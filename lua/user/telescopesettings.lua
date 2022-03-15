@@ -38,7 +38,7 @@ require('telescope').setup({
 --
 -- New way
 
-map('n' , '<C-f>'      , "<cmd>lua require ('telescope.builtin').find_files()<CR>"                            , { noremap = true })
+map('n' , '<C-f>'      , "<cmd>lua require ('telescope.builtin').find_files({hidden=false})<CR>"                            , { noremap = true })
 map('n' , '<leader>ff' , "<cmd>Telescope<CR>"                                                                 , { noremap = true })
 map('n' , '<leader>fg' , "<cmd>lua require ('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>" , { noremap = true })
 map('n' , '<C-b>'      , "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true                       , sort_lastused=true                              , ignore_current_buffer=true})<CR>"                  , { noremap = true })

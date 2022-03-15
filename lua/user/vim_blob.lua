@@ -1,3 +1,53 @@
+vim.cmd[[
+
+" Async tasks
+let g:asyncrun_open = 6
+let g:asynctasks_term_pos = 'bottom'
+let g:asynctasks_extra_config = ['~/.config/nvim/utils/tasks.ini']
+
+" Floatterm
+let g:floaterm_keymap_toggle = '<F1>'
+let g:floaterm_keymap_next   = '<F2>'
+let g:floaterm_keymap_prev   = '<F3>'
+let g:floaterm_keymap_new    = '<F4>'
+
+let g:floaterm_winblend = 7 " Make window opaque
+let g:floaterm_gitcommit='floaterm'
+let g:floaterm_autoinsert=1
+let g:floaterm_width=0.80
+let g:floaterm_height=0.80
+let g:floaterm_wintitle=0
+let g:floaterm_autoclose=1
+
+" Easy motion
+"Disable default mappings
+let g:EasyMotion_do_mapping = 0
+
+"Basic key usage is to just press s to activate
+nmap s <Plug>(easymotion-overwin-f)
+
+"Use a smartcase so that you can search upper and lower case easily
+let g:EasyMotion_smartcase = 1
+
+"Color setup
+hi link EasyMotionTarget ErrorMsg
+hi link EasyMotionShade  Comment
+
+hi link EasyMotionTarget2First MatchParen
+hi link EasyMotionTarget2Second MatchParen
+
+hi link EasyMotionMoveHL Search
+hi link EasyMotionIncSearch Search
+
+" I want to set my status line manually and use this extension for the snapshot
+" feature. Running into a lot of trouble with getting extra things added to the
+" status line like the tmux prefix highlight extension
+" Run :TmuxlineSnapshot to generate a new tmux config
+let g:airline#extensions#tmuxline#enabled = 0
+
+
+" coc stuff
+
 "CoC Settings (personal)
 let g:coc_disable_startup_warning = 1
 
@@ -49,13 +99,14 @@ set updatetime=300
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
+" TODO: this causes errors in lua <SID>
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+"inoremap <silent><expr> <TAB>
+"      \ pumvisible() ? "\<C-n>" :
+"      \ <SID>check_back_space() ? "\<TAB>" :
+"      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
@@ -192,3 +243,4 @@ else
 endif
 
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
+]]

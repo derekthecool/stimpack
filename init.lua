@@ -20,18 +20,18 @@ require('user.vimwikisettings')                      -- Vimwiki is a great perso
 require('user.which-key')                            -- Which-key is AMAZING to help you remember your mappings
 require('user.startify')                             -- Very good startup up application helper
 require('user.markdown-preview')                     -- Preview markdown in browser
+require('user.vim_blob')
 
 -- Configuration for my personal plugins that I wrote
 require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
 
 --Plugin specific configuration
-vim.cmd[[
-source $HOME/.config/nvim/viml/coc.vim              " Customizable popup window with MANY uses
-
-source $HOME/.config/nvim/viml/floaterm.vim         " Customizable popup window with MANY uses
-source $HOME/.config/nvim/viml/easymotion.vim       " Easy motion makes jumping around a file easier
-source $HOME/.config/nvim/viml/tmuxline.vim         " Tmuxline vim/tmux plugin settings
-source $HOME/.config/nvim/viml/asynctasks.vim       " Async build options
-source $HOME/.config/nvim/viml/syntaxsettings.vim   " Lua file is not working so I am keeping this
-source $HOME/.config/nvim/viml/mappings.vim         " My mapped commands not pertaining to any plugins
-]]
+-- vim.cmd[[
+-- source $HOME/.config/nvim/viml/coc.vim              " Customizable popup window with MANY uses
+-- ]]
+-- -- source $HOME/.config/nvim/viml/floaterm.vim         " Customizable popup window with MANY uses
+-- source $HOME/.config/nvim/viml/easymotion.vim       " Easy motion makes jumping around a file easier
+-- source $HOME/.config/nvim/viml/tmuxline.vim         " Tmuxline vim/tmux plugin settings
+-- source $HOME/.config/nvim/viml/asynctasks.vim       " Async build options
+-- source $HOME/.config/nvim/viml/syntaxsettings.vim   " Lua file is not working so I am keeping this
+-- source $HOME/.config/nvim/viml/mappings.vim         " My mapped commands not pertaining to any plugins
