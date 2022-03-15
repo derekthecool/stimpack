@@ -26,7 +26,7 @@ require('user.dereks-plugins-config')                -- Source lua file ~/.confi
 
 --Plugin specific configuration
 vim.cmd[[
-source ./viml/coc.vim              " Customizable popup window with MANY uses
+source $HOME/.config/nvim/viml/coc.vim              " Customizable popup window with MANY uses
 
 source $HOME/.config/nvim/viml/floaterm.vim         " Customizable popup window with MANY uses
 source $HOME/.config/nvim/viml/easymotion.vim       " Easy motion makes jumping around a file easier

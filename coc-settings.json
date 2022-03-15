@@ -21,7 +21,6 @@
   "json.format.enable": true,
   "yank.highlight.duration": 800,
   "python.jediEnabled": false,
-  "snippets.userSnippetsDirectory": "~/.config/nvim/snips",
   "signature.target": "echo",
   "diagnostic.format": "%message [%source]",
   "diagnostic.virtualText": true,
@@ -119,6 +118,9 @@
   "explorer.file.showHiddenFiles": true,
   "explorer.position": "floating",
   "explorer.trash.command": "mv --backup=t %l ~/.trash/",
+  //"snippets.userSnippetsDirectory": "$MYVIMRC/snips/",
+  //"snippets.userSnippetsDirectory": "~/AppData/Local/nvim/snips",
+  "snippets.userSnippetsDirectory": "~/.config/nvim/snips/",
   "explorer.keyMappings.global": {
     "<cr>": ["expandable?", "expand", "open"],
     "v": "open:vsplit"

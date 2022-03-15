@@ -3,7 +3,7 @@ let g:coc_disable_startup_warning = 1
 
 "How to add config file to another location
 "https://github.com/neoclide/coc.nvim/issues/528
-let g:coc_config_home = './other/coc-settings.json'
+"let g:coc_config_home = './other/coc-settings.json'
 
 " Extensions to always install
 " Grouped in this order:
@@ -183,5 +183,12 @@ let g:coc_explorer_global_presets = {
 \     'file-child-template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
 \   }
 \ }
+
+" User snippet directory, must be cross platform
+if has("unix")
+  let g:coc_snippets_userSnippetsDirectory = '~/.config/nvim/snips'
+else
+  let g:coc_snippets_userSnippetsDirectory = '~/AppData/Local/nvim/snips'
+endif
 
 autocmd BufEnter * if (winnr("$") == 1 && &filetype == 'coc-explorer') | q | endif
