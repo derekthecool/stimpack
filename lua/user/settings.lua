@@ -48,7 +48,6 @@ vim.bo.formatoptions = string.gsub(vim.bo.formatoptions,"cro","")
 
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"
-vim.cmd "set spell"                      -- Enable spell check
 
 -- Run auto commands using vim script since they are not supported in lua yet
 -- vim.api.nvim_command([[

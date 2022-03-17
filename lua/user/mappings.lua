@@ -38,6 +38,3 @@ map('v' , '/' , '/\\v' ,{noremap = true})
 -- 3. Press zr and zm for more and less context
 --  nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
 -- vim.cmd "nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>"
-
-vim.cmd "nnoremap <space>/ :Commentary<CR>"
-vim.cmd "vnoremap <space>/ :Commentary<CR>"
