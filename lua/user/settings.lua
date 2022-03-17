@@ -9,9 +9,6 @@ vim.g.noswapfile = true                 -- Do not create swp files
 vim.g.nobackup = true                   -- Recommended by CoC
 vim.g.nowritebackup = true              -- Recommended by CoC
 vim.g.showmatch = true                  -- Show matching () [] {}
--- vim.g.secure = true                     -- Only safe commands allowed in project rc files (.exrc or .nvimrc)
--- vim.g.exrc = true                       -- Allows project vim settings file
-vim.cmd "set exrc secure"
 
 -- Regular options
 vim.o.clipboard = 'unnamedplus'         -- Copy paste between vim and everything else (for WSL clipboard usage see https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl)

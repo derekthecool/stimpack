@@ -44,7 +44,7 @@ return require('packer').startup(function()
   -- }}}
 
   -- LSP setup {{{
-  use 'neovim/nvim-lspconfig'
+  -- use 'neovim/nvim-lspconfig'
   -- use 'hrsh7th/cmp-nvim-lsp'
   -- use 'hrsh7th/cmp-buffer'
   -- use 'hrsh7th/cmp-path'
@@ -63,7 +63,7 @@ return require('packer').startup(function()
   -- General helper plugins {{{
   use 'tpope/vim-surround'                              -- Easily surround text
   use 'tpope/vim-unimpaired'                            -- Easily surround text
-  use 'liuchengxu/vim-which-key'                        -- Convenience useins
+  use 'liuchengxu/vim-which-key'                        -- Convenience pop up guide
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
   use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
