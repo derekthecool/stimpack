@@ -5,12 +5,12 @@
 -- |____/ \___|_|  \___|_|\_\ |___/ |_|_| |_|_|\__(_)_|\__,_|\__,_|
 
 -- Lua basic configuration
-require('user.plugins')                              -- Source lua file ~/.config/nvim/lua/plugins.lua
-require('user.settings')                             -- Source lua file ~/.config/nvim/lua/settings.lua
-require('user.disable-vim-builtins')                 -- Source lua file ~/.config/nvim/lua/disable-vim-builtins.lua
-require('user.visualsettings')                       -- Source lua file ~/.config/nvim/lua/visualsettings.lua
-require('user.mappings')                             -- Source lua file ~/.config/nvim/lua/mappings.lua
-require('user.syntaxsettings')                       -- Source lua file ~/.config/nvim/lua/syntaxsettings.lua
+require('user.plugins')                              -- Source lua file ~/.config/nvim/lua/user/plugins.lua
+require('user.settings')                             -- Source lua file ~/.config/nvim/lua/user/settings.lua
+require('user.disable-vim-builtins')                 -- Source lua file ~/.config/nvim/lua/user/disable-vim-builtins.lua
+require('user.visualsettings')                       -- Source lua file ~/.config/nvim/lua/user/visualsettings.lua
+require('user.mappings')                             -- Source lua file ~/.config/nvim/lua/user/mappings.lua
+require('user.syntaxsettings')                       -- Source lua file ~/.config/nvim/lua/user/syntaxsettings.lua
 
 -- Lua plugin configuration
 -- require('user.lsp-setup')                            -- Source lua file ~/.config/nvim/lua/lsp-setup.lua

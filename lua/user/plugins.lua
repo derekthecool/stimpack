@@ -84,7 +84,6 @@ return require('packer').startup(function()
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
   use 'honza/vim-snippets'                              -- Snippet resource
-  use 'tpope/vim-commentary'                            -- Easily comment lines
   use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
   use 'puremourning/vimspector'                         -- Code debugger for vim
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
@@ -95,6 +94,12 @@ return require('packer').startup(function()
   use 'RishabhRD/nvim-cheat.sh'                         -- Easy coding help from vim
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
+  use {                                                 -- Comment plugin made with lua
+      'numToStr/Comment.nvim',
+      config = function()
+          require('Comment').setup()
+      end
+  }
   -- }}}
 
   -- Git helpers {{{
