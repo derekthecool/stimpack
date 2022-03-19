@@ -8,7 +8,6 @@ let wiki_1.syntax = 'markdown'
 let wiki_1.ext = '.md'
 let wiki_1.auto_diary_index = 1
 let wiki_1.list_margin = 0
-let wiki_1.custom_wiki2html = '$HOME/.derek-shell-config/scripts/wiki2html.sh'
 
 "Work Wiki Setup
 let wiki_2 = {}
@@ -17,7 +16,6 @@ let wiki_2.syntax = 'markdown'
 let wiki_2.ext = '.md'
 let wiki_2.auto_diary_index = 1
 let wiki_2.list_margin = 0
-let wiki_2.custom_wiki2html = '$HOME/.derek-shell-config/scripts/wiki2html.sh'
 
 "Apply the different Wiki's into the setup vimwiki_list
 let g:vimwiki_list = [ wiki_1, wiki_2 ]

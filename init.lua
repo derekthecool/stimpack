@@ -1,12 +1,21 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
+--[[ TODO:
+try out nvim-dap debugger
+try alpha as a replacement for startify
+luasnip plugin
+lsp to replace coc
+clear out the vim_blob file and move to lua
+make autocommand function to make setting easier
+add auto command to set formatoptions
+]]
+
 -- Lua basic configuration
 require('user.plugins')                              -- Source lua file ~/.config/nvim/lua/user/plugins.lua
 require('user.settings')                             -- Source lua file ~/.config/nvim/lua/user/settings.lua
 require('user.disable-vim-builtins')                 -- Source lua file ~/.config/nvim/lua/user/disable-vim-builtins.lua
 require('user.visualsettings')                       -- Source lua file ~/.config/nvim/lua/user/visualsettings.lua
 require('user.mappings')                             -- Source lua file ~/.config/nvim/lua/user/mappings.lua
-require('user.syntaxsettings')                       -- Source lua file ~/.config/nvim/lua/user/syntaxsettings.lua
 
 -- Lua plugin configuration
 require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua

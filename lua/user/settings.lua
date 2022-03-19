@@ -46,16 +46,23 @@ vim.bo.textwidth = 80                                 -- Set max length for line
 vim.cmd "set textwidth=80"                            -- The dang lua version above does not always work
 vim.bo.formatoptions = string.gsub(vim.bo.formatoptions,"cro","")
 
+-- TODO: get this to write the message in another color
+vim.api.nvim_create_autocmd("FileChangedShellPost *", { command = "echo 'File changed on disk. Buffer reloaded.'", })
+
+-- -- Run auto commands using vim script since they are not supported in lua yet
+-- vim.cmd([[
+-- " Triger `autoread` when files changes on disk
+-- "autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+-- ]])
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--         pattern = "lua",
+--         callback = function()
+--             vim.schedule(function()
+--                 print("Hey, we got called")
+--             end)
+--     end,
+-- })
+--
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"
-
--- Run auto commands using vim script since they are not supported in lua yet
--- vim.api.nvim_command([[
-vim.cmd([[
-" Triger `autoread` when files changes on disk
-autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
-
-" Notification after file change
-" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
-autocmd FileChangedShellPost * echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-]])
