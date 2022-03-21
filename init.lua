@@ -1,7 +1,13 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
 --[[ TODO:
-try out nvim-dap debugger
+neogit plugin DONE
+git diff view plugin
+
+try out nvim-dap debugger -- needs more work
+
+find function to check for my local plugin dvp.nvim
+find function to check OS
 try alpha as a replacement for startify
 luasnip plugin
 lsp to replace coc
@@ -25,7 +31,10 @@ require('user.vimwikisettings')                      -- Vimwiki is a great perso
 require('user.which-key')                            -- Which-key is AMAZING to help you remember your mappings
 require('user.startify')                             -- Very good startup up application helper
 require('user.markdown-preview')                     -- Preview markdown in browser
+require('user.nvim-dap-settings')                    -- Debugging plugin
 require('user.vim_blob')
+require('git.diffview')
+require('git.neogit')
 
 -- Configuration for my personal plugins that I wrote
 require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua

@@ -65,54 +65,54 @@ let g:which_key_map_leader.t = {
       \ 'v' : [':FloatermNew vifm'                       , 'Vifm']     ,
       \ } 
 
-" d is for debug
-" Dependent Plugins:
-" Plug 'puremourning/vimspector'
-" Plug 'szw/vim-maximizer'
-function! GotoWindow(id)
-    call win_gotoid(a:id)
-    MaximizerToggle
-endfunction
-
-function! AddToVimspectorWatch()
-    let word = expand("<cexpr>")
-    call vimspector#AddWatch(word)
-endfunction
-
-" Mapping VimspectorBallonEval does not work in which key mappings
-nnoremap <leader>di :lua require('telescope').extensions.vimspector.configurations()<CR>
-
-" Allow for use of function key mappings as well
-let g:vimspector_enable_mappings = 'HUMAN'
-
-let g:which_key_map_leader.d = {
-      \ 'name' : '+debug'                                                             ,
-      \ 'b' : ['<Plug>VimspectorToggleBreakpoint'                                     , 'breakpoint']             ,
-      \ 'B' : ['<Plug>VimspectorToggleConditionalBreakpoint'                          , 'conditional breakpoint'] ,
-      \ 'c' : ['<Plug>VimspectorRunToCursor'                                          , 'run to cursor']          ,
-      \ 'C' : [':call vimspector#ClearBreakpoints()<CR>'                              , 'clear all breakpoints']  ,
-      \ 'd' : ['<Plug>VimspectorContinue'                                             , 'continue']               ,
-      \ 'f' : ['<Plug>VimspectorAddFunctionBreakpoint'                                , 'function breakpoint']    ,
-      \ 'l' : [':call vimspector#Launch()<CR>'                                        , 'launch debugger']        ,
-      \ 'm' : [':MaximizerToggle!'                                                    , 'maximize window']        ,
-      \ 'o' : ['<Plug>VimspectorStepOver'                                             , 'step over']              ,
-      \ 'O' : ['<Plug>VimspectorStepOut'                                              , 'step out']               ,
-      \ 'i' : ['<Plug>VimspectorStepInto'                                             , 'step into']              ,
-      \ 'h' : ['<Plug>VimspectorBalloonEval'                                          , 'ballon eval']            ,
-      \ 'p' : ['<Plug>VimspectorPause'                                                , 'pause']                  ,
-      \ 'q' : [':VimspectorReset'                                                     , 'exit debugger']          ,
-      \ 'r' : ['<Plug>VimspectorRestart'                                              , 'restart']                ,
-      \ 'w' : [':call AddToVimspectorWatch()<CR>'                                     , 'add variable to watch']  ,
-      \ 's' : ['<Plug>VimspectorStop'                                                 , 'stop']                   ,
-      \ '1' : [':call GotoWindow(g:vimspector_session_windows.code)<CR>'              , 'View: Code']             ,
-      \ '2' : [':call GotoWindow(g:vimspector_session_windows.variables)<CR>'         , 'View: Variables']        ,
-      \ '3' : [':call GotoWindow(g:vimspector_session_windows.watches)<CR>'           , 'View: Watches']          ,
-      \ '4' : [':call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>'       , 'View: Stack Trace']      ,
-      \ '5' : [':call GotoWindow(g:vimspector_session_windows.tagpage)<CR>'           , 'View: Tag Page']         ,
-      \ '6' : [':call GotoWindow(g:vimspector_session_windows.output)<CR>'            , 'View: Output']           ,
-      \ '+' : ['<Plug>VimspectorUpFrame'                                              , 'View: Stack Frame Up']   ,
-      \ '-' : ['<Plug>VimspectorDownFrame'                                            , 'View: Stack Frame Down'] ,
-      \ }
+" " d is for debug
+" " Dependent Plugins:
+" " Plug 'puremourning/vimspector'
+" " Plug 'szw/vim-maximizer'
+" function! GotoWindow(id)
+"     call win_gotoid(a:id)
+"     MaximizerToggle
+" endfunction
+" 
+" function! AddToVimspectorWatch()
+"     let word = expand("<cexpr>")
+"     call vimspector#AddWatch(word)
+" endfunction
+" 
+" " Mapping VimspectorBallonEval does not work in which key mappings
+" nnoremap <leader>di :lua require('telescope').extensions.vimspector.configurations()<CR>
+" 
+" " Allow for use of function key mappings as well
+" let g:vimspector_enable_mappings = 'HUMAN'
+" 
+" let g:which_key_map_leader.d = {
+"       \ 'name' : '+debug'                                                             ,
+"       \ 'b' : ['<Plug>VimspectorToggleBreakpoint'                                     , 'breakpoint']             ,
+"       \ 'B' : ['<Plug>VimspectorToggleConditionalBreakpoint'                          , 'conditional breakpoint'] ,
+"       \ 'c' : ['<Plug>VimspectorRunToCursor'                                          , 'run to cursor']          ,
+"       \ 'C' : [':call vimspector#ClearBreakpoints()<CR>'                              , 'clear all breakpoints']  ,
+"       \ 'd' : ['<Plug>VimspectorContinue'                                             , 'continue']               ,
+"       \ 'f' : ['<Plug>VimspectorAddFunctionBreakpoint'                                , 'function breakpoint']    ,
+"       \ 'l' : [':call vimspector#Launch()<CR>'                                        , 'launch debugger']        ,
+"       \ 'm' : [':MaximizerToggle!'                                                    , 'maximize window']        ,
+"       \ 'o' : ['<Plug>VimspectorStepOver'                                             , 'step over']              ,
+"       \ 'O' : ['<Plug>VimspectorStepOut'                                              , 'step out']               ,
+"       \ 'i' : ['<Plug>VimspectorStepInto'                                             , 'step into']              ,
+"       \ 'h' : ['<Plug>VimspectorBalloonEval'                                          , 'ballon eval']            ,
+"       \ 'p' : ['<Plug>VimspectorPause'                                                , 'pause']                  ,
+"       \ 'q' : [':VimspectorReset'                                                     , 'exit debugger']          ,
+"       \ 'r' : ['<Plug>VimspectorRestart'                                              , 'restart']                ,
+"       \ 'w' : [':call AddToVimspectorWatch()<CR>'                                     , 'add variable to watch']  ,
+"       \ 's' : ['<Plug>VimspectorStop'                                                 , 'stop']                   ,
+"       \ '1' : [':call GotoWindow(g:vimspector_session_windows.code)<CR>'              , 'View: Code']             ,
+"       \ '2' : [':call GotoWindow(g:vimspector_session_windows.variables)<CR>'         , 'View: Variables']        ,
+"       \ '3' : [':call GotoWindow(g:vimspector_session_windows.watches)<CR>'           , 'View: Watches']          ,
+"       \ '4' : [':call GotoWindow(g:vimspector_session_windows.stack_trace)<CR>'       , 'View: Stack Trace']      ,
+"       \ '5' : [':call GotoWindow(g:vimspector_session_windows.tagpage)<CR>'           , 'View: Tag Page']         ,
+"       \ '6' : [':call GotoWindow(g:vimspector_session_windows.output)<CR>'            , 'View: Output']           ,
+"       \ '+' : ['<Plug>VimspectorUpFrame'                                              , 'View: Stack Frame Up']   ,
+"       \ '-' : ['<Plug>VimspectorDownFrame'                                            , 'View: Stack Frame Down'] ,
+"       \ }
 
 " u is for task
 let g:which_key_map_leader.u = {
@@ -130,40 +130,40 @@ let g:which_key_map_leader.u = {
       \ 'p' : [':AsyncTask project-run' , 'GLOBAL: run project']              ,
       \ }
 
-" g is for git
-" Dependent Plugins: 
-" Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-rhubarb' (only for GBrowse)
-let g:which_key_map_leader.g = {
-      \ 'name' : '+git'                            ,
-      \ '1' : [':diffget'                          , 'diffget']             ,
-      \ '2' : [':diffput'                          , 'diffput']             ,
-      \ 'a' : [':Git add .'                        , 'add all']             ,
-      \ 'A' : [':CocCommand fzf-preview.GitStatus' , 'actions']             ,
-      \ 'b' : [':Git blame'                        , 'blame']               ,
-      \ 'B' : [':GBrowse'                          , 'browse']              ,
-      \ 'c' : [':Git commit'                       , 'commit']              ,
-      \ 'd' : [':Git diff'                         , 'diff']                ,
-      \ 'D' : [':Gdiffsplit'                       , 'diff split']          ,
-      \ 'g' : [':Git'                              , 'status']              ,
-      \ 'G' : [':GGrep'                            , 'git grep']            ,
-      \ 'h' : [':GitGutterLineHighlightsToggle'    , 'highlight hunks']     ,
-      \ 'H' : ['<Plug>(GitGutterPreviewHunk)'      , 'preview hunk']        ,
-      \ 'i' : [':Gist -b'                          , 'post gist']           ,
-      \ 'j' : ['<Plug>(GitGutterNextHunk)'         , 'next hunk']           ,
-      \ 'k' : ['<Plug>(GitGutterPrevHunk)'         , 'prev hunk']           ,
-      \ 'l' : [':Git log'                          , 'log']                 ,
-      \ 'm' : ['<Plug>(git-messenger)'             , 'message']             ,
-      \ 'p' : [':Git push'                         , 'push']                ,
-      \ 'P' : [':Git pull'                         , 'pull']                ,
-      \ 'r' : [':GRemove'                          , 'remove']              ,
-      \ 's' : ['<Plug>(GitGutterStageHunk)'        , 'stage hunk']          ,
-      \ 'S' : [':CocCommand fzf-preview.GitStatus' , 'status']              ,
-      \ 't' : [':GitGutterSignsToggle'             , 'toggle signs']        ,
-      \ 'u' : ['<Plug>(GitGutterUndoHunk)'         , 'undo hunk']           ,
-      \ 'v' : [':GV'                               , 'view commits']        ,
-      \ 'V' : [':GV!'                              , 'view buffer commits'] ,
-      \ }
+" " g is for git
+" " Dependent Plugins:
+" " Plug 'tpope/vim-fugitive'
+" " Plug 'tpope/vim-rhubarb' (only for GBrowse)
+" let g:which_key_map_leader.g = {
+"       \ 'name' : '+git'                            ,
+"       \ '1' : [':diffget'                          , 'diffget']             ,
+"       \ '2' : [':diffput'                          , 'diffput']             ,
+"       \ 'a' : [':Git add .'                        , 'add all']             ,
+"       \ 'A' : [':CocCommand fzf-preview.GitStatus' , 'actions']             ,
+"       \ 'b' : [':Git blame'                        , 'blame']               ,
+"       \ 'B' : [':GBrowse'                          , 'browse']              ,
+"       \ 'c' : [':Git commit'                       , 'commit']              ,
+"       \ 'd' : [':Git diff'                         , 'diff']                ,
+"       \ 'D' : [':Gdiffsplit'                       , 'diff split']          ,
+"       \ 'g' : [':Git'                              , 'status']              ,
+"       \ 'G' : [':GGrep'                            , 'git grep']            ,
+"       \ 'h' : [':GitGutterLineHighlightsToggle'    , 'highlight hunks']     ,
+"       \ 'H' : ['<Plug>(GitGutterPreviewHunk)'      , 'preview hunk']        ,
+"       \ 'i' : [':Gist -b'                          , 'post gist']           ,
+"       \ 'j' : ['<Plug>(GitGutterNextHunk)'         , 'next hunk']           ,
+"       \ 'k' : ['<Plug>(GitGutterPrevHunk)'         , 'prev hunk']           ,
+"       \ 'l' : [':Git log'                          , 'log']                 ,
+"       \ 'm' : ['<Plug>(git-messenger)'             , 'message']             ,
+"       \ 'p' : [':Git push'                         , 'push']                ,
+"       \ 'P' : [':Git pull'                         , 'pull']                ,
+"       \ 'r' : [':GRemove'                          , 'remove']              ,
+"       \ 's' : ['<Plug>(GitGutterStageHunk)'        , 'stage hunk']          ,
+"       \ 'S' : [':CocCommand fzf-preview.GitStatus' , 'status']              ,
+"       \ 't' : [':GitGutterSignsToggle'             , 'toggle signs']        ,
+"       \ 'u' : ['<Plug>(GitGutterUndoHunk)'         , 'undo hunk']           ,
+"       \ 'v' : [':GV'                               , 'view commits']        ,
+"       \ 'V' : [':GV!'                              , 'view buffer commits'] ,
+"       \ }
 
 
 " l is for language server protocol

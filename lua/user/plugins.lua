@@ -16,34 +16,35 @@ return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- My plugins {{{
-  use '~/dvp.nvim'
-  -- }}}
+  -- My plugins
+  -- Use the local development version if it is found
+  -- Else pull it from GitHub
+  if io.open(os.getenv('HOME') .. '/dvp.nvim/README.md','r') ~= nil then
+    use '~/dvp.nvim'
+  else
+    use 'derekthecool/dvp.nvim'
+  end
 
-  -- Vimwiki {{{
+  -- Vimwiki
   use 'vimwiki/vimwiki'
   use 'mattn/calendar-vim'
   use 'godlygeek/tabular'
   use 'plasticboy/vim-markdown'
-  -- }}}
 
-  -- Pandoc / Latex {{{
+  -- Pandoc / Latex
   use 'conornewton/vim-pandoc-markdown-preview'
-  -- }}}
 
-  -- Tmux {{{
+  -- Tmux
   use 'christoomey/vim-tmux-navigator'
   use 'tmux-plugins/vim-tmux-focus-events'
   use 'edkolev/tmuxline.vim'
-  -- }}}
 
-  -- Tree sitter, I can't get past the ABI errors https://github.com/nvim-treesitter/nvim-treesitter/issues/994 {{{
+  -- Tree sitter, I can't get past the ABI errors https://github.com/nvim-treesitter/nvim-treesitter/issues/994
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/playground'
-  -- }}}
 
-  -- LSP setup {{{
+  -- LSP setup
   -- use 'neovim/nvim-lspconfig'
   -- use 'hrsh7th/cmp-nvim-lsp'
   -- use 'hrsh7th/cmp-buffer'
@@ -51,41 +52,38 @@ return require('packer').startup(function()
   -- use 'hrsh7th/cmp-cmdline'
   -- use 'hrsh7th/nvim-cmp'
   -- use 'quangnguyen30192/cmp-nvim-ultisnips'
-  -- }}}
 
-  -- Colors and themes {{{
+  -- Colors and themes
   use 'chriskempson/base16-vim'                         -- Visual plugins
   use 'vim-airline/vim-airline'                         -- Nice looking bottom status bar
   use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
   use 'kyazdani42/nvim-web-devicons'
-  -- }}}
 
-  -- General helper plugins {{{
+  -- General helper plugins
   use 'tpope/vim-surround'                              -- Easily surround text
   use 'tpope/vim-unimpaired'                            -- Easily surround text
   use 'liuchengxu/vim-which-key'                        -- Convenience pop up guide
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
   use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
-  -- }}}
 
-  -- Telescope Setup {{{
+  -- Telescope Setup
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-  use 'nvim-telescope/telescope-vimspector.nvim'
+  -- use 'nvim-telescope/telescope-vimspector.nvim'
   use 'fannheyward/telescope-coc.nvim'
-  -- }}}
 
-  -- Coding helpers {{{
+  -- Coding helpers
   use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
   use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
   use 'honza/vim-snippets'                              -- Snippet resource
   use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
-  use 'puremourning/vimspector'                         -- Code debugger for vim
+  use 'mfussenegger/nvim-dap'
+  -- use 'puremourning/vimspector'                         -- Code debugger for vim
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
   use 'skywind3000/asynctasks.vim'                      -- Async build resource
   use 'skywind3000/asyncrun.vim'
@@ -100,14 +98,19 @@ return require('packer').startup(function()
           require('Comment').setup()
       end
   }
-  -- }}}
 
-  -- Git helpers {{{
+  -- Git helpers
+  use {
+    'TimUntersberger/neogit',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'sindrets/diffview.nvim'
+    }
+  }
   use 'airblade/vim-rooter'                             -- Sets directory to git root
-  use 'tpope/vim-fugitive'                              -- Git client helper
-  use 'tpope/vim-rhubarb'                               -- Git helper to open file in github
   use 'airblade/vim-gitgutter'                          -- Git gutter to see changes in files
-  -- }}}
+  -- use 'tpope/vim-fugitive'                              -- Git client helper
+  -- use 'tpope/vim-rhubarb'                               -- Git helper to open file in github
 
   -- Plugins can have post-install/update hooks
 
