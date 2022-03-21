@@ -1,4 +1,4 @@
--- Using packer.nvim to manage plugins
+-- Using packer.nvim to mantage plugins
 -- https://github.com/wbthomason/packer.nvim
 
 -- Bootstrap function to install packer.nvim if it does not exist
@@ -55,7 +55,10 @@ return require('packer').startup(function()
 
   -- Colors and themes
   use 'chriskempson/base16-vim'                         -- Visual plugins
-  use 'vim-airline/vim-airline'                         -- Nice looking bottom status bar
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
   use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
   use 'kyazdani42/nvim-web-devicons'
 
@@ -92,6 +95,13 @@ return require('packer').startup(function()
   use 'RishabhRD/nvim-cheat.sh'                         -- Easy coding help from vim
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+    },
+    config = function() require'nvim-tree'.setup {} end
+  }
   use {                                                 -- Comment plugin made with lua
       'numToStr/Comment.nvim',
       config = function()
@@ -107,8 +117,14 @@ return require('packer').startup(function()
       'sindrets/diffview.nvim'
     }
   }
+  use {
+    'lewis6991/gitsigns.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    },
+  }
   use 'airblade/vim-rooter'                             -- Sets directory to git root
-  use 'airblade/vim-gitgutter'                          -- Git gutter to see changes in files
+  -- use 'airblade/vim-gitgutter'                          -- Git gutter to see changes in files
   -- use 'tpope/vim-fugitive'                              -- Git client helper
   -- use 'tpope/vim-rhubarb'                               -- Git helper to open file in github
 
@@ -121,5 +137,3 @@ return require('packer').startup(function()
   }
 
 end)
-
--- vim set foldmethod=marker
