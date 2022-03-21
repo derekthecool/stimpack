@@ -4,11 +4,15 @@
 neogit plugin DONE
 git diff view plugin DONE
 find function to check for my local plugin dvp.nvim DONE
+nvim-tree
+lua line
+
+fix nvim tree not closing on last file
+fix nvim tree not closing when opening file
 
 try out nvim-dap debugger -- needs more work
 
 find function to check OS
-nvim-tree
 try alpha as a replacement for startify
 luasnip plugin
 lsp to replace coc
