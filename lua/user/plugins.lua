@@ -19,7 +19,8 @@ return require('packer').startup(function()
   -- My plugins
   -- Use the local development version if it is found
   -- Else pull it from GitHub
-  if io.open(os.getenv('HOME') .. '/dvp.nvim/README.md','r') ~= nil then
+  local HOME = os.getenv('HOME')
+  if HOME ~= nil and io.open(HOME .. '/dvp.nvim/README.md','r') ~= nil then
     use '~/dvp.nvim'
   else
     use 'derekthecool/dvp.nvim'
