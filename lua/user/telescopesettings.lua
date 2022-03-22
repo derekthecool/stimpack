@@ -36,4 +36,5 @@ map("n" , "<leader>fV" , "<cmd>lua require ('telescope.builtin').live_grep({layo
 map("n" , "<leader>fd" , "<cmd>lua require ('telescope.builtin').find_files({cwd='~/'                         , prompt_title='Search WSL home directory'})<CR>" , { noremap = true })
 map("n" , "<leader>fm" , "<cmd>lua require ('telescope.builtin').keymaps()<CR>"                               , { noremap = true })
 
-require('telescope').load_extension('coc')
+-- TODO: remove if no longer using coc
+-- require('telescope').load_extension('coc')
