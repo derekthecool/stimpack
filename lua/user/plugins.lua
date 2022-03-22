@@ -46,13 +46,23 @@ return require('packer').startup(function()
   use 'nvim-treesitter/playground'
 
   -- LSP setup
-  -- use 'neovim/nvim-lspconfig'
-  -- use 'hrsh7th/cmp-nvim-lsp'
-  -- use 'hrsh7th/cmp-buffer'
-  -- use 'hrsh7th/cmp-path'
-  -- use 'hrsh7th/cmp-cmdline'
-  -- use 'hrsh7th/nvim-cmp'
-  -- use 'quangnguyen30192/cmp-nvim-ultisnips'
+  -- cmp plugins
+  use "hrsh7th/nvim-cmp" -- The completion plugin
+  use "hrsh7th/cmp-buffer" -- buffer completions
+  use "hrsh7th/cmp-path" -- path completions
+  use "hrsh7th/cmp-cmdline" -- cmdline completions
+  use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use "hrsh7th/cmp-nvim-lsp"
+
+  -- snippets
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+
+  -- LSP
+  use "neovim/nvim-lspconfig" -- enable LSP
+  use "williamboman/nvim-lsp-installer" -- simple to use language server installer
+  use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
+  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- Colors and themes
   use 'chriskempson/base16-vim'                         -- Visual plugins
@@ -77,10 +87,10 @@ return require('packer').startup(function()
     requires = { {'nvim-lua/plenary.nvim'} }
   }
   -- use 'nvim-telescope/telescope-vimspector.nvim'
-  use 'fannheyward/telescope-coc.nvim'
+  -- use 'fannheyward/telescope-coc.nvim'
 
   -- Coding helpers
-  use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
+  -- use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
   use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
