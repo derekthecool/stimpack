@@ -43,6 +43,7 @@ require('user.nvim-tree-settings')
 require('git.diffview')
 require('git.neogit')
 require('git.gitsigns-settings')
+require('user.cmp')
 require('user.lsp')
 
 -- Configuration for my personal plugins that I wrote
