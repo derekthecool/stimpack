@@ -27,21 +27,15 @@ autocmd  FileType which_key set laststatus=0 noshowmode noruler
 " f is for find, file, and FZF
 " Dependent Plugins:
 " Plug 'mhinz/vim-startify'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}        " Auto complete awesomeness
 let g:which_key_map_leader.f = {
       \ 'name' : '+Find'              ,
-      \ 'e' : [':CocCommand explorer' , 'Coc-explorer']       ,
       \ 'h' : [':Startify'            , 'Startify']           ,
       \ }
 
 " c is for cheat
-" for loop
 " Dependent Plugins:
 " 'RishabhRD/popfix'
 " 'RishabhRD/nvim-cheat.sh'
-
-      "-- \ 'h' : [''        , 'Read text for current line and get help , you have to enter a langage (HowIn)'] ,
-
 nnoremap <leader>Kh :HowIn 
 let g:which_key_map_leader.K = {
       \ 'name' : '+CheatSheet'               ,
@@ -122,7 +116,6 @@ let g:which_key_map_leader.u = {
       \ 'u' : [':AsyncTask run'         , 'LOCAL: run project']               ,
       \ 'e' : [':AsyncTaskEdit'         , 'LOCAL: edit tasks']                ,
       \ 'h' : [':AsyncTaskList!'        , 'list hidden tasks']                ,
-      \ 'l' : [':CocList tasks'         , 'list tasks']                       ,
       \ 'm' : [':AsyncTaskMacro'        , 'macro help']                       ,
       \ 'g' : [':AsyncTaskEdit!'        , 'GLOBAL: edit tasks']               ,
       \ 'z' : [':AsyncTask cmake-init'  , 'GLOBAL: cmake setup build folder'] ,
@@ -139,7 +132,6 @@ let g:which_key_map_leader.u = {
 "       \ '1' : [':diffget'                          , 'diffget']             ,
 "       \ '2' : [':diffput'                          , 'diffput']             ,
 "       \ 'a' : [':Git add .'                        , 'add all']             ,
-"       \ 'A' : [':CocCommand fzf-preview.GitStatus' , 'actions']             ,
 "       \ 'b' : [':Git blame'                        , 'blame']               ,
 "       \ 'B' : [':GBrowse'                          , 'browse']              ,
 "       \ 'c' : [':Git commit'                       , 'commit']              ,
@@ -158,7 +150,6 @@ let g:which_key_map_leader.u = {
 "       \ 'P' : [':Git pull'                         , 'pull']                ,
 "       \ 'r' : [':GRemove'                          , 'remove']              ,
 "       \ 's' : ['<Plug>(GitGutterStageHunk)'        , 'stage hunk']          ,
-"       \ 'S' : [':CocCommand fzf-preview.GitStatus' , 'status']              ,
 "       \ 't' : [':GitGutterSignsToggle'             , 'toggle signs']        ,
 "       \ 'u' : ['<Plug>(GitGutterUndoHunk)'         , 'undo hunk']           ,
 "       \ 'v' : [':GV'                               , 'view commits']        ,
@@ -171,44 +162,44 @@ let g:which_key_map_leader.u = {
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " This includes all the leader and <space> bindings from the coc suggested config
 
-xmap <leader>la  <Plug>(coc-codeaction-selected)
-nmap <leader>la  <Plug>(coc-codeaction-selected)
-
-let g:which_key_map_leader.l = {
-      \ 'name' : '+lsp'                            ,
-      \ '.' : [':CocConfig'                        , 'config']          ,
-      \ ';' : ['<Plug>(coc-refactor)'              , 'refactor']        ,
-      \ 'A' : ['<Plug>(coc-codeaction)'            , 'code action']     ,
-      \ 'b' : [':CocNext'                          , 'next action']     ,
-      \ 'B' : [':CocPrev'                          , 'prev action']     ,
-      \ 'c' : [':CocList commands'                 , 'commands']        ,
-      \ 'd' : ['<Plug>(coc-definition)'            , 'definition']      ,
-      \ 'D' : ['<Plug>(coc-declaration)'           , 'declaration']     ,
-      \ 'e' : [':CocList extensions'               , 'extensions']      ,
-      \ 'f' : ['<Plug>(coc-format-selected)'       , 'format selected'] ,
-      \ 'F' : ['<Plug>(coc-format)'                , 'format']          ,
-      \ 'h' : ['<Plug>(coc-float-hide)'            , 'hide']            ,
-      \ 'i' : ['<Plug>(coc-implementation)'        , 'implementation']  ,
-      \ 'I' : [':CocList diagnostics'              , 'diagnostics']     ,
-      \ 'j' : ['<Plug>(coc-float-jump)'            , 'float jump']      ,
-      \ 'l' : ['<Plug>(coc-codelens-action)'       , 'code lens']       ,
-      \ 'n' : ['<Plug>(coc-diagnostic-next)'       , 'next diagnostic'] ,
-      \ 'N' : ['<Plug>(coc-diagnostic-next-error)' , 'next error']      ,
-      \ 'O' : [':CocList outline'                  , 'search outline']  ,
-      \ 'p' : ['<Plug>(coc-diagnostic-prev)'       , 'prev diagnostic'] ,
-      \ 'P' : ['<Plug>(coc-diagnostic-prev-error)' , 'prev error']      ,
-      \ 'q' : ['<Plug>(coc-fix-current)'           , 'quickfix']        ,
-      \ 'r' : ['<Plug>(coc-references)'            , 'references']      ,
-      \ 'R' : ['<Plug>(coc-rename)'                , 'rename']          ,
-      \ 's' : [':CocList -I symbols'               , 'references']      ,
-      \ 'S' : [':CocList snippets'                 , 'snippets']        ,
-      \ 't' : ['<Plug>(coc-type-definition)'       , 'type definition'] ,
-      \ 'u' : [':CocListResume'                    , 'resume list']     ,
-      \ 'U' : [':CocUpdate'                        , 'update CoC']      ,
-      \ 'v' : [':source ~/.config/nvim/init.vim'   , 'source init.vim'] ,
-      \ 'z' : [':CocDisable'                       , 'disable CoC']     ,
-      \ 'Z' : [':CocEnable'                        , 'enable CoC']      ,
-      \ }
+" xmap <leader>la  <Plug>(coc-codeaction-selected)
+" nmap <leader>la  <Plug>(coc-codeaction-selected)
+"
+" let g:which_key_map_leader.l = {
+"       \ 'name' : '+lsp'                            ,
+"       \ '.' : [':CocConfig'                        , 'config']          ,
+"       \ ';' : ['<Plug>(coc-refactor)'              , 'refactor']        ,
+"       \ 'A' : ['<Plug>(coc-codeaction)'            , 'code action']     ,
+"       \ 'b' : [':CocNext'                          , 'next action']     ,
+"       \ 'B' : [':CocPrev'                          , 'prev action']     ,
+"       \ 'c' : [':CocList commands'                 , 'commands']        ,
+"       \ 'd' : ['<Plug>(coc-definition)'            , 'definition']      ,
+"       \ 'D' : ['<Plug>(coc-declaration)'           , 'declaration']     ,
+"       \ 'e' : [':CocList extensions'               , 'extensions']      ,
+"       \ 'f' : ['<Plug>(coc-format-selected)'       , 'format selected'] ,
+"       \ 'F' : ['<Plug>(coc-format)'                , 'format']          ,
+"       \ 'h' : ['<Plug>(coc-float-hide)'            , 'hide']            ,
+"       \ 'i' : ['<Plug>(coc-implementation)'        , 'implementation']  ,
+"       \ 'I' : [':CocList diagnostics'              , 'diagnostics']     ,
+"       \ 'j' : ['<Plug>(coc-float-jump)'            , 'float jump']      ,
+"       \ 'l' : ['<Plug>(coc-codelens-action)'       , 'code lens']       ,
+"       \ 'n' : ['<Plug>(coc-diagnostic-next)'       , 'next diagnostic'] ,
+"       \ 'N' : ['<Plug>(coc-diagnostic-next-error)' , 'next error']      ,
+"       \ 'O' : [':CocList outline'                  , 'search outline']  ,
+"       \ 'p' : ['<Plug>(coc-diagnostic-prev)'       , 'prev diagnostic'] ,
+"       \ 'P' : ['<Plug>(coc-diagnostic-prev-error)' , 'prev error']      ,
+"       \ 'q' : ['<Plug>(coc-fix-current)'           , 'quickfix']        ,
+"       \ 'r' : ['<Plug>(coc-references)'            , 'references']      ,
+"       \ 'R' : ['<Plug>(coc-rename)'                , 'rename']          ,
+"       \ 's' : [':CocList -I symbols'               , 'references']      ,
+"       \ 'S' : [':CocList snippets'                 , 'snippets']        ,
+"       \ 't' : ['<Plug>(coc-type-definition)'       , 'type definition'] ,
+"       \ 'u' : [':CocListResume'                    , 'resume list']     ,
+"       \ 'U' : [':CocUpdate'                        , 'update CoC']      ,
+"       \ 'v' : [':source ~/.config/nvim/init.vim'   , 'source init.vim'] ,
+"       \ 'z' : [':CocDisable'                       , 'disable CoC']     ,
+"       \ 'Z' : [':CocEnable'                        , 'enable CoC']      ,
+"       \ }
 
 " S is for startify sessions
 " Dependent Plugins:
@@ -237,14 +228,6 @@ let g:which_key_map_leader.q = {
       \ 'name' : '+QuickFix' ,
       \ 'o' : [':copen'      , 'Open quickfix list']  ,
       \ 'q' : [':cclose'     , 'Close quickfix list'] ,
-      \ }
-
-" y is for yank
-" Dependent Plugins:
-let g:which_key_map_leader.y = {
-      \ 'name' : '+Yank'                   ,
-      \ 'c' : [':CocCommand yank.clean'    , 'Clear all yanks'] ,
-      \ 'v' : [':CocList -A --normal yank' , 'View yank list']  ,
       \ }
 
 " v is for vimwiki

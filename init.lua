@@ -1,12 +1,6 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
 --[[ TODO:
-neogit plugin DONE
-git diff view plugin DONE
-find function to check for my local plugin dvp.nvim DONE
-nvim-tree
-lua line
-
 fix nvim tree not closing on last file
 fix nvim tree not closing when opening file
 
@@ -14,10 +8,7 @@ try out nvim-dap debugger -- needs more work
 
 find function to check OS
 try alpha as a replacement for startify
-luasnip plugin
-lsp to replace coc
 clear out the vim_blob file and move to lua
-make autocommand function to make setting easier
 add auto command to set formatoptions
 ]]
 
@@ -47,4 +38,4 @@ require('user.cmp')
 require('user.lsp')
 
 -- Configuration for my personal plugins that I wrote
-require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
+      require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua

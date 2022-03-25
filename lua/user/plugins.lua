@@ -63,7 +63,7 @@ return require('packer').startup(function()
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
-  -- use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- Colors and themes
   use 'chriskempson/base16-vim'                         -- Visual plugins
@@ -103,10 +103,15 @@ return require('packer').startup(function()
   use 'skywind3000/asynctasks.vim'                      -- Async build resource
   use 'skywind3000/asyncrun.vim'
   use 'skywind3000/asyncrun.extra'
-  use 'RishabhRD/popfix'                                -- Needed for nvim-cheat.sh
-  use 'RishabhRD/nvim-cheat.sh'                         -- Easy coding help from vim
+  use {'RishabhRD/nvim-cheat.sh',  -- Easy coding help from vim
+       requires = {
+        'RishabhRD/popfix'
+       },
+     }
+  -- TODO: not sure if this is needed
+  -- use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
+
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
-  use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
