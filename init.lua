@@ -36,6 +36,7 @@ require('git.neogit')
 require('git.gitsigns-settings')
 require('user.cmp')
 require('user.lsp')
+require('user.neoscroll')
 
 -- Configuration for my personal plugins that I wrote
       require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua

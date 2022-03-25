@@ -3,7 +3,8 @@ return {
 
 		Lua = {
 			diagnostics = {
-				globals = { "vim" },
+				-- Added these helps to have a nicer, less noisy checking of nvim files
+				globals = { "vim","use" },
 			},
 			workspace = {
 				library = {

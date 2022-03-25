@@ -81,6 +81,7 @@ return require('packer').startup(function()
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
   use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
+  use 'karb94/neoscroll.nvim'                           -- Smooth scroll with <C-d> and <C-u>
 
   -- Telescope Setup
   use {
