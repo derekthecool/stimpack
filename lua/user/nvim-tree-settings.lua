@@ -1,6 +1,6 @@
 local map = require('user.mapping-function')
 
-require'nvim-tree'.setup {
+require('nvim-tree').setup {
   auto_close = true,
   auto_reload_on_write = true,
   disable_netrw = true,
@@ -100,4 +100,4 @@ require'nvim-tree'.setup {
   },
 } -- END_DEFAULT_OPTS
 
-map("n" , "<leader>fE" , ":NvimTreeToggle<cr>")
+map("n" , "<leader>fe" , ":NvimTreeToggle<cr>")

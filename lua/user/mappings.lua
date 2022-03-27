@@ -6,8 +6,8 @@ local map = require('user.mapping-function')
 map('n' , 'U' , '<C-u>' ,{noremap = true})
 map('n' , 'D' , '<C-d>' ,{noremap = true})
 -- Map alt + n/e to navigate quickfix list
-map('n', '<M-.>', ':cnext<CR>',{noremap = true})
-map('n', '<M-,>', ':cprev<CR>',{noremap = true})
+map('n', '→', ':cnext<CR>',{noremap = true})
+map('n', '←', ':cprev<CR>',{noremap = true})
 
 -- Ｉｎｓｅｒｔ ｍａｐｓ
 -- Control + j/k to select from popup menu

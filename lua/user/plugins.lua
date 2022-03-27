@@ -79,7 +79,8 @@ return require('packer').startup(function()
   use 'tpope/vim-unimpaired'                            -- Easily surround text
   use 'liuchengxu/vim-which-key'                        -- Convenience pop up guide
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
-  use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
+  -- use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
+  use 'ggandor/lightspeed.nvim'
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
   use 'karb94/neoscroll.nvim'                           -- Smooth scroll with <C-d> and <C-u>
 
@@ -97,7 +98,7 @@ return require('packer').startup(function()
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
   use 'honza/vim-snippets'                              -- Snippet resource
-  use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
+  -- use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
   use 'mfussenegger/nvim-dap'
   -- use 'puremourning/vimspector'                         -- Code debugger for vim
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
