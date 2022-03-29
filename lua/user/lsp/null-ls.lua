@@ -27,8 +27,8 @@ null_ls.setup({
 		formatting.clang_format,
 		formatting.shfmt,
 		diagnostics.markdownlint.with({filetypes =  {"markdown", "vimwiki"}}), -- https://github.com/DavidAnson/markdownlint
-		diagnostics.write_good.with({filetypes =  {"markdown", "vimwiki"}}), -- https://github.com/btford/write-good
-		diagnostics.gitlint,      -- https://jorisroovers.com/gitlint/
+		diagnostics.write_good.with({filetypes =  {"markdown", "vimwiki", "gitcommit", "NeogitCommitMessage"}}), -- https://github.com/btford/write-good
+		diagnostics.gitlint.with({filetypes = {"gitcommit","NeogitCommitMessage"}}),      -- https://jorisroovers.com/gitlint/
 		hover.dictionary.with({filetypes =  {"markdown", "text", "vimwiki"}}),
 		diagnostics.shellcheck, -- https://github.com/koalaman/shellcheck#installing Needs version 0.8.0 at least
     code_actions.shellcheck,

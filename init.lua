@@ -1,17 +1,5 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
---[[ TODO:
-fix nvim tree not closing on last file
-fix nvim tree not closing when opening file
-
-try out nvim-dap debugger -- needs more work
-
-find function to check OS
-try alpha as a replacement for startify
-clear out the vim_blob file and move to lua
-add auto command to set formatoptions
-]]
-
 -- Lua basic configuration
 require('user.plugins')                              -- Source lua file ~/.config/nvim/lua/user/plugins.lua
 require('user.settings')                             -- Source lua file ~/.config/nvim/lua/user/settings.lua
@@ -20,7 +8,6 @@ require('user.visualsettings')                       -- Source lua file ~/.confi
 require('user.mappings')                             -- Source lua file ~/.config/nvim/lua/user/mappings.lua
 
 -- Lua plugin configuration
-require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua
 require('user.vim-pandoc-markdown-preview-settings') -- Source lua file ~/.config/nvim/lua/vim-pandoc-markdown-preview-settings.lua
 require('user.treesitter')                           -- Source lua file ~/.config/nvim/lua/treesitter.lua
 require('user.vimwikisettings')                      -- Vimwiki is a great personal wiki and diary
@@ -37,6 +24,16 @@ require('git.gitsigns-settings')
 require('user.cmp')
 require('user.lsp')
 require('user.neoscroll')
+require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua
+require('user.cheat-settings')
+require('user.async-tasks')
 
 -- Configuration for my personal plugins that I wrote
-      require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
+require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
+
+-- Use the new global status bar feature
+vim.cmd([[
+set lazyredraw
+set laststatus=3
+highlight WinSeparator guibg=none
+]])

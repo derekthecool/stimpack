@@ -1,7 +1,6 @@
 local map = require('user.mapping-function')
 
 require('nvim-tree').setup {
-  auto_close = true,
   auto_reload_on_write = true,
   disable_netrw = true,
   hide_root_folder = false,
@@ -101,3 +100,8 @@ require('nvim-tree').setup {
 } -- END_DEFAULT_OPTS
 
 map("n" , "<leader>fe" , ":NvimTreeToggle<cr>")
+
+-- Autocommand to close when last window
+-- TODO: Derek Lomax
+-- change this to a lua autocommand ASAP 2022-03-27
+vim.cmd[[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]

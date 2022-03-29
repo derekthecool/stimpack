@@ -9,6 +9,13 @@ vim.g.noswapfile = true                 -- Do not create swp files
 vim.g.nobackup = true                   -- Recommended by CoC
 vim.g.nowritebackup = true              -- Recommended by CoC
 vim.g.showmatch = true                  -- Show matching () [] {}
+-- vim.g.lazyredraw = true                 -- Don't redraw screen during macros
+-- vim.g.laststatus=3
+vim.cmd([[
+set lazyredraw
+set laststatus=3
+highlight WinSeparator guibg=none
+]])
 
 -- Regular options
 vim.o.clipboard = 'unnamedplus'         -- Copy paste between vim and everything else (for WSL clipboard usage see https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl)
@@ -42,9 +49,10 @@ vim.wo.wrap = false                     -- Display long lines as a single line
 vim.wo.signcolumn = 'auto:1-4'          -- Allow for up to 4 items in the sign column
 
 -- Buffer options
-vim.bo.textwidth = 80                                 -- Set max length for lines
+-- vim.bo.textwidth = 80                                 -- Set max length for lines
 vim.cmd "set textwidth=80"                            -- The dang lua version above does not always work
-vim.bo.formatoptions = string.gsub(vim.bo.formatoptions,"cro","")
+vim.cmd "set formatoptions-=cro"
+-- vim.bo.formatoptions = string.gsub(vim.bo.formatoptions,"cro","")
 
 -- TODO: get this to write the message in another color
 vim.api.nvim_create_autocmd("FileChangedShellPost *", { command = "echo 'File changed on disk. Buffer reloaded.'", })
@@ -63,6 +71,9 @@ vim.api.nvim_create_autocmd("FileChangedShellPost *", { command = "echo 'File ch
 --             end)
 --     end,
 -- })
---
+
+local generalSettingsGroup = vim.api.nvim_create_augroup("General settings", { clear = true} )
+vim.api.nvim_create_autocmd("TextYankPost * ", {command = "silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 500})",group = generalSettingsGroup})
+
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"

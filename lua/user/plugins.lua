@@ -77,10 +77,10 @@ return require('packer').startup(function()
   -- General helper plugins
   use 'tpope/vim-surround'                              -- Easily surround text
   use 'tpope/vim-unimpaired'                            -- Easily surround text
-  use 'liuchengxu/vim-which-key'                        -- Convenience pop up guide
+  use 'folke/which-key.nvim'                            -- Shows mappings with helpful pop up
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
   -- use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
-  use 'ggandor/lightspeed.nvim'
+  -- use 'ggandor/lightspeed.nvim'
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
   use 'karb94/neoscroll.nvim'                           -- Smooth scroll with <C-d> and <C-u>
 
