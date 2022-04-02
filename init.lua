@@ -27,6 +27,7 @@ require('user.neoscroll')
 require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua
 require('user.cheat-settings')
 require('user.async-tasks')
+require('user.luasnip-settings')
 
 -- Configuration for my personal plugins that I wrote
 require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua

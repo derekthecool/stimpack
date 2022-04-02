@@ -8,6 +8,7 @@ u = {
   e = { "<cmd>AsyncTaskEdit<cr>", "LOCAL: edit tasks" },
   E = { "<cmd>AsyncTaskEdit!<cr>", "GLOBAL: edit tasks" },
   m = { "<cmd>AsyncTaskMacro<cr>", "View macros to help build config" },
+  [";"] = { "<cmd>AsyncTaskMacro<cr>", "View macros to help build config" },
 }
 })
 

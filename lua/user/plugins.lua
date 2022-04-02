@@ -71,7 +71,8 @@ return require('packer').startup(function()
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-  use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
+  -- Very nice but I don't need it always, so leave commented
+  -- use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
   use 'kyazdani42/nvim-web-devicons'
 
   -- General helper plugins
@@ -79,8 +80,7 @@ return require('packer').startup(function()
   use 'tpope/vim-unimpaired'                            -- Easily surround text
   use 'folke/which-key.nvim'                            -- Shows mappings with helpful pop up
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
-  -- use 'easymotion/vim-easymotion'                       -- Navigate similar to vimimum web browsing
-  -- use 'ggandor/lightspeed.nvim'
+  use 'ggandor/lightspeed.nvim'
   use 'mhinz/vim-startify'                              -- Really nice start menu for vim
   use 'karb94/neoscroll.nvim'                           -- Smooth scroll with <C-d> and <C-u>
 
@@ -97,7 +97,6 @@ return require('packer').startup(function()
   use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
-  use 'honza/vim-snippets'                              -- Snippet resource
   -- use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
   use 'mfussenegger/nvim-dap'
   -- use 'puremourning/vimspector'                         -- Code debugger for vim

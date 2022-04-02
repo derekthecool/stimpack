@@ -66,31 +66,6 @@ triggers_blacklist = {
 
 
 --[[
-" Map leader to which_key
-nnoremap <silent> <leader> :silent WhichKey ','<CR>
-vnoremap <silent> <leader> :silent WhichKeyVisual ','<CR>
-nnoremap <silent> <Space> :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <Space> :<c-u>WhichKeyVisual '<Space>'<CR>
-
-" Create map to add keys to
-let g:which_key_map_leader =  {}
-" Define a separator
-let g:which_key_sep = '→'
-
-" Not a fan of floating windows for this
-let g:which_key_use_floating_win = 0
-
-" Change the colors if you want
-highlight default link WhichKey          Operator
-highlight default link WhichKeySeperator DiffAdded
-highlight default link WhichKeyGroup     Identifier
-highlight default link WhichKeyDesc      Function
-
-" Hide status line
-autocmd! FileType which_key
-autocmd  FileType which_key set laststatus=0 noshowmode noruler
-  \| autocmd BufLeave <buffer> set laststatus=2 noshowmode ruler
-
 " f is for find, file, and FZF
 " Dependent Plugins:
 " Plug 'mhinz/vim-startify'
@@ -98,33 +73,6 @@ let g:which_key_map_leader.f = {
       \ 'name' : '+Find'              ,
       \ 'h' : [':Startify'            , 'Startify']           ,
       \ }
-
-" c is for cheat
-" Dependent Plugins:
-" 'RishabhRD/popfix'
-" 'RishabhRD/nvim-cheat.sh'
-nnoremap <leader>Kh :HowIn 
-let g:which_key_map_leader.K = {
-      \ 'name' : '+CheatSheet'               ,
-      \ 'c' : [':Cheat'                      , 'Cheat Sheet (cht.sh)'] ,
-      \ 'i' : [':FloatermNew cht.sh --shell' , 'cht.sh interactive']   ,
-      \ }
-
-" t is for terminal
-" Dependent Plugins:
-" Plug 'voldikss/vim-floaterm'
-let g:which_key_map_leader.t = {
-      \ 'name' : '+Floaterm'                             ,
-      \ ';' : [':FloatermNew --wintype=popup --height=6' , 'Terminal'] ,
-      \ 'd' : [':FloatermNew lazydocker'                 , 'Docker']   ,
-      \ 'f' : [':FloatermNew fzf'                        , 'Fzf']      ,
-      \ 'g' : [':FloatermNew lazygit'                    , 'LazyGit']  ,
-      \ 'n' : [':FloatermNew node'                       , 'Node']     ,
-      \ 'p' : [':FloatermNew python3'                    , 'Python']   ,
-      \ 'r' : [':FloatermNew ranger'                     , 'Ranger']   ,
-      \ 't' : [':FloatermToggle'                         , 'Toggle']   ,
-      \ 'v' : [':FloatermNew vifm'                       , 'Vifm']     ,
-      \ } 
 
 " " d is for debug
 " " Dependent Plugins:

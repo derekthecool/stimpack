@@ -40,7 +40,7 @@ local which_key_mapper = require('user.which-key-mapping')
 which_key_mapper({
 f = {
   name = "file", -- optional group name
-  f = { "<cmd>Telescope find_files<cr>", "Find File" }, -- create a binding with label
+  f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
 }
 })
 
