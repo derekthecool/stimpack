@@ -44,6 +44,8 @@ ls.add_snippets(nil, {
 
   vimwiki = {
     s("qy", fmt("```yaml\n{}\n```",i(1))),
+
+    -- s("mermaid-Flowchart", fmt("```mermaid\ngraph\n\nA[Start] --> B{{Do a thing}}\nB -- Yes --> C[OK]\nB -- No --> D[Bad]\nC --> E[End]\nD --> E[End]\n{}```"), i(0)),
   }
 
 },

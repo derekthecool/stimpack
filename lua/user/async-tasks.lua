@@ -4,11 +4,10 @@ u = {
   name = "Async task runner", -- optional group name
   i = { "<cmd>AsyncTask test<cr>", "LOCAL: test" },
   u = { "<cmd>AsyncTask run<cr>", "LOCAL: run" },
+  [";"] = { "<cmd>AsyncTask build<cr>", "LOCAL: build" },
   U = { "<cmd>AsyncTask file-run<cr>", "GLOBAL: run" },
   e = { "<cmd>AsyncTaskEdit<cr>", "LOCAL: edit tasks" },
   E = { "<cmd>AsyncTaskEdit!<cr>", "GLOBAL: edit tasks" },
   m = { "<cmd>AsyncTaskMacro<cr>", "View macros to help build config" },
-  [";"] = { "<cmd>AsyncTaskMacro<cr>", "View macros to help build config" },
 }
 })
-

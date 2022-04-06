@@ -39,16 +39,20 @@ f = {
 
 v = {
   name ="vimwiki",
-  D = {"<cmd>VimwikiDiaryNextDay<cr>", "Diary next day"},
-  d = {"<cmd>VimwikiDiaryPrevDay<cr>", "Diary previous day"},
-  h = {'<cmd>VimwikiSplitLink<cr>', 'Follow Link Horizontal'},
-  l = {'<cmd>VimwikiToggleListItem<cr>', 'Toggle list item'},
-  ["/"] = {'<cmd>VimwikiSearch<cr>', 'Vimwiki Search'},
-  j = {'<cmd>lnext<cr>', 'Next search result'},
-  k = {'<cmd>lprevious<cr>', 'Previous search result'},
-  o = {'<cmd>lopen<cr>', 'Open list of all search results'},
-  v = {'<cmd>VimwikiVSplitLink<cr>', 'Follow Link Verical'},
-  u = {'<cmd>VimwikiNextTask<cr>', 'Find Next Unfinished Task'},
-  T = {'<cmd>VimwikiTable<cr>', 'Vimwiki Table Insert'},
+  D = {
+    "<cmd>VimwikiDiaryNextDay<cr>",
+    "Diary next day"
+  },
+  d = {"<cmd>VimwikiDiaryPrevDay<cr>"   ,  "Diary previous day"},
+  h = {"<cmd>VimwikiSplitLink<cr>"      ,  "Follow Link Horizontal"},
+  l = {"<cmd>VimwikiToggleListItem<cr>" ,  "Toggle list item"},
+  ["/"] = {"<cmd>VimwikiSearch<cr>"     ,  "Vimwiki Search"},
+  j = {"<cmd>lnext<cr>"                 ,  "Next search result"},
+  k = {"<cmd>lprevious<cr>"             ,  "Previous search result"},
+  o = {"<cmd>lopen<cr>"                 ,  "Open list of all search results"},
+  v = {"<cmd>VimwikiVSplitLink<cr>"     ,  "Follow Link Verical"},
+  u = {"<cmd>VimwikiNextTask<cr>"       ,  "Find Next Unfinished Task"},
+  T = {"<cmd>VimwikiTable<cr>"          ,  "Vimwiki Table Insert"},
+  t = {":Tabularize /"                  ,  "Tabularize formatting"},
 }
 })
