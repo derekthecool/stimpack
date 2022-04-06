@@ -1,4 +1,3 @@
-local map = require('user.mapping-function')
 local neogit = require("neogit")
 
 neogit.setup {
@@ -6,7 +5,7 @@ neogit.setup {
   disable_hint = false,
   disable_context_highlighting = false,
   disable_commit_confirmation = false,
-  -- Neogit refreshes its internal state after specific events, which can be expensive depending on the repository size. 
+  -- Neogit refreshes its internal state after specific events, which can be expensive depending on the repository size.
   -- Disabling `auto_refresh` will make it so you have to manually refresh the status after you open it.
   auto_refresh = true,
   disable_builtin_notifications = false,
@@ -19,8 +18,8 @@ neogit.setup {
   -- customize displayed signs
   signs = {
     -- { CLOSED, OPENED }
-    section = { ">", "v" },
-    item = { ">", "v" },
+    section = { "→", "↓" },
+    item = { "→", "↓" },
     hunk = { "", "" },
   },
   integrations = {
@@ -61,5 +60,3 @@ neogit.setup {
     }
   }
 }
-
-map('n' , '<leader>gg' , "<cmd>lua require('neogit').open()<cr>" ,{noremap = true})

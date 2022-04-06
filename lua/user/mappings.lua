@@ -1,9 +1,12 @@
 local map = require('user.mapping-function')
 
 -- Ｎｏｒｍａｌ ｍａｐｓ
--- Map alt + n/e to navigate quickfix list
+-- These are really only possible with Plover steno so don't feel crazy if you
+-- can't type this with your keyboard
 map('n', '→', ':cnext<CR>')
 map('n', '←', ':cprev<CR>')
+map('n', '↓', ':cclose<CR>')
+map('n', '↑', ':copen<CR>')
 
 -- Ｉｎｓｅｒｔ ｍａｐｓ
 -- Control + j/k to select from popup menu

@@ -32,18 +32,6 @@ map("s", "<c-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>")
 
 vim.keymap.set("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/lua/user/luasnip-settings.lua<cr>")
 
--- vim.keymap.set("i", "<c-s>", function()
---   if ls.choice_active() then
---     ls.change_choice(1)
---   end
--- end)
---
--- vim.keymap.set("i","s", "<c-s>", function()
---   if ls.choice_active() then
---     ls.change_choice(1)
---   end
--- end)
-
 ls.add_snippets(nil, {
   lua = {
     s("ternary", {

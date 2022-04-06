@@ -51,29 +51,16 @@ vim.wo.signcolumn = 'auto:1-4'          -- Allow for up to 4 items in the sign c
 -- Buffer options
 -- vim.bo.textwidth = 80                                 -- Set max length for lines
 vim.cmd "set textwidth=80"                            -- The dang lua version above does not always work
-vim.cmd "set formatoptions-=cro"
--- vim.bo.formatoptions = string.gsub(vim.bo.formatoptions,"cro","")
-
--- TODO: get this to write the message in another color
-vim.api.nvim_create_autocmd("FileChangedShellPost *", { command = "echo 'File changed on disk. Buffer reloaded.'", })
-
--- -- Run auto commands using vim script since they are not supported in lua yet
--- vim.cmd([[
--- " Triger `autoread` when files changes on disk
--- "autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
--- ]])
-
--- vim.api.nvim_create_autocmd("FileType", {
---         pattern = "lua",
---         callback = function()
---             vim.schedule(function()
---                 print("Hey, we got called")
---             end)
---     end,
--- })
 
 local generalSettingsGroup = vim.api.nvim_create_augroup("General settings", { clear = true} )
+-- TODO: get this to write the message in another color
+-- " Triger `autoread` when files changes on disk
+-- "autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+vim.api.nvim_create_autocmd("FileChangedShellPost *", { command = "echo 'File changed on disk. Buffer reloaded.'", group = generalSettingsGroup})
 vim.api.nvim_create_autocmd("TextYankPost * ", {command = "silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 500})",group = generalSettingsGroup})
+-- This autocommand does not seem to work right on nonhelp files, not able to do macros
+-- vim.api.nvim_create_autocmd("FileType qf,help", {command = "nnoremap <silent> <buffer> q :close<cr>",group = generalSettingsGroup})
+vim.api.nvim_create_autocmd("BufWinEnter *", {command = ":set formatoptions-=cro",group = generalSettingsGroup})
 
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"

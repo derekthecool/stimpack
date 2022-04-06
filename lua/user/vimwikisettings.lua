@@ -41,26 +41,14 @@ v = {
   name ="vimwiki",
   D = {"<cmd>VimwikiDiaryNextDay<cr>", "Diary next day"},
   d = {"<cmd>VimwikiDiaryPrevDay<cr>", "Diary previous day"},
+  h = {'<cmd>VimwikiSplitLink<cr>', 'Follow Link Horizontal'},
+  l = {'<cmd>VimwikiToggleListItem<cr>', 'Toggle list item'},
+  ["/"] = {'<cmd>VimwikiSearch<cr>', 'Vimwiki Search'},
+  j = {'<cmd>lnext<cr>', 'Next search result'},
+  k = {'<cmd>lprevious<cr>', 'Previous search result'},
+  o = {'<cmd>lopen<cr>', 'Open list of all search results'},
+  v = {'<cmd>VimwikiVSplitLink<cr>', 'Follow Link Verical'},
+  u = {'<cmd>VimwikiNextTask<cr>', 'Find Next Unfinished Task'},
+  T = {'<cmd>VimwikiTable<cr>', 'Vimwiki Table Insert'},
 }
 })
-
-
--- " v is for vimwiki
--- " Dependent Plugins:
--- " Plug 'vimwiki/vimwiki'
--- " Plug 'godlygeek/tabular'
---  let g:which_key_map_leader.v = {
---       \ 'name' : '+Vimwiki'             ,
---       \ 'D' : [':VimwikiDiaryNextDay'   , 'Diary Next Day' ]                  ,
---       \ 'd' : [':VimwikiDiaryPrevDay'   , 'Diary Previous Day' ]              ,
---       \ 'h' : [':VimwikiSplitLink'      , 'Follow Link Horizontal' ]          ,
---       \ 'l' : [':VimwikiToggleListItem' , 'Toggle list item' ]                ,
---       \ '/' : [':VimwikiSearch'         , 'Vimwiki Search' ]                  ,
---       \ 'j' : [':lnext'                 , 'Next search result' ]              ,
---       \ 'k' : [':lprevious'             , 'Previous search result' ]          ,
---       \ 'o' : [':lopen'                 , 'Open list of all search results' ] ,
---       \ 'v' : [':VimwikiVSplitLink'     , 'Follow Link Verical']              ,
---       \ 'u' : [':VimwikiNextTask'       , 'Find Next Unfinished Task']        ,
---       \ 'T' : [':VimwikiTable'          , 'Vimwiki Table Insert']             ,
---       \ }
-

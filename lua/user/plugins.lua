@@ -12,6 +12,10 @@ if fn.empty(fn.glob(install_path)) > 0 then
   execute 'packadd packer.nvim'
 end
 
+-- Run PackerSync every time I edit and save this file
+-- local Packer_sync_group = vim.api.nvim_create_augroup("Packer_sync_group", { clear = true} )
+-- vim.api.nvim_create_autocmd("BufWritePost plugins.lua", { command = "source <afile> | PackerSync", group = Packer_sync_group})
+
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
@@ -40,7 +44,7 @@ return require('packer').startup(function()
   use 'tmux-plugins/vim-tmux-focus-events'
   use 'edkolev/tmuxline.vim'
 
-  -- Tree sitter, I can't get past the ABI errors https://github.com/nvim-treesitter/nvim-treesitter/issues/994
+  -- Treesitter
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use 'nvim-treesitter/nvim-treesitter-textobjects'
   use 'nvim-treesitter/playground'
@@ -77,7 +81,7 @@ return require('packer').startup(function()
 
   -- General helper plugins
   use 'tpope/vim-surround'                              -- Easily surround text
-  use 'tpope/vim-unimpaired'                            -- Easily surround text
+  use 'tpope/vim-unimpaired'                            -- Good mappings in pairs
   use 'folke/which-key.nvim'                            -- Shows mappings with helpful pop up
   use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
   use 'ggandor/lightspeed.nvim'
@@ -89,15 +93,12 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
-  -- use 'nvim-telescope/telescope-vimspector.nvim'
-  -- use 'fannheyward/telescope-coc.nvim'
 
   -- Coding helpers
   -- use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
   use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
-  -- use 'sheerun/vim-polyglot'                            -- Syntax highlight for many additional languages
   use 'mfussenegger/nvim-dap'
   -- use 'puremourning/vimspector'                         -- Code debugger for vim
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
@@ -142,12 +143,8 @@ return require('packer').startup(function()
     },
   }
   use 'airblade/vim-rooter'                             -- Sets directory to git root
-  -- use 'airblade/vim-gitgutter'                          -- Git gutter to see changes in files
-  -- use 'tpope/vim-fugitive'                              -- Git client helper
-  -- use 'tpope/vim-rhubarb'                               -- Git helper to open file in github
 
   -- Plugins can have post-install/update hooks
-
   -- using cmd = 'MarkdownPreview' just causes problems and plugin does not load properly
   use {
     'iamcco/markdown-preview.nvim',

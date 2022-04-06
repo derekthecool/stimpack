@@ -18,11 +18,9 @@ require('user.nvim-dap-settings')                    -- Debugging plugin
 require('user.vim_blob')
 require('user.lualine-settings')
 require('user.nvim-tree-settings')
-require('git.diffview')
-require('git.neogit')
-require('git.gitsigns-settings')
 require('user.cmp')
-require('user.lsp')
+require('user.lsp') -- A directory with its own init.lua
+require('git') -- A directory with its own init.lua
 require('user.neoscroll')
 require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua
 require('user.cheat-settings')

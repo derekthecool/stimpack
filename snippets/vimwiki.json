@@ -1,9 +1,0 @@
-{
-  "Markdown yaml code block": {
-    "prefix": "qy",
-    "body": [
-      "```yaml",
-      "$0",
-      "```"
-    ]
-}
