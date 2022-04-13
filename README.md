@@ -15,7 +15,7 @@ game, there is no self harm from using this repo. Also stim sounds like vim.
 * [X] Config the Comment.nvim plugin to not add comment above when using `gcap`
      The solution was easy, I should have been using `gcip` instead to not
      grab those extra lines.
-* [ ] Write my own lua snip snippet
+* [X] Write my own lua snip snippet
 
 ## Customizing
 

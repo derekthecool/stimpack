@@ -3,10 +3,15 @@ local map = require('user.mapping-function')
 -- Ｎｏｒｍａｌ ｍａｐｓ
 -- These are really only possible with Plover steno so don't feel crazy if you
 -- can't type this with your keyboard
+-- Quick fix maps
 map('n', '→', ':cnext<CR>')
 map('n', '←', ':cprev<CR>')
 map('n', '↓', ':cclose<CR>')
 map('n', '↑', ':copen<CR>')
+-- Buffer maps
+map('n', '⊃', ':bnext<cr>')  -- Use right mod
+map('n', '⊂', ':bprevious<cr>') -- Use left mod
+map('n', 'π', ':bdelete<cr>') -- Use down mod
 
 -- Ｉｎｓｅｒｔ ｍａｐｓ
 -- Control + j/k to select from popup menu
