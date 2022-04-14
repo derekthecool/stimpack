@@ -24,7 +24,7 @@ null_ls.setup({
 		formatting.prettier.with({ extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote" } }),
 		formatting.black.with({ extra_args = { "--fast" } }),
 		formatting.stylua,
-		formatting.prettier.with({filetypes =  {"markdown", "vimwiki"}}),
+		formatting.prettier.with({filetypes =  {"markdown", "vimwiki"}, extra_args = {"--embedded-language-formatting=off"}}),
 		diagnostics.write_good.with({filetypes =  {"markdown", "vimwiki", "gitcommit", "NeogitCommitMessage"}}), -- https://github.com/btford/write-good
 		diagnostics.gitlint.with({filetypes = {"gitcommit","NeogitCommitMessage"}}),      -- https://jorisroovers.com/gitlint/
 		hover.dictionary.with({filetypes =  {"markdown", "text", "vimwiki"}}),

@@ -41,6 +41,11 @@ f = {
   V = {"<cmd>lua require ('telescope.builtin').live_grep({layout_strategy='vertical'        , cwd='~/.config/nvim'                            , prompt_title='Live grep through vim config'})<CR>" , "Search vim config live grep"}, -- grep over vim config files
   d = {"<cmd>lua require ('telescope.builtin').find_files({cwd='~/'                         , prompt_title='Search WSL home directory'})<CR>" , "Find files"}, -- find files
   m = {"<cmd>lua require ('telescope.builtin').keymaps()<CR>"                               , "List key maps"}, -- list keymaps
-}
+},
+
+l = {
+  name = "LSP",
+  A = {"<cmd>lua require ('telescope.builtin').lsp_code_actions()<CR>", "Telescope: code action"},
+},
 })
 
