@@ -1,3 +1,9 @@
+vim.cmd[[
+let g:asyncrun_open = 6
+let g:asynctasks_term_pos = 'bottom'
+let g:asynctasks_extra_config = ['~/.config/nvim/other/tasks.ini']
+]]
+
 local which_key_mapper = require('user.which-key-mapping')
 which_key_mapper({
 u = {

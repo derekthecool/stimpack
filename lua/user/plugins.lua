@@ -108,6 +108,7 @@ return require('packer').startup(function()
   use 'skywind3000/asynctasks.vim'                      -- Async build resource
   use 'skywind3000/asyncrun.vim'
   use 'skywind3000/asyncrun.extra'
+  use 'stefandtw/quickfix-reflector.vim'
   use {'RishabhRD/nvim-cheat.sh',  -- Easy coding help from vim
        requires = {
         'RishabhRD/popfix'
