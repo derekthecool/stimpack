@@ -14,12 +14,12 @@ require('user.vimwikisettings')                      -- Vimwiki is a great perso
 require('user.which-key')                            -- Which-key is AMAZING to help you remember your mappings
 require('user.startify')                             -- Very good startup up application helper
 require('user.markdown-preview')                     -- Preview markdown in browser
-require('user.nvim-dap-settings')                    -- Debugging plugin
 require('user.vim_blob')
 require('user.lualine-settings')
 require('user.nvim-tree-settings')
 require('user.cmp')
 require('user.lsp') -- A directory with its own init.lua
+require('user.debugging') -- A directory with its own init.lua
 require('git') -- A directory with its own init.lua
 require('user.neoscroll')
 require('user.telescopesettings')                    -- Source lua file ~/.config/nvim/lua/telescopesettings.lua
@@ -41,4 +41,6 @@ silent! unmap f
 silent! unmap F
 silent! unmap t
 silent! unmap T
+
+packadd cfilter
 ]])

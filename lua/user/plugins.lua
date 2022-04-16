@@ -103,7 +103,7 @@ return require('packer').startup(function()
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
   use 'mfussenegger/nvim-dap'
-  -- use 'puremourning/vimspector'                         -- Code debugger for vim
+  use 'theHamsta/nvim-dap-virtual-text'
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
   use 'skywind3000/asynctasks.vim'                      -- Async build resource
   use 'skywind3000/asyncrun.vim'
