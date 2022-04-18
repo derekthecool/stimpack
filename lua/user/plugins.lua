@@ -105,8 +105,6 @@ return require('packer').startup(function()
   use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
-  use 'mfussenegger/nvim-dap'
-  use 'theHamsta/nvim-dap-virtual-text'
   use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
   use 'skywind3000/asynctasks.vim'                      -- Async build resource
   use 'skywind3000/asyncrun.vim'
@@ -119,6 +117,11 @@ return require('packer').startup(function()
      }
   -- TODO: not sure if this is needed
   -- use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
+
+  -- Debugging
+  use 'mfussenegger/nvim-dap'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'rcarriga/nvim-dap-ui'
 
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use {
