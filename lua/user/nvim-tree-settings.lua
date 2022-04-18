@@ -105,3 +105,31 @@ map("n" , "<leader>fe" , ":NvimTreeToggle<cr>")
 -- TODO: Derek Lomax
 -- change this to a lua autocommand ASAP 2022-03-27
 vim.cmd[[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]]
+
+-- TODO: Derek Lomax
+-- Find a way back to lua with this
+vim.cmd[[
+let g:nvim_tree_icons = {
+    \ 'default': "",
+    \ 'symlink': "",
+    \ 'git': {
+    \   'unstaged': "",
+    \   'staged': "✓",
+    \   'unmerged': "",
+    \   'renamed': "➜",
+    \   'untracked': "★",
+    \   'deleted': "",
+    \   'ignored': "◌"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "",
+    \   'arrow_closed': "",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+]]

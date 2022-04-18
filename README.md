@@ -8,14 +8,14 @@ game, there is no self harm from using this repo. Also stim sounds like vim.
 
 ## TODO
 
-* [ ] Get nvim.dap working for debugging:
-  * [ ] csharp on Windows
-  * [ ] c on Linux
-* [ ] Try the plugin alpha to replace startify
-* [X] Config the Comment.nvim plugin to not add comment above when using `gcap`
-     The solution was easy, I should have been using `gcip` instead to not
-     grab those extra lines.
-* [X] Write my own lua snip snippet
+- [o] Get nvim.dap working for debugging:
+  - [ ] csharp on Windows
+  - [x] c on Linux
+- [ ] Try the plugin alpha to replace startify
+- [x] Config the Comment.nvim plugin to not add comment above when using `gcap`
+      The solution was easy, I should have been using `gcip` instead to not
+      grab those extra lines.
+- [x] Write my own lua snip snippet
 
 ## Customizing
 
