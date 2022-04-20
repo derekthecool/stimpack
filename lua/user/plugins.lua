@@ -126,10 +126,7 @@ return require('packer').startup(function()
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+    requires = {'kyazdani42/nvim-web-devicons'}
   }
   use {                                                 -- Comment plugin made with lua
       'numToStr/Comment.nvim',

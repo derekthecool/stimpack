@@ -1,24 +1,25 @@
 local map = require('user.mapping-function')
 
-require('nvim-tree').setup {
+require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,
-  disable_netrw = true,
+  disable_netrw = false,
   hide_root_folder = false,
   hijack_cursor = false,
   hijack_netrw = true,
   hijack_unnamed_buffer_when_opening = false,
   ignore_buffer_on_setup = false,
   open_on_setup = false,
+  open_on_setup_file = false,
   open_on_tab = false,
   sort_by = "name",
   update_cwd = false,
   view = {
-    width = "50%",
+    width = 30,
     height = 30,
     side = "left",
     preserve_window_proportions = false,
-    number = true,
-    relativenumber = true,
+    number = false,
+    relativenumber = false,
     signcolumn = "yes",
     mappings = {
       custom_only = false,
@@ -27,6 +28,9 @@ require('nvim-tree').setup {
         { key = "h", action = "close_node" },
         { key = "v", action = "vsplit" },
       },
+    },
+    icons = {
+      webdev_colors = true,
     },
   },
   hijack_directories = {
@@ -67,6 +71,7 @@ require('nvim-tree').setup {
     timeout = 400,
   },
   actions = {
+    use_system_clipboard = true,
     change_dir = {
       enable = true,
       global = false,
@@ -94,7 +99,10 @@ require('nvim-tree').setup {
     types = {
       all = false,
       config = false,
+      copy_paste = false,
+      diagnostics = false,
       git = false,
+      profile = false,
     },
   },
 } -- END_DEFAULT_OPTS
