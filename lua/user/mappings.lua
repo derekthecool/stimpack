@@ -4,10 +4,13 @@ local map = require('user.mapping-function')
 -- These are really only possible with Plover steno so don't feel crazy if you
 -- can't type this with your keyboard
 -- Quick fix maps
-map('n', '→', ':cnext<CR>')
-map('n', '←', ':cprev<CR>')
-map('n', '↓', ':cclose<CR>')
-map('n', '↑', ':copen<CR>')
+map('n' , '→'  , ':cnext<CR>')
+map('n' , '→→' , ':clast<CR>')
+map('n' , '←'  , ':cprev<CR>')
+map('n' , '←←' , ':cfirst<CR>')
+map('n' , '↓'  , ':cclose<CR>')
+map('n' , '↑'  , ':copen<CR>')
+
 -- Buffer maps
 map('n', '⊃', ':bnext<cr>')  -- Use right mod
 map('n', '⊂', ':bprevious<cr>') -- Use left mod
@@ -17,8 +20,6 @@ map('n', 'π', ':bdelete<cr>') -- Use down mod
 -- Control + j/k to select from popup menu
 map('i', '<c-j>', '<C-n>')
 map('i', '<c-k>', '<C-p>')
---Easy add semicolon to end of the line
-map('i', ';;', '<C-o>A;')
 
 -- Ｖｉｓｕａｌ ｍｏｄｅ
 -- Better command to shift text in visual mode, text it reselected
