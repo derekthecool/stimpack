@@ -1,5 +1,5 @@
 -- takes an optional argument for path, default is './.vim/projector.json'
-require'projector.config_utils'.load_project_configurations()
+require'projector.config_utils'.load_project_configurations('./projector.json')
 require'projector.config_utils'.load_dap_configurations()
 
 local map = require('user.mapping-function')
