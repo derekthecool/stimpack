@@ -1,7 +1,8 @@
 local map = require('user.mapping-function')
 
-map("n" , "<leader>dd" , "<cmd>lua require('dap').continue()<CR>")
-map("n" , "_"          , "<cmd>lua require('dap').continue()<CR>")
+-- Use mappings from nvim projector for continue
+-- map("n" , "<leader>dd" , "<cmd>lua require('dap').continue()<CR>")
+-- map("n" , "_"          , "<cmd>lua require('dap').continue()<CR>")
 
 map("n" , "<leader>do" , "<cmd>lua require('dap').step_over()<CR>")
 map("n" , "≤"          , "<cmd>lua require('dap').step_over()<CR>")
@@ -59,12 +60,13 @@ dap.configurations.cpp = {
     name = "Launch file",
     type = "cppdbg",
     request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
+    program = "${workspaceFolder}/debug/test/FA_test",
+    -- program = function()
+    --   return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    -- end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
-    args = {"--command","FArepack","+RESP:STINF,423433,358152100935466,,,,19,311,480,4003,0FAE90C,,0,0,100,20201216191336-20,0003$"},
+    args = {"--command","FAgenerateLWT","ABCDEF"},
   },
 }
 dap.configurations.c = dap.configurations.cpp

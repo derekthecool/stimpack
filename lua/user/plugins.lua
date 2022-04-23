@@ -79,11 +79,12 @@ return require('packer').startup(function()
   use 'chriskempson/base16-vim'                         -- Visual plugins
   use {
     'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
   }
+  use 'kyazdani42/nvim-web-devicons'
+  use 'rcarriga/nvim-notify'
   -- Very nice but I don't need it always, so leave commented
   -- use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
-  use 'kyazdani42/nvim-web-devicons'
 
   -- General helper plugins
   use 'tpope/vim-surround'                              -- Easily surround text
@@ -122,6 +123,7 @@ return require('packer').startup(function()
   use 'mfussenegger/nvim-dap'
   use 'theHamsta/nvim-dap-virtual-text'
   use 'rcarriga/nvim-dap-ui'
+  use 'kndndrj/nvim-dap-projector'
 
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use {

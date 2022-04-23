@@ -1,10 +1,11 @@
+-- NOTE: colorscheme needs to be loaded before lualine
+-- https://github.com/nvim-lualine/lualine.nvim/issues/632
 require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-		-- TODO: look at a better separator
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
     disabled_filetypes = {},
     always_divide_middle = true,
     globalstatus = false,

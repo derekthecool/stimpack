@@ -16,6 +16,7 @@ require('user.startify')                             -- Very good startup up app
 require('user.markdown-preview')                     -- Preview markdown in browser
 require('user.vim_blob')
 require('user.lualine-settings')
+require('user.nvim-notify-settings')
 require('user.nvim-tree-settings')
 require('user.cmp')
 require('user.lsp') -- A directory with its own init.lua
