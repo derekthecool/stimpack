@@ -71,3 +71,9 @@ dap.configurations.cpp = {
   },
 }
 dap.configurations.c = dap.configurations.cpp
+
+dap.adapters.coreclr = {
+  type = 'executable',
+  command = 'C:\\Users\\Derek Lomax\\scoop\\apps\\netcoredbg\\2.0.0-895\\netcoredbg.exe',
+  args = {'--interpreter=vscode'}
+}
