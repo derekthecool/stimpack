@@ -100,6 +100,7 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
+  use 'nvim-telescope/telescope-dap.nvim'
 
   -- Coding helpers
   -- use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
@@ -123,7 +124,7 @@ return require('packer').startup(function()
   use 'mfussenegger/nvim-dap'
   use 'theHamsta/nvim-dap-virtual-text'
   use 'rcarriga/nvim-dap-ui'
-  use 'kndndrj/nvim-dap-projector'
+  use 'kndndrj/nvim-projector'
 
   use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
   use {

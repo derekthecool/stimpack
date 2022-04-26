@@ -1,31 +1,32 @@
 local map = require('user.mapping-function')
 
--- Use mappings from nvim projector for continue
--- map("n" , "<leader>dd" , "<cmd>lua require('dap').continue()<CR>")
--- map("n" , "_"          , "<cmd>lua require('dap').continue()<CR>")
+require('telescope').load_extension('dap')
 
-map("n" , "<leader>do" , "<cmd>lua require('dap').step_over()<CR>")
+local which_key_mapper = require('user.which-key-mapping')
+which_key_mapper({
+d = {
+  name = "Debug",
+  o = { "<cmd>lua require('dap').step_over()<CR>", "Step over (≤)" },
+  i = { "<cmd>lua require('dap').step_into()<CR>", "Step into (≥)" },
+  O = { "<cmd>lua require('dap').step_out()<CR>", "Step out (µ)" },
+  b = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint (__)" },
+  B = { "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", "Conditional breakpoint (___)" },
+  m = { "<cmd>lua require('dap').set_breakpoint(nil , nil , vim.fn.input('Log point message: '))<CR>", "Logging breakpoint (____)" },
+  r = { "<cmd>lua require('dap').repl.open()<CR>", "Open repl" },
+  R = { "<cmd>lua require('dap').run_last()<CR>", "Run last" },
+  q = { "<cmd>lua require('dap').terminate()<CR>", "Exit debugging" },
+  l = { "<cmd>sp ~/.cache/nvim/dap.log<CR>", "Open dap log" },
+},
+}
+)
+
 map("n" , "≤"          , "<cmd>lua require('dap').step_over()<CR>")
-
-map("n" , "<leader>di" , "<cmd>lua require('dap').step_into()<CR>")
 map("n" , "≥"          , "<cmd>lua require('dap').step_into()<CR>")
-
-map("n" , "<leader>dO" , "<cmd>lua require('dap').step_out()<CR>")
 map("n" , "µ"          , "<cmd>lua require('dap').step_out()<CR>")
-
-map("n" , "<leader>db" , "<cmd>lua require('dap').toggle_breakpoint()<CR>")
 map("n" , "__"         , "<cmd>lua require('dap').toggle_breakpoint()<CR>")
-
-map("n" , "<leader>dB" , "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
 map("n" , "___"        , "<cmd>lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
-
-map("n" , "<leader>dm" , "<cmd>lua require('dap').set_breakpoint(nil , nil , vim.fn.input('Log point message: '))<CR>")
 map("n" , "____"       , "<cmd>lua require('dap').set_breakpoint(nil , nil , vim.fn.input('Log point message: '))<CR>")
 
-map("n" , "<leader>dr" , "<cmd>lua require('dap').repl.open()<CR>")
-map("n" , "<leader>dR" , "<cmd>lua require('dap').run_last()<CR>")
-
-map("n" , "<leader>dl" , "<cmd>sp ~/.cache/nvim/dap.log<CR>")
 -- lua require('dap').set_log_level('TRACE')
 
         --[[ Available log levels:
