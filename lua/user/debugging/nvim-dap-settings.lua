@@ -74,6 +74,17 @@ dap.configurations.c = dap.configurations.cpp
 
 dap.adapters.coreclr = {
   type = 'executable',
-  command = 'C:\\Users\\Derek Lomax\\scoop\\apps\\netcoredbg\\2.0.0-895\\netcoredbg.exe',
+  command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
   args = {'--interpreter=vscode'}
+}
+
+dap.configurations.cs = {
+  {
+    type = "coreclr",
+    name = "netcoredbg",
+    request = "launch",
+    program = "${workspaceFolder}/bin/Debug/net6.0/test.dll",
+    -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
+    cwd = '${workspaceFolder}',
+  },
 }
