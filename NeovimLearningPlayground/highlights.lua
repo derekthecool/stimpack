@@ -6,5 +6,4 @@ print(cmd)
 
 vim.api.nvim_command(cmd)
 
-vim.api.nvim_buf_add_highlight(0,1, 'MyCoolHighlight', 7, 0,-1)
-
+vim.api.nvim_buf_add_highlight(0,1, 'MyCoolHighlight', 2, 0,-1)

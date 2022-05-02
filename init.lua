@@ -27,7 +27,8 @@ require('user.telescopesettings')                    -- Source lua file ~/.confi
 require('user.cheat-settings')
 require('user.async-tasks')
 require('user.luasnip-settings')
-require("user.lightspeed-settings")
+require('user.lightspeed-settings')
+require('user.nvim-luapad-settings')
 
 -- Configuration for my personal plugins that I wrote
 require('user.dereks-plugins-config')                -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
