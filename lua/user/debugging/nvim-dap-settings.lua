@@ -7,6 +7,7 @@ which_key_mapper({
 d = {
   name = "Debug",
   o = { "<cmd>lua require('dap').step_over()<CR>", "Step over (≤)" },
+  e = { "<cmd>lua require('dapui').eval()<CR>", "Eval variable under cursor" },
   i = { "<cmd>lua require('dap').step_into()<CR>", "Step into (≥)" },
   O = { "<cmd>lua require('dap').step_out()<CR>", "Step out (µ)" },
   b = { "<cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint (__)" },
