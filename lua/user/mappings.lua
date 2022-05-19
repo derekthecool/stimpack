@@ -26,11 +26,10 @@ map('i', '<c-k>', '<C-p>')
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
--- Eazy saving with zz
--- Press zz or <C-z> in normal mode to save
--- Press zz or <C-z> in insert mode to save, exit insert, and go to start of line
-map('n' , 'zz'    , ':update<CR>'            )
-map('i' , 'zz'    , '<C-o>:update<CR><ESC>^' )
+-- Eazy saving with zzzz
+-- Press zzz
+map('n' , 'zzz'    , ':update<CR>'            )
+map('i' , 'zzz'    , '<C-o>:update<CR><ESC>^' )
 
 -- -- Permanent Very Magic Mode - Helps To Get PCRE Type Regex
 map('n' , '/' , '/\\v' )
