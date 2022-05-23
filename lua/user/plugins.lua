@@ -5,10 +5,10 @@
 local execute = vim.api.nvim_command
 local fn = vim.fn
 
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
   execute 'packadd packer.nvim'
 end
 
@@ -24,7 +24,7 @@ return require('packer').startup(function()
   -- Use the local development version if it is found
   -- Else pull it from GitHub
   local HOME = os.getenv('HOME')
-  if HOME ~= nil and io.open(HOME .. '/dvp.nvim/README.md','r') ~= nil then
+  if HOME ~= nil and io.open(HOME .. '/dvp.nvim/README.md', 'r') ~= nil then
     use '~/dvp.nvim'
   else
     use 'derekthecool/dvp.nvim'
@@ -62,7 +62,7 @@ return require('packer').startup(function()
   -- Code action
   use 'kosayoda/nvim-lightbulb'
 
-  use {'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu'}
+  use { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' }
 
 
   -- snippets
@@ -76,7 +76,7 @@ return require('packer').startup(function()
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
 
   -- Colors and themes
-  use 'chriskempson/base16-vim'                         -- Visual plugins
+  use 'chriskempson/base16-vim' -- Visual plugins
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true },
@@ -87,36 +87,36 @@ return require('packer').startup(function()
   -- use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
 
   -- General helper plugins
-  use 'tpope/vim-surround'                              -- Easily surround text
-  use 'tpope/vim-unimpaired'                            -- Good mappings in pairs
-  use 'folke/which-key.nvim'                            -- Shows mappings with helpful pop up
-  use 'voldikss/vim-floaterm'                           -- Awesome floating terminal in vim
+  use 'tpope/vim-surround' -- Easily surround text
+  use 'tpope/vim-unimpaired' -- Good mappings in pairs
+  use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
+  use 'voldikss/vim-floaterm' -- Awesome floating terminal in vim
   use 'ggandor/lightspeed.nvim'
-  use 'mhinz/vim-startify'                              -- Really nice start menu for vim
-  use 'karb94/neoscroll.nvim'                           -- Smooth scroll with <C-d> and <C-u>
+  use 'mhinz/vim-startify' -- Really nice start menu for vim
+  use 'karb94/neoscroll.nvim' -- Smooth scroll with <C-d> and <C-u>
 
   -- Telescope Setup
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
   use 'nvim-telescope/telescope-dap.nvim'
 
   -- Coding helpers
   -- use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
-  use 'rafcamlet/nvim-luapad'                          -- Real time nvim lua scratch pad
+  use 'rafcamlet/nvim-luapad' -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
-  use {'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', }                  -- Bash LSP extension
-  use 'szw/vim-maximizer'                               -- Maximize a vim pane, to be used with vimspector
-  use 'skywind3000/asynctasks.vim'                      -- Async build resource
+  use { 'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', } -- Bash LSP extension
+  use 'szw/vim-maximizer' -- Maximize a vim pane, to be used with vimspector
+  use 'skywind3000/asynctasks.vim' -- Async build resource
   use 'skywind3000/asyncrun.vim'
   use 'skywind3000/asyncrun.extra'
   use 'stefandtw/quickfix-reflector.vim'
-  use {'RishabhRD/nvim-cheat.sh',  -- Easy coding help from vim
-       requires = {
-        'RishabhRD/popfix'
-       },
-     }
+  use { 'RishabhRD/nvim-cheat.sh', -- Easy coding help from vim
+    requires = {
+      'RishabhRD/popfix'
+    },
+  }
   -- TODO: not sure if this is needed
   -- use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
 
@@ -126,16 +126,16 @@ return require('packer').startup(function()
   use 'rcarriga/nvim-dap-ui'
   use 'kndndrj/nvim-projector'
 
-  use 'AndrewRadev/linediff.vim'                        -- Diff items from the same file
+  use 'AndrewRadev/linediff.vim' -- Diff items from the same file
   use {
     'kyazdani42/nvim-tree.lua',
-    requires = {'kyazdani42/nvim-web-devicons'}
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
-  use {                                                 -- Comment plugin made with lua
-      'numToStr/Comment.nvim',
-      config = function()
-          require('Comment').setup()
-      end
+  use { -- Comment plugin made with lua
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+    end
   }
 
   -- Git helpers
@@ -152,7 +152,7 @@ return require('packer').startup(function()
       'nvim-lua/plenary.nvim'
     },
   }
-  use 'airblade/vim-rooter'                             -- Sets directory to git root
+  use 'airblade/vim-rooter' -- Sets directory to git root
 
   -- Plugins can have post-install/update hooks
   -- using cmd = 'MarkdownPreview' just causes problems and plugin does not load properly
