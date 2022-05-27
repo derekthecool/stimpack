@@ -4,11 +4,19 @@ require('git.gitsigns-settings')
 
 local which_key_mapper = require('user.which-key-mapping')
 which_key_mapper({
-g = {
-  name = "git", -- optional group name
+  g = {
+    name = "git", -- optional group name
     g = {
       "<cmd>lua require('neogit').open()<cr>",
       "Neogit"
+    },
+    G = {
+      "<cmd>Gitsigns toggle_deleted<cr>",
+      "Gitsigns toggle display of deleted lines"
+    },
+    B = {
+      "<cmd>Gitsigns toggle_current_line_blame<cr>",
+      "Gitsigns toggle display of deleted lines"
     },
     j = {
       "<cmd>lua require 'gitsigns'.next_hunk()<cr>",
@@ -66,5 +74,5 @@ g = {
       "<cmd>Gitsigns diffthis HEAD<cr>",
       "Diff",
     },
-}
+  }
 })
