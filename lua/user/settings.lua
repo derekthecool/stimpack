@@ -5,13 +5,13 @@
 
 -- Global options
 vim.g.mapleader = ',' -- Map leader to comma instead of space since switching to stenography. Spacing is done after each word so comma is better for me now.
-vim.g.noswapfile = true -- Do not create swp files
 vim.g.nobackup = true -- Recommended by CoC
 vim.g.nowritebackup = true -- Recommended by CoC
 vim.g.showmatch = true -- Show matching () [] {}
 -- vim.g.lazyredraw = true                 -- Don't redraw screen during macros
 -- vim.g.laststatus=3
 vim.cmd([[
+" set noswapfile
 set lazyredraw
 set laststatus=3
 highlight WinSeparator guibg=none
@@ -40,7 +40,9 @@ vim.o.syntax = 'enable' -- Enable syntax highlighting
 vim.o.tabstop = 2 -- Insert 2 spaces for a tab
 vim.o.timeoutlen = 500 -- Faster than default 1000 ms
 vim.o.updatetime = 300 -- Faster completion
-vim.o.termguicolors = true                       -- Needed for better color display
+vim.o.termguicolors = true -- Needed for better color display
+vim.o.swapfile = false -- Do not create swp files
+vim.bo.swapfile = false -- Do not create swp files
 
 -- Window options
 vim.wo.number = true -- Show line numbers
