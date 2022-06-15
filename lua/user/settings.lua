@@ -72,16 +72,18 @@ vim.api.nvim_create_autocmd("BufWinEnter *", { command = ":set formatoptions-=cr
 vim.api.nvim_create_autocmd("BufWritePre *.c *.h",
   { command = ":lua vim.lsp.buf.format { async = true }", group = generalSettingsGroup })
 -- Map xaml and axaml to have xml syntax
-vim.api.nvim_create_autocmd("BufNewFile *.xaml", { command = ":set ft=xml", group = generalSettingsGroup })
-vim.api.nvim_create_autocmd("BufRead *.xaml", { command = ":set ft=xml", group = generalSettingsGroup })
-vim.api.nvim_create_autocmd("BufNewFile *.axaml", { command = ":set ft=xml", group = generalSettingsGroup })
-vim.api.nvim_create_autocmd("BufRead *.axaml", { command = ":set ft=xml", group = generalSettingsGroup })
--- vim.api.nvim_create_autocmd({ "BufNewFile,BufRead" },
---   {
---   pattern = "*.{xaml,axaml}",
---   command = ":set ft=xml",
---   group = generalSettingsGroup
--- })
+vim.cmd [[
+autocmd BufNewFile,BufRead *.xaml,*.axaml set filetype=xml
+]]
+-- TODO: find why this command it files to set ft
+-- vim.api.nvim_create_autocmd("BufNewFile,BufRead *.xaml,*.axaml",
+--   { command = ":set filetype=xml", group = generalSettingsGroup })
+
+-- TODO: find why these four command set nearly all file types to xml
+-- vim.api.nvim_create_autocmd("BufNewFile *.xaml", { command = ":setfiletype xml", group = generalSettingsGroup })
+-- vim.api.nvim_create_autocmd("BufRead *.xaml", { command = ":setfiletype xml", group = generalSettingsGroup })
+-- vim.api.nvim_create_autocmd("BufNewFile *.axaml", { command = ":setfiletype xml", group = generalSettingsGroup })
+-- vim.api.nvim_create_autocmd("BufRead *.axaml", { command = ":setfiletype xml", group = generalSettingsGroup })
 
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"
