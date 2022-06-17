@@ -89,8 +89,9 @@ autocmd BufNewFile,BufRead *.xaml,*.axaml set filetype=xml
 vim.cmd "set iskeyword+=-"
 
 -- Set items specific to OS
-if vim.fn.has('Linux') == 1 then
+-- Use this command to check OS lua print(vim.loop.os_uname().sysname)
+if vim.loop.os_uname().sysname == ('Linux') then
 
-elseif vim.fn.has('Windows_NT') == 1 then
+elseif vim.loop.os_uname().sysname == ('Windows_NT') then
   vim.o.shell = 'pwsh'
 end
