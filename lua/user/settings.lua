@@ -87,3 +87,10 @@ autocmd BufNewFile,BufRead *.xaml,*.axaml set filetype=xml
 
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"
+
+-- Set items specific to OS
+if vim.fn.has('Linux') == 1 then
+
+elseif vim.fn.has('Windows_NT') == 1 then
+  vim.o.shell = 'pwsh'
+end
