@@ -1,5 +1,5 @@
 require('neoscroll').setup({
-  mappings = { '<C-u>', '<C-d>' },
+  -- mappings = { '<C-u>', '<C-d>' },
   hide_cursor = true, -- Hide cursor while scrolling
   stop_eof = true, -- Stop at <EOF> when scrolling downwards
   use_local_scrolloff = true, -- Use the local scope of scrolloff instead of the global scope
@@ -10,3 +10,13 @@ require('neoscroll').setup({
   post_hook = nil, -- Function to run after the scrolling animation ends
   performance_mode = false, -- Disable "Performance Mode" on all buffers.
 })
+
+local t = {}
+-- Syntax: t[keys] = {function, {function arguments}}
+local delay = 350
+local easing_function = nil
+local scroll_amount = 0.4
+t['<C-u>'] = { 'scroll', { scroll_amount * -1, 'true', delay, easing_function } }
+t['<C-d>'] = { 'scroll', { scroll_amount, 'true', delay, easing_function } }
+
+require('neoscroll.config').set_mappings(t)
