@@ -21,10 +21,9 @@ return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   -- My plugins
-  -- Use the local development version if it is found
+  -- Use the local Linux development version if it is found
   -- Else pull it from GitHub
-  local HOME = os.getenv('HOME')
-  if HOME ~= nil and io.open(HOME .. '/dvp.nvim/README.md', 'r') ~= nil then
+  if OS.OS == 'Linux' and io.open(OS.home .. '/dvp.nvim/README.md', 'r') ~= nil then
     use '~/dvp.nvim'
   else
     use 'derekthecool/dvp.nvim'

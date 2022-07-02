@@ -1,6 +1,7 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
 -- Lua basic configuration
+require('user.get-OS')
 require('user.plugins') -- Source lua file ~/.config/nvim/lua/user/plugins.lua
 require('user.settings') -- Source lua file ~/.config/nvim/lua/user/settings.lua
 require('user.disable-vim-builtins') -- Source lua file ~/.config/nvim/lua/user/disable-vim-builtins.lua

@@ -5,8 +5,8 @@
 
 -- Global options
 vim.g.mapleader = ',' -- Map leader to comma instead of space since switching to stenography. Spacing is done after each word so comma is better for me now.
-vim.g.nobackup = true -- Recommended by CoC
-vim.g.nowritebackup = true -- Recommended by CoC
+vim.g.nobackup = true
+vim.g.nowritebackup = true
 vim.g.showmatch = true -- Show matching () [] {}
 -- vim.g.lazyredraw = true                 -- Don't redraw screen during macros
 -- vim.g.laststatus=3
@@ -42,6 +42,7 @@ vim.o.timeoutlen = 500 -- Faster than default 1000 ms
 vim.o.updatetime = 300 -- Faster completion
 vim.o.termguicolors = true -- Needed for better color display
 vim.o.swapfile = false -- Do not create swp files
+vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:'
 vim.bo.swapfile = false -- Do not create swp files
 
 -- Window options
@@ -50,6 +51,7 @@ vim.wo.colorcolumn = "80" -- Display color column at 80 characters
 vim.wo.relativenumber = true -- Show relative line numbers
 vim.wo.wrap = false -- Display long lines as a single line
 vim.wo.signcolumn = 'auto:1-4' -- Allow for up to 4 items in the sign column
+vim.wo.foldmethod = 'marker'
 
 -- Buffer options
 -- vim.bo.textwidth = 80                                 -- Set max length for lines
@@ -90,8 +92,6 @@ vim.cmd "set iskeyword+=-"
 
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)
-if vim.loop.os_uname().sysname == ('Linux') then
-
-elseif vim.loop.os_uname().sysname == ('Windows_NT') then
+if OS.OS == 'Windows' then
   vim.o.shell = 'pwsh'
 end
