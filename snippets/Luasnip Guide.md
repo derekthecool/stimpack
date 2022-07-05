@@ -1,5 +1,26 @@
 # Luasnip Guide
 
+## Luasnip Todo
+
+- Set key maps for all choice nodes
+- Set highlighting and virtual text in config
+- Research all of the TM\_\* values
+  - SELECTION
+  - TM_SELECTED_TEXT
+  - TM_CURRENT_LINE
+  - TM_CURRENT_WORD
+  - TM_LINE_INDEX
+  - TM_LINE_NUMBER
+  - TM_FILENAME
+  - TM_DIRECTORY
+  - TM_FILEPATH
+- Look at telescope pickers
+
+More advanced snippets to create
+
+- Tree sitter to find all local variables and put them into the choice nodes
+- Make amazing printf where each of the `%` are matched to an arg of the right type
+
 ## Helpful Links
 
 - [Luasnip GitHub](https://github.com/L3MON4D3/LuaSnip)

@@ -51,6 +51,23 @@ local snippets = {
   ),
   -- }}}
 
+  s(
+    {
+      trig = "TM",
+      descr = "Test all TM values",
+    },
+
+    f(function(_, snip)
+      return " snip.env.TM_FILENAME = " .. snip.env.TM_FILENAME
+          .. " snip.env.TM_DIRECTORY = " .. snip.env.TM_DIRECTORY
+          .. " snip.env.TM_LINE_INDEX = " .. snip.env.TM_LINE_INDEX
+          .. " snip.env.TM_FILEPATH = " .. snip.env.TM_FILEPATH
+          .. " snip.env.TM_LINE_NUMBER = " .. snip.env.TM_LINE_NUMBER
+          .. " snip.env.TM_CURRENT_WORD = " .. snip.env.TM_CURRENT_WORD
+    end, {})
+  ),
+
+
 }
 
 local autosnippets = {

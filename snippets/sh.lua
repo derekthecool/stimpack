@@ -93,7 +93,7 @@ return snippets, autosnippets
 --   }
 --
 --   parseBG() {
---     case \$1 in 
+--     case \$1 in
 --       black) background=\$blackBackground ;;
 --       red) background=\$redBackground ;;
 --       green) background=\$greenBackground ;;

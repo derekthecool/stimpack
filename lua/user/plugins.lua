@@ -29,6 +29,9 @@ return require('packer').startup(function()
     use 'derekthecool/dvp.nvim'
   end
 
+  -- Help neovim start faster and see what takes the most time to source
+  use 'lewis6991/impatient.nvim'
+
   -- Vimwiki
   use 'vimwiki/vimwiki'
   use 'mattn/calendar-vim'
@@ -91,7 +94,14 @@ return require('packer').startup(function()
   use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
   use 'voldikss/vim-floaterm' -- Awesome floating terminal in vim
   use 'ggandor/lightspeed.nvim'
-  use 'mhinz/vim-startify' -- Really nice start menu for vim
+  -- use 'mhinz/vim-startify' -- Really nice start menu for vim
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function()
+      require 'alpha'.setup(require 'alpha.themes.startify'.config)
+    end
+  }
   use 'karb94/neoscroll.nvim' -- Smooth scroll with <C-d> and <C-u>
 
   -- Telescope Setup

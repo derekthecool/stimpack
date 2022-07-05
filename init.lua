@@ -1,5 +1,8 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
+-- Start up profiler that shows what takes the most time and helps speed up
+require('impatient').enable_profile()
+
 -- Lua basic configuration
 require('user.get-OS')
 require('user.plugins') -- Source lua file ~/.config/nvim/lua/user/plugins.lua
@@ -13,7 +16,7 @@ require('user.vim-pandoc-markdown-preview-settings') -- Source lua file ~/.confi
 require('user.treesitter') -- Source lua file ~/.config/nvim/lua/treesitter.lua
 require('user.vimwikisettings') -- Vimwiki is a great personal wiki and diary
 require('user.which-key') -- Which-key is AMAZING to help you remember your mappings
-require('user.startify') -- Very good startup up application helper
+-- require('user.startify') -- Very good startup up application helper
 require('user.markdown-preview') -- Preview markdown in browser
 require('user.vim_blob')
 require('user.nvim-notify-settings')
