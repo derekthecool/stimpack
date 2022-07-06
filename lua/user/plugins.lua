@@ -1,26 +1,21 @@
--- Using packer.nvim to mantage plugins
+-- Packer plugin manager
 -- https://github.com/wbthomason/packer.nvim
 
--- Bootstrap function to install packer.nvim if it does not exist
+-- Bootstrap function to install packer.nvim if it does not exist {{{
 local execute = vim.api.nvim_command
 local fn = vim.fn
-
 local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-
 if fn.empty(fn.glob(install_path)) > 0 then
   fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
   execute 'packadd packer.nvim'
 end
-
--- Run PackerSync every time I edit and save this file
--- local Packer_sync_group = vim.api.nvim_create_augroup("Packer_sync_group", { clear = true} )
--- vim.api.nvim_create_autocmd("BufWritePost plugins.lua", { command = "source <afile> | PackerSync", group = Packer_sync_group})
+-- }}}
 
 return require('packer').startup(function()
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
 
-  -- My plugins
+  -- My plugins {{{
   -- Use the local Linux development version if it is found
   -- Else pull it from GitHub
   if OS.OS == 'Linux' and io.open(OS.home .. '/dvp.nvim/README.md', 'r') ~= nil then
@@ -28,31 +23,30 @@ return require('packer').startup(function()
   else
     use 'derekthecool/dvp.nvim'
   end
+  -- }}}
 
   -- Help neovim start faster and see what takes the most time to source
   use 'lewis6991/impatient.nvim'
 
-  -- Vimwiki
+  -- Vimwiki {{{
   use 'vimwiki/vimwiki'
   use 'mattn/calendar-vim'
   use 'godlygeek/tabular'
   use 'plasticboy/vim-markdown'
+  -- }}}
 
-  -- Pandoc / Latex
-  use 'conornewton/vim-pandoc-markdown-preview'
-
-  -- Tmux
+  -- Tmux {{{
+  -- TODO: replace with lua counterpart
+  -- https://github.com/numToStr/Navigator.nvim
+  -- https://github.com/aserowy/tmux.nvim
   use 'christoomey/vim-tmux-navigator'
+
   use 'tmux-plugins/vim-tmux-focus-events'
-  use 'edkolev/tmuxline.vim'
+  -- }}}
 
-  -- Treesitter
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use 'nvim-treesitter/nvim-treesitter-textobjects'
-  use 'nvim-treesitter/playground'
+  -- LSP setup {{{
 
-  -- LSP setup
-  -- cmp plugins
+  -- cmp plugins {{{
   use "hrsh7th/nvim-cmp" -- The completion plugin
   use "hrsh7th/cmp-buffer" -- buffer completions
   use "hrsh7th/cmp-path" -- path completions
@@ -60,24 +54,30 @@ return require('packer').startup(function()
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
   use "hrsh7th/cmp-nvim-lsp"
   use "hrsh7th/cmp-nvim-lua"
-
-  -- Code action
-  use 'kosayoda/nvim-lightbulb'
-
-  use { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' }
-
-
-  -- snippets
-  use "L3MON4D3/LuaSnip" --snippet engine
-  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
-
-  -- LSP
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- simple to use language server installer
   use "tamago324/nlsp-settings.nvim" -- language server settings defined in json for
   use "jose-elias-alvarez/null-ls.nvim" -- for formatters and linters
+  -- }}}
 
-  -- Colors and themes
+  -- Treesitter {{{
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use 'nvim-treesitter/nvim-treesitter-textobjects'
+  use 'nvim-treesitter/playground'
+  -- }}}
+
+  -- Code action {{{
+  use 'kosayoda/nvim-lightbulb'
+  use { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' }
+  -- }}}
+  -- }}}
+
+  -- Snippets {{{
+  use "L3MON4D3/LuaSnip" --snippet engine
+  use "rafamadriz/friendly-snippets" -- a bunch of snippets to use
+  -- }}}
+
+  -- Colors and themes {{{
   use 'chriskempson/base16-vim' -- Visual plugins
   use {
     'nvim-lualine/lualine.nvim',
@@ -85,16 +85,14 @@ return require('packer').startup(function()
   }
   use 'kyazdani42/nvim-web-devicons'
   use 'rcarriga/nvim-notify'
-  -- Very nice but I don't need it always, so leave commented
-  -- use {'rrethy/vim-hexokinase', run = 'make hexokinase' } -- Color highlighter
+  -- }}}
 
-  -- General helper plugins
+  -- General helper plugins {{{
   use 'tpope/vim-surround' -- Easily surround text
   use 'tpope/vim-unimpaired' -- Good mappings in pairs
   use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
   use 'voldikss/vim-floaterm' -- Awesome floating terminal in vim
   use 'ggandor/lightspeed.nvim'
-  -- use 'mhinz/vim-startify' -- Really nice start menu for vim
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },
@@ -103,16 +101,9 @@ return require('packer').startup(function()
     end
   }
   use 'karb94/neoscroll.nvim' -- Smooth scroll with <C-d> and <C-u>
+  -- }}}
 
-  -- Telescope Setup
-  use {
-    'nvim-telescope/telescope.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } }
-  }
-  use 'nvim-telescope/telescope-dap.nvim'
-
-  -- Coding helpers
-  -- use {'neoclide/coc.nvim', branch = 'release'}        -- Auto complete awesomeness
+  -- Coding helpers {{{
   use 'rafcamlet/nvim-luapad' -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
   use { 'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', } -- Bash LSP extension
@@ -121,33 +112,35 @@ return require('packer').startup(function()
   use 'skywind3000/asyncrun.vim'
   use 'skywind3000/asyncrun.extra'
   use 'stefandtw/quickfix-reflector.vim'
-  use { 'RishabhRD/nvim-cheat.sh', -- Easy coding help from vim
-    requires = {
-      'RishabhRD/popfix'
-    },
-  }
-  -- TODO: not sure if this is needed
-  -- use 'dbeniamine/cheat.sh-vim'                         -- Another cheat sheet tool
-
-  -- Debugging
-  use 'mfussenegger/nvim-dap'
-  use 'theHamsta/nvim-dap-virtual-text'
-  use 'rcarriga/nvim-dap-ui'
-  use 'kndndrj/nvim-projector'
-
-  use 'AndrewRadev/linediff.vim' -- Diff items from the same file
-  use {
-    'kyazdani42/nvim-tree.lua',
-    requires = { 'kyazdani42/nvim-web-devicons' }
-  }
+  use 'dbeniamine/cheat.sh-vim' -- Another cheat sheet tool
   use { -- Comment plugin made with lua
     'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
     end
   }
+  -- }}}
 
-  -- Git helpers
+  -- Debugging {{{
+  use 'mfussenegger/nvim-dap'
+  use 'theHamsta/nvim-dap-virtual-text'
+  use 'rcarriga/nvim-dap-ui'
+  use 'kndndrj/nvim-projector'
+  use 'nvim-telescope/telescope-dap.nvim'
+  -- }}}
+
+  -- File navigation {{{
+  use {
+    'kyazdani42/nvim-tree.lua',
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  }
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
+  -- }}}
+
+  -- Git helpers {{{
   use {
     'TimUntersberger/neogit',
     requires = {
@@ -162,12 +155,15 @@ return require('packer').startup(function()
     },
   }
   use 'airblade/vim-rooter' -- Sets directory to git root
+  -- }}}
 
-  -- Plugins can have post-install/update hooks
-  -- using cmd = 'MarkdownPreview' just causes problems and plugin does not load properly
+  -- Markdown and Pandoc {{{
+  use 'conornewton/vim-pandoc-markdown-preview'
   use {
+    -- using cmd = 'MarkdownPreview' just causes problems and plugin does not load properly
     'iamcco/markdown-preview.nvim',
     run = 'cd app && yarn install'
   }
+  -- }}}
 
 end)

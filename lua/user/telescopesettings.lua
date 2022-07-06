@@ -42,7 +42,17 @@ require('telescope').setup({
   -- other configuration values here
 })
 
-map('n', '<C-f>', "<cmd>lua require ('telescope.builtin').git_files()<CR>")
+local function gitfiles_or_findfiles()
+  local builtin = require('telescope.builtin')
+  if Execute("git rev-parse --is-inside-work-tree").ret == 0 then
+    return builtin.git_files()
+  else
+    return builtin.find_files()
+  end
+end
+
+-- map('n', '<C-f>', "<cmd>lua require ('telescope.builtin').git_files()<CR>")
+map('n', '<C-f>', gitfiles_or_findfiles, {})
 map('n', '<M-f>', "<cmd>lua require ('telescope.builtin').find_files()<CR>")
 map('n', '<C-b>',
   "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true                       , sort_lastused=true                              , ignore_current_buffer=true})<CR>")
