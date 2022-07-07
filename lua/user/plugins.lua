@@ -91,7 +91,7 @@ return require('packer').startup(function()
   use 'tpope/vim-surround' -- Easily surround text
   use 'tpope/vim-unimpaired' -- Good mappings in pairs
   use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
-  use 'voldikss/vim-floaterm' -- Awesome floating terminal in vim
+  use 'akinsho/toggleterm.nvim' -- Awesome terminal helper in lua
   use 'ggandor/lightspeed.nvim'
   use {
     'goolord/alpha-nvim',

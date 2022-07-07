@@ -1,3 +1,4 @@
+if not pcall(require, 'telescope') then return end
 local map = require('user.mapping-function')
 
 require('telescope').setup({
@@ -8,7 +9,8 @@ require('telescope').setup({
     },
     mappings = {
       i = {
-        ["<exc>"] = close
+        ["<esc>"] = require('telescope.actions').close,
+        -- ["<c-f>"] = vim.cmd[[<plug>Telescope<CR>]],
       },
     },
     -- other defaults configuration here
@@ -17,6 +19,16 @@ require('telescope').setup({
   pickers = {
     find_files = {
       layout_strategy = 'vertical',
+    },
+    git_files = {
+      layout_strategy = 'vertical',
+      prompt_prefix = "Git ❯ ",
+      show_untracted = true,
+    },
+    buffers = {
+      sort_mru = true,
+      sort_lastused = true,
+      ignore_current_buffer = true,
     },
     live_grep = {
       borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
@@ -59,26 +71,30 @@ map('n', '<C-b>',
 
 
 local which_key_mapper = require('user.which-key-mapping')
+local builtins = require('telescope.builtin')
 which_key_mapper({
   f = {
     name = "file", -- optional group name
     f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
-    F = { "<cmd>lua require ('telescope.builtin').find_files({layout_strategy='vertical'})<CR>", "Find Files" },
-    G = { "<cmd>lua require ('telescope.builtin').git_files({layout_strategy='vertical'})<CR>", "Git Files" },
-    b = { "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true,sort_lastused=true,ignore_current_buffer=true})<CR>",
-      "Local buffers" },
-    g = { "<cmd>lua require ('telescope.builtin').live_grep({layout_strategy='vertical'})<CR>", "Live grep" }, -- search locally with live grep
-    v = { "<cmd>lua require ('telescope.builtin').find_files({cwd='~/.config/nvim'             , prompt_title='Search vim config'})<CR>",
-      "Search vim config" }, -- search vim config files
+    F = { builtins.find_files, "Find Files" },
+    G = { builtins.git_files, "Git Files" },
+    b = { builtins.buffers, "Local buffers" },
+    g = { builtins.live_grep, "Live grep" }, -- search locally with live grep (uses ripgrep in the background)
+
+    -- v = { builtins.find_files {
+    --   cwd = OS.nvim,
+    --   prompt_title = 'Search vim config'
+    -- }, "Search vim config" }, -- search vim config files
+
     V = { "<cmd>lua require ('telescope.builtin').live_grep({layout_strategy='vertical'        , cwd='~/.config/nvim'                            , prompt_title='Live grep through vim config'})<CR>",
       "Search vim config live grep" }, -- grep over vim config files
     d = { "<cmd>lua require ('telescope.builtin').find_files({cwd='~/'                         , prompt_title='Search WSL home directory'})<CR>",
       "Find files" }, -- find files
-    m = { "<cmd>lua require ('telescope.builtin').keymaps()<CR>", "List key maps" }, -- list keymaps
+    m = { builtins.keymaps, "List key maps" }, -- list keymaps
   },
 
   l = {
     name = "LSP",
-    A = { "<cmd>lua require ('telescope.builtin').lsp_code_actions()<CR>", "Telescope: code action" },
+    -- A = { builtins.code_actions{}, "Telescope: code action" },
   },
 })

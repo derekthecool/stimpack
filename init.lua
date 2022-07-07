@@ -1,7 +1,8 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
 -- Start up profiler that shows what takes the most time and helps speed up
-require('impatient').enable_profile()
+-- Load before any other plugins
+if not pcall(require, 'impatient') then return end
 
 -- Lua basic configuration
 require('user.global-helper-tables')
@@ -18,7 +19,7 @@ require('user.vimwikisettings') -- Vimwiki is a great personal wiki and diary
 require('user.which-key') -- Which-key is AMAZING to help you remember your mappings
 -- require('user.startify') -- Very good startup up application helper
 require('user.markdown-preview') -- Preview markdown in browser
-require('user.vim_blob')
+require('user.toggle-term-settings')
 require('user.nvim-notify-settings')
 require('user.nvim-tree-settings')
 require('user.cmp')

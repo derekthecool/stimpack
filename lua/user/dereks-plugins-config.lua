@@ -1,4 +1,4 @@
 local map = require('user.mapping-function')
 
-map("n", "<space>nn", '<cmd>lua require(\'dvp\').comma_count()<cr>')
-map("n", "<space>nb", '<cmd>lua require(\'dvp\').bit_flip()<cr>')
+map("n", "<leader>nn", require('dvp').comma_count)
+map("n", "<leader>nb", require('dvp').bit_flip)
