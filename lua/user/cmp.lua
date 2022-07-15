@@ -117,8 +117,10 @@ cmp.setup {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
     },
   },
+  view = {
+    native_menu = true,
+  },
   experimental = {
-    ghost_text = false,
-    native_menu = false,
+    ghost_text = true,
   },
 }

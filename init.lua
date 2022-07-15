@@ -17,7 +17,6 @@ require('user.vim-pandoc-markdown-preview-settings') -- Source lua file ~/.confi
 require('user.treesitter') -- Source lua file ~/.config/nvim/lua/treesitter.lua
 require('user.vimwikisettings') -- Vimwiki is a great personal wiki and diary
 require('user.which-key') -- Which-key is AMAZING to help you remember your mappings
--- require('user.startify') -- Very good startup up application helper
 require('user.markdown-preview') -- Preview markdown in browser
 require('user.toggle-term-settings')
 require('user.nvim-notify-settings')
@@ -31,26 +30,11 @@ require('user.telescopesettings') -- Source lua file ~/.config/nvim/lua/telescop
 require('user.cheat-settings')
 require('user.async-tasks')
 require('user.luasnip-settings')
-require('user.lightspeed-settings')
+require('user.leap-settings')
 require('user.nvim-luapad-settings')
 
 -- Configuration for my personal plugins that I wrote
 require('user.dereks-plugins-config') -- Source lua file ~/.config/nvim/lua/dereks-plugins-config.lua
 
-
--- Use the new global status bar feature
-vim.cmd([[
-set lazyredraw
-set laststatus=3
-highlight WinSeparator guibg=none
-
-silent! unmap f
-silent! unmap F
-silent! unmap t
-silent! unmap T
-
-packadd cfilter
-]])
-
-
+-- Source last
 require('user.lualine-settings')

@@ -13,8 +13,9 @@ null_ls.setup({
     if client.server_capabilities.document_formatting then
       vim.cmd([[
           augroup LspFormatting
-              autocmd! * <buffer>
-              autocmd BufWritePre <buffer> lua vim.lsp.buf.format { async = true }
+              " autocmd! *
+              " autocmd BufWritePre <buffer> lua vim.lsp.buf.format()
+              autocmd BufWritePre * lua vim.lsp.buf.format()
           augroup END
           ]])
     end

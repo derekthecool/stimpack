@@ -92,7 +92,7 @@ return require('packer').startup(function()
   use 'tpope/vim-unimpaired' -- Good mappings in pairs
   use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
   use 'akinsho/toggleterm.nvim' -- Awesome terminal helper in lua
-  use 'ggandor/lightspeed.nvim'
+  use 'ggandor/leap.nvim'
   use {
     'goolord/alpha-nvim',
     requires = { 'kyazdani42/nvim-web-devicons' },

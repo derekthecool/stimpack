@@ -1,11 +1,14 @@
 if not pcall(require, 'telescope') then return end
 local map = require('user.mapping-function')
 
+-- useful icons:    
+
+local layout_config = 'vertical'
+
 require('telescope').setup({
   defaults = {
     layout_config = {
-      vertical = { width = 0.85 }
-      -- other layout configuration here
+      vertical = { width = 0.85 },
     },
     mappings = {
       i = {
@@ -18,24 +21,32 @@ require('telescope').setup({
 
   pickers = {
     find_files = {
-      layout_strategy = 'vertical',
+      layout_strategy = layout_config,
+      prompt_prefix = " : ",
     },
     git_files = {
-      layout_strategy = 'vertical',
-      prompt_prefix = "Git ❯ ",
+      layout_strategy = layout_config,
+      prompt_prefix = " : ",
+      show_untracked = true,
+    },
+    help_tags = {
+      layout_strategy = layout_config,
+      prompt_prefix = " : ",
       show_untracted = true,
     },
     buffers = {
+      layout_strategy = layout_config,
+      prompt_prefix = " : ",
       sort_mru = true,
       sort_lastused = true,
       ignore_current_buffer = true,
     },
     live_grep = {
-      borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-      prompt_prefix = "Regexp ❯ ",
-      results_title = "",
-      preview_title = "",
-      prompt_title = "",
+      -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+      prompt_prefix = " : ",
+      results_title = "Found",
+      preview_title = "Preview",
+      prompt_title = "File Content Search",
       disable_coordinates = true,
       disable_devicons = true,
       vimgrep_arguments = {
@@ -63,11 +74,9 @@ local function gitfiles_or_findfiles()
   end
 end
 
--- map('n', '<C-f>', "<cmd>lua require ('telescope.builtin').git_files()<CR>")
-map('n', '<C-f>', gitfiles_or_findfiles, {})
-map('n', '<M-f>', "<cmd>lua require ('telescope.builtin').find_files()<CR>")
+map('n', '<C-f>', gitfiles_or_findfiles)
 map('n', '<C-b>',
-  "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true                       , sort_lastused=true                              , ignore_current_buffer=true})<CR>")
+  "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true, sort_lastused=true, ignore_current_buffer=true})<CR>")
 
 
 local which_key_mapper = require('user.which-key-mapping')
@@ -80,6 +89,7 @@ which_key_mapper({
     G = { builtins.git_files, "Git Files" },
     b = { builtins.buffers, "Local buffers" },
     g = { builtins.live_grep, "Live grep" }, -- search locally with live grep (uses ripgrep in the background)
+    h = { builtins.help_tags, "Help Search" },
 
     -- v = { builtins.find_files {
     --   cwd = OS.nvim,
