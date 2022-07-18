@@ -28,3 +28,12 @@ function Execute(command)
   output.stdout, output.ret, output.stderr = require('telescope.utils').get_os_command_output(formatted_command)
   return output
 end
+
+---This function extracts the package name of the current lua file. The files
+---need to be named with names like telescope-settings.lua. The search returns
+---all text before the '-settings'.
+---@param nameOfCurrentFileToExtractPackageNamFrom any
+---@return string|number
+function GetPackageNameFromCurrentFile(nameOfCurrentFileToExtractPackageNamFrom)
+  return string.match(nameOfCurrentFileToExtractPackageNamFrom, '(%w+)-settings.lua')
+end

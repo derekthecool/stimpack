@@ -1,10 +1,5 @@
-if not pcall(require, 'leap') then return end
-local filename = vim.fn.getreg('%')
-local sourcefilepackage = ''
-for match in string.gmatch(filename,'(%w+)-settings.lua') do
-    sourcefilepackage = match
-end
-print(sourcefilepackage)
+if not pcall(require, GetPackageNameFromCurrentFile(debug.getinfo(1).source)) then return else print(GetPackageNameFromCurrentFile(debug.getinfo(1).source))end
+-- if not  then return end
 
 require('leap').setup {
   highlight_ahead_of_time = true,

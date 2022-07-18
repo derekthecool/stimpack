@@ -5,7 +5,7 @@
 if not pcall(require, 'impatient') then return end
 
 -- Lua basic configuration
-require('user.global-helper-tables')
+require('user.global-helpers')
 require('user.plugins') -- Source lua file ~/.config/nvim/lua/user/plugins.lua
 require('user.settings') -- Source lua file ~/.config/nvim/lua/user/settings.lua
 require('user.disable-vim-builtins') -- Source lua file ~/.config/nvim/lua/user/disable-vim-builtins.lua
