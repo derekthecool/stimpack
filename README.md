@@ -8,9 +8,10 @@ game, there is no self harm from using this repo. Also stim sounds like vim.
 
 ## TODO
 
-- [o] Get nvim.dap working for debugging:
+- [ ] Get nvim.dap working for debugging:
   - [ ] csharp on Windows
   - [x] c on Linux
+- [ ] Adjust all vim.cmd blobs to lua api calls
 
 ## Customizing
 

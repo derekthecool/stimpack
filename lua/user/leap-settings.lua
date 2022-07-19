@@ -1,4 +1,4 @@
-if not pcall(require, GetPackageNameFromCurrentFile(debug.getinfo(1).source)) then return else print(GetPackageNameFromCurrentFile(debug.getinfo(1).source))end
+-- if not pcall(require, GetPackageNameFromCurrentFile(debug.getinfo(1).source)) then return else print(GetPackageNameFromCurrentFile(debug.getinfo(1).source))end
 -- if not  then return end
 
 require('leap').setup {

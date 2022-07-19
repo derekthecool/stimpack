@@ -32,3 +32,13 @@ require('lualine').setup {
 
 -- WinSeparator looks nicer like this
 vim.cmd [[highlight WinSeparator guibg=none]]
+
+-- I can't get rid of this dumb error on every start up. This is my work around.
+-- Copied from this example: https://github.com/ChristianChiarulli/nvim/blob/master/ftplugin/c.lua
+local notify_filter = vim.notify
+vim.notify = function(msg, ...)
+  if msg:match "lualine: There are some issues with your config. Run :LualineNotices for details" then
+    return
+  end
+  notify_filter(msg, ...)
+end
