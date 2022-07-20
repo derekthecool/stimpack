@@ -138,6 +138,8 @@ return require('packer').startup(function()
     'nvim-telescope/telescope.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } }
   }
+  -- Telescope extensions
+  use 'xiyaowong/telescope-emoji.nvim'
   -- }}}
 
   -- Git helpers {{{

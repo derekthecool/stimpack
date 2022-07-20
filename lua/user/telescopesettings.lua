@@ -65,6 +65,9 @@ require('telescope').setup({
   -- other configuration values here
 })
 
+-- Extensions to load
+require("telescope").load_extension("emoji")
+
 local function gitfiles_or_findfiles()
   local builtin = require('telescope.builtin')
   if Execute("git rev-parse --is-inside-work-tree").ret == 0 then
@@ -87,6 +90,7 @@ which_key_mapper({
     f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
     F = { builtins.find_files, "Find Files" },
     G = { builtins.git_files, "Git Files" },
+    e = { "<cmd>Telescope emoji<CR>", "Telescope extension: emoji" },
     b = { builtins.buffers, "Local buffers" },
     g = { builtins.live_grep, "Live grep" }, -- search locally with live grep (uses ripgrep in the background)
     h = { builtins.help_tags, "Help Search" },

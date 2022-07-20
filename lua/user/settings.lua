@@ -18,6 +18,7 @@ highlight WinSeparator guibg=none
 ]])
 
 -- Regular options
+    vim.o.conceallevel = 2
 vim.o.clipboard = 'unnamedplus' -- Copy paste between vim and everything else (for WSL clipboard usage see https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl)
 vim.o.cmdheight = 2 -- Larger command line height, helps to avoid seeing press any key to continue
 vim.o.completeopt = 'menu,noselect,longest,menuone' -- Pop up menu settings
