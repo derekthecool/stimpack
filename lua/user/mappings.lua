@@ -35,6 +35,12 @@ map('i', 'zzz', '<C-o>:update<CR><ESC>^')
 map('n', '/', '/\\v')
 map('v', '/', '/\\v')
 
+-- Packer commands
+map('n', 'PHRUP', ':PackerSync<CR>')
+
+-- Treesitter commands
+map('n', 'TR*EUT', ':TSPlaygroundToggle<CR>')
+
 -- Conceal level mappings from ziontee113
 
 map("n", "<F10>", function()
