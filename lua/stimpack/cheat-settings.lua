@@ -1,4 +1,4 @@
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 which_key_mapper({
 K = {
   name = "cht.sh helper", -- optional group name

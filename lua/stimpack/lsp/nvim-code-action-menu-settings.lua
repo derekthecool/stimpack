@@ -1,2 +1,2 @@
-local map = require("user.mapping-function")
+local map = require("stimpack.mapping-function")
 map("n", "<leader>lb", "<cmd>CodeActionMenu<CR>")

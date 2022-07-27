@@ -13,5 +13,5 @@ require('luapad').setup {
  }
 }
 
-local map = require("user.mapping-function")
+local map = require("stimpack.mapping-function")
 map("n", "<leader>dV", ":lua require('luapad').toggle()<CR>")

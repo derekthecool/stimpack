@@ -7,7 +7,7 @@ This function is meant to make it easy to set mappings in other files
 To use this mapping function follow these steps:
 
 1. Require this file as a local variable
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 
 2. Set the mapping
 which_key_mapper({

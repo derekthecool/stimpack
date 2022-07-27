@@ -7,7 +7,7 @@ This function is meant to make it easy to set mappings in other files
 To use this mapping function follow these steps:
 
 1. Require this file as a local variable
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
 2. Set the mapping
 map('n', '→', ':cnext<CR>')

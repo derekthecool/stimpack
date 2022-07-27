@@ -1,8 +1,8 @@
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
 require('telescope').load_extension('dap')
 
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 which_key_mapper({
   d = {
     name = "Debug",

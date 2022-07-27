@@ -1,5 +1,4 @@
 local generalSettingsGroup = vim.api.nvim_create_augroup("General settings", { clear = true })
-
 -- TODO: get this to write the message in another color
 -- " Triger `autoread` when files changes on disk
 -- "autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif

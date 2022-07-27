@@ -5,37 +5,37 @@
 if not pcall(require, 'impatient') then return end
 
 -- Lua basic configuration
-require('user.global-helpers')
-require('user.plugins')
-require('user.settings')
-require('user.auto-commands')
-require('user.disable-vim-builtins')
-require('user.mappings')
-require('user.visualsettings')
+require('stimpack.global-helpers')
+require('stimpack.plugins')
+require('stimpack.settings')
+require('stimpack.auto-commands')
+require('stimpack.disable-vim-builtins')
+require('stimpack.mappings')
+require('stimpack.visualsettings')
 
 -- Lua plugin configuration
-require('user.vim-pandoc-markdown-preview-settings')
-require('user.treesitter')
-require('user.vimwikisettings') -- Vimwiki is a great personal wiki and diary
-require('user.which-key') -- Which-key is AMAZING to help you remember your mappings
-require('user.markdown-preview') -- Preview markdown in browser
-require('user.toggle-term-settings')
-require('user.nvim-notify-settings')
-require('user.nvim-tree-settings')
-require('user.cmp')
-require('user.lsp')
-require('user.debugging')
+require('stimpack.vim-pandoc-markdown-preview-settings')
+require('stimpack.treesitter')
+require('stimpack.vimwikisettings') -- Vimwiki is a great personal wiki and diary
+require('stimpack.which-key') -- Which-key is AMAZING to help you remember your mappings
+require('stimpack.markdown-preview') -- Preview markdown in browser
+require('stimpack.toggle-term-settings')
+require('stimpack.nvim-notify-settings')
+require('stimpack.nvim-tree-settings')
+require('stimpack.cmp')
+require('stimpack.lsp')
+require('stimpack.debugging')
 require('git')
-require('user.neoscroll')
-require('user.telescopesettings')
-require('user.cheat-settings')
-require('user.async-tasks')
-require('user.luasnip-settings')
-require('user.leap-settings')
-require('user.nvim-luapad-settings')
+require('stimpack.neoscroll')
+require('stimpack.telescopesettings')
+require('stimpack.cheat-settings')
+require('stimpack.async-tasks')
+require('stimpack.luasnip-settings')
+require('stimpack.leap-settings')
+require('stimpack.nvim-luapad-settings')
 
 -- Configuration for my personal plugins that I wrote
-require('user.dereks-plugins-config')
+require('stimpack.dereks-plugins-config')
 
 -- Source last
-require('user.lualine-settings')
+require('stimpack.lualine-settings')

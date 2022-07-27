@@ -40,6 +40,6 @@ local function leap_bidirectional()
   require 'leap'.leap { target_windows = { vim.api.nvim_get_current_win() } }
 end
 
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 map("n", "\\", leap_all_windows)
 map("n", "√", leap_bidirectional)

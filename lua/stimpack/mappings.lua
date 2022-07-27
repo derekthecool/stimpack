@@ -1,4 +1,4 @@
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
 -- Ｎｏｒｍａｌ ｍａｐｓ
 -- These are really only possible with Plover steno so don't feel crazy if you

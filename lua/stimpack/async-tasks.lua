@@ -4,7 +4,7 @@ let g:asynctasks_term_pos = 'bottom'
 let g:asynctasks_extra_config = ['~/.config/nvim/other/tasks.ini']
 ]]
 
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 which_key_mapper({
 u = {
   name = "Async task runner", -- optional group name

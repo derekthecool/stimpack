@@ -12,7 +12,7 @@ require("luasnip").config.set_config {
   -- store_selection_keys = '<c-s>', -- I'm not sure about this, the default has it nil
 }
 
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 map("i", "<c-j>", "<cmd>lua require'luasnip'.jump(1)<CR>")
 map("s", "<c-j>", "<cmd>lua require'luasnip'.jump(1)<CR>")
 map("i", "<c-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>")

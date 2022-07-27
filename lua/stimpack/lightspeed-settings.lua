@@ -4,7 +4,7 @@ if not pcall(require, 'lightspeed') then return end
 -- let g:lightspeed_no_default_keymaps = 1
 -- ]]
 vim.g.lightspeed_no_default_keymaps = 1
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 map("n", "s", "<Plug>Lightspeed_s")
 map("n", "S", "<Plug>Lightspeed_S")
 map("n", "\\", "<Plug>Lightspeed_omni_s")

@@ -1,4 +1,4 @@
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
 require'nvim-tree'.setup { -- BEGIN_DEFAULT_OPTS
   auto_reload_on_write = true,

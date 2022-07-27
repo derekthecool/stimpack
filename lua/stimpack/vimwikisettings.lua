@@ -27,9 +27,9 @@ let g:automatic_nested_syntaxes = 1
 autocmd BufNewFile  ~/.mywiki/work/diary/*.md :silent 0r !~/.derek-shell-config/scripts/generate-vimwiki-diary-template.py '%'
 ]]
 
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 which_key_mapper({
 f = {
   name = "file", -- optional group name

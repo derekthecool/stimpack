@@ -1,5 +1,5 @@
 if not pcall(require, 'telescope') then return end
-local map = require('user.mapping-function')
+local map = require('stimpack.mapping-function')
 
 -- useful icons:    
 
@@ -82,7 +82,7 @@ map('n', '<C-b>',
   "<cmd>lua require ('telescope.builtin').buffers({sort_mru=true, sort_lastused=true, ignore_current_buffer=true})<CR>")
 
 
-local which_key_mapper = require('user.which-key-mapping')
+local which_key_mapper = require('stimpack.which-key-mapping')
 local builtins = require('telescope.builtin')
 which_key_mapper({
   f = {
