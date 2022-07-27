@@ -8,6 +8,7 @@ if not pcall(require, 'impatient') then return end
 require('user.global-helpers')
 require('user.plugins')
 require('user.settings')
+require('user.auto-commands')
 require('user.disable-vim-builtins')
 require('user.mappings')
 require('user.visualsettings')

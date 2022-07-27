@@ -15,7 +15,7 @@
 (("break"      @keyword)   (#set!   conceal   "🔨"))
 
 ;; Sets all types (int, char etc. to this symbol)
-((primitive_type)      @TSType   (#set!   conceal   "×"))
+;; ((primitive_type)      @TSType   (#set!   conceal   "×"))
 
 ;; Not working yet
 ;; (("char"       @keyword)   (#set!   conceal   "🔤"))

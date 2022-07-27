@@ -36,10 +36,10 @@ map('n', '/', '/\\v')
 map('v', '/', '/\\v')
 
 -- Packer commands
-map('n', 'PHRUP', ':PackerSync<CR>')
+map('n', '<leader>aa', ':PackerSync<CR>')
 
 -- Treesitter commands
-map('n', 'TR*EUT', ':TSPlaygroundToggle<CR>')
+map('n', '<leader>ab', ':TSPlaygroundToggle<CR>')
 
 -- Conceal level mappings from ziontee113
 

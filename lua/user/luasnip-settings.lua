@@ -8,7 +8,7 @@ require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip").config.set_config {
   history = true,
   update_events = "TextChanged,TextChangedI", -- update text as you type
-  enable_autosnippets = true, -- I NEED autosnippets to live default is false
+  enable_autosnippets = true, -- I NEED autosnippets to live, default is false
   -- store_selection_keys = '<c-s>', -- I'm not sure about this, the default has it nil
 }
 
@@ -18,9 +18,13 @@ map("s", "<c-j>", "<cmd>lua require'luasnip'.jump(1)<CR>")
 map("i", "<c-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>")
 map("s", "<c-k>", "<cmd>lua require'luasnip'.jump(-1)<CR>")
 
+map('i', '☝', '<cmd>lua require("luasnip.extras.select_choice")()<cr>')
+map("i", "👉", "<Plug>luasnip-next-choice<CR>")
+map("s", "👉", "<Plug>luasnip-next-choice<CR>")
+map("i", "👈", "<Plug>luasnip-prev-choice<CR>")
+map("s", "👈", "<Plug>luasnip-prev-choice<CR>")
+
 -- Steno down with root semicolon
-map('n', '∄', '<cmd>lua require("luasnip.loaders.from_lua").edit_snippet_files()<CR>')
--- Steno left with root semicolon
-map('i', '∀', '<cmd>lua require("luasnip.extras.select_choice")()<cr>')
+map('n', '👇', '<cmd>lua require("luasnip.loaders.from_lua").edit_snippet_files()<CR>')
 -- Steno down with root backslash
-map('n', '∄∄', '<cmd>source ' .. OS.nvim .. 'lua/user/luasnip-settings.lua<cr>')
+map('n', '👇👇', '<cmd>source ' .. OS.nvim .. 'lua/user/luasnip-settings.lua<cr>')
