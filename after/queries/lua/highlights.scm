@@ -22,7 +22,7 @@
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "print"  )) (#set! conceal ""))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "pairs"  )) (#set! conceal "P"))
 ((function_call name: (identifier) @TSNote (#eq? @TSNote "ipairs" )) (#set! conceal "I"))
-((function_call name: (identifier) @TSNote (#eq? @TSNote "map" )) (#set! conceal "🗺"))
+((function_call name: (identifier) @TSNote (#eq? @TSNote "map" )) (#set! conceal "📃"))
 
 ;; table.
 ((dot_index_expression table: (identifier) @keyword  (#eq? @keyword  "math" )) (#set! conceal ""))

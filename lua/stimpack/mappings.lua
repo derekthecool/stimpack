@@ -39,7 +39,7 @@ map('v', '/', '/\\v')
 map('n', '<leader>aa', ':PackerSync<CR>')
 
 -- Treesitter commands
-map('n', '<leader>ab', ':TSPlaygroundToggle<CR>')
+map('n', '<leader>ab', 'dog')
 
 -- Conceal level mappings from ziontee113
 
@@ -68,3 +68,23 @@ end)
 vim.cmd [[
 nnoremap § :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
 ]]
+
+
+
+local function ReloadConfig()
+  local count = 0
+  for name, _ in pairs(package.loaded) do
+    print(name)
+
+    if name:match('stimpack') then
+      -- print('name matched ' .. name)
+      package.loaded.name = nil
+      count = count + 1
+    end
+  end
+
+  vim.notify(string.format("Reloaded entire neovim config with %d packages", count))
+  dofile(OS.init_lua)
+end
+
+map('n', '<leader>ac', ReloadConfig)
