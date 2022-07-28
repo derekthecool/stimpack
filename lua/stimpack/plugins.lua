@@ -88,8 +88,15 @@ return require('packer').startup(function()
   -- }}}
 
   -- General helper plugins {{{
-  use 'tpope/vim-surround' -- Easily surround text
-  use 'tpope/vim-unimpaired' -- Good mappings in pairs
+  -- use 'tpope/vim-surround' -- Easily surround text
+  use({
+    "kylechui/nvim-surround",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  })
   use 'folke/which-key.nvim' -- Shows mappings with helpful pop up
   use 'akinsho/toggleterm.nvim' -- Awesome terminal helper in lua
   use 'ggandor/leap.nvim'
@@ -106,7 +113,19 @@ return require('packer').startup(function()
   -- Coding helpers {{{
   use 'rafcamlet/nvim-luapad' -- Real time nvim lua scratch pad
   use 'folke/lua-dev.nvim'
-  use { 'autozimu/LanguageClient-neovim', branch = 'next', run = 'bash install.sh', } -- Bash LSP extension
+
+  -- Get installer to work better with Linux and windows
+  local install_command
+  if OS.OS == 'Linux' then
+    install_command = 'bash install.sh'
+  else
+    install_command = 'powershell -file ./install.ps1'
+  end
+  use {
+    'autozimu/LanguageClient-neovim',
+    branch = 'next',
+    run = install_command,
+  } -- Bash LSP extension
   use 'szw/vim-maximizer' -- Maximize a vim pane, to be used with vimspector
   use 'skywind3000/asynctasks.vim' -- Async build resource
   use 'skywind3000/asyncrun.vim'
