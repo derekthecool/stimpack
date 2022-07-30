@@ -15,7 +15,7 @@ require('lualine').setup {
     lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = { 'filename' },
     lualine_x = { 'filesize', 'encoding', 'fileformat', 'filetype' },
-    lualine_y = { 'progress' },
+    lualine_y = { 'progress', 'WatchFileJumpToEnd' },
     lualine_z = { 'location' }
   },
   inactive_sections = {

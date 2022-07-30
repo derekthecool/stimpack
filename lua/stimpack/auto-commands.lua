@@ -2,11 +2,16 @@ local generalSettingsGroup = vim.api.nvim_create_augroup("General settings", { c
 -- TODO: get this to write the message in another color
 -- " Triger `autoread` when files changes on disk
 -- "autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
-vim.api.nvim_create_autocmd("FileChangedShellPost *",
-  { command = "echo 'File changed on disk. Buffer reloaded.'", group = generalSettingsGroup })
+-- vim.api.nvim_create_autocmd("FileChangedShellPost *",
+--   { callback = function() vim.notify('File changed on disk. Buffer reloaded.') end, group = generalSettingsGroup })
+-- vim.api.nvim_create_autocmd("FileChangedShell *",
+--   { callback = function() vim.notify('File changed on disk. Buffer reloaded.') end, group = generalSettingsGroup })
+
 vim.api.nvim_create_autocmd("TextYankPost * ",
-  { command = "silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 500})",
-    group = generalSettingsGroup })
+  {
+    command = "silent!lua require('vim.highlight').on_yank({higroup = 'Visual', timeout = 500})",
+    group = generalSettingsGroup
+  })
 -- This autocommand does not seem to work right on nonhelp files, not able to do macros
 -- vim.api.nvim_create_autocmd("FileType qf,help", {command = "nnoremap <silent> <buffer> q :close<cr>",group = generalSettingsGroup})
 vim.api.nvim_create_autocmd("BufWinEnter *", { command = ":set formatoptions-=cro", group = generalSettingsGroup })

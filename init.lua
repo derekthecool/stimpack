@@ -14,6 +14,10 @@ require('stimpack.mappings')
 require('stimpack.visualsettings')
 
 -- Lua plugin configuration
+require('stimpack.lsp') -- Directory with its own init.lua
+require('stimpack.git') -- Directory with its own init.lua
+
+require('stimpack.file-watcher')
 require('stimpack.vim-pandoc-markdown-preview-settings')
 require('stimpack.treesitter')
 require('stimpack.vimwikisettings') -- Vimwiki is a great personal wiki and diary
@@ -23,9 +27,7 @@ require('stimpack.toggle-term-settings')
 require('stimpack.nvim-notify-settings')
 require('stimpack.nvim-tree-settings')
 require('stimpack.cmp')
-require('stimpack.lsp')
 require('stimpack.debugging')
-require('git')
 require('stimpack.neoscroll')
 require('stimpack.telescopesettings')
 require('stimpack.cheat-settings')
