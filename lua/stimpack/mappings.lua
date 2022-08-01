@@ -39,7 +39,10 @@ map('v', '/', '/\\v')
 map('n', '<leader>aa', ':PackerSync<CR>')
 
 -- Treesitter commands
-map('n', '<leader>ab', 'dog')
+map('n', '<leader>ab', '<cmd>TSPlaygroundToggle<CR>')
+
+-- Run plenary tests on current buffer
+map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
 -- Conceal level mappings from ziontee113
 

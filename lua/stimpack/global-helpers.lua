@@ -2,17 +2,17 @@
 -- This will solve all cross platform path issues
 OS = {}
 
-  OS['init_lua'] = vim.env.MYVIMRC
-  OS['nvim'] = vim.fn.stdpath('config')
+OS['init_lua'] = vim.env.MYVIMRC
+OS['nvim'] = vim.fn.stdpath('config')
 
 if vim.loop.os_uname().sysname == ('Linux') then
   OS['OS'] = 'Linux'
   OS['home'] = os.getenv('HOME')
-  OS['snippets'] = string.format('%s/snippets/', OS['nvim'])
+  OS['snippets'] = string.format('%s/luasnippets/', OS['nvim'])
 elseif vim.loop.os_uname().sysname == ('Windows_NT') then
   OS['OS'] = 'Windows'
   OS['home'] = os.getenv('USERPROFILE')
-  OS['snippets'] = string.format('%s\\snippets\\', OS['nvim'])
+  OS['snippets'] = string.format('%s\\luasnippets\\', OS['nvim'])
 end
 
 ---Function to return telescope.utils command runner
