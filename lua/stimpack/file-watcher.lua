@@ -17,9 +17,6 @@ function WatchFile(bufNr, filePath)
 
     -- Jump to end of line
     if WatchFileJumpToEnd == formatted_tail_string then
-      -- Vim style command
-      -- vim.cmd('normal G')
-
       -- Lua API method to jump to end of file
       vim.api.nvim_win_set_cursor(0, { vim.api.nvim_buf_line_count(0), 0 })
     end

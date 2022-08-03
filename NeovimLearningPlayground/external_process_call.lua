@@ -37,3 +37,5 @@ print(a.stdout)
 print(a.ret)
 print(a.stderr)
 print(execute({ "git" }).stderr)
+
+print(vim.fn.jobstart("git"))

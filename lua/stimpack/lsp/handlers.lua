@@ -71,7 +71,6 @@ vim.api.nvim_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format { async 
 vim.api.nvim_set_keymap("n", "gl", '<cmd>lua vim.lsp.diagnostic.open_float()<CR>', opts)
 vim.api.nvim_set_keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.api.nvim_set_keymap("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
--- vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 -- -- See `:help vim.lsp.*` for documentation on any of the below functions
 -- -- buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
 -- -- buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)

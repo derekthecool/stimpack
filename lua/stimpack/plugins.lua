@@ -176,6 +176,7 @@ return require('packer').startup(function()
     },
   }
   use 'airblade/vim-rooter' -- Sets directory to git root
+  vim.g.rooter_patterns = { '.git', '*.sln', 'lua' } -- Set which directories should be set as root project directories
   -- }}}
 
   -- Markdown and Pandoc {{{

@@ -2,20 +2,23 @@
 -- vim.g  = setting global options
 -- vim.bo = setting buffer-scoped options
 -- vim.wo = setting window-scoped options
+-- vim.go = setting global globals another way, tray here if vim.g fails
 
 -- Global options
 vim.g.mapleader = ',' -- Map leader to comma instead of space since switching to stenography. Spacing is done after each word so comma is better for me now.
 vim.g.nobackup = true
 vim.g.nowritebackup = true
 vim.g.showmatch = true -- Show matching () [] {}
--- vim.g.lazyredraw = true                 -- Don't redraw screen during macros
--- vim.g.laststatus=3
+
+vim.go.lazyredraw = true -- Don't redraw screen during macros
+-- vim.go.laststatus=3
 vim.cmd([[
 " set noswapfile
-set lazyredraw
-set laststatus=3
+" set lazyredraw
+" set laststatus=3
 highlight WinSeparator guibg=none
 ]])
+-- vim.api.nvim_buf_add_highlight(0,1, 'MyCoolHighlight', 2, 0,-1)
 
 -- Regular options
 vim.o.conceallevel = 2
@@ -56,9 +59,11 @@ vim.wo.foldmethod = 'marker'
 -- Buffer options
 -- vim.bo.textwidth = 80                                 -- Set max length for lines
 vim.cmd "set textwidth=80" -- The dang lua version above does not always work
+-- vim.bo.textwidth = 80
 
 -- Only possible to set with vim commands
 vim.cmd "set iskeyword+=-"
+-- vim.bo.iskeyword = vim.bo.iskeyword + '-'
 
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)

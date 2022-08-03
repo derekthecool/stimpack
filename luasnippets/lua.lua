@@ -51,6 +51,9 @@ local snippets = {
   ),
   -- }}}
 
+  -- {{{ Neovim command and API snippets
+  -- }}}
+
   s(
     {
       trig = "TM",
@@ -71,6 +74,10 @@ local snippets = {
 }
 
 local autosnippets = {
+
+  -- {{{ Neovim command and API snippets
+  s('vim.api speed input', { t(1, 'vim.api') }),
+  -- }}}
 
   -- Fast if statement for steno input
   s('IF',

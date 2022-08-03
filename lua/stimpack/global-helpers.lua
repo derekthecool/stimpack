@@ -1,3 +1,6 @@
+-- Require the file icons.lua. This is a global table, but deserves its own file
+require('stimpack.icons')
+
 -- Create global table that can be accessed from any file
 -- This will solve all cross platform path issues
 OS = {}

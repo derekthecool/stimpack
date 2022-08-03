@@ -13,11 +13,15 @@ buffer and it will resync. Deleting lines from the quick fix list does not
 delete them from the source files.
 --]]
 
-vim.cmd [[
-let g:qf_modifiable = 1
-let g:qf_join_changes = 1
-let g:qf_write_changes = 1
-]]
+-- vim.cmd [[
+-- let g:qf_modifiable = 1
+-- let g:qf_join_changes = 1
+-- let g:qf_write_changes = 1
+-- ]]
+
+vim.g.qf_modifiable = 1
+vim.g.qf_join_changes = 1
+vim.g.qf_write_changes = 1
 
 -- Another nice feature to have to help narrow down quick fix lists. Run :h Cfilter for help
 vim.cmd([[

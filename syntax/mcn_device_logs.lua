@@ -1,6 +1,6 @@
 -- TODO: replace it these vim.cmd calls with lua ASAP
 
-vim.cmd[[
+vim.cmd [[
 " Language:          Micron Device Logs (mcn_device_logs for short)
 " Maintainer:        Derek Lomax
 " Helpful Resources: https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
@@ -56,6 +56,9 @@ highlight   def   link   ATcommandOK      ATcommandHighlightOK
 highlight ATcommandHighlight cterm=NONE guibg=#5fd700 guifg=#000000
 highlight ATcommandHighlightOK cterm=NONE guibg=#000ff0 guifg=#00FF00
 highlight DebugInitSetup cterm=NONE guibg=#0000FF guifg=#FFFFFF
+
+"Compress log lines from my serilog (csharp logging library) log files
+syntax match  conceallLogLine '\v\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3} -\d{2}:\d{2}\s' conceal
 
 let b:current_syntax = "mcn_device_logs"
 ]]

@@ -4,6 +4,7 @@ require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'base16',
+    -- component_separators = { left = '', right = Icons.ui.RightArrow },
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
     disabled_filetypes = {},
@@ -27,7 +28,7 @@ require('lualine').setup {
     lualine_z = {}
   },
   tabline = {},
-  extensions = {}
+  extensions = { 'quickfix', 'man', 'toggleterm', 'nvim-tree', 'nvim-dap-ui' }
 }
 
 -- WinSeparator looks nicer like this
