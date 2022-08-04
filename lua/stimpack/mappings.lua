@@ -71,6 +71,20 @@ end)
 vim.cmd [[
 nnoremap § :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
 ]]
+--[[
+Code flow:
+
+
+Relavant Documentation:
+
+
+						*v:lnum* *lnum-variable*
+v:lnum		Line number for the 'foldexpr' |fold-expr|, 'formatexpr' and
+		'indentexpr' expressions, tab page number for 'guitablabel'
+		and 'guitabtooltip'.  Only valid while one of these
+		expressions is being evaluated.  Read-only when in the
+		|sandbox|.
+]]
 
 
 

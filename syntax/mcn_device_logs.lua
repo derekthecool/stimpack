@@ -1,4 +1,8 @@
--- TODO: replace it these vim.cmd calls with lua ASAP
+-- Set the highlight colors used
+vim.api.nvim_set_hl(0, 'ATcommandHighlight', { bg = '#5fd700', fg = '#000000' })
+vim.api.nvim_set_hl(0, 'ATcommandHighlightOK', { bg = '#000ff0', fg = '#00FF00' })
+vim.api.nvim_set_hl(0, 'DebugInitSetup', { bg = '#0000FF', fg = '#FFFFFF' })
+vim.api.nvim_set_hl(0, 'conceallLogLine', { bg = nil })
 
 vim.cmd [[
 " Language:          Micron Device Logs (mcn_device_logs for short)
@@ -50,12 +54,6 @@ highlight   def   link   log_linenumber   MoreMsg
 highlight   def   link   debugInit        DebugInitSetup
 highlight   def   link   ATcommand        ATcommandHighlight
 highlight   def   link   ATcommandOK      ATcommandHighlightOK
-
-" Specify the color for ATcommand
-" Make sure to test/set both colors for cterm and gui
-highlight ATcommandHighlight cterm=NONE guibg=#5fd700 guifg=#000000
-highlight ATcommandHighlightOK cterm=NONE guibg=#000ff0 guifg=#00FF00
-highlight DebugInitSetup cterm=NONE guibg=#0000FF guifg=#FFFFFF
 
 "Compress log lines from my serilog (csharp logging library) log files
 syntax match  conceallLogLine '\v\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3} -\d{2}:\d{2}\s' conceal

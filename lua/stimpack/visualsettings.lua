@@ -10,7 +10,7 @@ vim.go.listchars = 'trail:·,precedes:«,extends:»,tab:▸\\ ' -- specify chars
 -- vim.cmd "colorscheme base16-atelier-forest" -- Current color scheme
 vim.cmd "colorscheme base16-atelier-sulphurpool" -- Former favorite
 
-vim.cmd([[match ColorColumn /\s\+$/]]) -- Highlight trailing whitespace with color column
+-- vim.cmd([[match ColorColumn /\s\+$/]]) -- Highlight trailing whitespace with color column
 
 require 'nvim-web-devicons'.setup {
   -- globally enable default icons (default to false)

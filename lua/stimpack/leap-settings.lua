@@ -2,8 +2,10 @@
 -- if not  then return end
 
 require('leap').setup {
-  highlight_ahead_of_time = true,
-  highlight_unlabeled = false,
+  -- highlight_ahead_of_time = true,
+  highlight_ahead_of_time = false,
+  -- highlight_unlabeled = false,
+  -- highlight_unlabeled = true,
   case_sensitive = false,
   -- Groups of characters that should match each other.
   -- E.g.: { "([{<", ")]}>", "'\"`", }

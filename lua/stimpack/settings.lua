@@ -11,14 +11,7 @@ vim.g.nowritebackup = true
 vim.g.showmatch = true -- Show matching () [] {}
 
 vim.go.lazyredraw = true -- Don't redraw screen during macros
--- vim.go.laststatus=3
-vim.cmd([[
-" set noswapfile
-" set lazyredraw
-" set laststatus=3
-highlight WinSeparator guibg=none
-]])
--- vim.api.nvim_buf_add_highlight(0,1, 'MyCoolHighlight', 2, 0,-1)
+vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
 -- Regular options
 vim.o.conceallevel = 2
