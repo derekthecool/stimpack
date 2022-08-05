@@ -16,7 +16,7 @@ print(vim.fn.col('.'))
 -- Length of cursor line + 1
 print(vim.fn.col('$'))
 -- Column of the mark t
-print(vim.fn.col("'t"))
+print(vim.fn.col('\'t'))
 
 -- :h getpos()
 -- :h getcurpos()

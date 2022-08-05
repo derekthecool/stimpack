@@ -4,7 +4,7 @@ vim.api.nvim_set_hl(0, 'ATcommandHighlightOK', { bg = '#000ff0', fg = '#00FF00' 
 vim.api.nvim_set_hl(0, 'DebugInitSetup', { bg = '#0000FF', fg = '#FFFFFF' })
 vim.api.nvim_set_hl(0, 'conceallLogLine', { bg = nil })
 
-vim.cmd [[
+vim.cmd([[
 " Language:          Micron Device Logs (mcn_device_logs for short)
 " Maintainer:        Derek Lomax
 " Helpful Resources: https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
@@ -59,4 +59,4 @@ highlight   def   link   ATcommandOK      ATcommandHighlightOK
 syntax match  conceallLogLine '\v\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d{3} -\d{2}:\d{2}\s' conceal
 
 let b:current_syntax = "mcn_device_logs"
-]]
+]])

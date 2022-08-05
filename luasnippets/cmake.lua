@@ -1,15 +1,16 @@
 ---@diagnostic disable: undefined-global
+
 local snippets = {
 
-  -- {{{ Cmake C library and test app for test driven development (tdd) setup
-  s(
-    {
-      trig = '_Ctdd',
-      descr = 'Easy cmake tdd setup for a C project',
-    },
+    -- {{{ Cmake C library and test app for test driven development (tdd) setup
+    s(
+        {
+            trig = '_Ctdd',
+            descr = 'Easy cmake tdd setup for a C project',
+        },
 
-    fmt(
-      [[
+        fmt(
+            [[
     cmake_minimum_required(VERSION {})
 
     #Set debug mode
@@ -77,34 +78,41 @@ local snippets = {
     # |____/|_| |_|\___/ \__,_|_|\__,_| |_|  \__,_|_|_|
     #--------------------------------
     add_test(${}_ShouldFail {}_test "${}")
-    ]] ,
-      {
-        i(1, ' 3.10.2'),
-        i(2, 'ProjectName'),
-        rep(2),
-        i(3, 'Description'),
-        -- Repeat this field 8 times
-        rep(2), rep(2), rep(2), rep(2), rep(2), rep(2), rep(2), rep(2),
-        i(4, 'Test1'),
-        rep(2),
-        i(5, 'PassInput'),
-        rep(4),
-        rep(2),
-        i(6, 'FailInput'),
+    ]],
+            {
+                i(1, ' 3.10.2'),
+                i(2, 'ProjectName'),
+                rep(2),
+                i(3, 'Description'),
+                -- Repeat this field 8 times
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                i(4, 'Test1'),
+                rep(2),
+                i(5, 'PassInput'),
+                rep(4),
+                rep(2),
+                i(6, 'FailInput'),
+            }
+        )
+    ),
+    -- }}}
 
-      })
-  ),
-  -- }}}
+    -- {{{ Cmake C executable
+    s(
+        {
+            trig = 'Capp',
+            descr = 'Easy C cmake app setup',
+        },
 
-  -- {{{ Cmake C executable
-  s(
-    {
-      trig = "Capp",
-      descr = "Easy C cmake app setup",
-    },
-
-    fmt(
-      [[
+        fmt(
+            [[
     cmake_minimum_required(VERSION {})
 
     #Set debug mode
@@ -122,16 +130,17 @@ local snippets = {
 
     #Set executable
     add_executable({} ${{MainSource}})
-    ]] ,
-      {
-        i(1, ' 3.10.2'),
-        i(2, 'ProjectName'),
-        rep(2), rep(2), rep(2),
-      })
-  ),
-  -- }}}
-
-
+    ]],
+            {
+                i(1, ' 3.10.2'),
+                i(2, 'ProjectName'),
+                rep(2),
+                rep(2),
+                rep(2),
+            }
+        )
+    ),
+    -- }}}
 }
 
 local autosnippets = {}

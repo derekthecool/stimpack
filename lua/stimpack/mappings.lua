@@ -46,20 +46,20 @@ map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
 -- Conceal level mappings from ziontee113
 
-map("n", "<F10>", function()
-  if vim.o.conceallevel > 0 then
-    vim.o.conceallevel = 0
-  else
-    vim.o.conceallevel = 2
-  end
+map('n', '<F10>', function()
+    if vim.o.conceallevel > 0 then
+        vim.o.conceallevel = 0
+    else
+        vim.o.conceallevel = 2
+    end
 end)
 
-map("n", "<F11>", function()
-  if vim.o.concealcursor == "n" then
-    vim.o.concealcursor = ""
-  else
-    vim.o.concealcursor = "n"
-  end
+map('n', '<F11>', function()
+    if vim.o.concealcursor == 'n' then
+        vim.o.concealcursor = ''
+    else
+        vim.o.concealcursor = 'n'
+    end
 end)
 
 -- TODO: make this work in LUA. As of 2021-07-21 it starts the folds then exits
@@ -68,9 +68,9 @@ end)
 -- 2. Press \z to filter everything not matching the search
 -- 3. Press zr and zm for more and less context
 --  nnoremap \z :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
-vim.cmd [[
+vim.cmd([[
 nnoremap § :setlocal foldexpr=(getline(v:lnum)=~@/)?0:(getline(v:lnum-1)=~@/)\\|\\|(getline(v:lnum+1)=~@/)?1:2 foldmethod=expr foldlevel=0 foldcolumn=2<CR>
-]]
+]])
 --[[
 Code flow:
 
@@ -86,22 +86,20 @@ v:lnum		Line number for the 'foldexpr' |fold-expr|, 'formatexpr' and
 		|sandbox|.
 ]]
 
-
-
 local function ReloadConfig()
-  local count = 0
-  for name, _ in pairs(package.loaded) do
-    print(name)
+    local count = 0
+    for name, _ in pairs(package.loaded) do
+        print(name)
 
-    if name:match('stimpack') then
-      -- print('name matched ' .. name)
-      package.loaded.name = nil
-      count = count + 1
+        if name:match('stimpack') then
+            -- print('name matched ' .. name)
+            package.loaded.name = nil
+            count = count + 1
+        end
     end
-  end
 
-  vim.notify(string.format("Reloaded entire neovim config with %d packages", count))
-  dofile(OS.init_lua)
+    vim.notify(string.format('Reloaded entire neovim config with %d packages', count))
+    dofile(OS.init_lua)
 end
 
 map('n', '<leader>ac', ReloadConfig)

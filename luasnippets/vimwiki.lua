@@ -1,33 +1,31 @@
 ---@diagnostic disable: undefined-global
-local snippets = {
-  s(
-    {
-      trig = "link",
-      descr = "Create markdown link [txt](url)",
-    },
 
-    fmt(
-      [[
+local snippets = {
+    s(
+        {
+            trig = 'link',
+            descr = 'Create markdown link [txt](url)',
+        },
+
+        fmt(
+            [[
       [{}]({})
       {}
       ]],
-      {
-        i(1),
-        f(function(_, snip)
-          return snip.env.TM_Selected_text[1] or {}
-        end, {}),
-        i(2)
-      })
-  ),
-
+            {
+                i(1),
+                f(function(_, snip)
+                    return snip.env.TM_Selected_text[1] or {}
+                end, {}),
+                i(2),
+            }
+        )
+    ),
 }
 
-local autosnippets = {
-
-}
+local autosnippets = {}
 
 return snippets, autosnippets
-
 
 -- snippet link "Markdown web or file link"
 -- [${1:Description}](${2:URL})

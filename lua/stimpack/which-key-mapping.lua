@@ -17,20 +17,19 @@ which_key_mapper({
   })
 ]]
 
-
 local function which_key_mapping(setup)
-  local wk = require("which-key")
+    local wk = require('which-key')
 
-  local options = {
-    mode = "n",          -- NORMAL mode
-    prefix = "<leader>", -- Every mapping is prepended with <leader>
-    buffer = nil,        -- Global mappings. Specify a buffer number for buffer local mappings
-    silent = true,       -- use `silent` when creating keymaps
-    noremap = true,      -- use `noremap` when creating keymaps
-    nowait = false,      -- use `nowait` when creating keymaps
-  }
+    local options = {
+        mode = 'n', -- NORMAL mode
+        prefix = '<leader>', -- Every mapping is prepended with <leader>
+        buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+        silent = true, -- use `silent` when creating keymaps
+        noremap = true, -- use `noremap` when creating keymaps
+        nowait = false, -- use `nowait` when creating keymaps
+    }
 
-  wk.register(setup, options)
+    wk.register(setup, options)
 end
 
 return which_key_mapping

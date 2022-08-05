@@ -1,4 +1,4 @@
-vim.cmd [[
+vim.cmd([[
 " Language:         errlogpool.txt BelleX device logs
 " Maintainer:       Derek Lomax
 " Helpful Resources: https://gist.github.com/romainl/379904f91fa40533175dfaec4c833f2f
@@ -81,4 +81,4 @@ highlight Visual cterm=NONE ctermbg=76 ctermfg=16 gui=NONE guibg=#5fd700 guifg=#
 highlight Error cterm=NONE ctermbg=76 ctermfg=16 gui=NONE guibg=#FF0000 guifg=#000000
 
 let b:current_syntax = "errlogpool"
-]]
+]])

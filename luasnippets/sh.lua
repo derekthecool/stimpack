@@ -1,14 +1,10 @@
 ---@diagnostic disable: undefined-global
-local snippets = {
 
-}
+local snippets = {}
 
-local autosnippets = {
-
-}
+local autosnippets = {}
 
 return snippets, autosnippets
-
 
 -- snippet getopts-good "Slightly altered getops than the default" b
 -- ScriptVersion="${1:Version}"

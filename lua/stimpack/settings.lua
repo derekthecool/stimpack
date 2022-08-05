@@ -51,15 +51,15 @@ vim.wo.foldmethod = 'marker'
 
 -- Buffer options
 -- vim.bo.textwidth = 80                                 -- Set max length for lines
-vim.cmd "set textwidth=80" -- The dang lua version above does not always work
+vim.cmd('set textwidth=80') -- The dang lua version above does not always work
 -- vim.bo.textwidth = 80
 
 -- Only possible to set with vim commands
-vim.cmd "set iskeyword+=-"
+vim.cmd('set iskeyword+=-')
 -- vim.bo.iskeyword = vim.bo.iskeyword + '-'
 
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)
 if OS.OS == 'Windows' then
-  vim.o.shell = 'pwsh'
+    vim.o.shell = 'pwsh'
 end

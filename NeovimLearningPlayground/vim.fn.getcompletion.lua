@@ -1,9 +1,9 @@
 -- Get lists of items
 local function GetCompletion(item_name)
-  -- for _, v in pairs(vim.fn.getcompletion('', item_name)) do
-  --   print(v)
-  -- end
-  return vim.fn.getcompletion('', item_name)
+    -- for _, v in pairs(vim.fn.getcompletion('', item_name)) do
+    --   print(v)
+    -- end
+    return vim.fn.getcompletion('', item_name)
 end
 
 print(GetCompletion('arglist'))
