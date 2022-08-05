@@ -24,7 +24,7 @@ map("s", "👉", "<Plug>luasnip-next-choice<CR>")
 map("i", "👈", "<Plug>luasnip-prev-choice<CR>")
 map("s", "👈", "<Plug>luasnip-prev-choice<CR>")
 
--- Steno down with root semicolon
+-- STWHEUFL
 map('n', '👇', '<cmd>lua require("luasnip.loaders.from_lua").edit_snippet_files()<CR>')
--- Steno down with root backslash
-map('n', '👇👇', '<cmd>source ' .. OS.nvim .. 'lua/user/luasnip-settings.lua<cr>')
+-- STWHEUFLS
+map('n', '👇👇', '<cmd>source ' .. OS.nvim .. 'lua/stimpack/luasnip-settings.lua<cr>')

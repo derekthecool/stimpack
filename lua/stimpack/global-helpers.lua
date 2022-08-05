@@ -6,13 +6,14 @@ require('stimpack.icons')
 OS = {}
 
 OS['init_lua'] = vim.env.MYVIMRC
-OS['nvim'] = vim.fn.stdpath('config')
 
 if vim.loop.os_uname().sysname == ('Linux') then
+  OS['nvim'] = vim.fn.stdpath('config') .. '/'
   OS['OS'] = 'Linux'
   OS['home'] = os.getenv('HOME')
   OS['snippets'] = string.format('%s/luasnippets/', OS['nvim'])
 elseif vim.loop.os_uname().sysname == ('Windows_NT') then
+  OS['nvim'] = vim.fn.stdpath('config') .. '\\'
   OS['OS'] = 'Windows'
   OS['home'] = os.getenv('USERPROFILE')
   OS['snippets'] = string.format('%s\\luasnippets\\', OS['nvim'])
@@ -40,4 +41,9 @@ end
 ---@return string|number
 function GetPackageNameFromCurrentFile(nameOfCurrentFileToExtractPackageNamFrom)
   return string.match(nameOfCurrentFileToExtractPackageNamFrom, '(%w+)-settings.lua')
+end
+
+-- Helpful function to print tables nicely instead of the address
+function P(table_to_print)
+  print(vim.inspect(table_to_print))
 end

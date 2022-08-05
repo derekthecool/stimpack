@@ -1,8 +1,10 @@
--- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
+-- Ｄｅｒｅｋ"ｓ ｉｎｉｔ.ｌｕａ
 
 -- Start up profiler that shows what takes the most time and helps speed up
 -- Load before any other plugins
-if not pcall(require, 'impatient') then return end
+if not pcall(require, 'impatient') then
+  return
+end
 
 -- Lua basic configuration
 require('stimpack.global-helpers')

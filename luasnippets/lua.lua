@@ -52,6 +52,8 @@ local snippets = {
   -- }}}
 
   -- {{{ Neovim command and API snippets
+
+
   -- }}}
 
   s(
@@ -79,9 +81,8 @@ local autosnippets = {
   s('vim.api speed input', { t(1, 'vim.api') }),
   -- }}}
 
-  -- Fast if statement for steno input
+  -- {{{ Fast steno commands to trigger snippets
   s('IF',
-
     fmt(
       [[
     if {} then
@@ -90,8 +91,40 @@ local autosnippets = {
     ]] ,
       {
         i(1), i(2)
-      })
-  ),
+      })),
+
+  s('PRINT',
+    fmt(
+      [[print({})
+    {}]], { i(1), i(2) })),
+
+
+  s({ trig = 'DESCRIBE', descr = 'Plenary test group', },
+    fmt([[
+        describe('{}', function()
+          it('{}', function()
+              {}
+          end)
+        end)
+    ]],
+      {
+        i(1, 'Test group name '),
+        i(2, 'Test name'),
+        i(3),
+      })),
+
+  s({ trig = 'TEST', descr = 'Single Plenary test', },
+    fmt([[
+        it('{}', function()
+            {}
+        end),
+    ]],
+      {
+        i(1, 'Test name'),
+        i(2),
+      })),
+
+  -- }}}
 
   s(
     {
