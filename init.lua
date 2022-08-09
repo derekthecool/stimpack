@@ -1,4 +1,4 @@
--- Ｄｅｒｅｋ"ｓ ｉｎｉｔ.ｌｕａ
+-- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
 
 -- Start up profiler that shows what takes the most time and helps speed up
 -- Load before any other plugins
