@@ -18,11 +18,18 @@ return require('packer').startup(function()
   -- My plugins {{{
   -- Use the local Linux development version if it is found
   -- Else pull it from GitHub
-  if OS.OS == 'Linux' and io.open(OS.home .. '/dvp.nvim/README.md', 'r') ~= nil then
-    use('~/dvp.nvim')
-  else
-    use('derekthecool/dvp.nvim')
+  local function get_my_plugin_path(plugin_name)
+    local plugin_development_path = OS.my_plugins .. '/' .. plugin_name
+    local plugin_readme_path = plugin_development_path .. '/README.md'
+    if OS.OS == 'Linux' and io.open(plugin_readme_path, 'r') ~= nil then
+      return plugin_development_path
+    else
+      return 'derekthecool/' .. plugin_name
+    end
   end
+
+  use(get_my_plugin_path('dvp.nvim'))
+  use(get_my_plugin_path('plover-tapey-tape.nvim'))
   -- }}}
 
   -- Help neovim start faster and see what takes the most time to source
@@ -114,7 +121,7 @@ return require('packer').startup(function()
   -- }}}
 
   -- Coding helpers {{{
-  use('rafcamlet/nvim-luapad') -- Real time nvim lua scratch pad
+  use({ 'rafcamlet/nvim-luapad', requires = 'antoinemadec/FixCursorHold.nvim' }) -- Real time nvim lua scratch pad
   use('folke/lua-dev.nvim')
 
   -- Get installer to work better with Linux and windows
