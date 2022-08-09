@@ -14,10 +14,10 @@ vim.api.nvim_create_autocmd('BufWinEnter *', { command = ':set formatoptions-=cr
 
 -- Format c/h files on save
 -- https://www.reddit.com/r/neovim/comments/gm4ir3/does_the_new_builtin_lsp_client_support/
-vim.api.nvim_create_autocmd(
-  'BufWritePre *.c *.h',
-  { command = ':lua vim.lsp.buf.format { async = true }', group = generalSettingsGroup }
-)
+-- vim.api.nvim_create_autocmd(
+--   'BufWritePre *.c *.h',
+--   { command = ':lua vim.lsp.buf.format { async = true }', group = generalSettingsGroup }
+-- )
 
 -- Map xaml and axaml to have xml syntax
 vim.cmd([[
