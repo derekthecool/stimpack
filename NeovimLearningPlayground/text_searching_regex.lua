@@ -17,7 +17,7 @@ local lines = vim.api.nvim_buf_get_lines(current_buffer, start_line, last_line, 
 -- Print the line count in the current buffer
 print(string.format('Lines in current buffer = %d', vim.api.nvim_buf_line_count(current_buffer)))
 
-for key, value in pairs(lines) do
+--[[ for key, value in pairs(lines) do
     local regex_text = 'match'
 
     print(key, value)
@@ -42,4 +42,6 @@ for key, value in pairs(lines) do
             match_string_end
         )
     end
-end
+end ]]
+
+print(string.match("This is a test", '^.*$'))
