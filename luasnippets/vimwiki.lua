@@ -1,26 +1,61 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
-    s(
-        {
-            trig = 'link',
-            descr = 'Create markdown link [txt](url)',
-        },
+  s(
+    {
+      trig = 'link',
+      descr = 'Create markdown link [txt](url)',
+    },
 
-        fmt(
-            [[
+    fmt(
+      [[
       [{}]({})
       {}
       ]],
-            {
-                i(1),
-                f(function(_, snip)
-                    return snip.env.TM_Selected_text[1] or {}
-                end, {}),
-                i(2),
-            }
-        )
-    ),
+      {
+        i(1),
+        f(function(_, snip)
+          return snip.env.TM_Selected_text[1] or {}
+        end, {}),
+        i(2),
+      }
+    )
+  ),
+
+  s(
+    'image',
+    fmt([[![{}]({})]], {
+      i(1, 'alt text'),
+      i(2, 'image path'),
+    })
+  ),
+
+  -- {{{ hugo snippets
+  s(
+    'front',
+    fmt(
+      [[
+      ---
+      title: "{}"
+      date: {}
+      draft: {}
+      ---
+      ]],
+      {
+
+        d(1, function(_, snip)
+          return sn(nil, {
+            t(snip.env.TM_FILENAME),
+          })
+        end, { 1 }),
+
+        t(os.date('%Y-%m-%dT%H:%M:%S')),
+        i(2, 'false'),
+      }
+    )
+  ),
+
+  -- }}}
 }
 
 local autosnippets = {}

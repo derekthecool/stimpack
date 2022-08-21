@@ -26,33 +26,6 @@ local snippets = {
     )
   ),
 
-  s(
-    {
-      trig = 'snip',
-      descr = 'New luasnip snippet starter',
-    },
-
-    fmta(
-      [[
-      s(
-      {
-        trig = "<>",
-        descr = "<>",
-      },
-
-      fmt(
-        <>
-        <>
-        <>,
-          {
-            <>
-          })
-       ),
-       <>
-       ]],
-      { i(1), i(2), t('[['), i(3), t(']]'), i(4), i(5) }
-    )
-  ),
   -- }}}
 
   -- {{{ Neovim command and API snippets
@@ -127,25 +100,118 @@ local autosnippets = {
 
   -- }}}
 
+  -- Luasnip functions
+
   s(
     {
-      trig = ';l',
-      name = 'fast option',
+      trig = 'snip',
+      descr = 'New luasnip snippet starter',
     },
-
-    fmt([[ - [{}] ]], {
-      -- return option "plugin"
-      d(1, function()
-        local options = { ' ', 'x', '-', '=', '_', '!', '+', '?' }
-        for i = 1, #options do
-          options[i] = t(options[i])
-        end
-        return sn(nil, {
-          c(1, options),
-        })
-      end),
-    })
+    fmta(
+      [[
+      s(
+      {
+        trig = "<>",
+        descr = "<>",
+      },
+      fmt(
+        <>
+        <>
+        <>,
+          {
+            <>
+          })
+       ),
+       <>
+       ]],
+      { i(1), i(2), t('[['), i(3), t(']]'), i(4), i(5) }
+    )
   ),
+
+  s(
+    {
+      trig = 'text node',
+      descr = 'insert a text node',
+    },
+    fmt(
+      [[
+      t('{}'),
+      {}
+      ]],
+      {
+        i(1, 'text'),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    {
+      trig = 'insert node',
+      descr = 'insert a new insert node',
+    },
+    fmt(
+      [[
+      i({}, '{}'),
+      {}
+      ]],
+      {
+        i(1, '1'),
+        i(2, 'default'),
+        i(0),
+      }
+    )
+  ),
+
+  -- Needs work
+  s(
+    {
+      trig = 'function node',
+      descr = 'insert a function node',
+    },
+    fmt(
+      [[
+    f(return function()
+      {}
+    end,
+    {{ {} }},
+    ),
+    {}
+    ]] ,
+      {
+        i(1),
+        i(2, 'node_number'),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    {
+      trig = 'choice node',
+      descr = 'insert a choice node',
+    },
+    fmt(
+      [[
+      c({},
+      {{
+        {}
+      }}),
+      {}
+      ]],
+      {
+        i(1, 'node number'),
+        i(2, [[t('new text')]]),
+        i(0),
+      }
+    )
+  ),
+
+  -- add dynamic node
+
+  -- add restore node
+
+  --
 }
 
 return snippets, autosnippets

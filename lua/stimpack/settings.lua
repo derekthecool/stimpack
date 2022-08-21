@@ -61,5 +61,7 @@ vim.cmd('set iskeyword+=-')
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)
 if OS.OS == 'Windows' then
-    vim.o.shell = 'pwsh'
+  -- Somehow setting to cmd works better than setting directory to pwsh or
+  -- powershell. But I still get PowerShell so I don't care!
+  vim.o.shell = 'cmd'
 end

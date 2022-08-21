@@ -169,6 +169,7 @@ return require('packer').startup(function()
   })
   -- Telescope extensions
   use('xiyaowong/telescope-emoji.nvim')
+  use({ 'nvim-telescope/telescope-ui-select.nvim' })
   -- }}}
 
   -- Git helpers {{{
