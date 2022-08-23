@@ -14,6 +14,15 @@
 (("while"      @keyword)   (#set!   conceal   "🔁"))
 (("break"      @keyword)   (#set!   conceal   "🔨"))
 
+; ((sized_type_specifier) @uc (#contains? @uc "unsigned"))@ucf
+
+
+
+
+
+
+
+
 ;; Sets all types (int, char etc. to this symbol)
 ;; ((primitive_type)      @TSType   (#set!   conceal   "×"))
 

@@ -40,17 +40,19 @@ local snippets = {
       date: {}
       draft: {}
       ---
+
+      # {}
+
+      {}
       ]],
       {
 
-        d(1, function(_, snip)
-          return sn(nil, {
-            t(snip.env.TM_FILENAME),
-          })
-        end, { 1 }),
-
+        f(function() return (vim.fn.expand('%:t'):gsub('-',' '):gsub('.md',''))end),
         t(os.date('%Y-%m-%dT%H:%M:%S')),
         i(2, 'false'),
+        require('luasnip.extras').rep(1),
+        i(0),
+        
       }
     )
   ),
