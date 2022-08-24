@@ -156,10 +156,7 @@ local autosnippets = {
   ),
 
   s(
-    {
-      trig = 'FUNCTION',
-      descr = 'fast function',
-    },
+    'FUNCTION',
     fmt(
       [[
       {} {} {}({})
@@ -182,8 +179,10 @@ local autosnippets = {
           i(1),
         }),
 
+        --TODO: Add choice-node here
         i(3, 'AwesomeFunction'),
-        i(4, 'params'),
+
+        i(4, 'int params'),
         i(5),
         i(0),
       }
