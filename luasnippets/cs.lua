@@ -70,10 +70,7 @@ local autosnippets = {
 
   -- {{{ Fast steno commands to trigger snippets
   s(
-    {
-      trig = 'IF',
-      descr = 'fast if statement',
-    },
+    'IF',
     fmt(
       [[
       if ({})
@@ -91,10 +88,7 @@ local autosnippets = {
   ),
 
   s(
-    {
-      trig = 'ELS_EI_F',
-      descr = 'fast else if',
-    },
+    'ELS_EI_F',
     fmt(
       [[
       else if ({})
@@ -112,10 +106,7 @@ local autosnippets = {
   ),
 
   s(
-    {
-      trig = 'ELSE',
-      descr = 'fast else statement',
-    },
+    'ELSE',
     fmt(
       [[
       else
@@ -133,10 +124,7 @@ local autosnippets = {
   ),
 
   s(
-    {
-      trig = 'FOR',
-      descr = 'fast for loop',
-    },
+    'FOR',
     fmt(
       [[
       for (int i = {}; i < {}; i++)
@@ -185,6 +173,38 @@ local autosnippets = {
         i(4, 'int params'),
         i(5),
         i(0),
+      }
+    )
+  ),
+
+  s(
+    { trig = '(%d+)b', regTrig = true },
+
+    fmt([[ {} {} ]], {
+      f(function(args, snip)
+        return 'Captured Text: ' .. snip.captures[1] .. '.'
+      end, {}),
+
+      t('Derek is cool!'),
+    })
+  ),
+
+  s(
+    {
+      trig = ' Derek (%d+) (%w+) ',
+      regTrig = true,
+      descr = 'test test',
+    },
+    fmt(
+      [[
+      {} {}
+      ]],
+      {
+        t(' Derek test: '),
+
+        f(function(args, snip)
+          return snip.captures[2] .. ' + ' .. snip.captures[1]
+        end, {}),
       }
     )
   ),

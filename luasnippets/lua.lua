@@ -104,16 +104,13 @@ local autosnippets = {
 
   s(
     {
-      trig = 'snip',
+      trig = 'snip snip',
       descr = 'New luasnip snippet starter',
     },
     fmta(
       [[
       s(
-        {
-          trig = "<>",
-          descr = "<>",
-        },
+       <>,
         fmt(
           <>
           <>
@@ -124,9 +121,31 @@ local autosnippets = {
          ),
          <>
          ]],
-      { i(1), i(2), t('[['), i(3), t(']]'), i(4), i(0) }
+      {
+        c(1, {
+          i(1, 'short snippet trigger'),
+          sn(
+            i(1, 'long snippet trigger'),
+
+            c(2, {
+              t('true'),
+              t('false'),
+            }),
+
+            i(3, 'description')
+          ),
+        }),
+
+        t('[['),
+        i(2),
+        t(']]'),
+        i(3),
+        i(0),
+      }
     )
   ),
+
+  
 
   s(
     {
@@ -171,13 +190,12 @@ local autosnippets = {
     },
     fmt(
       [[
-    f(return function()
+      f(function(args, snip)
+        {}
+      end,
+      {{ {} }}),
       {}
-    end,
-    {{ {} }},
-    ),
-    {}
-    ]] ,
+      ]],
       {
         i(1),
         i(2, 'node_number'),
@@ -201,7 +219,7 @@ local autosnippets = {
       ]],
       {
         i(1, 'node number'),
-        i(2, [[t('new text')]]),
+        i(2, [[t('new text'),]]),
         i(0),
       }
     )
