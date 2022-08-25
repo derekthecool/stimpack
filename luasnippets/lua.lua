@@ -107,45 +107,54 @@ local autosnippets = {
       trig = 'snip snip',
       descr = 'New luasnip snippet starter',
     },
-    fmta(
-      [[
+    fmt(
+      [=[
       s(
-       <>,
+        {},
         fmt(
-          <>
-          <>
-          <>,
-            {
-              <>
-            })
-         ),
-         <>
-         ]],
+          [[
+          {}
+          ]],
+          {{
+            {}
+          }}
+        )
+      ),
+      {}
+      ]=],
+
       {
         c(1, {
-          i(1, 'short snippet trigger'),
-          sn(
-            i(1, 'long snippet trigger'),
-
-            c(2, {
-              t('true'),
-              t('false'),
-            }),
-
-            i(3, 'description')
-          ),
+          i(1, '\'short snippet trigger\''),
+          -- sn(1, {
+          --   i(1, 'long snippet trigger'),
+          --
+          --   c(2, {
+          --     t('true'),
+          --     t('false'),
+          --   }),
+          --
+          --   i(3, 'description'),
+          -- }),
         }),
-
-        t('[['),
         i(2),
-        t(']]'),
         i(3),
         i(0),
       }
     )
   ),
 
-  
+  s('dog', {
+    t('new text'),
+
+    sn(1, {
+      t('text'),
+      c(1, {
+        t('new text'),
+        t('sheep'),
+      }),
+    }),
+  }),
 
   s(
     {
