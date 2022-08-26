@@ -1,3 +1,6 @@
+-- Load my treesitter helper functions now
+require('stimpack.my-treesitter-functions')
+
 -- Setup location to load my custom lua snippets - NOTE: the value OS.snippets
 -- is a global table from my config which helps me have cross platform setup
 require('luasnip.loaders.from_lua').load({ paths = OS.snippets })

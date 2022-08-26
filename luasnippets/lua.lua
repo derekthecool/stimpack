@@ -1,5 +1,38 @@
 ---@diagnostic disable: undefined-global
 
+local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+
+-- --lua treesitter functions
+-- local function get_recent_var()
+--   local get_root = function(bufnr)
+--     local parser = vim.treesitter.get_parser(bufnr, 'lua', {})
+--     local tree = parser:parse()[1]
+--     return tree:root()
+--   end
+--
+--   local my_query = vim.treesitter.parse_query('lua', '(variable_list) @variable')
+--   local bufnr = vim.api.nvim_get_current_buf()
+--   local root = get_root(bufnr)
+--
+--   local current_row = vim.api.nvim_win_get_cursor(0)
+--   print(current_row)
+--   local closest_row_above = 1000
+--   local variable_name = ''
+--   for id, node in my_query:iter_captures(root, bufnr, 0, -1) do
+--     local _, _, row, _ = node:range()
+--     if row < current_row[1] then
+--       closest_row_above = row
+--       variable_name = vim.treesitter.get_node_text(node, bufnr)
+--       print(variable_name)
+--     end
+--   end
+--
+--   print(closest_row_above)
+--   return variable_name
+-- end
+--
+--
+
 local snippets = {
 
   -- {{{ Snippets to help create luasnip snippets
@@ -126,16 +159,26 @@ local autosnippets = {
       {
         c(1, {
           i(1, '\'short snippet trigger\''),
-          -- sn(1, {
-          --   i(1, 'long snippet trigger'),
-          --
-          --   c(2, {
-          --     t('true'),
-          --     t('false'),
-          --   }),
-          --
-          --   i(3, 'description'),
-          -- }),
+          sn(
+            1,
+            fmt(
+              [[
+              {{
+                trig = '{}',
+                regTrig = {},
+                descr = '{}',
+              }}
+              ]],
+              {
+                i(1, 'long snippet trigger'),
+                c(2, {
+                  t('true'),
+                  t('false'),
+                }),
+                i(3, 'description'),
+              }
+            )
+          ),
         }),
         i(2),
         i(3),
@@ -144,17 +187,21 @@ local autosnippets = {
     )
   ),
 
-  s('dog', {
-    t('new text'),
-
-    sn(1, {
-      t('text'),
-      c(1, {
-        t('new text'),
-        t('sheep'),
-      }),
-    }),
-  }),
+  s(
+    {
+      trig = 'long snippet trigger',
+      regTrig = true,
+      descr = 'description',
+    },
+    fmt(
+      [[
+      {}
+      ]],
+      {
+        t('text'),
+      }
+    )
+  ),
 
   s(
     {
@@ -234,11 +281,59 @@ local autosnippets = {
     )
   ),
 
+  s('trig', {
+    t('text: '),
+    i(1),
+    t({ '', 'copy: ' }),
+    d(2, function(args)
+      -- the returned snippetNode doesn't need a position; it's inserted
+      -- "inside" the dynamicNode.
+      return sn(nil, {
+        -- jump-indices are local to each snippetNode, so restart at 1.
+        i(1, args[1]),
+      })
+    end, { 1 }),
+  }),
+
   -- add dynamic node
+  s(
+    'dynamic node',
+    fmt(
+      [[
+      d({}, function(args)
+        return sn(nil,{{
+          {}
+        }}) end,
+        {{ {} }}
+       )
+       {}
+      ]],
+      {
+        i(1, '1'),
+        i(2),
+        i(3, '1'),
+        i(0),
+      }
+    )
+  ),
+
+  -- end lua snip functions
+
+  s(
+    'var var',
+    fmt(
+      [[
+      {}
+      ]],
+      {
+        f(function(args, snip)
+          return my_treesitter_functions.lua.get_recent_var()
+        end, {}),
+      }
+    )
+  ),
 
   -- add restore node
-
-  --
 }
 
 return snippets, autosnippets

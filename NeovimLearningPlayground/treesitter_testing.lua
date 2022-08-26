@@ -20,10 +20,9 @@ print(current_row)
 local closest_row_above = 1000
 for id, node in my_query:iter_captures(root, bufnr, 0, -1) do
   local _, _, row, _ = node:range()
-  print(row)
-
   if row < current_row[1] then
-    print(row)
+    closest_row_above  = row
+    print(vim.treesitter.get_node_text(node, bufnr))
   end
 end
 
