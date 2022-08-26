@@ -1,8 +1,26 @@
 ---@diagnostic disable: undefined-global
 
+local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+
 local snippets = {}
 
-local autosnippets = {}
+local autosnippets = {
+
+  s(
+    'var var',
+    fmt(
+      [[
+      {}
+      ]],
+      {
+        f(function()
+          local variable = my_treesitter_functions.bash.get_recent_var()
+          return variable
+        end, {}),
+      }
+    )
+  ),
+}
 
 return snippets, autosnippets
 

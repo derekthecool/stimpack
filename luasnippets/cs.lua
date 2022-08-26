@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+
 local snippets = {
 
   -- {{{ Comment XML snippets
@@ -181,7 +183,7 @@ local autosnippets = {
     { trig = '(%d+)b', regTrig = true },
 
     fmt([[ {} {} ]], {
-      f(function(args, snip)
+      f(function(_, snip)
         return 'Captured Text: ' .. snip.captures[1] .. '.'
       end, {}),
 
@@ -202,8 +204,23 @@ local autosnippets = {
       {
         t(' Derek test: '),
 
-        f(function(args, snip)
+        f(function(_, snip)
           return snip.captures[2] .. ' + ' .. snip.captures[1]
+        end, {}),
+      }
+    )
+  ),
+
+  s(
+    'var var',
+    fmt(
+      [[
+      {}
+      ]],
+      {
+        f(function()
+          local variable = my_treesitter_functions.cs.get_recent_var()
+          return variable
         end, {}),
       }
     )

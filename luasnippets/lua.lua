@@ -326,7 +326,7 @@ local autosnippets = {
       {}
       ]],
       {
-        f(function(args, snip)
+        f(function()
           return my_treesitter_functions.lua.get_recent_var()
         end, {}),
       }
