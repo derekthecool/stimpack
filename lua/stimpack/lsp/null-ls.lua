@@ -32,7 +32,7 @@ null_ls.setup({
     }),
 
     -- This is getting really annoying to see write good errors
-    -- diagnostics.write_good.with({ filetypes = { "markdown", "vimwiki", "gitcommit", "NeogitCommitMessage" } }), -- https://github.com/btford/write-good
+    diagnostics.write_good.with({ filetypes = { "markdown", "vimwiki", "gitcommit", "NeogitCommitMessage" } }), -- https://github.com/btford/write-good
     diagnostics.gitlint.with({ filetypes = { 'gitcommit', 'NeogitCommitMessage' } }), -- https://jorisroovers.com/gitlint/
     hover.dictionary.with({ filetypes = { 'markdown', 'text', 'vimwiki' } }),
 

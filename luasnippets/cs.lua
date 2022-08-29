@@ -179,6 +179,20 @@ local autosnippets = {
     )
   ),
 
+  -- TODO: Add switch statement that gets all enum values if applicable
+
+  --[[ switch (DeviceTypeEnum)
+            {
+                case DeviceTypeEnum.unknown:
+                    break;
+                case DeviceTypeEnum.BelleX:
+                    break;
+                case DeviceTypeEnum.BelleW:
+                    break;
+                default:
+                    break;
+            } ]]
+
   s(
     { trig = '(%d+)b', regTrig = true },
 
