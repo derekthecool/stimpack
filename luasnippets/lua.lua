@@ -2,37 +2,6 @@
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
--- --lua treesitter functions
--- local function get_recent_var()
---   local get_root = function(bufnr)
---     local parser = vim.treesitter.get_parser(bufnr, 'lua', {})
---     local tree = parser:parse()[1]
---     return tree:root()
---   end
---
---   local my_query = vim.treesitter.parse_query('lua', '(variable_list) @variable')
---   local bufnr = vim.api.nvim_get_current_buf()
---   local root = get_root(bufnr)
---
---   local current_row = vim.api.nvim_win_get_cursor(0)
---   print(current_row)
---   local closest_row_above = 1000
---   local variable_name = ''
---   for id, node in my_query:iter_captures(root, bufnr, 0, -1) do
---     local _, _, row, _ = node:range()
---     if row < current_row[1] then
---       closest_row_above = row
---       variable_name = vim.treesitter.get_node_text(node, bufnr)
---       print(variable_name)
---     end
---   end
---
---   print(closest_row_above)
---   return variable_name
--- end
---
---
-
 local snippets = {
 
   -- {{{ Snippets to help create luasnip snippets
@@ -103,18 +72,74 @@ local autosnippets = {
     fmt(
       [[
         describe('{}', function()
-          it('{}', function()
-              {}
-          end)
+          {}
         end)
+
+        {}
     ]] ,
       {
         i(1, 'Test group name '),
-        i(2, 'Test name'),
+        d(2, function(args)
+
+          local test_snippet = fmt(
+          [[
+          it('{}', function()
+              {}
+          end)
+          ]],
+          {
+            i(1, 'Test name'),
+            i(2),
+          })
+
+          -- TODO: dynamic may not be the way to go. I may need just normal choice version
+          local runtimepath_add_in = fmt(
+          [[
+          before_each(function()
+            -- Run time path is not getting loaded automatically, so modify it before each test
+            --
+            -- Project directory tree view:
+            -- lua/
+            -- ├── string-calculator
+            -- │   ├── init.lua
+            -- │   └── string-calculator-function.lua
+            -- └── tests
+            --     └── string-calculator
+            --         └── string-calculator_spec.lua
+            --
+            -- Our test files are the '_spec.lua' files. So adding the directory 4 levels up will set our runtimepath properly.
+
+            local path_to_plugin = debug.getinfo(1).source:match("@(.*)/.*/.*/.*/.*"):gsub('"', "")
+            vim.cmd('set runtimepath+=' .. path_to_plugin)
+            print(string.format("Adding: %s to neovim runtimepath because plenary tests fail without this", path_to_plugin))
+          end)
+          ]],
+
+          {
+
+          }
+          )
+
+
+          return sn(nil, 
+          {
+          c(1,
+          {
+            t('new text'),
+            runtimepath_add_in
+          }
+          ),
+        }
+          
+            -- test_snippet
+          )
+        end, { 1 }),
+
         i(3),
       }
     )
   ),
+
 
   s(
     { trig = 'TEST', descr = 'Single Plenary test' },
@@ -122,7 +147,7 @@ local autosnippets = {
       [[
         it('{}', function()
             {}
-        end),
+        end)
     ]] ,
       {
         i(1, 'Test name'),
@@ -333,7 +358,32 @@ local autosnippets = {
     )
   ),
 
-  -- add restore node
+  -- {{{ Experiment snippets
+  s('extras1', {
+    i(1),
+    t({ '', '' }),
+    m(1, '^ABC$', 'A'),
+  }),
+  s('extras2', {
+    i(1, 'INPUT'),
+    t({ '', '' }),
+    m(1, l._1:match(l._1:reverse()), 'PALINDROME'),
+  }),
+  s('extras3', {
+    i(1),
+    t({ '', '' }),
+    i(2),
+    t({ '', '' }),
+    m({ 1, 2 }, l._1:match('^' .. l._2 .. '$'), l._1:gsub('a', 'e')),
+  }),
+  s('extras4', { i(1), t({ '', '' }), rep(1) }),
+  s('extras5', { p(os.date, '%Y') }),
+  s('extras6', { i(1, ''), t({ '', '' }), n(1, 'not empty!', 'empty!') }),
+  s('extras7', { i(1), t({ '', '' }), dl(2, l._1 .. l._1, 1) }),
+  -- s('extras8', {parse('"$1 is ${2|hard,easy,challenging|}"')}),
+  parse('extras8', '"$TM_FILENAME"'),
+
+  --}}}
 }
 
 return snippets, autosnippets

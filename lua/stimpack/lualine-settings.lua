@@ -4,7 +4,7 @@
 require('lualine').setup({
   options = {
     icons_enabled = true,
-    theme = 'base16',
+    -- theme = 'base16',
     -- component_separators = { left = '', right = Icons.ui.RightArrow },
     component_separators = { left = '', right = '' },
     section_separators = { left = '', right = '' },
@@ -15,7 +15,9 @@ require('lualine').setup({
   sections = {
     lualine_a = { 'mode' },
     lualine_b = { 'branch', 'diff', 'diagnostics' },
-    lualine_c = { 'filename', 'TapeyTape' },
+    lualine_c = { 'TapeyTape' },
+    -- Color does not work for globals
+    -- lualine_c = { 'TapeyTape', color = 'WarningMsg' },
     lualine_x = { 'filesize', 'encoding', 'fileformat', 'filetype' },
     lualine_y = { 'progress', 'WatchFileJumpToEnd' },
     lualine_z = { 'location' },

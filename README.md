@@ -59,3 +59,27 @@ Using a nerd font you can use characters as icons. This
 [website](https://www.nerdfonts.com/cheat-sheet) is a great reference to look up
 an icon. You can copy to neovim and see if is shows up properly, if it does not
 show up right choose another one.
+
+## Tracking My Open Source Involement
+
+### Neovim Plugins
+
+#### Fixes To Work On
+
+- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) globals in status
+- PowerShell lsp space in path messes everything up: 
+  ```
+  [START][2022-08-31 16:09:07] LSP logging initiated
+  [ERROR][2022-08-31 16:09:07] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"\27[91mC:\\Users\\Derek: \27[91mThe term 'C:\\Users\\Derek' is not recognized as a name of a cmdlet, function, script file, or executable program.\r\n"
+  [ERROR][2022-08-31 16:09:07] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\27[0m\r\n"
+  [ERROR][2022-08-31 16:10:10] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"\27[91mC:\\Users\\Derek: \27[91mThe term 'C:\\Users\\Derek' is not recognized as a name of a cmdlet, function, script file, or executable program.\r\n"
+  [ERROR][2022-08-31 16:10:10] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\27[0m\r\n"
+  [START][2022-08-31 16:10:21] LSP logging initiated
+  [ERROR][2022-08-31 16:10:21] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"\27[91mC:\\Users\\Derek: \27[91mThe term 'C:\\Users\\Derek' is not recognized as a name of a cmdlet, function, script file, or executable program.\r\n"
+  [ERROR][2022-08-31 16:10:21] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\27[0m\r\n"
+  [START][2022-08-31 16:11:28] LSP logging initiated
+  [ERROR][2022-08-31 16:11:28] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"\27[91mC:\\Users\\Derek: \27[91mThe term 'C:\\Users\\Derek' is not recognized as a name of a cmdlet, function, script file, or executable program.\r\n"
+  [ERROR][2022-08-31 16:11:28] ...\vim\lsp\rpc.lua:440	"rpc"	"pwsh"	"stderr"	"Check the spelling of the name, or if a path was included, verify that the path is correct and try again.\27[0m\r\n"
+- ```
+  
+  line disappear if colored
