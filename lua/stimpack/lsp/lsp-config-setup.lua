@@ -1,4 +1,5 @@
 -- Lua setup
+--[[
 require('lspconfig').sumneko_lua.setup({
   settings = {
     Lua = {
@@ -35,3 +36,4 @@ require('lspconfig').powershell_es.setup({
 
 -- Bash setup
 require('lspconfig').bashls.setup({})
+--]]

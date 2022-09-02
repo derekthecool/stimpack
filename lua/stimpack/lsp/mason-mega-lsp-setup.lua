@@ -69,4 +69,55 @@ require('mason').setup({
     },
 })
 
-require('mason-lspconfig').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = { 'sumneko_lua', 'awk_ls' },
+    automatic_installation = true,
+})
+
+require('mason-lspconfig').setup_handlers({
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
+
+    function(server_name) -- default handler (optional)
+        require('lspconfig')[server_name].setup({})
+    end,
+
+    -- Next, you can provide targeted overrides for specific servers.
+    -- For example, a handler override for the `rust_analyzer`:
+    -- powershell_es
+    -- clangd
+    -- awk_ls
+    -- bashls
+    -- omnisharp
+    -- sumneko_lua
+
+    ['sumneko_lua'] = function()
+        -- local sumneko_opts = require('stimpack.lsp.settings.sumneko_lua')
+        -- opts = vim.tbl_deep_extend('force', sumneko_opts, opts)
+        require('lspconfig')['sumneko_lua'].setup({
+            settings = {
+                Lua = {
+                    runtime = {
+                        -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                        version = 'LuaJIT',
+                    },
+                    diagnostics = {
+                        -- Get the language server to recognize the `vim` global
+                        -- globals = { 'vim', 'use', 'it', 'describe' },
+                        globals = { 'vim' },
+                    },
+                    workspace = {
+                        -- Make the server aware of Neovim runtime files
+                        library = vim.api.nvim_get_runtime_file('', true),
+                        [vim.fn.stdpath('config') .. '/lua'] = true,
+                    },
+                    -- Do not send telemetry data containing a randomized but unique identifier
+                    telemetry = {
+                        enable = false,
+                    },
+                },
+            },
+        })
+    end,
+})
