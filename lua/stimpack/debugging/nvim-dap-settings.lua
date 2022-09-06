@@ -83,7 +83,7 @@ dap.configurations.c = dap.configurations.cpp
 
 dap.adapters.coreclr = {
     type = 'executable',
-    command = mason_dap_directory .. 'netcoredbg',
+    command = mason_dap_directory .. 'netcoredbg.cmd',
     -- command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
     args = { '--interpreter=vscode' },
 }
