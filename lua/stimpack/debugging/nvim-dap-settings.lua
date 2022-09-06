@@ -57,11 +57,14 @@ vim.fn.sign_define('DapBreakpointRejected', { text = '🛑', texthl = '', linehl
 --     args = { 'args for my app'};
 -- }
 
+local mason_dap_directory = vim.fn.stdpath('data') .. '/mason/bin/'
+
 dap.adapters.cppdbg = {
     id = 'cppdbg',
     type = 'executable',
-    command = '/home/derek/debug-adapters/extension/debugAdapters/bin/OpenDebugAD7',
+    command = mason_dap_directory .. 'OpenDebugAD7',
 }
+
 dap.configurations.cpp = {
     {
         name = 'Launch file',
@@ -80,7 +83,8 @@ dap.configurations.c = dap.configurations.cpp
 
 dap.adapters.coreclr = {
     type = 'executable',
-    command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
+    command = mason_dap_directory .. 'netcoredbg',
+    -- command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
     args = { '--interpreter=vscode' },
 }
 
@@ -89,7 +93,8 @@ dap.configurations.cs = {
         type = 'coreclr',
         name = 'netcoredbg',
         request = 'launch',
-        program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
+        -- program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
+        program = '${workspaceFolder}\\bin\\Debug\\net6.0\\test.dll',
         -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
         cwd = '${workspaceFolder}',
     },
