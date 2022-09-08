@@ -37,6 +37,7 @@ require('stimpack.async-tasks')
 require('stimpack.luasnip-settings')
 require('stimpack.leap-settings')
 require('stimpack.nvim-luapad-settings')
+-- require('stimpack.code-auto-run')
 
 -- Configuration for my personal plugins that I wrote
 require('stimpack.dereks-plugins-config')

@@ -8,7 +8,7 @@ which_key_mapper({
         name = 'Debug',
         o = { '<cmd>lua require(\'dap\').step_over()<CR>', 'Step over (≤)' },
         e = { '<cmd>lua require(\'dapui\').eval()<CR>', 'Eval variable under cursor' },
-        e = { '<cmd>lua require(\'dapui\').float_element()<CR>', 'Open an item in a floating view' },
+        -- E = { '<cmd>lua require(\'dapui\').float_element()<CR>', 'Open an item in a floating view' },
         i = { '<cmd>lua require(\'dap\').step_into()<CR>', 'Step into (≥)' },
         O = { '<cmd>lua require(\'dap\').step_out()<CR>', 'Step out (µ)' },
         b = { '<cmd>lua require(\'dap\').toggle_breakpoint()<CR>', 'Toggle breakpoint (__)' },
@@ -57,33 +57,21 @@ vim.fn.sign_define('DapBreakpointRejected', { text = '🛑', texthl = '', linehl
 --     args = { 'args for my app'};
 -- }
 
-local mason_dap_directory = vim.fn.stdpath('data') .. '/mason/bin/'
+local mason_bin = vim.fn.stdpath('data') .. '/mason/bin/'
+local mason_dap_packages = vim.fn.stdpath('data') .. '/mason/packages/'
 
 dap.adapters.cppdbg = {
     id = 'cppdbg',
     type = 'executable',
-    command = mason_dap_directory .. 'OpenDebugAD7',
+    command = mason_bin .. 'OpenDebugAD7',
 }
-
-dap.configurations.cpp = {
-    {
-        name = 'Launch file',
-        type = 'cppdbg',
-        request = 'launch',
-        program = '${workspaceFolder}/debug/test/FA_test',
-        -- program = function()
-        --   return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        -- end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = false,
-        args = { '--command', 'FAgenerateLWT', 'ABCDEF' },
-    },
-}
+-- Set the C++ settings to work for C as well
 dap.configurations.c = dap.configurations.cpp
 
+-- Csharp settings
 dap.adapters.coreclr = {
     type = 'executable',
-    command = mason_dap_directory .. 'netcoredbg.cmd',
+    command = mason_bin .. 'netcoredbg.cmd',
     -- command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
     args = { '--interpreter=vscode' },
 }

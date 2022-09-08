@@ -13,12 +13,24 @@ if vim.loop.os_uname().sysname == 'Linux' then
   OS['home'] = os.getenv('HOME')
   OS['my_plugins'] = OS['home'] .. '/neovim_plugins'
   OS['snippets'] = string.format('%sluasnippets/', OS['nvim'])
+  OS['executable_extension'] = ''
 elseif vim.loop.os_uname().sysname == 'Windows_NT' then
   OS['nvim'] = vim.fn.stdpath('config') .. '\\'
   OS['OS'] = 'Windows'
   OS['home'] = os.getenv('USERPROFILE')
   OS['my_plugins'] = OS['home'] .. '\\neovim_plugins'
   OS['snippets'] = string.format('%sluasnippets\\', OS['nvim'])
+  OS['executable_extension'] = '.exe'
+end
+
+OS.adjust_windows_linux_path = function (input)
+  if OS.OS == 'Linux' then
+     input = input:gsub('\\', '/')
+  elseif OS.OS == 'Windows' then
+     input = input:gsub('/', '\\')
+  end
+
+  return input
 end
 
 ---Function to return telescope.utils command runner
