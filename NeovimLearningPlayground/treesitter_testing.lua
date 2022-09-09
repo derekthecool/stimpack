@@ -10,6 +10,7 @@ local root = get_root(bufnr)
 
 for id, node in my_query:iter_captures(root, bufnr, 0, -1) do
   -- Print node details
+  print(vim.treesitter.get_node_text(node,bufnr), node:range())
   --  {start row, start col, end row, end col}
   local node_text = vim.treesitter.get_node_text(node, bufnr)
   print(node_text, { node:range() })
