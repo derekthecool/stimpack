@@ -48,7 +48,8 @@ M.dotnet_test = function()
         -- Example log line: <UnitTestResult executionId="e1462b02-1118-4df7-9b9d-685e5f0abb7a" testId="7d2eee53-b992-539e-fa8b-ec839a51b1f9" testName="TestXUnit.UnitTest1.Test2" computerName="DerekLomax" duration="00:00:00.0057145" startTime="2022-09-07T11:32:32.2976422-06:00" endTime="2022-09-07T11:32:32.2976727-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e1462b02-1118-4df7-9b9d-685e5f0abb7a" />
         -- TODO: use lua rock package for xml reading for better results
         for line in io.lines(output_log_filename) do
-          local test_name, test_result = line:match('.*UnitTestResult.*testName=".-%.(%w+)".*outcome="(.-)"')
+          local test_name, test_result =
+          line:match('.*UnitTestResult.*testName=".-%.(%w+)["(].*outcome="(.-)"')
           if test_name ~= nil and test_result ~= nil then
             local current_test = { name = test_name, result = test_result }
             local possible_test_location = buffer_function_names[test_name]
