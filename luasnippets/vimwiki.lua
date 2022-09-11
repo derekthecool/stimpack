@@ -1,40 +1,58 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
-    s(
-        {
-            trig = 'link',
-            descr = 'Create markdown link [txt](url)',
-        },
+  s(
+    {
+      trig = 'link',
+      descr = 'Create markdown link [txt](url)',
+    },
 
-        fmt(
-            [[
+    fmt(
+      [[
       [{}]({})
       {}
       ]],
-            {
-                i(1),
-                f(function(_, snip)
-                    return snip.env.TM_Selected_text[1] or {}
-                end, {}),
-                i(2),
-            }
-        )
-    ),
+      {
+        i(1),
+        f(function(_, snip)
+          return snip.env.TM_Selected_text[1] or {}
+        end, {}),
+        i(2),
+      }
+    )
+  ),
 
-    s(
-        'image',
-        fmt([[![{}]({})]], {
-            i(1, 'alt text'),
-            i(2, 'image path'),
-        })
-    ),
+  s(
+    'image',
+    fmt([[![{}]({})]], {
+      i(1, 'alt text'),
+      i(2, 'image path'),
+    })
+  ),
 
-    -- {{{ hugo snippets
-    s(
-        'front',
-        fmt(
-            [[
+  s(
+    'pandoc header',
+    fmt(
+      [[
+        % {}
+        % {}
+        % {}
+        ]],
+      {
+        i(1, 'Title'),
+        i(2, 'Derek Lomax'),
+        f(function()
+          return os.date('%Y-%m-%d')
+        end, {}),
+      }
+    )
+  ),
+
+  -- {{{ hugo snippets
+  s(
+    'front',
+    fmt(
+      [[
       ---
       title: "{}"
       date: {}
@@ -45,61 +63,61 @@ local snippets = {
 
       {}
       ]],
-            {
+      {
 
-                f(function()
-                    return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
-                end),
-                t(os.date('%Y-%m-%dT%H:%M:%S')),
-                i(2, 'false'),
-                require('luasnip.extras').rep(1),
-                i(0),
-            }
-        )
-    ),
+        f(function()
+          return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
+        end),
+        t(os.date('%Y-%m-%dT%H:%M:%S')),
+        i(2, 'false'),
+        require('luasnip.extras').rep(1),
+        i(0),
+      }
+    )
+  ),
 
-    -- }}}
+  -- }}}
 }
 
 local autosnippets = {
 
-    s(
-        '```',
-        fmt(
-            [[
+  s(
+    '```',
+    fmt(
+      [[
             ```{}
             {}
             ```
 
             {}
             ]],
-            {
-                c(1, {
-                    t('yaml'),
-                    t('sh'),
-                    t('powershell'),
-                    i(1),
-                }),
-                i(2),
-                i(0),
-            }
-        )
-    ),
+      {
+        c(1, {
+          t('yaml'),
+          t('sh'),
+          t('powershell'),
+          i(1),
+        }),
+        i(2),
+        i(0),
+      }
+    )
+  ),
 
-    s(
-        'dick',
-        fmt(
-            [[
+  s(
+    'dick',
+    fmt(
+      [[
             {} : {{^}}{}{{^}}
             {}
             ]],
-            {
-                i(1, 'STKPWHRAO*EUFRPBLTS'),
-                i(2),
-                i(0),
-            }
-        )
-    ),
+      {
+        i(1, 'STKPWHRAO*EUFRPBLTS'),
+        i(2),
+        i(0),
+      }
+    )
+  ),
 }
 
 return snippets, autosnippets

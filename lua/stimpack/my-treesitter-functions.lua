@@ -6,6 +6,17 @@ local get_root = function(bufnr, language)
   return tree:root()
 end
 
+local function get_test_function_names(query, language)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local root = get_root(bufnr, language)
+
+  local test_function_locations = {}
+  for _, node in query:iter_captures(root, bufnr, 0, -1) do
+    table.insert(test_function_locations, { node:range() })
+  end
+  return test_function_locations
+end
+
 local function get_function_names(query, language)
   local bufnr = vim.api.nvim_get_current_buf()
   local root = get_root(bufnr, language)
@@ -14,7 +25,6 @@ local function get_function_names(query, language)
   for _, node in query:iter_captures(root, bufnr, 0, -1) do
     function_locations[vim.treesitter.get_node_text(node, bufnr)] = { node:range() }
   end
-  P(function_locations)
   return function_locations
 end
 
@@ -40,6 +50,20 @@ my_treesitter_functions.lua = {
     local language = 'lua'
     local query_recent_var_lua = vim.treesitter.parse_query(language, '(variable_list) @lua_variable')
     return get_recent_var_from_node(query_recent_var_lua, language)
+  end,
+
+  get_test_function_names = function()
+    local language = 'lua'
+    local get_test_function_names_query = vim.treesitter.parse_query(
+      language,
+      '((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it")))'
+
+      -- Better version to get the test name (location comes with it as well)
+      -- ((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))
+    )
+    local output = get_test_function_names(get_test_function_names_query, language)
+    V(output)
+    return output
   end,
 }
 
