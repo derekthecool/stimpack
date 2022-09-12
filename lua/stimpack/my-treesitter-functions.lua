@@ -11,8 +11,13 @@ local function get_test_function_names(query, language)
   local root = get_root(bufnr, language)
 
   local test_function_locations = {}
-  for _, node in query:iter_captures(root, bufnr, 0, -1) do
-    table.insert(test_function_locations, { node:range() })
+  for id, node in query:iter_captures(root, bufnr, 0, -1) do
+    local name = vim.treesitter.get_node_text(node, bufnr):gsub('"', ''):gsub('\'', '')
+    table.insert(test_function_locations, {
+      test_line = node:range(),
+      node_capture_group = query.captures[id],
+      name = name,
+    })
   end
   return test_function_locations
 end
@@ -54,16 +59,27 @@ my_treesitter_functions.lua = {
 
   get_test_function_names = function()
     local language = 'lua'
+
+    -- First attempt, this gets matches the function call of the "it" function call
+    -- '((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it")))'
+
+    -- Better version to get the test name (location comes with it as well)
+    -- ((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))
     local get_test_function_names_query = vim.treesitter.parse_query(
       language,
-      '((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it")))'
-
-      -- Better version to get the test name (location comes with it as well)
-      -- ((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))
+      '((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))'
     )
+
+    -- V(get_test_function_names_query)
     local output = get_test_function_names(get_test_function_names_query, language)
-    V(output)
-    return output
+    local final_output = {}
+
+    for _, value in pairs(output) do
+      if value.node_capture_group == 'test_name' then
+        table.insert(final_output, value)
+      end
+    end
+    return final_output
   end,
 }
 
