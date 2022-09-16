@@ -2,7 +2,7 @@ local M = {}
 
 local function check_for_open_test_files()
   local test_files_found = 0
-  for _, open_buffers in pairs(vim.fn.getbufinfo()) do
+  for _, open_buffers in pairs(vim.fn.getbufinfo({ buflisted = true })) do
     if open_buffers.name:match('.*_spec%.lua') then
       test_files_found = test_files_found + 1
     end
@@ -11,13 +11,13 @@ local function check_for_open_test_files()
   if test_files_found > 0 then
     return true
   else
-    vim.notify('Error, no neovim test files (_spec.lua) found in open buffers', vim.log.levels.ERROR)
     return false
   end
 end
 
 M.neovim_test = function()
   if not check_for_open_test_files() then
+    -- vim.notify('Error, no neovim test files (_spec.lua) found in open buffers', vim.log.levels.ERROR)
     return
   end
 
@@ -27,7 +27,7 @@ M.neovim_test = function()
   local output_list = {}
   local test_file_buffers = {}
 
-  for _, buffer in pairs(vim.fn.getbufinfo()) do
+  for _, buffer in pairs(vim.fn.getbufinfo({ buflisted = true })) do
     vim.api.nvim_buf_clear_namespace(buffer.bufnr, namespace_id, 0, -1)
     vim.diagnostic.reset(namespace_id, buffer.bufnr)
 
@@ -70,30 +70,32 @@ M.neovim_test = function()
       V(output_list)
 
       local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
+      V(test_names)
       for _, test_name in pairs(test_names) do
         for _, output_results_test_name in pairs(output_list) do
           if test_name.name == output_results_test_name.test_name then
             -- TODO: test line is not getting set with multiple test files
             output_results_test_name['test_line'] = test_name.test_line
+            output_results_test_name['bufnr'] = test_name.bufnr
           end
         end
       end
 
       for _, test_result in pairs(output_list) do
         -- Make sure table is not empty first
+        V(test_result)
         if next(test_result.buffer_number) ~= nil then
           if test_result.result == 'Success' then
-            -- V(test_result.test_line)
             local ext_mark_text = '    ✔️'
-            -- vim.api.nvim_buf_set_extmark(
-            --   test_result.buffer_number[1].bufnr,
-            --   namespace_id,
-            --   test_result.test_line,
-            --   0,
-            --   {
-            --     virt_text = { { ext_mark_text, 'DevIconMotoko' } },
-            --   }
-            -- )
+            vim.api.nvim_buf_set_extmark(
+              test_result.buffer_number[1].bufnr,
+              namespace_id,
+              test_result.test_line,
+              0,
+              {
+                virt_text = { { ext_mark_text, 'DevIconMotoko' } },
+              }
+            )
           elseif test_result.result == 'Fail' then
             local diagnostic_message = {
               {
@@ -106,7 +108,6 @@ M.neovim_test = function()
                 user_data = {},
               },
             }
-            -- V(test_result.buffer_number[1].bufnr)
             vim.diagnostic.set(namespace_id, test_result.buffer_number[1].bufnr, diagnostic_message, {})
           end
         end

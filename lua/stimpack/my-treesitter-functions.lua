@@ -6,19 +6,37 @@ local get_root = function(bufnr, language)
   return tree:root()
 end
 
-local function get_test_function_names(query, language)
-  -- TODO: loop over every buffer
-  local bufnr = vim.api.nvim_get_current_buf()
-  local root = get_root(bufnr, language)
+my_treesitter_functions.all = {
+  get_all_buffers = function(pattern)
+    local buffer_list = {}
 
+    for _, open_buffers in pairs(vim.fn.getbufinfo({ buflisted = true })) do
+      local buffer_number
+      if type(pattern) == 'string' and open_buffers.name:match(pattern) then
+        if next(open_buffers) then
+          buffer_number = open_buffers.bufnr
+        end
+      end
+      table.insert(buffer_list, buffer_number)
+    end
+    return buffer_list
+  end,
+}
+
+local function get_test_function_names(query, language)
   local test_function_locations = {}
-  for id, node in query:iter_captures(root, bufnr, 0, -1) do
-    local name = vim.treesitter.get_node_text(node, bufnr):gsub('"', ''):gsub('\'', '')
-    table.insert(test_function_locations, {
-      test_line = node:range(),
-      node_capture_group = query.captures[id],
-      name = name,
-    })
+  for _, bufnr in pairs(my_treesitter_functions.all.get_all_buffers('.*_spec%.lua')) do
+    local root = get_root(bufnr, language)
+
+    for id, node in query:iter_captures(root, bufnr, 0, -1) do
+      local name = vim.treesitter.get_node_text(node, bufnr):gsub('"', ''):gsub('\'', '')
+      table.insert(test_function_locations, {
+        test_line = node:range(),
+        node_capture_group = query.captures[id],
+        name = name,
+        bufnr = bufnr,
+      })
+    end
   end
   return test_function_locations
 end
