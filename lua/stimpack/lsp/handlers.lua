@@ -13,7 +13,7 @@ M.setup = function()
     end
 
     local config = {
-        virtual_text = true,
+        -- virtual_text = true,
         -- show signs
         signs = {
             active = signs,
@@ -75,18 +75,6 @@ vim.api.nvim_set_keymap('n', 'gl', '<cmd>lua vim.lsp.diagnostic.open_float()<CR>
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
--- M.on_attach = function(client --[[ , bufnr ]])
---   if client.name == "tsserver" then
---     client.resolved_capabilities.document_formatting = false
---   end
---
---   if client.name == "clangd" then
---     client.resolved_capabilities.document_formatting = true
---   end
---   -- lsp_keymaps(bufnr)
---   lsp_highlight_document(client)
--- end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 

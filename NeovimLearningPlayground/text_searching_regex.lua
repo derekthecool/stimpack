@@ -13,6 +13,10 @@ local start_line = 0
 local last_line = -1
 local strict_indexing = false
 local lines = vim.api.nvim_buf_get_lines(current_buffer, start_line, last_line, strict_indexing)
+print(type(lines))
+for line_number, line in pairs(vim.api.nvim_buf_get_lines(current_buffer, start_line, last_line, strict_indexing)) do
+  print(line)
+end
 
 -- Print the line count in the current buffer
 print(string.format('Lines in current buffer = %d', vim.api.nvim_buf_line_count(current_buffer)))

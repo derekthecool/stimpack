@@ -16,7 +16,7 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd(
     'BufWritePost',
-    { pattern = { '*_spec.lua' }, callback = neovim_test, group = autocommand_group }
+    { pattern = { '*.lua' }, callback = neovim_test, group = autocommand_group }
 )
 
 return {

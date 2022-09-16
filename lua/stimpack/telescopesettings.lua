@@ -44,7 +44,6 @@ require('telescope').setup({
       ignore_current_buffer = true,
     },
     live_grep = {
-      -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
       prompt_prefix = ' : ',
       results_title = 'Found',
       preview_title = 'Preview',
@@ -106,6 +105,7 @@ which_key_mapper({
     b = { builtins.buffers, 'Local buffers' },
     g = { builtins.live_grep, 'Live grep' }, -- search locally with live grep (uses ripgrep in the background)
     h = { builtins.help_tags, 'Help Search' },
+    c = { builtins.command_history, 'Command history' },
 
     -- v = { builtins.find_files {
     --   cwd = OS.nvim,

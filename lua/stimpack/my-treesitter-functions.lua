@@ -7,6 +7,7 @@ local get_root = function(bufnr, language)
 end
 
 local function get_test_function_names(query, language)
+  -- TODO: loop over every buffer
   local bufnr = vim.api.nvim_get_current_buf()
   local root = get_root(bufnr, language)
 

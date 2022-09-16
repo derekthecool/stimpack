@@ -61,7 +61,17 @@ vim.cmd('set iskeyword+=-')
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)
 if OS.OS == 'Windows' then
-  -- Somehow setting to cmd works better than setting directory to pwsh or
-  -- powershell. But I still get PowerShell so I don't care!
-  vim.o.shell = 'cmd'
+  -- https://github.com/akinsho/toggleterm.nvim/wiki/Tips-and-Tricks
+  local powershell_options = {
+    shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell',
+    shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
+    shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
+    shellquote = '',
+    shellxquote = '',
+  }
+
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
 end
