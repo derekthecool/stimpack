@@ -11,54 +11,54 @@ local types = require('luasnip.util.types')
 
 -- Set my config options
 require('luasnip').config.set_config({
-  history = true,
-  update_events = 'TextChanged,TextChangedI', -- update text as you type
-  enable_autosnippets = true, -- I NEED autosnippets to live, default is false
-  -- store_selection_keys = '<c-s>', -- I'm not sure about this, the default has it nil
+    history = true,
+    update_events = 'TextChanged,TextChangedI', -- update text as you type
+    enable_autosnippets = true, -- I NEED autosnippets to live, default is false
+    -- store_selection_keys = '<c-s>', -- I'm not sure about this, the default has it nil
 
-  -- Add awesome highlights to help show where you are at in a snippet
-  -- Think of them as a road map of where you're going
-  ext_opts = {
-    -- Nodes that don't need highlights:
-    -- Text node. It just makes a mess and does not help anything
+    -- Add awesome highlights to help show where you are at in a snippet
+    -- Think of them as a road map of where you're going
+    ext_opts = {
+        -- Nodes that don't need highlights:
+        -- Text node. It just makes a mess and does not help anything
 
-    -- TODO: make the virtual text into just a symbol once I know what they do and what colors I like
+        -- TODO: make the virtual text into just a symbol once I know what they do and what colors I like
 
-    [types.snippet] = {
-      -- show nothing when active
-      active = { virt_text = { { '' } } },
-      -- Display a blue icon after leaving snippet. This'll help remind to use snippet history
-      snippet_passive = { virt_text = { { ' ', 'DevIconDropbox' } } },
+        [types.snippet] = {
+            -- show nothing when active
+            active = { virt_text = { { '' } } },
+            -- Display a blue icon after leaving snippet. This'll help remind to use snippet history
+            snippet_passive = { virt_text = { { Icons.documents.cut, 'DevIconDropbox' } } },
+        },
+
+        [types.insertNode] = {
+            -- Display bright orange icon when active
+            active = { virt_text = { { Icons.documents.write, 'DevIconOPUS' } } },
+            -- Display gray icon when passive
+            passive = { virt_text = { { Icons.documents.write, 'DevIconDefault' } } },
+        },
+
+        [types.functionNode] = {
+            -- Display green icon when active
+            active = { virt_text = { { string.format('%s ', Icons.coding.Function), 'DevIconCsv' } } },
+            -- Display gray icon when passive
+            passive = { virt_text = { { string.format('%s ', Icons.coding.Function), 'DevIconDefault' } } },
+        },
+
+        [types.dynamicNode] = {
+            -- Display purple icon when active
+            active = { virt_text = { { Icons.miscellaneous.react, 'DevIconSln' } } },
+            -- Display gray icon when passive
+            passive = { virt_text = { { Icons.miscellaneous.react, 'DevIconDefault' } } },
+        },
+
+        [types.choiceNode] = {
+            -- Display a yellow icon when active
+            active = { virt_text = { { Icons.nvim_dev_icon_filetype('c'), 'DevIconCoffee' } } },
+            -- Display gray icon when passive
+            passive = { virt_text = { { Icons.nvim_dev_icon_filetype('c'), 'DevIconIni' } } },
+        },
     },
-
-    [types.insertNode] = {
-      -- Display bright orange icon when active
-      active = { virt_text = { { '', 'DevIconOPUS' } } },
-      -- Display gray icon when passive
-      passive = { virt_text = { { '', 'DevIconDefault' } } },
-    },
-
-    [types.functionNode] = {
-      -- Display green icon when active
-      active = { virt_text = { { ' ', 'DevIconCsv' } } },
-      -- Display gray icon when passive
-      passive = { virt_text = { { ' ', 'DevIconDefault' } } },
-    },
-
-    [types.dynamicNode] = {
-      -- Display purple icon when active
-      active = { virt_text = { { ' ', 'DevIconSln' } } },
-      -- Display gray icon when passive
-      passive = { virt_text = { { ' ', 'DevIconDefault' } } },
-    },
-
-    [types.choiceNode] = {
-      -- Display a yellow icon when active
-      active = { virt_text = { { '', 'DevIconCoffee' } } },
-      -- Display gray icon when passive
-      passive = { virt_text = { { '', 'DevIconIni' } } },
-    },
-  },
 })
 
 local map = require('stimpack.mapping-function')

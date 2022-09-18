@@ -45,11 +45,14 @@ map('n', '____', '<cmd>lua require(\'dap\').set_breakpoint(nil , nil , vim.fn.in
 
 local dap = require('dap')
 
-vim.fn.sign_define('DapBreakpoint', { text = 'ﲀ', texthl = 'Title', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '', texthl = 'ModeMsg', linehl = '', numhl = '' })
-vim.fn.sign_define('DapBreakpointCondition', { text = 'ﱦ', texthl = 'FoldColumn', linehl = '', numhl = '' })
-vim.fn.sign_define('DapLogPoint', { text = '', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapBreakpointRejected', { text = '🛑', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpoint', { text = Icons.ui.sign, texthl = 'Title', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = Icons.miscellaneous.fish, texthl = 'ModeMsg', linehl = '', numhl = '' })
+vim.fn.sign_define(
+    'DapBreakpointCondition',
+    { text = Icons.miscellaneous.react, texthl = 'FoldColumn', linehl = '', numhl = '' }
+)
+vim.fn.sign_define('DapLogPoint', { text = Icons.letters.w, texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', { text = Icons.ui.stop, texthl = '', linehl = '', numhl = '' })
 
 -- dap.adapters.csharp = {
 --     type = 'executable';

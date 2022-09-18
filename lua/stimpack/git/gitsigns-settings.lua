@@ -1,10 +1,35 @@
 require('gitsigns').setup({
     signs = {
-        add = { hl = 'GitSignsAdd', text = '▎', numhl = 'GitSignsAddNr', linehl = 'GitSignsAddLn' },
-        change = { hl = 'GitSignsChange', text = '▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
-        delete = { hl = 'GitSignsDelete', text = '契', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-        topdelete = { hl = 'GitSignsDelete', text = '契', numhl = 'GitSignsDeleteNr', linehl = 'GitSignsDeleteLn' },
-        changedelete = { hl = 'GitSignsChange', text = '▎', numhl = 'GitSignsChangeNr', linehl = 'GitSignsChangeLn' },
+        add = {
+            hl = 'GitSignsAdd',
+            text = Icons.git.gutterbar,
+            numhl = 'GitSignsAddNr',
+            linehl = 'GitSignsAddLn',
+        },
+        change = {
+            hl = 'GitSignsChange',
+            text = Icons.git.gutterbar,
+            numhl = 'GitSignsChangeNr',
+            linehl = 'GitSignsChangeLn',
+        },
+        delete = {
+            hl = 'GitSignsDelete',
+            text = Icons.ui.arrowclosed4,
+            numhl = 'GitSignsDeleteNr',
+            linehl = 'GitSignsDeleteLn',
+        },
+        topdelete = {
+            hl = 'GitSignsDelete',
+            text = Icons.ui.arrowclosed4,
+            numhl = 'GitSignsDeleteNr',
+            linehl = 'GitSignsDeleteLn',
+        },
+        changedelete = {
+            hl = 'GitSignsChange',
+            text = Icons.git.gutterbar,
+            numhl = 'GitSignsChangeNr',
+            linehl = 'GitSignsChangeLn',
+        },
     },
     signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
     numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -19,7 +44,7 @@ require('gitsigns').setup({
     current_line_blame_opts = {
         virt_text = true,
         virt_text_pos = 'eol', -- 'overlay':replaces your text... rude! | 'right_align': right align is so far over I can't read it
-        delay = 1000,
+        delay = 10000,
         ignore_whitespace = true,
     },
     current_line_blame_formatter_opts = {

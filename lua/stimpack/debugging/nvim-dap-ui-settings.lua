@@ -1,5 +1,5 @@
 require('dapui').setup({
-    icons = { expanded = '▾', collapsed = '▸' },
+    icons = { expanded = Icons.ui.arrowclosed2, collapsed = Icons.ui.arrowopen2 },
     mappings = {
         -- Use a table to apply multiple mappings
         expand = { '<CR>', '<2-LeftMouse>' },

@@ -31,11 +31,11 @@ require('notify').setup({
 
     -- Icons for the different levels
     icons = {
-        ERROR = '',
-        WARN = '',
-        INFO = '',
-        DEBUG = '',
-        TRACE = '✎',
+        ERROR = Icons.diagnostics.error1,
+        WARN = Icons.diagnostics.warning,
+        INFO = Icons.diagnostics.information,
+        DEBUG = Icons.debugging.bug,
+        TRACE = Icons.documents.write2,
     },
 })
 

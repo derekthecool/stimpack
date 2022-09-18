@@ -1,6 +1,6 @@
 local map = require('stimpack.mapping-function')
 
-require('nvim-tree').setup({ -- BEGIN_DEFAULT_OPTS
+require('nvim-tree').setup({
     auto_reload_on_write = true,
     disable_netrw = false,
     hijack_cursor = false,
@@ -34,7 +34,7 @@ require('nvim-tree').setup({ -- BEGIN_DEFAULT_OPTS
         auto_open = true,
     },
     update_focused_file = {
-        enable = false,
+        enable = true,
         update_cwd = false,
         ignore_list = {},
     },
@@ -50,11 +50,69 @@ require('nvim-tree').setup({ -- BEGIN_DEFAULT_OPTS
         enable = false,
         show_on_dirs = false,
         icons = {
-            hint = '',
-            info = '',
-            warning = '',
-            error = '',
+            hint = Icons.diagnostics.hint1,
+            info = Icons.diagnostics.information,
+            warning = Icons.diagnostics.warning,
+            error = Icons.diagnostics.error1,
         },
+    },
+    renderer = {
+        add_trailing = false,
+        group_empty = false,
+        highlight_git = false,
+        full_name = false,
+        highlight_opened_files = 'none',
+        root_folder_modifier = ':~',
+        indent_width = 2,
+        indent_markers = {
+            enable = false,
+            inline_arrows = true,
+            icons = {
+                corner = Icons.ui.borders.corner,
+                edge = Icons.ui.borders.edge,
+                item = Icons.ui.borders.item,
+                bottom = Icons.ui.borders.bottom,
+                none = Icons.ui.borders.none,
+            },
+        },
+        icons = {
+            webdev_colors = true,
+            git_placement = 'before',
+            padding = ' ',
+            symlink_arrow = ' ' .. Icons.ui.arrowclosed3 .. ' ',
+            show = {
+                file = true,
+                folder = true,
+                folder_arrow = true,
+                git = true,
+            },
+            glyphs = {
+                default = Icons.documents.file3,
+                symlink = Icons.documents.linkedfile,
+                bookmark = Icons.miscellaneous.target,
+                folder = {
+                    arrow_closed = Icons.ui.arrowclosed1,
+                    arrow_open = Icons.ui.arrowopen1,
+                    default = Icons.documents.flatdirectory,
+                    open = Icons.opendirectory3,
+                    empty = Icons.documents.emptydirectory,
+                    empty_open = Icons.documents.opendirectory2,
+                    symlink = Icons.documents.symlinkdirectory,
+                    symlink_open = Icons.documents.symlinkdirectory,
+                },
+                git = {
+                    unstaged = Icons.git.unstaged,
+                    staged = Icons.git.staged,
+                    unmerged = Icons.git.unmerged,
+                    renamed = Icons.git.renamed,
+                    untracked = Icons.git.untracked,
+                    deleted = Icons.git.deleted,
+                    ignored = Icons.git.ignored,
+                },
+            },
+        },
+        special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md' },
+        symlink_destination = true,
     },
     filters = {
         dotfiles = false,
@@ -101,39 +159,16 @@ require('nvim-tree').setup({ -- BEGIN_DEFAULT_OPTS
             profile = false,
         },
     },
-}) -- END_DEFAULT_OPTS
+})
 
 map('n', '<leader>fe', ':NvimTreeToggle<cr>')
 
 -- Autocommand to close when last window
--- TODO: Derek Lomax
--- change this to a lua autocommand ASAP 2022-03-27
-vim.cmd([[autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif]])
-
--- TODO: Derek Lomax
--- Find a way back to lua with this
-vim.cmd([[
-let g:nvim_tree_icons = {
-    \ 'default': "",
-    \ 'symlink': "",
-    \ 'git': {
-    \   'unstaged': "",
-    \   'staged': "✓",
-    \   'unmerged': "",
-    \   'renamed': "➜",
-    \   'untracked': "★",
-    \   'deleted': "",
-    \   'ignored': "◌"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "",
-    \   'arrow_closed': "",
-    \   'default': "",
-    \   'open': "",
-    \   'empty': "",
-    \   'empty_open': "",
-    \   'symlink': "",
-    \   'symlink_open': "",
-    \   }
-    \ }
-]])
+vim.api.nvim_create_autocmd('BufEnter', {
+    nested = true,
+    callback = function()
+        if #vim.api.nvim_list_wins() == 1 and vim.api.nvim_buf_get_name(0):match('NvimTree_') ~= nil then
+            vim.cmd('quit')
+        end
+    end,
+})

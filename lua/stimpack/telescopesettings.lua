@@ -16,34 +16,33 @@ require('telescope').setup({
                 ['<esc>'] = require('telescope.actions').close,
             },
         },
-        -- other defaults configuration here
     },
 
     pickers = {
         find_files = {
             layout_strategy = layout_config,
-            prompt_prefix = ' : ',
+            prompt_prefix = string.format('%s : ', Icons.documents.file2),
         },
         git_files = {
             layout_strategy = layout_config,
-            prompt_prefix = ' : ',
+            prompt_prefix = string.format('%s : ', Icons.git.git),
             show_untracked = true,
-            preview_title = '  File Preview',
+            preview_title = string.format('%s  File Preview', Icons.plugins.telescope),
         },
         help_tags = {
             layout_strategy = layout_config,
-            prompt_prefix = ' : ',
+            prompt_prefix = string.format('%s : ', Icons.miscellaneous.brain),
             show_untracted = true,
         },
         buffers = {
             layout_strategy = layout_config,
-            prompt_prefix = ' : ',
+            prompt_prefix = string.format('%s : ', Icons.ui.righthandpoint),
             sort_mru = true,
             sort_lastused = true,
             ignore_current_buffer = true,
         },
         live_grep = {
-            prompt_prefix = ' : ',
+            prompt_prefix = string.format('%s : ', Icons.miscellaneous.tornado),
             results_title = 'Found',
             preview_title = 'Preview',
             prompt_title = 'File Content Search',

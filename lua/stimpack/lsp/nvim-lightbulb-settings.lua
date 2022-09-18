@@ -10,7 +10,7 @@ require('nvim-lightbulb').setup({
     float = {
         enabled = false,
         -- Text to show in the popup float
-        text = '💡',
+        text = Icons.diagnostics.hint2,
         -- Available keys for window options:
         -- - height     of floating window
         -- - width      of floating window
@@ -30,17 +30,18 @@ require('nvim-lightbulb').setup({
     virtual_text = {
         enabled = false,
         -- Text to show at virtual text
-        text = '💡',
+        text = Icons.diagnostics.hint2,
         -- highlight mode to use for virtual text (replace, combine, blend), see :help nvim_buf_set_extmark() for reference
         hl_mode = 'replace',
     },
     status_text = {
         enabled = false,
         -- Text to provide when code actions are available
-        text = '💡',
+        text = Icons.diagnostics.hint2,
         -- Text to provide when no actions are available
         text_unavailable = '',
     },
 })
 
+-- TODO: neovim autocommand
 vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])

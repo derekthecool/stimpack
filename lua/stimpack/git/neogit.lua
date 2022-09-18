@@ -18,8 +18,8 @@ neogit.setup({
     -- customize displayed signs
     signs = {
         -- { CLOSED, OPENED }
-        section = { '→', '↓' },
-        item = { '→', '↓' },
+        section = { Icons.ui.arrowclosed3, Icons.ui.arrowopen3 },
+        item = { Icons.ui.arrowclosed3, Icons.ui.arrowopen3 },
         hunk = { '', '' },
     },
     integrations = {
