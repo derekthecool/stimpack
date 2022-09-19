@@ -5,8 +5,10 @@ local map = require('stimpack.mapping-function')
 -- can't type this with your keyboard
 -- Quick fix maps
 map('n', '→', ':cnext<CR>')
+map('n', '→→→', ':cnfile<CR>')
 map('n', '→→', ':clast<CR>')
 map('n', '←', ':cprev<CR>')
+map('n', '←←←', ':cNfile<CR>')
 map('n', '←←', ':cfirst<CR>')
 map('n', '↓', ':cclose<CR>')
 map('n', '↑', ':copen<CR>')

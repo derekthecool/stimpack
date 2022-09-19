@@ -22,8 +22,6 @@ require('luasnip').config.set_config({
         -- Nodes that don't need highlights:
         -- Text node. It just makes a mess and does not help anything
 
-        -- TODO: make the virtual text into just a symbol once I know what they do and what colors I like
-
         [types.snippet] = {
             -- show nothing when active
             active = { virt_text = { { '' } } },
@@ -33,9 +31,9 @@ require('luasnip').config.set_config({
 
         [types.insertNode] = {
             -- Display bright orange icon when active
-            active = { virt_text = { { Icons.documents.write, 'DevIconOPUS' } } },
+            active = { virt_text = { { Icons.documents.write1, 'DevIconOPUS' } } },
             -- Display gray icon when passive
-            passive = { virt_text = { { Icons.documents.write, 'DevIconDefault' } } },
+            passive = { virt_text = { { Icons.documents.write1, 'DevIconDefault' } } },
         },
 
         [types.functionNode] = {

@@ -43,5 +43,9 @@ require('nvim-lightbulb').setup({
     },
 })
 
--- TODO: neovim autocommand
-vim.cmd([[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]])
+vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+    callback = function()
+        require('nvim-lightbulb').update_lightbulb()
+    end,
+    group = vim.api.nvim_create_augroup('lightbulb', { clear = true }),
+})

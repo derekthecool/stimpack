@@ -6,8 +6,6 @@ require('which-key').setup({
             enabled = true, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
             suggestions = 20, -- how many suggestions should be shown in the list?
         },
-        -- the presets plugin, adds help for a bunch of default keybindings in Neovim
-        -- No actual key bindings are created
         presets = {
             operators = true, -- adds help for operators like d, y, ... and registers them for motion / text object completion
             motions = true, -- adds help for motions
@@ -18,16 +16,7 @@ require('which-key').setup({
             g = true, -- bindings for prefixed with g
         },
     },
-    -- add operators that will trigger motion and text object completion
-    -- to enable all native operators, set the preset / operators plugin above
     operators = { gc = 'Comments' },
-    key_labels = {
-        -- override the label used to display some keys. It doesn't effect WK in any other way.
-        -- For example:
-        -- ["<space>"] = "SPC",
-        -- ["<cr>"] = "RET",
-        -- ["<tab>"] = "TAB",
-    },
     icons = {
         breadcrumb = Icons.ui.doublechevron, -- symbol used in the command line area that shows your active key combo
         separator = Icons.ui.arrowclosed3, -- symbol used between a key and it's label
@@ -63,58 +52,3 @@ require('which-key').setup({
         v = { 'j', 'k' },
     },
 })
-
---[[
-" f is for find, file, and FZF
-" Dependent Plugins:
-" Plug 'mhin/vim-startify'
-let g:which_key_map_leader.f = {
-      \ 'name' : '+Find'              ,
-      \ 'h' : [':Startify'            , 'Startify']           ,
-      \ }
-
-" s is for spelling
-" Dependent Plugins:
-let g:which_key_map_leader.s = {
-      \ 'name' : '+Spelling' ,
-      \ 't' : [':set spell!' , 'Toggle Spelling On/Off']  ,
-      \ 'j' : ['\]s'         , 'Next spelling error']     ,
-      \ 'k' : ['\[s'         , 'Previous spelling error'] ,
-      \ }
-
-" q is for quickfix
-" Dependent Plugins:
-let g:which_key_map_leader.q = {
-      \ 'name' : '+QuickFix' ,
-      \ 'o' : [':copen'      , 'Open quickfix list']  ,
-      \ 'q' : [':cclose'     , 'Close quickfix list'] ,
-      \ }
-
-" v is for vimwiki
-" Dependent Plugins:
-" Plug 'vimwiki/vimwiki'
-" Plug 'godlygeek/tabular'
- let g:which_key_map_leader.v = {
-      \ 'name' : '+Vimwiki'             ,
-      \ 'D' : [':VimwikiDiaryNextDay'   , 'Diary Next Day' ]                  ,
-      \ 'd' : [':VimwikiDiaryPrevDay'   , 'Diary Previous Day' ]              ,
-      \ 'h' : [':VimwikiSplitLink'      , 'Follow Link Horizontal' ]          ,
-      \ 'l' : [':VimwikiToggleListItem' , 'Toggle list item' ]                ,
-      \ '/' : [':VimwikiSearch'         , 'Vimwiki Search' ]                  ,
-      \ 'j' : [':lnext'                 , 'Next search result' ]              ,
-      \ 'k' : [':lprevious'             , 'Previous search result' ]          ,
-      \ 'o' : [':lopen'                 , 'Open list of all search results' ] ,
-      \ 'v' : [':VimwikiVSplitLink'     , 'Follow Link Verical']              ,
-      \ 'u' : [':VimwikiNextTask'       , 'Find Next Unfinished Task']        ,
-      \ 'T' : [':VimwikiTable'          , 'Vimwiki Table Insert']             ,
-      \ }
-
-" Don't know how to include a command that requires input. So I will add the
-" mappings here, they will still show up in which key mapping. These commands
-" require input and a manual <CR> after the input.
-nnoremap <leader>vt :Tabularize /
-nnoremap <leader>vs :VWS 
-
-"Register which key
-call which_key#register(',', "g:which_key_map_leader")
---]]

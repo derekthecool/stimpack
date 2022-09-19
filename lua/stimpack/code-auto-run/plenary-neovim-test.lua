@@ -74,7 +74,6 @@ M.neovim_test = function()
             for _, test_name in pairs(test_names) do
                 for _, output_results_test_name in pairs(output_list) do
                     if test_name.name == output_results_test_name.test_name then
-                        -- TODO: test line is not getting set with multiple test files
                         output_results_test_name['test_line'] = test_name.test_line
                         output_results_test_name['bufnr'] = test_name.bufnr
                     end

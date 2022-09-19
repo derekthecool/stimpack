@@ -5,7 +5,8 @@ require('stimpack.lsp.mason-mega-lsp-setup')
 -- Load lspconfig third
 require('lspconfig')
 
-require('stimpack.lsp.lsp-config-setup')
+-- TODO: likely don't need this anymore
+-- require('stimpack.lsp.lsp-config-setup')
 
 -- require('stimpack.lsp.lsp-installer')
 require('stimpack.lsp.nvim-lightbulb-settings')
