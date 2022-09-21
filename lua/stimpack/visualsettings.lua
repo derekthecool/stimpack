@@ -7,10 +7,8 @@ vim.wo.colorcolumn = '80' -- Display color column at 80 characters
 vim.wo.list = true -- enable the feature
 vim.go.listchars = 'trail:·,precedes:«,extends:»,tab:▸\\ ' -- specify chars
 
--- vim.cmd "colorscheme base16-atelier-forest" -- Current color scheme
 vim.cmd('colorscheme base16-atelier-sulphurpool') -- Former favorite
-
--- vim.cmd([[match ColorColumn /\s\+$/]]) -- Highlight trailing whitespace with color column
+vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
 require('nvim-web-devicons').setup({
     -- globally enable default icons (default to false)

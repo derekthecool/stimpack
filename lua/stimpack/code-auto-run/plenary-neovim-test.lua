@@ -17,11 +17,9 @@ end
 
 M.neovim_test = function()
     if not check_for_open_test_files() then
-        -- vim.notify('Error, no neovim test files (_spec.lua) found in open buffers', vim.log.levels.ERROR)
         return
     end
 
-    -- local buffer_number = vim.api.nvim_get_current_buf()
     local namespace_id = vim.api.nvim_create_namespace('neovim plenary lua test runner')
 
     local output_list = {}
@@ -67,10 +65,7 @@ M.neovim_test = function()
         end,
 
         on_exit = function()
-            V(output_list)
-
             local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
-            V(test_names)
             for _, test_name in pairs(test_names) do
                 for _, output_results_test_name in pairs(output_list) do
                     if test_name.name == output_results_test_name.test_name then
@@ -82,7 +77,6 @@ M.neovim_test = function()
 
             for _, test_result in pairs(output_list) do
                 -- Make sure table is not empty first
-                V(test_result)
                 if next(test_result.buffer_number) ~= nil then
                     if test_result.result == 'Success' then
                         vim.api.nvim_buf_set_extmark(

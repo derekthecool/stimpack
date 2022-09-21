@@ -33,9 +33,6 @@ require('lualine').setup({
     extensions = { 'quickfix', 'man', 'toggleterm', 'nvim-tree', 'nvim-dap-ui' },
 })
 
--- WinSeparator looks nicer like this
-vim.cmd([[highlight WinSeparator guibg=none]])
-
 -- I can't get rid of this dumb error on every start up. This is my work around.
 -- Copied from this example: https://github.com/ChristianChiarulli/nvim/blob/master/ftplugin/c.lua
 local notify_filter = vim.notify

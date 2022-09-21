@@ -1,4 +1,7 @@
-vim.cmd([[
-" Set the filetype and also delete any <CR> (or \r) characters
-autocmd BufNewFile,BufRead BelleLTE_DataLog*.txt,debug-logs-*.log,debug-logs-*.txt set filetype=mcn_device_logs
-]])
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+    pattern = { 'BelleLTE_DataLog*.txt', 'debug-logs-*.log', 'debug-logs-*.txt' },
+    callback = function()
+        vim.opt.filetype = 'mcn_device_logs'
+    end,
+    group = vim.api.nvim_create_augroup('mcn_device_logs', { clear = true }),
+})

@@ -106,6 +106,7 @@ which_key_mapper({
         g = { builtins.live_grep, 'Live grep' }, -- search locally with live grep (uses ripgrep in the background)
         h = { builtins.help_tags, 'Help Search' },
         c = { builtins.command_history, 'Command history' },
+        z = { builtins.current_buffer_fuzzy_find, 'Current buffer fuzzy find' },
         -- c = { builtins.command_history, 'Command history' },
 
         -- v = { builtins.find_files {
