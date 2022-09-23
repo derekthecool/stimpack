@@ -1,4 +1,5 @@
 ;; Keywords
+[test test()*; sHP this should fail
 (("return"   @keyword) (#set! conceal ""))
 
 (("local"    @keyword) (#set! conceal "~"))

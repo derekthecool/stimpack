@@ -67,3 +67,18 @@ show up right choose another one.
 #### Fixes To Work On
 
 - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) globals in status line disappear if colored
+- mason.nvim omnisharp not working well
+
+```yaml
+ Detected filetype:   cs
+
+ 1 client(s) attached to this buffer:
+
+ Client: omnisharp (id: 1, pid: nil, bufnr: [1])
+ 	filetypes:       cs, vb
+ 	autostart:       true
+ 	root directory:  C:/Users/Derek Lomax/source/repos/Freeus.Tools/BXFota
+ 	cmd:             dotnet C:\Users\Derek Lomax\AppData\Local\nvim-data\lsp_servers\omnisharp\omnisharp\OmniSharp.dll --languageserver --hostPID 16700
+
+ Configured servers list: jedi_language_server, powershell_es, sumneko_lua, lemminx, omnisharp
+```

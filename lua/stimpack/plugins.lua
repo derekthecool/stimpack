@@ -2,12 +2,11 @@
 -- https://github.com/wbthomason/packer.nvim
 
 -- Bootstrap function to install packer.nvim if it does not exist {{{
-local execute = vim.api.nvim_command
-local fn = vim.fn
-local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-if fn.empty(fn.glob(install_path)) > 0 then
-    fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
-    execute('packadd packer.nvim')
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+---@diagnostic disable-next-line: missing-parameter
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+    vim.fn.system({ 'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.api.nvim_command('packadd packer.nvim')
 end
 -- }}}
 
