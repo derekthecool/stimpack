@@ -40,17 +40,6 @@ require('mason').setup({
         },
     },
 
-    -- The directory in which to install packages.
-    -- install_root_dir = path.concat({ vim.fn.stdpath('data'), 'mason' }),
-
-    pip = {
-        -- These args will be added to `pip install` calls. Note that setting extra args might impact intended behavior
-        -- and is not recommended.
-        --
-        -- Example: { "--proxy", "https://proxyserver" }
-        install_args = {},
-    },
-
     -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
     -- debugging issues with package installations.
     log_level = vim.log.levels.INFO,
@@ -75,28 +64,17 @@ require('mason-lspconfig').setup({
 })
 
 require('mason-lspconfig').setup_handlers({
-    -- The first entry (without a key) will be the default handler
-    -- and will be called for each installed server that doesn't have
-    -- a dedicated handler.
-
     function(server_name) -- default handler (optional)
         require('lspconfig')[server_name].setup({})
     end,
 
     -- Next, you can provide targeted overrides for specific servers.
     -- For example, a handler override for the `rust_analyzer`:
-    -- powershell_es
-    -- clangd
-    -- awk_ls
-    -- bashls
-    -- omnisharp
-    -- sumneko_lua
 
     -- TODO: get this working with Linux and windows
     -- ['omnisharp'] = function()
-    --   vim.notify('omnisharp')
-    --   require('lspconfig')['omnisharp'].setup({
-    --     cmd = { "dotnet", mason_dap_directory_packages .. "omnisharp\\Omnisharp.dll" },
+    -- require('lspconfig')['omnisharp'].setup({
+    --     cmd = { 'dotnet', Mason_packages .. 'omnisharp' .. OS.separator .. 'Omnisharp.dll' },
     --     enable_editorconfig_support = true,
     --     enable_ms_build_load_projects_on_demand = false,
     --
@@ -122,12 +100,11 @@ require('mason-lspconfig').setup_handlers({
     --     -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
     --     -- true
     --     analyze_open_documents_only = false,
-    --   })
+    -- })
     -- end,
 
     ['sumneko_lua'] = function()
-        -- local sumneko_opts = require('stimpack.lsp.settings.sumneko_lua')
-        -- opts = vim.tbl_deep_extend('force', sumneko_opts, opts)
+        require('lua-dev').setup()
         require('lspconfig')['sumneko_lua'].setup({
             settings = {
                 Lua = {
@@ -137,8 +114,8 @@ require('mason-lspconfig').setup_handlers({
                     },
                     diagnostics = {
                         -- Get the language server to recognize the `vim` global
-                        -- globals = { 'vim', 'use', 'it', 'describe' },
-                        globals = { 'vim' },
+                        globals = { 'vim', 'use', 'it', 'describe' },
+                        -- globals = { 'vim' },
                     },
                     workspace = {
                         -- Make the server aware of Neovim runtime files
