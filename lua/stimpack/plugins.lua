@@ -64,12 +64,15 @@ return require('packer').startup(function()
     use('hrsh7th/cmp-calc')
     use('saadparwaiz1/cmp_luasnip') -- snippet completions
     use('neovim/nvim-lspconfig') -- enable LSP
-    -- use('williamboman/nvim-lsp-installer') -- simple to use language server installer
     -- Successor to 'williamboman/nvim-lsp-installer' which supports LSP, DAP, and other tools like linters etc.
     use({
         'williamboman/mason.nvim',
         requires = { 'williamboman/mason-lspconfig.nvim' },
     })
+    -- I'm using the old nvim-lsp-installer only for omnisharp because it is not working on windows
+    -- This is a requirement for me. I've created this GitHub issue to track
+    -- https://github.com/williamboman/mason.nvim/issues/455
+    use('williamboman/nvim-lsp-installer') -- language server settings defined in json for
     use('tamago324/nlsp-settings.nvim') -- language server settings defined in json for
     use('jose-elias-alvarez/null-ls.nvim') -- for formatters and linters
     -- }}}

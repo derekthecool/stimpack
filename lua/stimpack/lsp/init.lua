@@ -1,5 +1,6 @@
 -- Load mason.nvim first
 require('stimpack.lsp.mason-mega-lsp-setup')
+require('stimpack.lsp.lsp-installer')
 -- Load mason-lspconfig.nvim second
 
 -- Load lspconfig third
