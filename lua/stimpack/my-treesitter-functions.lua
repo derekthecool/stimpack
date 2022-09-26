@@ -23,33 +23,28 @@ my_treesitter_functions.all = {
     end,
 }
 
-local function get_test_function_names(query, language, buffer_filter)
+local function get_test_function_names(query, language, buffer_filter, capture_id_filter)
     local test_function_locations = {}
     for _, bufnr in pairs(my_treesitter_functions.all.get_all_buffers(buffer_filter)) do
         local root = get_root(bufnr, language)
 
         for id, node in query:iter_captures(root, bufnr, 0, -1) do
             local name = vim.treesitter.get_node_text(node, bufnr):gsub('"', ''):gsub('\'', '')
-            table.insert(test_function_locations, {
-                test_line = node:range(),
-                node_capture_group = query.captures[id],
-                name = name,
-                bufnr = bufnr,
-            })
+            if test_function_locations.name == nil then
+                test_function_locations[name] = {
+                    range = { node:range() },
+                    node_capture_group = query.captures[id],
+                    name = name,
+                    bufnr = bufnr,
+                }
+
+                if capture_id_filter ~= nil and string.match(query.captures[id], capture_id_filter) == nil then
+                    test_function_locations[name] = nil
+                end
+            end
         end
     end
     return test_function_locations
-end
-
-local function get_function_names(query, language)
-    local bufnr = vim.api.nvim_get_current_buf()
-    local root = get_root(bufnr, language)
-
-    local function_locations = {}
-    for _, node in query:iter_captures(root, bufnr, 0, -1) do
-        function_locations[vim.treesitter.get_node_text(node, bufnr)] = { node:range() }
-    end
-    return function_locations
 end
 
 local function get_recent_var_from_node(query, language)
@@ -111,28 +106,15 @@ my_treesitter_functions.cs = {
         return variable
     end,
 
-    get_function_names = function()
+    get_test_function_names = function()
         local language = 'c_sharp'
-        -- TODO: replace with this query:
-        -- (method_declaration (attribute_list (attribute name: (identifier) @xUnitTest (#match? @xUnitTest "(Fact|Theory)"))))
-        -- Which will find only fact or theory methods by their decorators
-        local functions =
-            -- vim.treesitter.parse_query(language, '(method_declaration name: (identifier) @function_names)')
-            vim.treesitter.parse_query(
-                language,
-                '((method_declaration (attribute_list (attribute name: (identifier) @xUnitTest (#match? @xUnitTest "(Fact|Theory)"))) name: (identifier) @xUnitTestMethodName))'
-            )
-        local function_list = get_function_names(functions, language)
-        local final_output = {}
-        V(function_list)
+        local functions = vim.treesitter.parse_query(
+            language,
+            '((method_declaration (attribute_list (attribute name: (identifier) @xUnitTest (#match? @xUnitTest "(Fact|Theory)"))) name: (identifier) @xUnitTestMethodName))'
+        )
+        local function_list = get_test_function_names(functions, language, '.*Tests.cs', 'xUnitTestMethodName')
 
-        for _, value in pairs(function_list) do
-            if value.node_capture_group == 'xUnitTestMethodName' then
-                table.insert(final_output, value)
-            end
-        end
-        V(final_output)
-        return final_output
+        return function_list
     end,
 }
 

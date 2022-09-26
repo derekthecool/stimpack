@@ -1,29 +1,29 @@
 local status_ok, toggleterm = pcall(require, 'toggleterm')
 if not status_ok then
-  return
+    return
 end
 
 toggleterm.setup({
-  size = 20,
-  open_mapping = '⏫',
-  hide_numbers = true,
-  shade_filetypes = {},
-  shade_terminals = true,
-  shading_factor = 2,
-  start_in_insert = true,
-  insert_mappings = true,
-  persist_size = true,
-  direction = 'horizontal',
-  close_on_exit = true,
-  shell = vim.o.shell,
-  float_opts = {
-    border = 'curved',
-    winblend = 0,
-    highlights = {
-      border = 'Normal',
-      background = 'Normal',
+    size = 20,
+    open_mapping = '⏫',
+    hide_numbers = true,
+    shade_filetypes = {},
+    shade_terminals = true,
+    shading_factor = 2,
+    start_in_insert = true,
+    insert_mappings = true,
+    persist_size = true,
+    direction = 'horizontal',
+    close_on_exit = true,
+    shell = vim.o.shell,
+    float_opts = {
+        border = 'curved',
+        winblend = 0,
+        highlights = {
+            border = 'Normal',
+            background = 'Normal',
+        },
     },
-  },
 })
 
 local map = require('stimpack.mapping-function')
@@ -31,8 +31,11 @@ local map = require('stimpack.mapping-function')
 -- Arrows mapped to steno symbol right side: -RL... Inverse of tab
 map('n', '⏫⏫', '<Cmd>ToggleTermToggleAll<CR>')
 map('n', '▶️', '<Cmd>ToggleTermSendCurrentLine<CR>')
-map('x', '▶️▶️', '<Cmd>ToggleTermSendVisualLines<CR>')
-map('x', '▶️▶️▶️', '<Cmd>ToggleTermSendVisualSelection<CR>')
+-- map('v', '▶️', '<Cmd>ToggleTermSendVisualLines<CR>')
+-- map('v', '▶️▶️▶️', '<Cmd>ToggleTermSendVisualSelection<CR>')
+-- TODO: find out why these visual lua mappings do not work like the vnoremap version
+vim.cmd([[vnoremap ▶️ :ToggleTermSendVisualLines<CR>]])
+vim.cmd([[vnoremap ▶️▶️ :ToggleTermSendVisualSelection<CR>]])
 
 map('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
 map('t', '<C-l>', [[<Cmd>wincmd l<CR>]])

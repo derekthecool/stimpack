@@ -9,10 +9,7 @@ local neovim_test = require('stimpack.code-auto-run.plenary-neovim-test').neovim
 end, {}) ]]
 
 local autocommand_group = vim.api.nvim_create_augroup('code-auto-run', { clear = true })
-vim.api.nvim_create_autocmd(
-    'BufWritePost',
-    { pattern = { '*test*.cs', '*Test*.cs' }, callback = dotnet_test, group = autocommand_group }
-)
+vim.api.nvim_create_autocmd('BufWritePost', { pattern = { '*.cs' }, callback = dotnet_test, group = autocommand_group })
 
 vim.api.nvim_create_autocmd(
     'BufWritePost',

@@ -6,9 +6,7 @@ require('stimpack.lsp.lsp-installer')
 -- Load lspconfig third
 require('lspconfig')
 
--- TODO: likely don't need this anymore
--- require('stimpack.lsp.lsp-config-setup')
-
+-- TODO: Get LSP document scrolling to work. I want to look at csharp function overloads!
 -- require('stimpack.lsp.lsp-installer')
 require('stimpack.lsp.nvim-lightbulb-settings')
 require('stimpack.lsp.nvim-code-action-menu-settings')

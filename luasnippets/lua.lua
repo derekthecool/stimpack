@@ -57,6 +57,90 @@ local autosnippets = {
     ),
 
     s(
+        'ELS_EI_F',
+        fmt(
+            [[
+        elseif {} then
+          {}
+        ]],
+            {
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    s(
+        'ELSE',
+        fmt(
+            [[
+        else
+           {}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    -- TODO: Call different function than pairs if two arguments are used
+    s(
+        'FOR',
+        fmt(
+            [[
+        for i={}, {} do
+            {}
+        end
+
+        {}
+        ]],
+            {
+                i(1, '1'),
+                i(2, '100'),
+                i(3),
+                i(0),
+            }
+        )
+    ),
+
+    s(
+        'FOREACH',
+        fmt(
+            [[
+        for {} in pairs({}) do
+            {}
+        end
+
+        {}
+        ]],
+            {
+                i(1, 'item'),
+                i(2, 'table'),
+                i(3),
+                i(0),
+            }
+        )
+    ),
+
+    s(
+        'WHILE',
+        fmt(
+            [[
+        while({}) do
+            {}
+        end
+
+        {}
+        ]],
+            {
+                i(1, 'condition'),
+                i(2),
+                i(0),
+            }
+        )
+    ),
+
+    s(
         'FORMAT',
         fmt(
             [[
@@ -178,7 +262,7 @@ local autosnippets = {
         fmt(
             [=[
       s(
-        {},
+        '{}',
         fmt(
           [[
           {}
@@ -190,10 +274,9 @@ local autosnippets = {
       ),
       {}
       ]=],
-
             {
                 c(1, {
-                    i(1, '\'short snippet trigger\''),
+                    i(1, 'short snippet trigger'),
                     sn(
                         1,
                         fmt(
@@ -255,6 +338,7 @@ local autosnippets = {
         )
     ),
 
+    -- This snippet supports a choice between just insert position or position and place holder text
     s(
         {
             trig = 'insert node',
@@ -262,12 +346,21 @@ local autosnippets = {
         },
         fmt(
             [[
-      i({}, '{}'),
+      i({}),
       {}
       ]],
             {
-                i(1, '1'),
-                i(2, 'default'),
+                c(1, {
+                    sn(nil, {
+                        i(1, '1'),
+                    }),
+                    sn(nil, {
+                        i(1, '1'),
+                        t([[, ']]),
+                        i(2, 'default'),
+                        t([[']]),
+                    }),
+                }),
                 i(0),
             }
         )

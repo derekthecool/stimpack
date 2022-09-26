@@ -14,11 +14,18 @@ Main process steps:
 ]]
 M.dotnet_test = function()
     local output_log_filename = nil
-    local buffer_number = vim.api.nvim_get_current_buf()
     local namespace_id = vim.api.nvim_create_namespace('dotnet_test_runner')
 
-    vim.api.nvim_buf_clear_namespace(buffer_number, namespace_id, 0, -1)
-    vim.diagnostic.reset(namespace_id, buffer_number)
+    local buffer_list = require('stimpack/my-treesitter-functions').all.get_all_buffers('.*Tests.cs')
+    if #buffer_list == 0 then
+        vim.notify('No open test files')
+        return
+    end
+
+    for _, buffer_number in pairs(buffer_list) do
+        vim.api.nvim_buf_clear_namespace(buffer_number, namespace_id, 0, -1)
+        vim.diagnostic.reset(namespace_id, buffer_number)
+    end
 
     local dotnet_test_command = 'dotnet test --logger trx'
     vim.notify(string.format('Starting dotnet test: cmd="%s"', dotnet_test_command))
@@ -43,7 +50,7 @@ M.dotnet_test = function()
                 output_log_filename = 'nil'
             else
                 local pass_fail_results = {}
-                local buffer_function_names = require('stimpack.my-treesitter-functions').cs.get_function_names()
+                local test_name_locations = require('stimpack.my-treesitter-functions').cs.get_test_function_names()
 
                 -- Example log line: <UnitTestResult executionId="e1462b02-1118-4df7-9b9d-685e5f0abb7a" testId="7d2eee53-b992-539e-fa8b-ec839a51b1f9" testName="TestXUnit.UnitTest1.Test2" computerName="DerekLomax" duration="00:00:00.0057145" startTime="2022-09-07T11:32:32.2976422-06:00" endTime="2022-09-07T11:32:32.2976727-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e1462b02-1118-4df7-9b9d-685e5f0abb7a" />
                 -- TODO: use lua rock package for xml reading for better results
@@ -51,19 +58,19 @@ M.dotnet_test = function()
                     local test_name, test_result =
                         line:match('.*UnitTestResult.*testName=".-%.(%w+)["(].*outcome="(.-)"')
                     if test_name ~= nil and test_result ~= nil then
-                        local current_test = { name = test_name, result = test_result }
-                        local possible_test_location = buffer_function_names[test_name]
-                        if possible_test_location ~= nil then
-                            current_test.location = possible_test_location
-                        end
-                        table.insert(pass_fail_results, current_test)
+                        pass_fail_results[test_name] = {
+                            name = test_name,
+                            result = test_result,
+                            ['treesitter_details'] = test_name_locations[test_name],
+                        }
                     end
                 end
 
-                for _, test in ipairs(pass_fail_results) do
+                for _, test in pairs(pass_fail_results) do
+                    local buffer_number = test.treesitter_details.bufnr
                     -- If test passed put a virtual check mark with a purple highlight
                     if test.result == 'Passed' then
-                        vim.api.nvim_buf_set_extmark(buffer_number, namespace_id, test.location[3], 0, {
+                        vim.api.nvim_buf_set_extmark(buffer_number, namespace_id, test.treesitter_details.range[1], 0, {
                             virt_text = { { Icons.diagnostics.success, 'DevIconMotoko' } },
                         })
                     -- If test failed then use vim diagnostic to show the error
@@ -71,7 +78,7 @@ M.dotnet_test = function()
                         local diagnostic_message = {
                             {
                                 bufnr = buffer_number,
-                                lnum = test.location[3],
+                                lnum = test.treesitter_details.range[1],
                                 col = 0,
                                 severity = vim.diagnostic.severity.ERROR,
                                 source = 'dotnet test',
