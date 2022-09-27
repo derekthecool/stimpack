@@ -79,38 +79,23 @@ dap.adapters.coreclr = {
     args = { '--interpreter=vscode' },
 }
 
-dap.configurations.cs = {
-    {
-        type = 'coreclr',
-        name = 'netcoredbg',
-        request = 'launch',
-        -- program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
-        program = '${workspaceFolder}\\bin\\Debug\\net6.0\\test.dll',
-        -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
-        cwd = '${workspaceFolder}',
-    },
-}
-
 -- Windows debugging testing version, TODO: get this working on both Linux and windows
---[[
 local mason_dap_directory_packages = vim.fn.stdpath('data') .. '\\mason\\packages\\'
 dap.adapters.coreclr = {
     type = 'executable',
     command = mason_dap_directory_packages .. 'netcoredbg\\netcoredbg\\netcoredbg.exe',
-    -- command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
     args = { '--interpreter=vscode' },
 }
 
-dap.configurations.cs = {
-    {
-        type = 'coreclr',
-        name = 'netcoredbg',
-        request = 'launch',
-        -- program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
-        program = '${workspaceFolder}\\BXFota\\BXFota\\bin\\Debug\\netcoreapp3.1\\BXFota.dll',
-        -- program = '${workspaceFolder}\\bin\\Debug\\net6.0\\test.dll',
-        -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
-        cwd = '${workspaceFolder}',
-    },
-}
-]]
+-- dap.configurations.cs = {
+--     {
+--         type = 'coreclr',
+--         name = 'netcoredbg',
+--         request = 'launch',
+--         -- program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
+--         program = '${workspaceFolder}\\BXFota\\BXFota\\bin\\Debug\\netcoreapp3.1\\BXFota.dll',
+--         -- program = '${workspaceFolder}\\bin\\Debug\\net6.0\\test.dll',
+--         -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
+--         cwd = '${workspaceFolder}',
+--     },
+-- }
