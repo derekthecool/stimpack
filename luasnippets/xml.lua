@@ -51,6 +51,21 @@ local snippets = {
     )
   ),
 
+  s(
+    'button',
+    fmt(
+      [[
+      <Button Content="{}" Command="{{Binding {}}}" {} />
+      ]],
+      {
+        i(1),
+        i(2),
+        i(0),
+      }
+    )
+  ),
+
+
   -- s('setter', {t(<Setter Property=%%"),i(1,'FontSize')})
 }
 

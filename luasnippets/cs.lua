@@ -47,6 +47,34 @@ local snippets = {
     })
   ),
   -- }}}
+
+  -- Avalonia snippets
+  s(
+    'prop Avalonia',
+    fmt(
+      [[
+        private {} {};
+        public {} {}
+        {{
+            get => {};
+            set => this.RaiseAndSetIfChanged(ref {}, value);
+        }}
+
+        {}
+      ]],
+      {
+        i(1, 'int'),
+        i(2, 'variableName'),
+        rep(1),
+        i(3, 'VariableName'),
+        rep(2),
+        rep(2),
+        i(0),
+      }
+    )
+  ),
+
+
 }
 
 local autosnippets = {
