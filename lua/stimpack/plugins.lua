@@ -165,7 +165,7 @@ return require('packer').startup(function()
   use('theHamsta/nvim-dap-virtual-text')
   use('rcarriga/nvim-dap-ui')
   -- use('kndndrj/nvim-projector')
-  use('~/neovim_plugins/nvim-projector')
+  use(get_my_plugin_path('nvim-projector'))
   use('nvim-telescope/telescope-dap.nvim')
   -- }}}
 
