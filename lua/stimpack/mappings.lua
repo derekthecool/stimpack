@@ -46,6 +46,9 @@ map('n', '<leader>ab', '<cmd>TSPlaygroundToggle<CR>')
 -- Run plenary tests on current buffer
 map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
+-- Show recent notifications
+map('n', '<leader>ad', require('notify')._print_history)
+
 -- Conceal level mappings from ziontee113
 
 map('n', '<F10>', function()

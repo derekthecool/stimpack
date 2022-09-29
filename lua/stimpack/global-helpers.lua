@@ -64,6 +64,8 @@ function P(table_to_print)
 end
 
 -- Helpful function to print tables nicely to the vim.notify function
-function V(table_to_show)
-    vim.notify(vim.inspect(table_to_show))
+function V(...)
+    for key, value in ipairs({ ... }) do
+        vim.notify(vim.inspect(value), vim.log.levels.INFO, { title = 'Stimpack notification (' .. key .. ')' })
+    end
 end

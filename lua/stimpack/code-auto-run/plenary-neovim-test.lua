@@ -23,6 +23,7 @@ M.neovim_test = function()
     local namespace_id = vim.api.nvim_create_namespace('neovim plenary lua test runner')
 
     local output_list = {}
+    local summary = {}
     local test_file_buffers = {}
 
     for _, buffer in pairs(vim.fn.getbufinfo({ buflisted = true })) do
@@ -61,28 +62,37 @@ M.neovim_test = function()
                         table.insert(output_list, test_output)
                     end
                 end
+
+                -- TODO: if running multiple plenary test files these numbers need to be added together
+                local success_total = line:match('Success.*:.*(%d+)')
+                if success_total ~= nil then
+                    summary.success = success_total
+                end
+
+                local failure_total = line:match('Failed.*:.*(%d+)')
+                if failure_total ~= nil then
+                    summary.failure = failure_total
+                end
+
+                local error_total = line:match('Errors.*:.*(%d+)')
+                if error_total ~= nil then
+                    summary.error = error_total
+                end
             end
+            StimpackTestSummary = summary
         end,
 
         on_exit = function()
             local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
-            for _, test_name in pairs(test_names) do
-                for _, output_results_test_name in pairs(output_list) do
-                    if test_name.name == output_results_test_name.test_name then
-                        output_results_test_name['test_line'] = test_name.test_line
-                        output_results_test_name['bufnr'] = test_name.bufnr
-                    end
-                end
-            end
-
             for _, test_result in pairs(output_list) do
+                test_result['treesitter_details'] = test_names[test_result.test_name]
                 -- Make sure table is not empty first
                 if next(test_result.buffer_number) ~= nil then
                     if test_result.result == 'Success' then
                         vim.api.nvim_buf_set_extmark(
                             test_result.buffer_number[1].bufnr,
                             namespace_id,
-                            test_result.test_line,
+                            test_result.treesitter_details.range[1],
                             0,
                             {
                                 virt_text = { { Icons.diagnostics.success, 'DevIconMotoko' } },
@@ -92,7 +102,7 @@ M.neovim_test = function()
                         local diagnostic_message = {
                             {
                                 bufnr = test_result.buffer_number[1].bufnr,
-                                lnum = test_result.test_line,
+                                lnum = test_result.treesitter_details.range[1],
                                 col = 0,
                                 severity = vim.diagnostic.severity.ERROR,
                                 source = 'neovim lua test',

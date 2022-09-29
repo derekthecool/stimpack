@@ -14,7 +14,7 @@ require('lualine').setup({
     sections = {
         lualine_a = { 'mode' },
         lualine_b = { 'branch', 'diff', 'diagnostics' },
-        lualine_c = { 'filename', 'TapeyTape' },
+        lualine_c = { 'filename', 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
         -- Color does not work for globals
         -- lualine_c = { 'TapeyTape', color = 'WarningMsg' },
         lualine_x = { 'filesize', 'encoding', 'fileformat', 'filetype' },

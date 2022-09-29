@@ -85,15 +85,16 @@ my_treesitter_functions.lua = {
         )
 
         -- V(get_test_function_names_query)
-        local output = get_test_function_names(get_test_function_names_query, language, '.*_spec%.lua')
-        local final_output = {}
-
-        for _, value in pairs(output) do
-            if value.node_capture_group == 'test_name' then
-                table.insert(final_output, value)
-            end
-        end
-        return final_output
+        local output = get_test_function_names(get_test_function_names_query, language, '.*_spec%.lua','test_name')
+        -- local final_output = {}
+        --
+        -- for _, value in pairs(output) do
+        --     if value.node_capture_group == 'test_name' then
+        --         table.insert(final_output, value)
+        --     end
+        -- end
+        -- return final_output
+        return output
     end,
 }
 

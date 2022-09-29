@@ -37,6 +37,10 @@ local snippets = {
         % {}
         % {}
         % {}
+
+        # {}
+
+        {}
         ]],
       {
         i(1, 'Title'),
@@ -44,6 +48,8 @@ local snippets = {
         f(function()
           return os.date('%Y-%m-%d')
         end, {}),
+        rep(1),
+        i(0),
       }
     )
   ),
