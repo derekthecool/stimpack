@@ -8,8 +8,8 @@ local snippets = {
 
     fmt(
       [[
-      <TextBlock Text="{}" />
-      ]],
+                              <TextBlock Text="{}" />
+                              ]],
       {
         i(1, 'Textblock text'),
       }
@@ -24,8 +24,8 @@ local snippets = {
 
     fmt(
       [[
-      <TextBox Text="{}" />
-      ]],
+                              <TextBox Text="{}" />
+                              ]],
       {
         i(1, 'Textbox text'),
       }
@@ -36,12 +36,12 @@ local snippets = {
     'style',
     fmt(
       [[
-      <Style Selector="{}">
-        <Setter Property="{}" Value="{}" />
-      </Style>
+                              <Style Selector="{}">
+                                <Setter Property="{}" Value="{}" />
+                              </Style>
 
-      {}
-      ]],
+                              {}
+                              ]],
       {
         i(1, 'TextBlock.h1'),
         i(2, 'FontSize'),
@@ -55,8 +55,8 @@ local snippets = {
     'button',
     fmt(
       [[
-      <Button Content="{}" Command="{{Binding {}}}" {} />
-      ]],
+                              <Button Content="{}" Command="{{Binding {}}}" {} />
+                              ]],
       {
         i(1),
         i(2),
@@ -69,6 +69,73 @@ local snippets = {
   -- s('setter', {t(<Setter Property=%%"),i(1,'FontSize')})
 }
 
-local autosnippets = {}
+local autosnippets = {
+  s(
+    { trig = '==', wordTrig = false },
+    fmt(
+      [[
+                              ="{}" {}
+                              ]],
+      {
+        i(1),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    'row definition',
+    fmt(
+      [[
+                              RowDefinitions="{}" {}
+                              ]],
+      {
+        i(1),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    'column definition',
+    fmt(
+      [[
+                              ColumnDefinitions="{}" {}
+                              ]],
+      {
+        i(1),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    'grid row',
+    fmt(
+      [[
+                              Grid.Row="{}" {}
+                              ]],
+      {
+        i(1, '1'),
+        i(0),
+      }
+    )
+  ),
+
+  s(
+    'grid column',
+    fmt(
+      [[
+                              Grid.Column="{}" {}
+                              ]],
+      {
+        i(1, '1'),
+        i(0),
+      }
+    )
+  ),
+
+}
+
 
 return snippets, autosnippets

@@ -4,6 +4,28 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
 local snippets = {
 
+  s(
+    'event',
+    fmt(
+      [[
+      public event EventHandler<{}> {};
+
+      protected virtual void On{}({} e)
+      {{
+          {}?.Invoke(this, e);
+      }}
+      ]],
+      {
+        i(1, 'string'),
+        i(2, 'EventName'),
+        rep(2),
+        rep(1),
+        rep(2),
+      }
+    )
+  ),
+
+
   -- {{{ Comment XML snippets
   s(
     {
