@@ -185,6 +185,7 @@ return require('packer').startup(function()
       'sindrets/diffview.nvim',
     },
   })
+  use('tpope/vim-fugitive')
   use('lewis6991/gitsigns.nvim')
   use('airblade/vim-rooter') -- Sets directory to git root
   vim.g.rooter_patterns = { '.git', '*.sln', 'lua' } -- Set which directories should be set as root project directories
