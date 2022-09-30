@@ -43,8 +43,6 @@ map('n', '____', '<cmd>lua require(\'dap\').set_breakpoint(nil , nil , vim.fn.in
           WARN
           ERROR ]]
 
-local dap = require('dap')
-
 vim.fn.sign_define('DapBreakpoint', { text = Icons.ui.sign, texthl = 'Title', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = Icons.miscellaneous.fish, texthl = 'ModeMsg', linehl = '', numhl = '' })
 vim.fn.sign_define(
@@ -54,48 +52,13 @@ vim.fn.sign_define(
 vim.fn.sign_define('DapLogPoint', { text = Icons.letters.w, texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointRejected', { text = Icons.ui.stop, texthl = '', linehl = '', numhl = '' })
 
--- dap.adapters.csharp = {
---     type = 'executable';
---     command = os.getenv('HOME') .. '/scoop/apps/netcoredbg/2.0.0-895/netcoredbg.exe';
---     args = { 'args for my app'};
--- }
+-- Set global variables to help with path locations
+Mason = {}
+Mason.bin = OS.join_path({vim.fn.stdpath('data'), 'mason', 'bin'})
+Mason.packages = OS.join_path({vim.fn.stdpath('data'), 'mason', 'packages'})
 
-local mason_bin = vim.fn.stdpath('data') .. '/mason/bin/'
-local mason_dap_packages = vim.fn.stdpath('data') .. '/mason/packages/'
-
-dap.adapters.cppdbg = {
-    id = 'cppdbg',
-    type = 'executable',
-    command = mason_bin .. 'OpenDebugAD7',
-}
--- Set the C++ settings to work for C as well
-dap.configurations.c = dap.configurations.cpp
-
--- Csharp settings
-dap.adapters.coreclr = {
-    type = 'executable',
-    command = mason_bin .. 'netcoredbg.cmd',
-    -- command = '/home/derek/debug-adapters/netcoredbg/netcoredbg/netcoredbg',
-    args = { '--interpreter=vscode' },
-}
-
--- Windows debugging testing version, TODO: get this working on both Linux and windows
-local mason_dap_directory_packages = vim.fn.stdpath('data') .. '\\mason\\packages\\'
-dap.adapters.coreclr = {
-    type = 'executable',
-    command = mason_dap_directory_packages .. 'netcoredbg\\netcoredbg\\netcoredbg.exe',
-    args = { '--interpreter=vscode' },
-}
-
--- dap.configurations.cs = {
---     {
---         type = 'coreclr',
---         name = 'netcoredbg',
---         request = 'launch',
---         -- program = '${workspaceFolder}/bin/Debug/net6.0/test.dll',
---         program = '${workspaceFolder}\\BXFota\\BXFota\\bin\\Debug\\netcoreapp3.1\\BXFota.dll',
---         -- program = '${workspaceFolder}\\bin\\Debug\\net6.0\\test.dll',
---         -- program = "${workspaceFolder}\\fm-cli\\bin\\Debug\\net6.0\\fm-cli.dll",
---         cwd = '${workspaceFolder}',
---     },
--- }
+-- Source configuration files for each language
+require('stimpack.debugging.dap-csharp')
+require('stimpack.debugging.dap-c')
+require('stimpack.debugging.dap-powershell')
+require('stimpack.debugging.dap-bash')

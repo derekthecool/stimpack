@@ -14,6 +14,7 @@ if vim.loop.os_uname().sysname == 'Linux' then
     OS['my_plugins'] = OS['home'] .. '/neovim_plugins'
     OS['snippets'] = string.format('%sluasnippets/', OS['nvim'])
     OS['executable_extension'] = ''
+    OS['executable_extension_alt'] = ''
     OS['separator'] = '/'
 elseif vim.loop.os_uname().sysname == 'Windows_NT' then
     OS['nvim'] = vim.fn.stdpath('config') .. '\\'
@@ -22,17 +23,31 @@ elseif vim.loop.os_uname().sysname == 'Windows_NT' then
     OS['my_plugins'] = OS['home'] .. '\\neovim_plugins'
     OS['snippets'] = string.format('%sluasnippets\\', OS['nvim'])
     OS['executable_extension'] = '.exe'
+    OS['executable_extension_alt'] = '.cmd'
     OS['separator'] = '\\'
 end
 
-OS.adjust_windows_linux_path = function(input)
-    if OS.OS == 'Linux' then
-        input = input:gsub('\\', '/')
-    elseif OS.OS == 'Windows' then
-        input = input:gsub('/', '\\')
+---@param input (table|string)
+---@return string
+OS.join_path = function(input)
+    local output = ''
+    if type(input) == 'table' then
+        for key, value in pairs(input) do
+            if key < #input and value ~= '' then
+                output = output .. value .. OS.separator
+            else
+                output = output .. value
+            end
+        end
+    else
+        if OS.OS == 'Linux' then
+            output = input:gsub('\\', '/')
+        elseif OS.OS == 'Windows' then
+            output = input:gsub('/', '\\')
+        end
     end
 
-    return input
+    return output
 end
 
 ---Function to return telescope.utils command runner
