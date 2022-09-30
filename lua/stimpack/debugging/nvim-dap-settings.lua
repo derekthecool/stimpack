@@ -34,14 +34,7 @@ map('n', '__', '<cmd>lua require(\'dap\').toggle_breakpoint()<CR>')
 map('n', '___', '<cmd>lua require(\'dap\').set_breakpoint(vim.fn.input(\'Breakpoint condition: \'))<CR>')
 map('n', '____', '<cmd>lua require(\'dap\').set_breakpoint(nil , nil , vim.fn.input(\'Log point message: \'))<CR>')
 
--- lua require('dap').set_log_level('TRACE')
-
---[[ Available log levels:
-          TRACE
-          DEBUG
-          INFO
-          WARN
-          ERROR ]]
+require('dap').set_log_level('TRACE') -- TRACE, DEBUG, INFO, WARN, ERROR
 
 vim.fn.sign_define('DapBreakpoint', { text = Icons.ui.sign, texthl = 'Title', linehl = '', numhl = '' })
 vim.fn.sign_define('DapStopped', { text = Icons.miscellaneous.fish, texthl = 'ModeMsg', linehl = '', numhl = '' })
