@@ -6,6 +6,7 @@ vim.wo.colorcolumn = '80' -- Display color column at 80 characters
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
 vim.wo.list = true -- enable the feature
 vim.go.listchars = 'trail:·,precedes:«,extends:»,tab:▸\\ ' -- specify chars
+vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:'
 
 vim.cmd('colorscheme base16-atelier-sulphurpool') -- Former favorite
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })

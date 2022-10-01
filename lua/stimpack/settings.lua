@@ -5,7 +5,6 @@ vim.g.nowritebackup = true
 vim.g.showmatch = true -- Show matching () [] {}
 
 vim.go.lazyredraw = true -- Don't redraw screen during macros
-vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
 -- Regular options
 vim.o.conceallevel = 2
@@ -33,7 +32,6 @@ vim.o.timeoutlen = 500 -- Faster than default 1000 ms
 vim.o.updatetime = 300 -- Faster completion
 vim.o.termguicolors = true -- Needed for better color display
 vim.o.swapfile = false -- Do not create swp files
-vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:'
 vim.bo.swapfile = false -- Do not create swp files
 
 -- Window options
