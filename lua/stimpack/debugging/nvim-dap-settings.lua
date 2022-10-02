@@ -9,6 +9,7 @@ which_key_mapper({
         o = { '<cmd>lua require(\'dap\').step_over()<CR>', 'Step over (≤)' },
         e = { '<cmd>lua require(\'dapui\').eval()<CR>', 'Eval variable under cursor' },
         -- E = { '<cmd>lua require(\'dapui\').float_element()<CR>', 'Open an item in a floating view' },
+        d = { [[:lua require"osv".launch({port = 8086})<CR>]], 'Start neovim lua debugging' },
         i = { '<cmd>lua require(\'dap\').step_into()<CR>', 'Step into (≥)' },
         O = { '<cmd>lua require(\'dap\').step_out()<CR>', 'Step out (µ)' },
         b = { '<cmd>lua require(\'dap\').toggle_breakpoint()<CR>', 'Toggle breakpoint (__)' },
@@ -47,11 +48,12 @@ vim.fn.sign_define('DapBreakpointRejected', { text = Icons.ui.stop, texthl = '',
 
 -- Set global variables to help with path locations
 Mason = {}
-Mason.bin = OS.join_path({vim.fn.stdpath('data'), 'mason', 'bin'})
-Mason.packages = OS.join_path({vim.fn.stdpath('data'), 'mason', 'packages'})
+Mason.bin = OS.join_path({ vim.fn.stdpath('data'), 'mason', 'bin' })
+Mason.packages = OS.join_path({ vim.fn.stdpath('data'), 'mason', 'packages' })
 
 -- Source configuration files for each language
 require('stimpack.debugging.dap-csharp')
 require('stimpack.debugging.dap-c')
 require('stimpack.debugging.dap-powershell')
 require('stimpack.debugging.dap-bash')
+require('stimpack.debugging.dap-neovim-lua')

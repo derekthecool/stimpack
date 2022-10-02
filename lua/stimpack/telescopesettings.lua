@@ -70,7 +70,7 @@ require('telescope').setup({
 
 -- Extensions to load
 require('telescope').load_extension('emoji')
-require('telescope').load_extension('ui-select')
+-- require('telescope').load_extension('ui-select') -- TODO: decide if dressing.nvim meets my needs
 require('telescope').load_extension('file_browser')
 
 local function gitfiles_or_findfiles()
