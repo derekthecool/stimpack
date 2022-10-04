@@ -2,6 +2,8 @@
 vim.o.termguicolors = true -- Needed for better color display
 vim.wo.cursorcolumn = true
 vim.wo.colorcolumn = '80' -- Display color column at 80 characters
+vim.o.showtabline = 1 -- Only show tabs if there are 2 or more
+vim.opt.winbar = '%f'
 
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
 vim.wo.list = true -- enable the feature

@@ -38,7 +38,21 @@ local snippets = {
 local autosnippets = {
 
     -- {{{ Neovim command and API snippets
-    s('VIM.NOTIFY', fmt([[vim.notify({})]], { i(1, 'Notify text') })),
+    s(
+        'VIM.NOTIFY',
+        fmt([[vim.notify('{}', {}, {{ title = '{}' }})]], {
+            i(1, 'Notify text'),
+            c(2, {
+                t('vim.log.levels.INFO'),
+                t('vim.log.levels.ERROR'),
+                t('vim.log.levels.TRACE'),
+                t('vim.log.levels.WARN'),
+                t('vim.log.levels.DEBUG'),
+                t('vim.log.levels.OFF'),
+            }),
+            i(3, 'Stimpack Notification'),
+        })
+    ),
     -- }}}
 
     -- {{{ Fast steno commands to trigger snippets
@@ -178,7 +192,7 @@ local autosnippets = {
     ]],
             {
                 i(1, 'Test group name '),
-                d(2, function(args)
+                d(2, function()
                     local test_snippet = fmt(
                         [[
           it('{}', function()
@@ -409,19 +423,19 @@ local autosnippets = {
         )
     ),
 
-    s('trig', {
-        t('text: '),
-        i(1),
-        t({ '', 'copy: ' }),
-        d(2, function(args)
-            -- the returned snippetNode doesn't need a position; it's inserted
-            -- "inside" the dynamicNode.
-            return sn(nil, {
-                -- jump-indices are local to each snippetNode, so restart at 1.
-                i(1, args[1]),
-            })
-        end, { 1 }),
-    }),
+    -- s('trig', {
+    --     t('text: '),
+    --     i(1),
+    --     t({ '', 'copy: ' }),
+    --     d(2, function(args)
+    --         -- the returned snippetNode doesn't need a position; it's inserted
+    --         -- "inside" the dynamicNode.
+    --         return sn(nil, {
+    --             -- jump-indices are local to each snippetNode, so restart at 1.
+    --             i(1, args[1]),
+    --         })
+    --     end, { 1 }),
+    -- }),
 
     -- add dynamic node
     s(
@@ -485,6 +499,33 @@ local autosnippets = {
     s('extras7', { i(1), t({ '', '' }), dl(2, l._1 .. l._1, 1) }),
     -- s('extras8', {parse('"$1 is ${2|hard,easy,challenging|}"')}),
     parse('extras8', '"$TM_FILENAME"'),
+
+    s(
+        'conditional snippet',
+        fmt(
+            [[
+        {}
+        ]],
+            {
+                t('You are on an even line!'),
+            }
+        ),
+
+        {
+            show_condition = function()
+                return true
+            end,
+            condition = function()
+                local line_number = vim.api.nvim_win_get_cursor(0)[1]
+
+                if line_number % 2 == 0 then
+                    return true
+                else
+                    return false
+                end
+            end,
+        }
+    ),
 
     --}}}
 }

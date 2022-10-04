@@ -14,7 +14,7 @@ require('luasnip').config.set_config({
   history = true,
   update_events = 'TextChanged,TextChangedI', -- update text as you type
   enable_autosnippets = true, -- I NEED autosnippets to live, default is false
-  -- store_selection_keys = '<c-s>', -- I'm not sure about this, the default has it nil
+  store_selection_keys = '<Tab>', -- I'm not sure about this, the default has it nil
 
   -- Add awesome highlights to help show where you are at in a snippet
   -- Think of them as a road map of where you're going
