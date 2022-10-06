@@ -5,4 +5,4 @@ map('n', '<leader>nb', require('dvp').bit_flip)
 
 -- plover-tapey-tape.nvim
 require('plover-tapey-tape').setup()
-map('n', '<leader>nt', require('plover-tapey-tape').open)
+map('n', '<leader>nt', require('plover-tapey-tape').toggle)
