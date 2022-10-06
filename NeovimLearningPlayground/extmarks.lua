@@ -112,6 +112,10 @@ local fancy_steno = {
     '      +-+-+ +-+-+      ',
 }
 
+local window_height = vim.api.nvim_win_get_height(0)
+local window_width = vim.api.nvim_win_get_width(0)
+print(window_height, window_width)
+
 vim.api.nvim_set_hl(0, 'FancyStenoBorder', { fg = '#6c25be', bg = '#39028d'})
 vim.api.nvim_set_hl(0, 'FancyStenoActive', { fg = '#222222',bg = '#22ffff', bold = true, italic = true })
 vim.api.nvim_set_hl(0, 'FancyStenoInactive', { bg = '#000000' })
@@ -127,9 +131,9 @@ for row, row_text in ipairs(fancy_steno) do
         else
             local steno_key = char:match('[A-Z#*]')
             if steno_key ~= nil and steno_key:match('[STG]') then
-                highlight = 'Normal'
+                highlight = 'FancyStenoActive'
             else
-                highlight = 'SpecialKey'
+                highlight = 'Folded'
             end
         end
 
