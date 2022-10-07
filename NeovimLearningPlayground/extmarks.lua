@@ -1,5 +1,4 @@
 -- Start example text and code (intended for writing virtual text and symbols on)
-
 local variable = 4
 
 local my_table = {
@@ -114,15 +113,22 @@ local fancy_steno = {
 
 local window_height = vim.api.nvim_win_get_height(0)
 local window_width = vim.api.nvim_win_get_width(0)
-print(window_height, window_width)
+local cursor_row = vim.api.nvim_win_get_cursor(0)[1]
+print(window_height, window_width, cursor_row)
 
-vim.api.nvim_set_hl(0, 'FancyStenoBorder', { fg = '#6c25be', bg = '#39028d'})
-vim.api.nvim_set_hl(0, 'FancyStenoActive', { fg = '#222222',bg = '#22ffff', bold = true, italic = true })
+vim.api.nvim_buf_set_extmark(bufnr, namespace, math.floor(cursor_row - window_height / 2), 0, {
+    virt_text_win_col = (window_width / 2) - 20,
+    virt_text_pos = 'overlay',
+    virt_text = { { 'Derek is cool!', 'GoodHappyGreen' } },
+})
+
+vim.api.nvim_set_hl(0, 'FancyStenoBorder', { fg = '#6c25be', bg = '#39028d' })
+vim.api.nvim_set_hl(0, 'FancyStenoActive', { fg = '#222222', bg = '#22ffff', bold = true, italic = true })
 vim.api.nvim_set_hl(0, 'FancyStenoInactive', { bg = '#000000' })
 
 print(fancy_steno[#fancy_steno])
 for row, row_text in ipairs(fancy_steno) do
--- for row=1,(#fancy_steno + 1) do
+    -- for row=1,(#fancy_steno + 1) do
     local char_column = 0
     print(fancy_steno[row])
     for char in fancy_steno[row]:gmatch('.') do

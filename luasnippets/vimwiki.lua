@@ -183,6 +183,13 @@ local autosnippets = {
       }
     )
   ),
+
+  s(
+    'TASK',
+    fmt('- [ ] {}', {
+      i(1),
+    })
+  ),
 }
 
 return snippets, autosnippets
