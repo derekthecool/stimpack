@@ -34,7 +34,8 @@ vim.api.nvim_create_autocmd('RecordingEnter', {
     pattern = { '*' },
     callback = function()
         -- Print notification and set win bar to another color
-        vim.opt.winbar = '%f -- recording macro ' .. vim.fn.reg_recording()
+        -- vim.opt.winbar = '%f -- recording macro ' .. vim.fn.reg_recording()
+        MacroWinbarIdentifier = ' -- recording macro ' .. vim.fn.reg_recording()
         vim.api.nvim_set_hl(0, 'WinBar', { bg = '#33FF33', fg = '#3333ff' })
         vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })
     end,
@@ -45,7 +46,8 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     pattern = { '*' },
     callback = function()
         -- Print notification and set win bar to another color
-        vim.opt.winbar = '%f'
+        -- vim.opt.winbar = '%f'
+        MacroWinbarIdentifier = ''
         vim.api.nvim_set_hl(0, 'WinBar', { bg = 'none' })
         vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })
     end,

@@ -31,9 +31,9 @@ local map = require('stimpack.mapping-function')
 -- Arrows mapped to steno symbol right side: -RL... Inverse of tab
 map('n', '⏫⏫', '<Cmd>ToggleTermToggleAll<CR>')
 map('n', '▶️', '<Cmd>ToggleTermSendCurrentLine<CR>')
--- map('v', '▶️', '<Cmd>ToggleTermSendVisualLines<CR>')
--- map('v', '▶️▶️▶️', '<Cmd>ToggleTermSendVisualSelection<CR>')
 -- TODO: find out why these visual lua mappings do not work like the vnoremap version
+-- 2022-10-10 I found that use vim.keymap.set and vim.api.nvim_set_keymap both have the same issue
+-- Some mappings just don't seem to work well with these two functions
 vim.cmd([[vnoremap ▶️ :ToggleTermSendVisualLines<CR>]])
 vim.cmd([[vnoremap ▶️▶️ :ToggleTermSendVisualSelection<CR>]])
 

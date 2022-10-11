@@ -6,20 +6,20 @@ local snippets = {}
 
 local autosnippets = {
 
-  s(
-    'var var',
-    fmt(
-      [[
+    s(
+        'var var',
+        fmt(
+            [[
       {}
       ]],
-      {
-        f(function()
-          local variable = my_treesitter_functions.bash.get_recent_var()
-          return variable
-        end, {}),
-      }
-    )
-  ),
+            {
+                f(function()
+                    local variable = my_treesitter_functions.bash.get_recent_var()
+                    return variable
+                end, {}),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets

@@ -18,6 +18,4 @@ vim.g.qf_join_changes = 1
 vim.g.qf_write_changes = 1
 
 -- Another nice feature to have to help narrow down quick fix lists. Run :h Cfilter for help
-vim.cmd([[
-packadd cfilter
-]])
+vim.api.nvim_cmd({ cmd = 'packadd', args = { 'cfilter' } }, {})

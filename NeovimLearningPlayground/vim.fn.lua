@@ -123,6 +123,10 @@ print(vim.fn.getreg('+'))
 print(vim.fn.getreg('_'))
 print(vim.fn.getreg('/'))
 
+print(vim.fn.getpos('\'<'))
+print(vim.fn.getpos('\'>'))
+print(vim.fn.getpos([[v]]))
+
 -- :h has()
 -- Returns 1 if he feature is found else 0
 -- Version checking
