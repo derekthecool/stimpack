@@ -145,31 +145,39 @@ require('nvim-treesitter.configs').setup({
         swap = {
             enable = true,
             -- TODO: make better mapping, I use this often
+            -- I'll need to make my own queries to enhance this: https://www.reddit.com/r/neovim/comments/tlkieq/swapping_objects_with_nvimtreesittertextobjects/
             swap_next = {
                 ['<leader>hn'] = '@parameter.inner',
+                ['<leader>t011'] = '@conditional.outer',
             },
             swap_previous = {
                 ['<leader>hN'] = '@parameter.inner',
+                ['<leader>t311'] = '@conditional.outer',
             },
         },
         move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-                ['<leader>tnms'] = '@function.outer',
-                [']]'] = '@class.outer',
+              -- TODO: what is the difference between inner and outer?
+                ['<leader>t201'] = '@function.outer',
+                ['<leader>t211'] = '@conditional.outer',
+                ['<leader>t221'] = '@class.outer',
             },
             goto_next_end = {
-                ['<leader>tnme'] = '@function.outer',
-                [']['] = '@class.outer',
+                ['<leader>t202'] = '@function.outer',
+                ['<leader>t212'] = '@conditional.outer',
+                ['<leader>t222'] = '@class.outer',
             },
             goto_previous_start = {
-                ['<leader>tpms'] = '@function.outer',
-                ['[['] = '@class.outer',
+                ['<leader>t101'] = '@function.outer',
+                ['<leader>t111'] = '@conditional.outer',
+                ['<leader>t121'] = '@class.outer',
             },
             goto_previous_end = {
-                ['<leader>tpme'] = '@function.outer',
-                ['[]'] = '@class.outer',
+                ['<leader>t102'] = '@function.outer',
+                ['<leader>t112'] = '@conditional.outer',
+                ['<leader>t122'] = '@class.outer',
             },
         },
     },
