@@ -53,6 +53,11 @@ return require('packer').startup(function()
     -- use('tmux-plugins/vim-tmux-focus-events') -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
     -- }}}
 
+    -- Database helpers {{{
+    use('tpope/vim-dadbod')
+    use('kristijanhusak/vim-dadbod-ui')
+    -- }}}
+
     -- LSP setup {{{
 
     -- cmp plugins {{{
