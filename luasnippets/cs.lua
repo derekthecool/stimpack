@@ -5,6 +5,25 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local snippets = {
 
   s(
+    'prop',
+    fmt(
+      [[
+      {} {} {} {{ get; set; }}
+      ]],
+      {
+        c(1,
+          {
+            t('public'),
+            t('private'),
+          }),
+        i(2, 'int'),
+        i(3),
+      }
+    )
+  ),
+
+
+  s(
     'event',
     fmt(
       [[

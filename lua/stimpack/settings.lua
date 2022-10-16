@@ -47,17 +47,41 @@ vim.opt.iskeyword:append('-')
 -- Set items specific to OS
 -- Use this command to check OS lua print(vim.loop.os_uname().sysname)
 if OS.OS == 'Windows' then
-    -- https://github.com/akinsho/toggleterm.nvim/wiki/Tips-and-Tricks
-    local powershell_options = {
-        shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell',
-        shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
-        shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
-        shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
-        shellquote = '',
-        shellxquote = '',
+  -- https://github.com/akinsho/toggleterm.nvim/wiki/Tips-and-Tricks
+  local windows_shell_options = {
+    {
+      shell = vim.fn.executable('pwsh') and 'pwsh' or 'powershell',
+      shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+      shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
+      shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
+      shellquote = '',
+      shellxquote = '',
+    },
+    {
+      shell = vim.opt.shell,
+      shellcmdflag = vim.opt.shellcmdflag,
+      shellredir = vim.opt.shellredir,
+      shellpipe = vim.opt.shellpipe,
+      shellquote = vim.opt.shellquote,
+      shellxquote = vim.opt.shellquote,
     }
+  }
 
-    for option, value in pairs(powershell_options) do
-        vim.opt[option] = value
+  -- Start with first index of windows_shell_options
+  local shell_settings_start = false
+
+  function WindowsSwapShell()
+    local shell_index
+    if shell_settings_start then
+      shell_index = 1
+    else
+      shell_index = 2
     end
+
+    for option, value in pairs(windows_shell_options[shell_index]) do
+      vim.opt[option] = value
+    end
+
+    shell_settings_start = not shell_settings_start
+  end
 end
