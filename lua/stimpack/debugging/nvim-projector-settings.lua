@@ -17,15 +17,11 @@ require('projector').setup({
   loaders = {
     {
       module = 'builtin',
-      opt = vim.fn.getcwd() .. '/projector.json',
+      opt = vim.fn.getcwd() .. OS.separator .. 'projector.json',
     },
     {
       module = 'legacy.json',
-      opt = vim.fn.getcwd() .. '/old_projector.json',
-    },
-    {
-      module = 'builtin',
-      opt = vim.fn.getcwd() .. '/.vscode/projector.json',
+      opt = vim.fn.getcwd() .. OS.separator .. 'old_projector.json',
     },
   },
   display_format = function(_, scope, group, modes, name)

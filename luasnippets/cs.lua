@@ -120,6 +120,40 @@ local snippets = {
 
 local autosnippets = {
 
+  s(
+    'PRINT',
+    fmt(
+      [[
+      Console.WriteLine($"{}");
+      ]],
+      {
+        i(1),
+      }
+    )
+  ),
+
+  s(
+    'FORMAT',
+    fmt(
+      [[
+      $"{}"
+      ]],
+      {
+        i(1),
+      }
+    )
+  ),
+
+  s(
+    '{{',
+    fmt(
+      [[{{{}}}]],
+      {
+        i(1),
+      }
+    )
+  ),
+
   -- {{{ XML autosnippet starter
   s(
     {
@@ -194,25 +228,25 @@ local autosnippets = {
     )
   ),
 
-  s(
-    'FOR',
-    fmt(
-      [[
-      for (int i = {}; i < {}; i++)
-      {{
-        {}
-      }}
-
-      {}
-      ]],
-      {
-        i(1, '0'),
-        i(2, '10'),
-        i(3),
-        i(0),
-      }
-    )
-  ),
+  -- s(
+  --   'FOR',
+  --   fmt(
+  --     [[
+  --     for (int i = {}; i < {}; i++)
+  --     {{
+  --       {}
+  --     }}
+  --
+  --     {}
+  --     ]],
+  --     {
+  --       i(1, '0'),
+  --       i(2, '10'),
+  --       i(3),
+  --       i(0),
+  --     }
+  --   )
+  -- ),
 
   s(
     'FUNCTION',

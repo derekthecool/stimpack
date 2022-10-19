@@ -58,17 +58,17 @@ if OS.OS == 'Windows' then
       shellxquote = '',
     },
     {
-      shell = vim.opt.shell,
-      shellcmdflag = vim.opt.shellcmdflag,
-      shellredir = vim.opt.shellredir,
-      shellpipe = vim.opt.shellpipe,
-      shellquote = vim.opt.shellquote,
-      shellxquote = vim.opt.shellquote,
+      shell = 'cmd',
+      shellcmdflag = '/s /c',
+      shellredir = '>%s 2>&1',
+      shellpipe = '>%s 2>&1',
+      shellquote = '',
+      shellxquote = '"',
     }
   }
 
   -- Start with first index of windows_shell_options
-  local shell_settings_start = false
+  local shell_settings_start = true
 
   function WindowsSwapShell()
     local shell_index
@@ -82,6 +82,14 @@ if OS.OS == 'Windows' then
       vim.opt[option] = value
     end
 
+    -- Only notify when I change to CMD, I don't want to see this on start up
+    if windows_shell_options[shell_index].shell == "cmd" then
+      vim.notify(windows_shell_options[shell_index].shell, vim.log.levels.INFO, { title = 'Stimpack Notification' })
+    end
+
     shell_settings_start = not shell_settings_start
   end
+
+  -- Call once to set initial values
+  WindowsSwapShell()
 end
