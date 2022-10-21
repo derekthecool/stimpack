@@ -60,9 +60,9 @@ local autosnippets = {
         'IF',
         fmt(
             [[
-    if {} then
-       {}
-    end]],
+            if {} then
+                {}
+            end]],
             {
                 i(1),
                 i(2),

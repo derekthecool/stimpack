@@ -1,7 +1,6 @@
 -- takes an optional argument for path, default is './.vim/projector.json'
 -- require('projector.config_utils').load_project_configurations('./projector.json')
 -- require('projector.config_utils').load_dap_configurations()
-P('debugging')
 
 --[[
 Issues with new refactor projector
@@ -14,43 +13,52 @@ Issues with new refactor projector
 ]]
 
 require('projector').setup({
-  loaders = {
-    {
-      module = 'builtin',
-      opt = vim.fn.getcwd() .. OS.separator .. 'projector.json',
+    loaders = {
+        {
+            module = 'builtin',
+            options = {
+                path = vim.fn.getcwd() .. OS.separator .. 'projector.json',
+                configs = nil,
+            },
+        },
     },
-    {
-      module = 'legacy.json',
-      opt = vim.fn.getcwd() .. OS.separator .. 'old_projector.json',
-    },
-  },
-  display_format = function(_, scope, group, modes, name)
-    return scope .. '  ' .. group .. '  ' .. modes .. '  ' .. name
-  end,
-  automatic_reload = true,
+    display_format = function(_, scope, group, modes, name)
+        return scope .. '  ' .. group .. '  ' .. modes .. '  ' .. name
+    end,
+    automatic_reload = true,
 
-  outputs = {
-    task = 'builtin',
-    debug = 'dap',
-    database = 'dadbod',
-  },
-  -- Reload configurations automatically before displaying task selector
-  -- map of icons
-  -- NOTE: "groups" use nvim-web-devicons if available
-  icons = {
-    enable = true,
-    scopes = {
-      global = '',
-      project = '',
+    -- local output_config = require("projector").config.outputs[mode]
+    outputs = {
+        task = {
+            module = 'builtin',
+            options = nil,
+        },
+        debug = {
+            module = 'dap',
+            options = nil,
+        },
+        database = {
+            module = 'dadbod',
+            options = nil,
+        },
     },
-    groups = {},
-    loaders = {},
-    modes = {
-      task = '',
-      debug = '',
-      database = '',
+    -- Reload configurations automatically before displaying task selector
+    -- map of icons
+    -- NOTE: "groups" use nvim-web-devicons if available
+    icons = {
+        enable = true,
+        scopes = {
+            global = '',
+            project = '',
+        },
+        groups = {},
+        loaders = {},
+        modes = {
+            task = '',
+            debug = '',
+            database = '',
+        },
     },
-  },
 })
 
 local map = require('stimpack.mapping-function')

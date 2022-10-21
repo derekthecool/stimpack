@@ -1,9 +1,8 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
-
 -- Start up profiler that shows what takes the most time and helps speed up
 -- Load before any other plugins
 if not pcall(require, 'impatient') then
-  return
+    return
 end
 
 -- Lua basic configuration

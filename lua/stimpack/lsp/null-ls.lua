@@ -11,6 +11,7 @@ local hover = null_ls.builtins.hover
 null_ls.setup({
     debug = false,
     sources = {
+        formatting.csharpier,
         formatting.prettier.with({ extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' } }),
         formatting.black.with({ extra_args = { '--fast' } }),
         formatting.stylua,
