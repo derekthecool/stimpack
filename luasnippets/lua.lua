@@ -130,19 +130,38 @@ local autosnippets = {
 
     -- TODO: Call different function than pairs if two arguments are used
     s(
-        'FOR',
+        { trig = '(%w+),? (%w+) FOR', regTrig = true },
         fmt(
             [[
-        for i={}, {} do
+        for {} do
             {}
         end
 
         {}
         ]],
             {
-                i(1, '1'),
-                i(2, '100'),
-                i(3),
+                d(1, function(args, snip)
+                    -- Check for numeric for loop, only lower bound needs to be number
+                    if snip.captures[1]:match('%d+') then
+                        return sn(nil, {
+                            t('i='),
+                            t(snip.captures[1]),
+                            t(', '),
+                            t(snip.captures[2]),
+                        })
+                    elseif snip.captures[1]:match('i?pairs') then
+                        return sn(nil, {
+                            t(string.format('k, v in %s(%s)', snip.captures[1], snip.captures[2])),
+                        })
+                    else
+                        return sn(nil, {
+                            i(1),
+                            t('in'),
+                            i(2),
+                        })
+                    end
+                end, { 1 }),
+                i(2),
                 i(0),
             }
         )
@@ -364,17 +383,19 @@ local autosnippets = {
     ),
 
     s(
-        {
-            trig = 'long snippet trigger',
-            regTrig = true,
-            descr = 'description',
-        },
+        'snippet node',
         fmt(
             [[
-      {}
-      ]],
+            sn({}, {{
+                {}
+            }}),
+            ]],
             {
-                t('text'),
+                c(1, {
+                    t('nil'),
+                    i(1, 'jump index'),
+                }),
+                i(2),
             }
         )
     ),
@@ -424,7 +445,28 @@ local autosnippets = {
         )
     ),
 
-    -- Needs work
+    s(
+        -- This node is not a real node. It is just easier to remember by calling it this.
+        'format node',
+        fmta(
+            [[
+        fmt(
+          <>
+          <>
+          <>,
+          {{
+              <>
+          }})
+        ]],
+            {
+                t('[['),
+                i(1),
+                t(']]'),
+                i(2),
+            }
+        )
+    ),
+
     s(
         {
             trig = 'function node',
@@ -440,7 +482,7 @@ local autosnippets = {
       ]],
             {
                 i(1),
-                i(2, 'node_number'),
+                i(2, ''),
                 i(0),
             }
         )
@@ -461,32 +503,24 @@ local autosnippets = {
       ]],
             {
                 i(1, 'node number'),
-                i(2, [[t('new text'),]]),
+                sn(
+                    2,
+                    fmt([[{}('{}'),]], {
+                        t('t'),
+                        i(1, 'new text'),
+                    })
+                ),
                 i(0),
             }
         )
     ),
-
-    -- s('trig', {
-    --     t('text: '),
-    --     i(1),
-    --     t({ '', 'copy: ' }),
-    --     d(2, function(args)
-    --         -- the returned snippetNode doesn't need a position; it's inserted
-    --         -- "inside" the dynamicNode.
-    --         return sn(nil, {
-    --             -- jump-indices are local to each snippetNode, so restart at 1.
-    --             i(1, args[1]),
-    --         })
-    --     end, { 1 }),
-    -- }),
 
     -- add dynamic node
     s(
         'dynamic node',
         fmt(
             [[
-      d({}, function(args)
+      d({}, function(args, snip)
         return sn(nil,{{
           {}
         }}) end,
@@ -569,6 +603,38 @@ local autosnippets = {
                 end
             end,
         }
+    ),
+    s(
+        { trig = 'test (%d+) test', regTrig = true },
+        fmt(
+            [[
+            {}
+        ]],
+            {
+                f(function(args, snip)
+                    return snip.captures[1]
+                end, {}),
+            }
+        )
+    ),
+
+    s(
+        { trig = 'for loop (%d+), (%d+)', regTrig = true },
+        fmt(
+            [[
+        for i={} do
+        end
+        ]],
+            {
+                d(1, function(_, snip)
+                    return sn(nil, {
+                        t(snip.captures[1]),
+                        t(', '),
+                        t(snip.captures[2]),
+                    })
+                end, {}),
+            }
+        )
     ),
 
     --}}}

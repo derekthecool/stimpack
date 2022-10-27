@@ -166,7 +166,7 @@ local autosnippets = {
                     t('<PackageReference Include="Dapper" Version="2.0.123" />'),
                     t('<PackageReference Include="MySql.Data" Version="8.0.31" />'),
                     -- Networking
-                    t('<PackageReference Include="M2Mqtt" Version="4.3.0" />'),
+                    t('<PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />'),
                     -- Encoding
                     t('<PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta2" />'),
                     t('<PackageReference Include="Google.Protobuf" Version="3.21.7" />'),

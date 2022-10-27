@@ -221,6 +221,69 @@ local autosnippets = {
     ),
 
     s(
+        'CLASS',
+        fmt(
+            [[
+        namespace {};
+
+        {}{} class {}
+        {{
+            {}
+        }}
+        ]]   ,
+            {
+                f(function(args, snip)
+                    -- Get csharp namespace
+                    local cwd = vim.fn.getcwd()
+                    local full_file = vim.fn.expand('%:p')
+                    local just_file_name = vim.fn.expand('%:t')
+                    local namespace = full_file
+                        :gsub(cwd .. OS.separator, '')
+                        :gsub(OS.separator .. just_file_name, '')
+                        :gsub(OS.separator, '.')
+                    return namespace
+                end, {}),
+
+                c(1, {
+                    t('public'),
+                    t('private'),
+                }),
+
+                c(2, {
+                    t(''),
+                    t(' static'),
+                }),
+
+                f(function(args, snip)
+                    return vim.fn.expand('%:p:t:r')
+                end, { 3 }),
+
+                i(3),
+            }
+        )
+    ),
+
+    s(
+        'CONSTRUCTOR',
+        fmt(
+            [[
+        {}({})
+        {{
+            {}
+        }}
+        ]]   ,
+            {
+                f(function(args, snip)
+                    local class_information = my_treesitter_functions.cs.get_class_name()
+                    return string.format('%s %s', class_information.modifier, class_information.class)
+                end, {}),
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    s(
         'FOREACH',
         fmt(
             [[
@@ -300,12 +363,7 @@ local autosnippets = {
                     t('private'),
                 }),
 
-                c(2, {
-                    t('int'),
-                    t('bool'),
-                    t('string'),
-                    i(1),
-                }),
+                i(2, 'async Task'),
 
                 --TODO: Add choice-node here
                 i(3, 'AwesomeFunction'),

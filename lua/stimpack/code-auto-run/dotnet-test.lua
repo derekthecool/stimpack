@@ -18,7 +18,7 @@ M.dotnet_test = function()
 
     local buffer_list = require('stimpack/my-treesitter-functions').all.get_all_buffers('.*Tests.cs')
     if #buffer_list == 0 then
-        vim.notify('No open test files')
+        -- vim.notify('No open test files')
         return
     end
 
@@ -73,7 +73,7 @@ M.dotnet_test = function()
                         vim.api.nvim_buf_set_extmark(buffer_number, namespace_id, test.treesitter_details.range[1], 0, {
                             virt_text = { { Icons.diagnostics.success, 'DevIconMotoko' } },
                         })
-                    -- If test failed then use vim diagnostic to show the error
+                        -- If test failed then use vim diagnostic to show the error
                     elseif test.result == 'Failed' then
                         local diagnostic_message = {
                             {

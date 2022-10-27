@@ -85,7 +85,7 @@ my_treesitter_functions.lua = {
         )
 
         -- V(get_test_function_names_query)
-        local output = get_test_function_names(get_test_function_names_query, language, '.*_spec%.lua','test_name')
+        local output = get_test_function_names(get_test_function_names_query, language, '.*_spec%.lua', 'test_name')
         -- local final_output = {}
         --
         -- for _, value in pairs(output) do
@@ -102,7 +102,7 @@ my_treesitter_functions.cs = {
     get_recent_var = function()
         local language = 'c_sharp'
         local query_recent_var_cs =
-            vim.treesitter.parse_query(language, '(variable_declarator (identifier) @cs_variable)')
+        vim.treesitter.parse_query(language, '(variable_declarator (identifier) @cs_variable)')
         local variable = get_recent_var_from_node(query_recent_var_cs, language)
         return variable
     end,
@@ -116,6 +116,29 @@ my_treesitter_functions.cs = {
         local function_list = get_test_function_names(functions, language, '.*Tests.cs', 'xUnitTestMethodName')
 
         return function_list
+    end,
+
+    get_class_name = function()
+        local language = 'c_sharp'
+        local class_query = vim.treesitter.parse_query(
+            language,
+            '(class_declaration (modifier) @public_private name: (identifier) @class_name)'
+        )
+
+        local bufnr = vim.api.nvim_get_current_buf()
+        local root = get_root(bufnr, language)
+        local class_details = {}
+        for id, node in class_query:iter_captures(root, bufnr, 0, -1) do
+            local name = vim.treesitter.get_node_text(node, bufnr):gsub('"', ''):gsub('\'', '')
+            local capture_group = class_query.captures[id]
+            if capture_group == 'public_private' then
+                class_details.modifier = name
+            elseif capture_group == 'class_name' then
+                class_details.class = name
+            end
+        end
+
+        return class_details
     end,
 }
 
@@ -135,7 +158,7 @@ my_treesitter_functions.bash = {
     get_recent_var = function()
         local language = 'bash'
         local query_recent_var_bash =
-            vim.treesitter.parse_query(language, '(variable_assignment name: (variable_name) @bash_variable)')
+        vim.treesitter.parse_query(language, '(variable_assignment name: (variable_name) @bash_variable)')
         local variable = get_recent_var_from_node(query_recent_var_bash, language)
         return variable
     end,

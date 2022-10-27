@@ -41,7 +41,7 @@ vim.wo.number = true -- Show line numbers
 vim.wo.relativenumber = true -- Show relative line numbers
 vim.wo.wrap = false -- Display long lines as a single line
 vim.wo.signcolumn = 'auto:1-4' -- Allow for up to 4 items in the sign column
-vim.wo.foldmethod = 'marker'
+-- vim.wo.foldmethod = 'marker'
 
 -- Buffer options
 vim.opt.iskeyword:append('-')
