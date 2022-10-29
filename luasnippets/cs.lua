@@ -9,7 +9,7 @@ local snippets = {
         fmt(
             [[
       {} {} {} {{ get; set; }}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     t('public'),
@@ -31,7 +31,7 @@ local snippets = {
       {{
           {}?.Invoke(this, e);
       }}
-      ]]     ,
+      ]],
             {
                 i(1, 'string'),
                 i(2, 'EventName'),
@@ -99,7 +99,7 @@ local snippets = {
         }}
 
         {}
-      ]]     ,
+      ]],
             {
                 i(1, 'int'),
                 i(2, 'variableName'),
@@ -108,6 +108,22 @@ local snippets = {
                 rep(2),
                 rep(2),
                 i(0),
+            }
+        )
+    ),
+
+    s(
+        'enum',
+        fmt(
+            [[
+        enum {}
+        {{
+            {}
+        }}
+        ]],
+            {
+                i(1, 'Enum1'),
+                i(2),
             }
         )
     ),
@@ -120,7 +136,7 @@ local autosnippets = {
         fmt(
             [[
       Console.WriteLine($"{}");
-      ]]     ,
+      ]],
             {
                 i(1),
             }
@@ -132,7 +148,7 @@ local autosnippets = {
         fmt(
             [[
       $"{}"
-      ]]     ,
+      ]],
             {
                 i(1),
             }
@@ -157,7 +173,7 @@ local autosnippets = {
     /// <summary>
     /// {}
     /// </summary>
-    ]]       ,
+    ]],
             {
                 i(1),
             }
@@ -175,7 +191,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'true'),
                 i(2),
@@ -193,7 +209,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'false'),
                 i(2),
@@ -212,7 +228,7 @@ local autosnippets = {
       }}
 
       {}
-      ]]     ,
+      ]],
             {
                 i(1),
                 i(0),
@@ -230,7 +246,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     -- Get csharp namespace
@@ -271,7 +287,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     local class_information = my_treesitter_functions.cs.get_class_name()
@@ -356,7 +372,7 @@ local autosnippets = {
       }}
 
       {}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     t('public'),
@@ -410,7 +426,7 @@ local autosnippets = {
         fmt(
             [[
       {} {}
-      ]]     ,
+      ]],
             {
                 t(' Derek test: '),
 
@@ -426,7 +442,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()

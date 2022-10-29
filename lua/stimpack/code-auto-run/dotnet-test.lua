@@ -30,6 +30,8 @@ M.dotnet_test = function()
     local dotnet_test_command = 'dotnet test --logger trx'
     vim.notify(string.format('Starting dotnet test: cmd="%s"', dotnet_test_command))
 
+    local error_list = {}
+
     vim.fn.jobstart(dotnet_test_command, {
         stdout_buffered = true,
         on_stdout = function(_, data)
@@ -42,10 +44,35 @@ M.dotnet_test = function()
                 if string.match(line, 'Results File') then
                     output_log_filename = line:match('Results File: (.*trx)')
                 end
+
+                -- Example error message
+                -- C:\Users\Derek Lomax\source\repos\Freeus.Tools\BelleDealerTasks\MqttHandler\Proto\ProtoParser.cs(58,10): error CS1002: ; expected [C:\Users\Derek Lomax\source\repos\Freeus.Tools\BelleDealerTasks\MqttHandler\MqttHandler.csproj]
+                -- C:\\Users\\Derek Lomax\\source\\repos\\Freeus.Tools\\BelleDealerTasks\\MqttHandler\\Proto\\ProtoParser.cs(58,10): error CS1002: ; expected [C:\\Users\\Derek Lomax\\source\\repos\\Freeus.Tools\\BelleDealerTasks\\MqttHandler\\MqttHandler.csproj]
+                if string.match(line, ': error ') then
+                    local error_match = {
+                        line:match('(.*)%((%d+),(%d+)%): error (..%d+): (.*)%['),
+                    }
+                    table.insert(error_list, error_match)
+                end
             end
         end,
 
-        on_exit = function()
+        on_exit = function(_, exit_code)
+            if exit_code ~= 0 then
+                vim.notify(
+                    'Dotnet autotest runner failed to run tests',
+                    vim.log.levels.ERROR,
+                    { title = 'Stimpack dotnet autotest runner' }
+                )
+
+                -- TODO: set quick fix list here
+                vim.notify(
+                    vim.inspect(error_list),
+                    vim.log.levels.ERROR,
+                    { title = 'Stimpack dotnet autotest runner errors' }
+                )
+            end
+
             if not output_log_filename then
                 output_log_filename = 'nil'
             else
@@ -56,7 +83,7 @@ M.dotnet_test = function()
                 -- TODO: use lua rock package for xml reading for better results
                 for line in io.lines(output_log_filename) do
                     local test_name, test_result =
-                        line:match('.*UnitTestResult.*testName=".-%.(%w+)["(].*outcome="(.-)"')
+                        line:match('.*UnitTestResult.*testName=".-%.([%w_]+)["(].*outcome="(.-)"')
                     if test_name ~= nil and test_result ~= nil then
                         pass_fail_results[test_name] = {
                             name = test_name,
@@ -66,27 +93,37 @@ M.dotnet_test = function()
                     end
                 end
 
+                V(pass_fail_results)
+
                 for _, test in pairs(pass_fail_results) do
-                    local buffer_number = test.treesitter_details.bufnr
-                    -- If test passed put a virtual check mark with a purple highlight
-                    if test.result == 'Passed' then
-                        vim.api.nvim_buf_set_extmark(buffer_number, namespace_id, test.treesitter_details.range[1], 0, {
-                            virt_text = { { Icons.diagnostics.success, 'DevIconMotoko' } },
-                        })
-                        -- If test failed then use vim diagnostic to show the error
-                    elseif test.result == 'Failed' then
-                        local diagnostic_message = {
-                            {
-                                bufnr = buffer_number,
-                                lnum = test.treesitter_details.range[1],
-                                col = 0,
-                                severity = vim.diagnostic.severity.ERROR,
-                                source = 'dotnet test',
-                                message = string.format('Test Failed %s', Icons.diagnostics.error2),
-                                user_data = {},
-                            },
-                        }
-                        vim.diagnostic.set(namespace_id, buffer_number, diagnostic_message, {})
+                    if test.treesitter_details ~= nil and test.treesitter_details.bufnr ~= nil then
+                        local buffer_number = test.treesitter_details.bufnr
+                        -- If test passed put a virtual check mark with a purple highlight
+                        if test.result == 'Passed' then
+                            vim.api.nvim_buf_set_extmark(
+                                buffer_number,
+                                namespace_id,
+                                test.treesitter_details.range[1],
+                                0,
+                                {
+                                    virt_text = { { Icons.diagnostics.success, 'DevIconMotoko' } },
+                                }
+                            )
+                            -- If test failed then use vim diagnostic to show the error
+                        elseif test.result == 'Failed' then
+                            local diagnostic_message = {
+                                {
+                                    bufnr = buffer_number,
+                                    lnum = test.treesitter_details.range[1],
+                                    col = 0,
+                                    severity = vim.diagnostic.severity.ERROR,
+                                    source = 'dotnet test',
+                                    message = string.format('Test Failed %s', Icons.diagnostics.error2),
+                                    user_data = {},
+                                },
+                            }
+                            vim.diagnostic.set(namespace_id, buffer_number, diagnostic_message, {})
+                        end
                     end
                 end
             end
