@@ -138,7 +138,7 @@ return require('packer').startup(function()
 
     -- Coding helpers {{{
     use({ 'rafcamlet/nvim-luapad', requires = 'antoinemadec/FixCursorHold.nvim' }) -- Real time nvim lua scratch pad
-    use('folke/lua-dev.nvim')
+    use('folke/neodev.nvim')
 
     -- Get installer to work better with Linux and windows
     -- -- use({ -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
