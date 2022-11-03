@@ -1,6 +1,8 @@
 ---@diagnostic disable: undefined-global
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local shiftwidth = vim.bo.shiftwidth
+local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
 local snippets = {
 
@@ -62,20 +64,23 @@ local autosnippets = {
             [[
             if {} then
                 {}
-            end]],
+            end
+
+            {}]],
             {
                 i(1),
                 i(2),
+                i(0),
             }
         )
     ),
 
     s(
-        'ELS_EI_F',
+        { trig = shiftwidth_match_string .. 'ELS_EI_F', regTrig = true, wordTrig = false },
         fmt(
             [[
         elseif {} then
-          {}
+            {}
         ]],
             {
                 i(1),
@@ -85,11 +90,11 @@ local autosnippets = {
     ),
 
     s(
-        'ELSE',
+        { trig = shiftwidth_match_string .. 'ELSE', regTrig = true, wordTrig = false },
         fmt(
             [[
         else
-           {}
+            {}
         ]],
             {
                 i(1),
@@ -636,6 +641,65 @@ local autosnippets = {
             }
         )
     ),
+
+    s('D', {
+        d(1, function(args, snip)
+            local items = {
+                t('if '),
+                i(1, 'true'),
+                t({ ' then', '' }),
+                i(2, '-- do something'),
+            }
+            if true then
+                table.insert(items, t({ '', 'new line' }))
+                table.insert(items, i(3, args[3][1]))
+            end
+            table.insert(items, t({ '', 'end' }))
+            return sn(nil, items)
+        end, {}),
+    }),
+
+    s(
+        'H',
+        fmt(
+            [[
+        if {} then
+            {}
+        {}
+        end
+        ]],
+            {
+                i(1, 'true'),
+                i(2, 'stuff'),
+                d(3, function(args, snip)
+                    local items = {}
+                    -- if args[1] then
+                    -- table.insert(items, t(args[1][1] .. ' t1'))
+                    -- end
+                    if args[2] then
+                        local found = false
+                        for k, v in ipairs(args[2]) do
+                            if v:match('else') then
+                                found = true
+                                v:gsub('else', '')
+                            end
+                        end
+                        if found then
+                            table.insert(items, t({ 'else ', '' }))
+                            table.insert(items, i(1))
+                        end
+                    end
+                    return sn(nil, items)
+                end, { 1, 2 }),
+            }
+        )
+    ),
+
+    s('J', {
+        i(1, 'test'),
+        l(l._1:gsub('a', 'e'), 1),
+        dl(2, l._1:gsub('a', 'e'), 1),
+    }),
 
     --}}}
 }
