@@ -137,7 +137,7 @@ return require('packer').startup(function()
     -- }}}
 
     -- Coding helpers {{{
-    use({ 'rafcamlet/nvim-luapad', requires = 'antoinemadec/FixCursorHold.nvim' }) -- Real time nvim lua scratch pad
+    use('rafcamlet/nvim-luapad') -- Real time nvim lua scratch pad
     use('folke/neodev.nvim')
 
     -- Get installer to work better with Linux and windows
