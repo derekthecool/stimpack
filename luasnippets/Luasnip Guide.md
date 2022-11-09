@@ -23,6 +23,8 @@ More advanced snippets to create
 
 ## Snip.env
 
+These global variables will come into scope to the file type specific snippets.
+
 ```lua
 snip_env = {
   s = require("luasnip.nodes.snippet").S,

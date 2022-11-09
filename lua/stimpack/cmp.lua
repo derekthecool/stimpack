@@ -85,8 +85,18 @@ cmp.setup({
         select = false,
     },
     window = {
+        completion = {
+            border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+            winhighlight = 'Normal:DevIconEex,FloatBorder:DevIconGitIgnore,CursorLine:DevIconJpg,Search:None',
+            scrolloff = 0,
+            col_offset = 0,
+            side_padding = 1,
+        },
         documentation = {
             border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
+            -- max_height = math.floor(WIDE_HEIGHT * (WIDE_HEIGHT / vim.o.lines)),
+            -- max_width = math.floor((WIDE_HEIGHT * 2) * (vim.o.columns / (WIDE_HEIGHT * 2 * 16 / 9))),
+            winhighlight = 'FloatBorder:NormalFloat',
         },
     },
     view = {
@@ -96,3 +106,21 @@ cmp.setup({
         ghost_text = true,
     },
 })
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })

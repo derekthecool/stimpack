@@ -1,8 +1,13 @@
-vim.cmd([[
-filetype plugin on
-"Template for work diary wiki using a python script
-autocmd BufNewFile  ~/.mywiki/work/diary/*.md :silent 0r !~/.derek-shell-config/scripts/generate-vimwiki-diary-template.py '%'
-]])
+-- Autocommand to trigger diary template.
+-- TODO: find a way to fully trigger the snippet
+local VimwikiSettingsGroup = vim.api.nvim_create_augroup('Vimwiki snippets', { clear = true })
+vim.api.nvim_create_autocmd('BufNewFile', {
+    pattern = '*/diary/*.md',
+    callback = function()
+        vim.api.nvim_feedkeys('ivimwikiDiaryStarter', 'nti', false)
+    end,
+    group = VimwikiSettingsGroup,
+})
 
 -- Personal Wiki Setup
 local personal = {

@@ -1,50 +1,120 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
-  s(
-    'selected_text',
-    f(function(_, snip)
-      local res, env = {}, snip.env
-      table.insert(res, 'Selected Text (current line is ' .. env.TM_LINE_NUMBER .. '):')
-      for _, ele in ipairs(env.LS_SELECT_RAW) do
-        table.insert(res, ele)
-      end
-      return res
-    end, {})
-  ),
 
-  s(
-    {
-      trig = 'link',
-      descr = 'Create markdown link [txt](url)',
-    },
-    fmt(
-      [[
+    s(
+        'footnote',
+        fmt([[{}{}{}]], {
+            t('['),
+            i(1),
+            f(function(args, snip)
+                return ']'
+            end, { 1 }),
+        }),
+        {
+            callbacks = {
+                [1] = {
+                    [events.leave] = function(node, event_args)
+                        local text = string.format('[%s]: ', node:get_text()[1])
+                        vim.cmd('normal mm')
+                        vim.api.nvim_buf_set_lines(0, -1, -1, false, { text })
+                        V('Jumping to end of file to write footnote, position saved at mark m')
+                        -- vim.cmd('normal GA')
+                        -- vim.api.nvim_win_set_cursor(0,{-1,-1})
+                        local esc_key = api.nvim_replace_termcodes('<Esc>', true, false, true)
+                        api.nvim_feedkeys(esc_key, 'm', true)
+                        -- vim.api.nvim_feedkeys('GA', 'i', false)
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'vimwikiDiaryStarter',
+        fmt(
+            [[
+        # {} Notes
+
+        ## Work Objectives
+
+        ### Planned
+
+        - {}
+
+        ## Rock Progress
+
+        - [FloatingTodoList](FloatingTodoList)
+        - [Rocks](../rocks/Rocks.md)
+
+        ## Notes
+        ]],
+            {
+                f(function(args, snip)
+                    return os.date('%Y-%m-%d')
+                end, {}),
+                i(1),
+            }
+        )
+    ),
+
+    s(
+        'footnote',
+        fmt(
+            [[
+        [{}]:{}
+        ]],
+            {
+                i(1, 'reference name'),
+                i(2, 'link'),
+            }
+        )
+    ),
+
+    s(
+        'selected_text',
+        f(function(_, snip)
+            local res, env = {}, snip.env
+            table.insert(res, 'Selected Text (current line is ' .. env.TM_LINE_NUMBER .. '):')
+            for _, ele in ipairs(env.LS_SELECT_RAW) do
+                table.insert(res, ele)
+            end
+            return res
+        end, {})
+    ),
+
+    s(
+        {
+            trig = 'link',
+            descr = 'Create markdown link [txt](url)',
+        },
+        fmt(
+            [[
             [{}]({})
             {}
             ]],
-      {
-        i(1),
-        f(function(_, snip)
-          return snip.env.TM_SELECTED_TEXT[1] or {}
-        end, {}),
-        i(2),
-      }
-    )
-  ),
+            {
+                i(1),
+                f(function(_, snip)
+                    return snip.env.TM_SELECTED_TEXT[1] or {}
+                end, {}),
+                i(2),
+            }
+        )
+    ),
 
-  s(
-    'image',
-    fmt([[![{}]({})]], {
-      i(1, 'alt text'),
-      i(2, 'image path'),
-    })
-  ),
+    s(
+        'image',
+        fmt([[![{}]({})]], {
+            i(1, 'alt text'),
+            i(2, 'image path'),
+        })
+    ),
 
-  s(
-    'pandoc header',
-    fmt(
-      [[
+    s(
+        'pandoc header',
+        fmt(
+            [[
         % {}
         % {}
         % {}
@@ -53,23 +123,23 @@ local snippets = {
 
         {}
         ]],
-      {
-        i(1, 'Title'),
-        i(2, 'Derek Lomax'),
-        f(function()
-          return os.date('%Y-%m-%d')
-        end, {}),
-        rep(1),
-        i(0),
-      }
-    )
-  ),
+            {
+                i(1, 'Title'),
+                i(2, 'Derek Lomax'),
+                f(function()
+                    return os.date('%Y-%m-%d')
+                end, {}),
+                rep(1),
+                i(0),
+            }
+        )
+    ),
 
-  -- {{{ hugo snippets
-  s(
-    'front',
-    fmt(
-      [[
+    -- {{{ hugo snippets
+    s(
+        'front',
+        fmt(
+            [[
       ---
       title: "{}"
       date: {}
@@ -80,116 +150,140 @@ local snippets = {
 
       {}
       ]],
-      {
+            {
 
-        f(function()
-          return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
-        end),
-        t(os.date('%Y-%m-%dT%H:%M:%S')),
-        i(2, 'false'),
-        require('luasnip.extras').rep(1),
-        i(0),
-      }
-    )
-  ),
+                f(function()
+                    return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
+                end),
+                t(os.date('%Y-%m-%dT%H:%M:%S')),
+                i(2, 'false'),
+                require('luasnip.extras').rep(1),
+                i(0),
+            }
+        )
+    ),
 
-  -- }}}
+    -- }}}
 
-  -- {{{ Mermaid-JS snippets
+    -- {{{ Mermaid-JS snippets
 
-  s(
-    'mermaid flowchart',
-    fmt(
-      [[
+    s(
+        'mermaid flowchart',
+        fmt(
+            [[
       ```mermaid
       graph {}
 
       {}
       ```
       ]],
-      {
-        c(1, {
-          t('TD'),
-          t('BT'),
-          t('LR'),
-          t('RL'),
-        }),
+            {
+                c(1, {
+                    t('TD'),
+                    t('BT'),
+                    t('LR'),
+                    t('RL'),
+                }),
 
-        c(2, {
-          t({
-            'A[Start] --> B{Is it?}',
-            'B -- Yes --> C[OK]',
-            'C --> D[Rethink]',
-            'D --> B',
-            'B -- No ----> E[End]',
-          }),
-          i(1),
-        }),
-      }
-    )
-  ),
+                c(2, {
+                    t({
+                        'A[Start] --> B{Is it?}',
+                        'B -- Yes --> C[OK]',
+                        'C --> D[Rethink]',
+                        'D --> B',
+                        'B -- No ----> E[End]',
+                    }),
+                    i(1),
+                }),
+            }
+        )
+    ),
 
-  -- snippet mermaid-Flowchart "Create a Mermaid-JS Flowchart" b
-  -- \`\`\`mermaid
-  -- graph ${1:TD}
-  --
-  -- A[Start] --> B{Is it?};
-  -- B -- Yes --> C[OK];
-  -- C --> D[Rethink];
-  -- D --> B;
-  -- B -- No ----> E[End];
-  --
-  -- \`\`\`
-  -- endsnippet
-  -- }}}
+    s(
+        'CHANGELOG.md',
+        fmt(
+            [[
+        # {} CHANGELOG
+
+        All notable changes to this project will be documented in this file.
+        The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+        and this project adheres to
+        [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+        {}
+        ]],
+            {
+                i(1, 'ProjectTitle'),
+                i(0),
+            }
+        )
+    ),
+
+    s(
+        'CHANGELOG.md item',
+        fmt(
+            [[
+        ## {}
+
+        ### {}
+
+        - {}
+        ]],
+            {
+                i(1, 'Version information'),
+                i(2, 'Changed'),
+                i(3),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
 
-  s(
-    '```',
-    fmt(
-      [[
+    s(
+        '```',
+        fmt(
+            [[
             ```{}
             {}
             ```
 
             {}
             ]],
-      {
-        c(1, {
-          t('yaml'),
-          t('sh'),
-          t('powershell'),
-          i(1),
-        }),
-        i(2),
-        i(0),
-      }
-    )
-  ),
+            {
+                c(1, {
+                    t('yaml'),
+                    t('sh'),
+                    t('powershell'),
+                    i(1),
+                }),
+                i(2),
+                i(0),
+            }
+        )
+    ),
 
-  s(
-    'dick',
-    fmt(
-      [[
+    s(
+        'dick',
+        fmt(
+            [[
             {} : {{^}}{}{{^}}
             {}
             ]],
-      {
-        i(1, 'STKPWHRAO*EUFRPBLTS'),
-        i(2),
-        i(0),
-      }
-    )
-  ),
+            {
+                i(1, 'STKPWHRAO*EUFRPBLTS'),
+                i(2),
+                i(0),
+            }
+        )
+    ),
 
-  s(
-    'TASK',
-    fmt('- [ ] {}', {
-      i(1),
-    })
-  ),
+    s(
+        'TASK',
+        fmt('- [ ] {}', {
+            i(1),
+        })
+    ),
 }
 
 return snippets, autosnippets
@@ -568,33 +662,4 @@ return snippets, autosnippets
 -- [^${1:${VISUAL:Footnote}}]$0
 --
 -- [^$1]:${2:Text}
--- endsnippet
---
--- snippet detail "Disclosure"
--- <details${3: open=""}>
---   ${1:<summary>${2}</summary>}$0
--- </details>
--- endsnippet
---
--- post_jump "create_table(snip)"
--- snippet "tb([1-9][1-9])" "Fancy table" br
--- `!p snip.rv = match.group(1)`
--- endsnippet
---
--- snippet meta "Metadata information" b
--- % ${1:Title}
--- % Author ${2:Derek Lomax}
--- % Date `date +%F`
--- endsnippet
--- endsnippet
---
--- post_jump "create_table(snip)"
--- snippet "tb([1-9][1-9])" "Fancy table" br
--- `!p snip.rv = match.group(1)`
--- endsnippet
---
--- snippet meta "Metadata information" b
--- % ${1:Title}
--- % Author ${2:Derek Lomax}
--- % Date `date +%F`
 -- endsnippet
