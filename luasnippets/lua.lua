@@ -33,6 +33,20 @@ local snippets = {
     -- }}}
 
     -- {{{ Neovim command and API snippets
+    s(
+        'lines',
+        fmt(
+            [[
+         local lines = vim.api.nvim_buf_get_lines(0, 0,-1, false)
+         for _, line in ipairs(lines) do
+             {}
+         end
+         ]],
+            {
+                i(1),
+            }
+        )
+    ),
 
     -- }}}
 }

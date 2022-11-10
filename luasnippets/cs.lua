@@ -2,14 +2,98 @@
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
+---Function for luasnip to add using directives needed for snippets
+---@param required_using_directive_list string|table
+local function add_csharp_using_statement_if_needed(required_using_directive_list)
+    if type(required_using_directive_list) == 'string' then
+        local temp = required_using_directive_list
+        required_using_directive_list = { temp }
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    for _, line in ipairs(lines) do
+        for _, using_directive in ipairs(required_using_directive_list) do
+            if line:match(using_directive) ~= nil then
+                table.remove(required_using_directive_list, using_directive)
+            end
+        end
+    end
+
+    -- Add all using directives that remain in the list to be written to top of file
+    if #required_using_directive_list > 0 then
+        local using_directives_to_write = {}
+        for _, using_directive in ipairs(required_using_directive_list) do
+            table.insert(using_directives_to_write, string.format('using %s;', using_directive))
+        end
+        vim.api.nvim_buf_set_lines(0, 0, 0, false, using_directives_to_write)
+    end
+end
+
 local snippets = {
+
+    s(
+        'regex match',
+        fmt(
+            [[
+        if(Regex.IsMatch({}, @"{}"))
+        {{
+            {}
+        }}
+        ]]   ,
+            {
+                i(1, '"source"'),
+                i(2, '.*'),
+                i(3),
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        add_csharp_using_statement_if_needed('System.Text.RegularExpressions')
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'regex matches',
+        fmt(
+            [[
+        var matches = Regex.Matches({}, @"{}")
+                           .Cast<Match>()
+                           .Select(match => {})
+                           .Distinct();
+        ]]   ,
+            {
+                i(1),
+                i(2, '.*'),
+                i(3, 'match'),
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        add_csharp_using_statement_if_needed({
+                            'System.Linq',
+                            'System.Text.RegularExpressions',
+                        })
+                    end,
+                },
+            },
+        }
+    ),
 
     s(
         'prop',
         fmt(
             [[
       {} {} {} {{ get; set; }}
-      ]],
+      ]]     ,
             {
                 c(1, {
                     t('public'),
@@ -25,13 +109,13 @@ local snippets = {
         'event',
         fmt(
             [[
-      public event EventHandler<{}> {};
+      public event EventHandler<{}>? {};
 
       protected virtual void On{}({} e)
       {{
           {}?.Invoke(this, e);
       }}
-      ]],
+      ]]     ,
             {
                 i(1, 'string'),
                 i(2, 'EventName'),
@@ -87,6 +171,19 @@ local snippets = {
     -- }}}
 
     -- Avalonia snippets
+    s('transform', {
+        i(1, 'TestTestTest'),
+        t({ '', '' }),
+        -- lambda nodes accept an l._1,2,3,4,5, which in turn accept any string transformations.
+        -- This list will be applied in order to the first node given in the second argument.
+        l(
+            l._1:gsub('^.', function(s)
+                return s:lower()
+            end),
+            1
+        ),
+    }),
+
     s(
         'prop Avalonia',
         fmt(
@@ -99,12 +196,17 @@ local snippets = {
         }}
 
         {}
-      ]],
+      ]]     ,
             {
                 i(1, 'int'),
-                i(2, 'variableName'),
+                i(2, 'variableNameWithLoweredFirstChar'),
                 rep(1),
-                i(3, 'VariableName'),
+                l(
+                    l._1:gsub('^.', function(s)
+                        return s:upper()
+                    end),
+                    2
+                ),
                 rep(2),
                 rep(2),
                 i(0),
@@ -120,7 +222,7 @@ local snippets = {
         {{
             {}
         }}
-        ]],
+        ]]   ,
             {
                 i(1, 'Enum1'),
                 i(2),
@@ -136,7 +238,7 @@ local autosnippets = {
         fmt(
             [[
       Console.WriteLine($"{}");
-      ]],
+      ]]     ,
             {
                 i(1),
             }
@@ -148,7 +250,7 @@ local autosnippets = {
         fmt(
             [[
       $"{}"
-      ]],
+      ]]     ,
             {
                 i(1),
             }
@@ -173,7 +275,7 @@ local autosnippets = {
     /// <summary>
     /// {}
     /// </summary>
-    ]],
+    ]]       ,
             {
                 i(1),
             }
@@ -191,7 +293,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]],
+      ]]     ,
             {
                 i(1, 'true'),
                 i(2),
@@ -209,7 +311,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]],
+      ]]     ,
             {
                 i(1, 'false'),
                 i(2),
@@ -228,7 +330,7 @@ local autosnippets = {
       }}
 
       {}
-      ]],
+      ]]     ,
             {
                 i(1),
                 i(0),
@@ -246,7 +348,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]],
+        ]]   ,
             {
                 f(function(args, snip)
                     -- Get csharp namespace
@@ -287,7 +389,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]],
+        ]]   ,
             {
                 f(function(args, snip)
                     local class_information = my_treesitter_functions.cs.get_class_name()
@@ -372,7 +474,7 @@ local autosnippets = {
       }}
 
       {}
-      ]],
+      ]]     ,
             {
                 c(1, {
                     t('public'),
@@ -426,7 +528,7 @@ local autosnippets = {
         fmt(
             [[
       {} {}
-      ]],
+      ]]     ,
             {
                 t(' Derek test: '),
 
@@ -442,7 +544,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]],
+      ]]     ,
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()

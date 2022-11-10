@@ -2,33 +2,56 @@
 local snippets = {
 
     s(
-        {
-            trig = 'textblock',
-            descr = 'Simple textblock',
-        },
+        'combo box',
+        fmt([[<ComboBox {} ItemsSource="{{Binding {}}}" />]], {
+            i(1),
+            i(2, 'ItemsSourceName'),
+        })
+    ),
 
+    s(
+        'grid',
         fmt(
             [[
-                              <TextBlock Text="{}" />
-                              ]],
+        <Grid  ColumnDefinitions="{}" RowDefinitions="{}" >
+          {}
+        </Grid>
+        ]],
             {
-                i(1, 'Textblock text'),
+                i(1, '*,*,*'),
+                i(2, '*,*,*'),
+                i(3),
             }
         )
     ),
 
     s(
-        {
-            trig = 'textbox',
-            descr = 'Simple textbox',
-        },
-
+        'data grid',
         fmt(
             [[
-                              <TextBox Text="{}" />
-                              ]],
+        <DataGrid Name="{}" Items="{{Binding {}}}" AutoGenerateColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True"/>
+        ]],
             {
-                i(1, 'Textbox text'),
+                i(1, 'MyDataGrid'),
+                i(2, 'ListSource'),
+            }
+        )
+    ),
+
+    s(
+        'styles',
+        fmt(
+            [[
+        <Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+            <Style Selector="{}">
+            <Setter Property="{}" Value="{}" />
+            </Style>
+        </Styles>
+        ]],
+            {
+                i(1, 'TextBlock.h1'),
+                i(2, 'FontSize'),
+                i(3, '20'),
             }
         )
     ),
@@ -37,12 +60,10 @@ local snippets = {
         'style',
         fmt(
             [[
-                              <Style Selector="{}">
-                                <Setter Property="{}" Value="{}" />
-                              </Style>
-
-                              {}
-                              ]],
+            <Style Selector="{}">
+              <Setter Property="{}" Value="{}" />
+            </Style>{}
+            ]],
             {
                 i(1, 'TextBlock.h1'),
                 i(2, 'FontSize'),
@@ -53,6 +74,13 @@ local snippets = {
     ),
 
     s(
+        'Class',
+        fmt([[Class="{}"]], {
+            i(1, 'h1'),
+        })
+    ),
+
+    s(
         'button',
         fmt(
             [[
@@ -60,16 +88,104 @@ local snippets = {
                               ]],
             {
                 i(1),
-                i(2),
+                i(2, 'ButtonFunctionName'),
                 i(0),
             }
         )
     ),
 
-    -- s('setter', {t(<Setter Property=%%"),i(1,'FontSize')})
+    s(
+        'output type',
+        fmt([[<OutputType>{}</OutputType>]], {
+            i(1, 'WinExe'),
+        })
+    ),
+    s(
+        'target framework',
+        fmt([[<TargetFramework>{}</TargetFramework>]], {
+            i(1, 'net6.0'),
+        })
+    ),
+
+    s(
+        'nullable',
+        fmt([[<Nullable>{}</Nullable>]], {
+            c(1, {
+                t('enable'),
+                t('disable'),
+            }),
+        })
+    ),
+    s(
+        'icon',
+        fmt([[<ApplicationIcon>{}</ApplicationIcon>]], {
+            i(1, 'Path to ico file'),
+        })
+    ),
+    s(
+        'trim mode',
+        fmt([[<TrimMode>{}</CopyUsed>]], {
+            i(1, 'copyused'),
+        })
+    ),
+    s(
+        'com support',
+        fmt([[<BuiltInComInteropSupport>{}</BuiltInComInteropSupport>]], {
+            i(1, 'true'),
+        })
+    ),
 }
 
 local autosnippets = {
+
+    s(
+        'setter',
+        fmt([[<Setter Property="{}" Value="{}" />]], {
+            i(1, 'FontSize'),
+            i(2, '20'),
+        })
+    ),
+
+    s(
+        'binding',
+        fmt([[{{Binding {}}}]], {
+            i(1, 'ItemSource'),
+        })
+    ),
+
+    s(
+        {
+            trig = 'text box',
+            descr = 'Simple textbox',
+        },
+        fmt(
+            [[
+            <TextBox {} Text="{}" />
+            ]],
+            {
+                i(1),
+                i(2, 'text'),
+            }
+        )
+    ),
+
+    s(
+        {
+            trig = 'text block',
+            descr = 'Simple textblock',
+        },
+        fmt(
+            [[
+            <TextBlock {} Text="{}" />{}
+            ]],
+            {
+                i(1),
+                i(2, 'text'),
+                i(0),
+            }
+        )
+    ),
+
     s(
         { trig = '==', wordTrig = false },
         fmt(
@@ -110,27 +226,29 @@ local autosnippets = {
     ),
 
     s(
-        'grid row',
-        fmt(
-            [[
-                              Grid.Row="{}" {}
-                              ]],
-            {
-                i(1, '1'),
-                i(0),
-            }
-        )
+        { trig = '[Gg]rid [Rr]ow', regTrig = true, wordTrig = false },
+        fmt([[Grid.Row="{}" {}]], {
+            i(1, '1'),
+            i(0),
+        })
     ),
 
     s(
-        'grid column',
+        { trig = '[Gg]rid [Cc]olumn', regTrig = true, wordTrig = false },
+        fmt([[Grid.Column="{}" {}]], {
+            i(1, '1'),
+            i(0),
+        })
+    ),
+
+    s(
+        'comment',
         fmt(
             [[
-                              Grid.Column="{}" {}
-                              ]],
+        <!-- {} -->
+        ]],
             {
-                i(1, '1'),
-                i(0),
+                i(1),
             }
         )
     ),
@@ -142,7 +260,7 @@ local autosnippets = {
       <ItemGroup>
         {}
       </ItemGroup>
-      ]]     ,
+      ]],
             {
                 i(1),
             }
@@ -154,7 +272,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     fmt([[<PackageReference Include="{}" Version="{}" />]], {

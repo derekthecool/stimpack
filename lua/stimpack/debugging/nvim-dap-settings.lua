@@ -8,6 +8,7 @@ which_key_mapper({
         name = 'Debug',
         o = { '<cmd>lua require(\'dap\').step_over()<CR>', 'Step over (≤)' },
         e = { '<cmd>lua require(\'dapui\').eval()<CR>', 'Eval variable under cursor' },
+        t = { '<cmd>lua require(\'dapui\').toggle()<CR>', 'Toggle dapui' },
         -- E = { '<cmd>lua require(\'dapui\').float_element()<CR>', 'Open an item in a floating view' },
         d = { [[:lua require"osv".launch({port = 8086})<CR>]], 'Start neovim lua debugging' },
         i = { '<cmd>lua require(\'dap\').step_into()<CR>', 'Step into (≥)' },
