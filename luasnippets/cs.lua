@@ -12,9 +12,9 @@ local function add_csharp_using_statement_if_needed(required_using_directive_lis
 
     local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
     for _, line in ipairs(lines) do
-        for _, using_directive in ipairs(required_using_directive_list) do
+        for index, using_directive in ipairs(required_using_directive_list) do
             if line:match(using_directive) ~= nil then
-                table.remove(required_using_directive_list, using_directive)
+                table.remove(required_using_directive_list, index)
             end
         end
     end
@@ -226,6 +226,97 @@ local snippets = {
             {
                 i(1, 'Enum1'),
                 i(2),
+            }
+        )
+    ),
+
+    s(
+        'read line',
+        fmt(
+            [[
+        var line = Console.ReadLine();
+        ]]   ,
+            {}
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        add_csharp_using_statement_if_needed('System')
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'read lines',
+        fmt(
+            [[
+        var Lines = new List<string>();
+        var Line = "";
+        while((Line = Console.ReadLine()) != null)
+        {{
+            Lines.Add(Line);
+        }}
+        ]]   ,
+            {}
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        add_csharp_using_statement_if_needed({ 'System', 'System.Collections.Generic' })
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'clash of code snippet starter',
+        fmt(
+            [[
+        using System;
+        using System.Linq;
+        using System.Text.RegularExpressions;
+        using System.Collections.Generic;
+
+        {}
+
+        {}
+
+        Console.WriteLine({});
+        ]]   ,
+            {
+                c(1, {
+                    t('var Line = Console.ReadLine();'),
+                    t({
+                        'var Lines = new List<string>();',
+                        'var Line="";',
+                        'while((Line = Console.ReadLine()) != null)',
+                        '{',
+                        '    Lines.Add(Line);',
+                        '}',
+                    }),
+                }),
+                i(2),
+                i(3),
+            }
+        )
+    ),
+
+    s(
+        'range',
+        fmt(
+            [[
+        Enumerable.Range({}, {})
+        ]]   ,
+            {
+                i(1, '1'),
+                i(2, '50'),
             }
         )
     ),

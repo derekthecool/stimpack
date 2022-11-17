@@ -56,17 +56,17 @@ cmp.setup({
         }),
     },
     formatting = {
-        fields = { 'kind', 'abbr', 'menu' },
+        fields = { 'abbr', 'kind', 'menu' },
         format = function(entry, vim_item)
             -- Kind icons
-            vim_item.kind = string.format('%s', Icons.coding[vim_item.kind])
-            vim_item.menu = ({
-                nvim_lsp = '[LSP]',
-                nvim_lua = '[Nvim LSP]',
-                luasnip = string.format('[Lua Snip %s ]', Icons.documents.cut),
-                buffer = '[Buffer]',
-                path = '[Path]',
-            })[entry.source.name]
+            vim_item.kind = string.format('%s %s', Icons.coding[vim_item.kind], vim_item.kind)
+            -- vim_item.menu = ({
+            --     nvim_lsp = '[LSP]',
+            --     nvim_lua = '[Nvim LSP]',
+            --     luasnip = '[Lua Snip]',
+            --     buffer = '[Buffer]',
+            --     path = '[Path]',
+            -- })[entry.source.name]
             return vim_item
         end,
     },
@@ -108,19 +108,19 @@ cmp.setup({
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
+cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = 'buffer' }
-    }
-  })
+        { name = 'buffer' },
+    },
+})
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = 'path' }
+        { name = 'path' },
     }, {
-      { name = 'cmdline' }
-    })
-  })
+        { name = 'cmdline' },
+    }),
+})

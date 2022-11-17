@@ -40,7 +40,7 @@ local snippets = {
 
         ### Planned
 
-        - {}
+        - [ ] {}
 
         ## Rock Progress
 
