@@ -8,6 +8,7 @@ vim.go.lazyredraw = true -- Don't redraw screen during macros
 
 -- Regular options
 vim.o.conceallevel = 2
+vim.o.concealcursor = 'n'
 vim.o.clipboard = 'unnamedplus' -- Copy paste between vim and everything else (for WSL clipboard usage see https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl)
 vim.o.cmdheight = 2 -- Larger command line height, helps to avoid seeing press any key to continue
 vim.o.completeopt = 'menu,noselect,longest,menuone' -- Pop up menu settings
@@ -30,8 +31,8 @@ vim.bo.swapfile = false -- Do not create swp files
 vim.o.termguicolors = true -- Needed for better color display
 
 -- Default text formatting options: see overrides to these in ftplugin/*.lua
-vim.o.shiftwidth = 2 -- Number of space characters for indentation
-vim.o.tabstop = 2 -- Insert 2 spaces for a tab
+vim.o.shiftwidth = 4 -- Number of space characters for indentation
+vim.o.tabstop = 4 -- Insert 2 spaces for a tab
 vim.o.expandtab = true -- Convert tabs to spaces
 vim.o.smartindent = true -- Easier indenting
 vim.opt.textwidth = 80

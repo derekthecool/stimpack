@@ -53,3 +53,8 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     end,
     group = generalSettingsGroup,
 })
+
+vim.api.nvim_create_autocmd(
+    'BufWritePost',
+    { pattern = { '*.fsx' }, command = ':FsiEvalBuffer', group = generalSettingsGroup }
+)

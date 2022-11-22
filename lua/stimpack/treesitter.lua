@@ -7,11 +7,13 @@ require('nvim-treesitter.configs').setup({
         'cmake',
         'comment',
         'cpp',
+        'help',
         'lua',
         'markdown',
         'proto',
         'python',
         'regex',
+        'vim',
     },
 
     ignore_install = { 'all' },

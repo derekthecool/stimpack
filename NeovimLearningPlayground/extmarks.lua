@@ -45,6 +45,15 @@ vim.api.nvim_buf_set_extmark(bufnr, namespace, location[1].row, location[1].col,
     virt_text = { { ext_mark_text, 'GoodHappyGreen' } },
 })
 
+
+-- |>
+vim.api.nvim_buf_set_extmark(bufnr, namespace, 48, 3, {
+    -- virt_text_win_col = (window_width / 2) - 20,
+    virt_text_pos = 'overlay',
+    virt_text = { { '😄', 'GoodHappyGreen' } },
+})
+
+
 -- Test two: simulate Visual Studio test virtual texi and references to functions
 local grayHighlight = 'Gray'
 -- vim.api.nvim_set_hl(namespace, 'ATcommandHighlight', { bg = '#5fd700', fg = '#000000' })
@@ -110,6 +119,7 @@ local fancy_steno = {
     '      |A|O| |E|U|      ',
     '      +-+-+ +-+-+      ',
 }
+
 
 local window_height = vim.api.nvim_win_get_height(0)
 local window_width = vim.api.nvim_win_get_width(0)
