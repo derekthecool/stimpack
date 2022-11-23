@@ -78,7 +78,7 @@ return require('packer').startup(function()
         requires = { 'williamboman/mason-lspconfig.nvim' },
     })
     -- LSP for F#, make sure to run 'dotnet tool install -g fsautocomplete'
-    use('https://github.com/ionide/Ionide-vim')
+    use('ionide/Ionide-vim')
     -- I'm using the old nvim-lsp-installer only for omnisharp because it is not working on windows
     -- This is a requirement for me. I've created this GitHub issue to track
     -- https://github.com/williamboman/mason.nvim/issues/455
