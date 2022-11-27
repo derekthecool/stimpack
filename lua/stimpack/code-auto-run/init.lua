@@ -16,6 +16,9 @@ vim.api.nvim_create_autocmd(
     { pattern = { '*.lua' }, callback = neovim_test, group = autocommand_group }
 )
 
+-- Load other non callable modules
+require('stimpack.code-auto-run.window-manager-config-check')
+
 return {
     dotnet_test = dotnet_test,
     neovim_test = neovim_test,
