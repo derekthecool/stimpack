@@ -36,10 +36,10 @@ function ToggleFileWatchTailing()
 end
 
 local fileWatcherSettings = vim.api.nvim_create_augroup('FileWatcherSettings', { clear = true })
--- vim.api.nvim_create_autocmd("BufRead *", { command = "Watch", group = fileWatcherSettings })
--- vim.api.nvim_create_autocmd('BufRead *', {
---     callback = function()
---         WatchFile(vim.api.nvim_get_current_buf(), vim.fn.expand('%:p'))
---     end,
---     group = fileWatcherSettings,
--- })
+-- vim.api.nvim_create_autocmd('BufRead *', { command = 'Watch', group = fileWatcherSettings })
+vim.api.nvim_create_autocmd('BufRead *', {
+    callback = function()
+        WatchFile(vim.api.nvim_get_current_buf(), vim.fn.expand('%:p'))
+    end,
+    group = fileWatcherSettings,
+})
