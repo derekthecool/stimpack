@@ -35,6 +35,14 @@ return require('packer').startup(function()
     use('nvim-lua/plenary.nvim')
     use('kyazdani42/nvim-web-devicons')
 
+    -- Web
+    use({
+        'glacambre/firenvim',
+        run = function()
+            vim.fn['firenvim#install'](0)
+        end,
+    })
+
     -- Help neovim start faster and see what takes the most time to source
     use('lewis6991/impatient.nvim')
 

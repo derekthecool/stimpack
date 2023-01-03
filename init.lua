@@ -45,3 +45,6 @@ require('stimpack.dereks-plugins-config')
 
 -- Source last
 require('stimpack.lualine-settings')
+
+-- Firenvim plugin settings very last
+require('stimpack.firenvim-settings')
