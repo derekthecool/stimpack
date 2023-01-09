@@ -4,7 +4,7 @@ vim.g.nobackup = true
 vim.g.nowritebackup = true
 vim.g.showmatch = true -- Show matching () [] {}
 
-vim.go.lazyredraw = true -- Don't redraw screen during macros
+-- vim.go.lazyredraw = true -- Don't redraw screen during macros
 
 -- Regular options
 vim.opt.mouse = '' -- No mouse!!
