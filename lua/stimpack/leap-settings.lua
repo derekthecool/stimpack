@@ -2,31 +2,35 @@
 -- if not  then return end
 
 require('leap').setup({
-    -- highlight_ahead_of_time = true,
-    highlight_ahead_of_time = false,
-    -- highlight_unlabeled = false,
-    -- highlight_unlabeled = true,
+    max_phase_one_targets = nil,
+    highlight_unlabeled_phase_one_targets = false,
+    max_highlighted_traversal_targets = 10,
     case_sensitive = false,
-    -- Groups of characters that should match each other.
-    -- E.g.: { "([{<", ")]}>", "'\"`", }
-    character_classes = {},
-    -- Leaving the appropriate list empty effectively disables "smart" mode,
-    -- and forces auto-jump to be on or off.
-    -- safe_labels = { . . . },
-    -- labels = { . . . },
-    -- These keys are captured directly by the plugin at runtime.
+    equivalence_classes = { ' \t\r\n' },
+    substitute_chars = {},
+    -- safe_labels = { 's', 'f', 'n', 'u', 't', . . . },
+    -- labels = { 's', 'f', 'n', 'j', 'k', . . . },
     special_keys = {
         repeat_search = '<enter>',
-        next_match = '<enter>',
-        prev_match = '<tab>',
+        next_phase_one_target = '<enter>',
+        next_target = { '<enter>', ';' },
+        prev_target = { '<tab>', ',' },
         next_group = '<space>',
         prev_group = '<tab>',
-        eol = '<space>',
+        multi_accept = '<enter>',
+        multi_revert = '<backspace>',
     },
 })
+require('leap').add_default_mappings()
 
 -- Searching in all windows (including the current one) on the tab page:
 local function leap_all_windows()
+    -- require('leap').leap({
+    --     target_windows = vim.tbl_filter(function(win)
+    --         return vim.api.nvim_win_get_config(win).focusable
+    --     end, vim.api.nvim_tabpage_list_wins(0)),
+    -- })
+
     require('leap').leap({
         target_windows = vim.tbl_filter(function(win)
             return vim.api.nvim_win_get_config(win).focusable
@@ -38,7 +42,8 @@ end
 -- multi-window mode - set `target-windows` to a table containing the current
 -- window as the only element:
 local function leap_bidirectional()
-    require('leap').leap({ target_windows = { vim.api.nvim_get_current_win() } })
+    -- require('leap').leap({ target_windows = { vim.api.nvim_get_current_win() } })
+    require('leap').leap({ target_windows = { vim.fn.win_getid() } })
 end
 
 local map = require('stimpack.mapping-function')

@@ -3,7 +3,7 @@
 -- vim.api.nvim_command("command! -nargs=0 Watch call luaeval('WatchFile(_A[1], _A[2])', [bufnr('%'), expand('%:p')])")
 local w = vim.loop.new_fs_poll()
 local formatted_tail_string = Icons.miscellaneous.eye
-WatchFileJumpToEnd = formatted_tail_string
+WatchFileJumpToEnd = ''
 
 local function on_change(bufnr, filePath)
     vim.api.nvim_command('checktime ' .. bufnr)

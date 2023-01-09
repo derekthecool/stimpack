@@ -95,10 +95,10 @@ local snippets = {
             ]],
             {
                 i(1),
-                f(function(_, snip)
-                    return snip.env.TM_SELECTED_TEXT[1] or {}
+                f(function()
+                    return vim.fn.getreg("+")
                 end, {}),
-                i(2),
+                i(0),
             }
         )
     ),

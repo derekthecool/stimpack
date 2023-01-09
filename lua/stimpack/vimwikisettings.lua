@@ -66,3 +66,6 @@ which_key_mapper({
         t = { ':Tabularize /', 'Tabularize formatting' },
     },
 })
+
+local path = OS.join_path({ OS.nvim, 'lua', 'stimpack', 'markdown-textobjects-codeblock.vim' })
+vim.cmd('source ' .. path)

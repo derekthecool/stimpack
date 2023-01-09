@@ -36,12 +36,16 @@ return require('packer').startup(function()
     use('kyazdani42/nvim-web-devicons')
 
     -- Web
-    use({
-        'glacambre/firenvim',
-        run = function()
-            vim.fn['firenvim#install'](0)
-        end,
-    })
+    -- Only run firenvim from the actual host, don't use WSL
+    -- I use windows and WSL
+    if vim.fn.has('wsl') ~= 1 then
+        use({
+            'glacambre/firenvim',
+            run = function()
+                vim.fn['firenvim#install'](0)
+            end,
+        })
+    end
 
     -- Help neovim start faster and see what takes the most time to source
     use('lewis6991/impatient.nvim')
