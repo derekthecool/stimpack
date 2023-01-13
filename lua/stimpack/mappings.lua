@@ -37,8 +37,8 @@ map('i', 'zzz', '<C-o>:update<CR><ESC>^')
 map('n', '/', '/\\v')
 map('v', '/', '/\\v')
 
--- Packer commands
-map('n', '<leader>aa', ':PackerSync<CR>')
+-- Lazy commands
+map('n', '<leader>aa', ':Lazy<CR>')
 
 -- Treesitter commands
 map('n', '<leader>ab', '<cmd>TSPlaygroundToggle<CR>')

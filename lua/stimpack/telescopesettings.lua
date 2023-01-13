@@ -82,7 +82,7 @@ local function gitfiles_or_findfiles()
     end
 end
 
-map('n', ',fes', require('telescope').extensions.file_browser.file_browser)
+map('n', ',fz', require('telescope').extensions.file_browser.file_browser)
 map('n', '<C-f>', gitfiles_or_findfiles)
 map(
     'n',

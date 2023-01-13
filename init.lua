@@ -36,9 +36,9 @@ require('stimpack.treesitter')
 require('stimpack.vimwikisettings') -- Vimwiki is a great personal wiki and diary
 require('stimpack.which-key') -- Which-key is AMAZING to help you remember your mappings
 require('stimpack.markdown-preview') -- Preview markdown in browser
-require('stimpack.toggle-term-settings')
+-- require('stimpack.toggle-term-settings')
 require('stimpack.nvim-notify-settings')
-require('stimpack.nvim-tree-settings')
+-- require('stimpack.nvim-tree-settings')
 require('stimpack.cmp')
 --require('stimpack.debugging')
 require('stimpack.neoscroll')
@@ -50,7 +50,7 @@ require('stimpack.leap-settings')
 require('stimpack.vim-rooter-settings')
 require('stimpack.nvim-luapad-settings')
 require('stimpack.code-auto-run')
-require('stimpack.dressing-nvim-settings')
+-- require('stimpack.dressing-nvim-settings')
 
 -- Configuration for my personal plugins that I wrote
 -- require('stimpack.dereks-plugins-config')

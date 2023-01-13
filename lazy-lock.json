@@ -1,4 +1,5 @@
 {
+  "Comment.nvim": { "branch": "master", "commit": "e89df176e8b38e931b7e71a470f923a317976d86" },
   "Ionide-vim": { "branch": "master", "commit": "a66845162ae4c2ad06d76e003c0aab235aac2ede" },
   "LuaSnip": { "branch": "master", "commit": "5d57303efde86fcb0959c52b1a6d40f923940f34" },
   "asyncrun.extra": { "branch": "master", "commit": "8c1f8795aaf1041276657ee868bf3c48c11d5c7d" },

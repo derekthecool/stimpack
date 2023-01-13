@@ -106,7 +106,6 @@ return {
     -- }}}
 
     -- Colors and themes {{{
-    'chriskempson/base16-vim', -- Visual plugins
     'rcarriga/nvim-notify',
     -- use({
     --     'norcalli/nvim-colorizer.lua',
@@ -132,8 +131,6 @@ return {
     --     end,
     -- })
     'folke/which-key.nvim', -- Shows mappings with helpful pop up
-    'stevearc/dressing.nvim',
-    'akinsho/toggleterm.nvim', -- Awesome terminal helper in lua
     'ggandor/leap.nvim',
     -- use({ -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
     --   'goolord/alpha-nvim',
@@ -166,13 +163,6 @@ return {
     'skywind3000/asyncrun.extra',
     'stefandtw/quickfix-reflector.vim',
     'dbeniamine/cheat.sh-vim', -- Another cheat sheet tool
-    -- use({ -- Comment plugin made with lua
-    --     'numToStr/Comment.nvim',
-    --     config = function()
-    --         require('Comment').setup()
-    --     end,
-    -- })
-    -- }}}
 
     -- Debugging {{{
     'mfussenegger/nvim-dap',
@@ -185,7 +175,6 @@ return {
     -- }}}
 
     -- File navigation {{{
-    'kyazdani42/nvim-tree.lua',
     'nvim-telescope/telescope.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     -- Telescope extensions
