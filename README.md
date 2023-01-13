@@ -68,7 +68,7 @@ show up right choose another one.
 
 - [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) globals in status line disappear if colored
 - mason.nvim omnisharp not working well
-
+https://github.com/folke/lazy.nvim
 ```yaml
  Detected filetype:   cs
 
@@ -82,3 +82,14 @@ show up right choose another one.
 
  Configured servers list: jedi_language_server, powershell_es, sumneko_lua, lemminx, omnisharp
 ```
+
+## 2023-01-12 Migrating From Packer.nvim to Lazy.Nvim
+
+Today my startup time was unbearably slow running on windows.
+The total start up time was a wopping `7541.379` seconds. WTF!
+
+Somehow, the same config running on Linux had a startup time of `1485.434`
+seconds.
+
+I believe switching to the awesome lua plugin manager,
+[Lazy.nvim](https://github.com/folke/lazy.nvim) will help a lot.
