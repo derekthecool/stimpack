@@ -101,7 +101,7 @@ return {
     -- }}}
 
     -- Snippets {{{
-    'L3MON4D3/LuaSnip', --snippet engine
+    -- 'L3MON4D3/LuaSnip', --snippet engine
     -- 'rafamadriz/friendly-snippets', -- a bunch of snippets to use -- TODO: 2022-09-27, suspension state. Do I really use this plugin? I believe this one is stunting my snippet growth creation!
     -- }}}
 
@@ -190,7 +190,7 @@ return {
     --     },
     -- })
     'tpope/vim-fugitive',
-    'lewis6991/gitsigns.nvim',
+    -- 'lewis6991/gitsigns.nvim',
     'airblade/vim-rooter', -- Sets directory to git root
     -- }}}
 
