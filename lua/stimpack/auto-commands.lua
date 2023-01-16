@@ -53,3 +53,5 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     end,
     group = generalSettingsGroup,
 })
+
+vim.filetype.add({ pattern = { ['*.md'] = 'vimwiki' } })

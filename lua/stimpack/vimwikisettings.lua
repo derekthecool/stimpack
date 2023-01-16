@@ -38,11 +38,11 @@ which_key_mapper({
     f = {
         name = 'file', -- optional group name
         W = {
-            '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.mywiki\'                                 , prompt_title=\'Live grep through .mywiki\'})<CR>',
+            '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\', cwd=\'~/.mywiki\', prompt_title=\'Live grep through .mywiki\'})<CR>',
             'Live grep my wiki',
         },
         w = {
-            '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/.mywiki\'                  , prompt_title=\'Search .mywiki\'})<CR>',
+            '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/.mywiki\', prompt_title=\'Search .mywiki\'})<CR>',
             'Search my wiki',
         },
     },

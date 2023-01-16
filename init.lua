@@ -33,8 +33,8 @@ require('stimpack.lsp') -- Directory with its own init.lua
 require('stimpack.file-watcher')
 require('stimpack.vim-pandoc-markdown-preview-settings')
 require('stimpack.treesitter')
-require('stimpack.vimwikisettings') -- Vimwiki is a great personal wiki and diary
-require('stimpack.which-key') -- Which-key is AMAZING to help you remember your mappings
+-- require('stimpack.vimwikisettings') -- Vimwiki is a great personal wiki and diary
+-- require('stimpack.which-key') -- Which-key is AMAZING to help you remember your mappings
 -- require('stimpack.markdown-preview') -- Preview markdown in browser
 -- require('stimpack.toggle-term-settings')
 require('stimpack.nvim-notify-settings')
@@ -43,12 +43,11 @@ require('stimpack.cmp')
 --require('stimpack.debugging')
 require('stimpack.neoscroll')
 require('stimpack.telescopesettings')
-require('stimpack.cheat-settings')
 -- require('stimpack.async-tasks')
 -- require('stimpack.luasnip-settings')
 require('stimpack.leap-settings')
-require('stimpack.vim-rooter-settings')
-require('stimpack.nvim-luapad-settings')
+-- require('stimpack.vim-rooter-settings')
+-- require('stimpack.nvim-luapad-settings')
 require('stimpack.code-auto-run')
 -- require('stimpack.dressing-nvim-settings')
 

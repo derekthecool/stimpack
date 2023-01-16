@@ -144,25 +144,9 @@ return {
     -- Coding helpers {{{
     'rafcamlet/nvim-luapad', -- Real time nvim lua scratch pad
     'folke/neodev.nvim',
-
-    -- Get installer to work better with Linux and windows
-    -- -- use({ -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    --   'autozimu/LanguageClient-neovim',
-    --   branch = 'next',
-    --   run = function()
-    --     if OS.OS == 'Linux' then
-    --       return 'bash install.sh'
-    --     else
-    --       return 'powershell -file ./install.ps1'
-    --     end
-    --   end,
-    -- })
     -- 'szw/vim-maximizer', -- Maximize a vim pane, to be used with vimspector -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    'skywind3000/asynctasks.vim', -- Async build resource
-    'skywind3000/asyncrun.vim',
-    'skywind3000/asyncrun.extra',
     'stefandtw/quickfix-reflector.vim',
-    'dbeniamine/cheat.sh-vim', -- Another cheat sheet tool
+    -- 'dbeniamine/cheat.sh-vim', -- Another cheat sheet tool
 
     -- Debugging {{{
     'mfussenegger/nvim-dap',
@@ -191,7 +175,7 @@ return {
     -- })
     'tpope/vim-fugitive',
     -- 'lewis6991/gitsigns.nvim',
-    'airblade/vim-rooter', -- Sets directory to git root
+    -- 'airblade/vim-rooter', -- Sets directory to git root
     -- }}}
 
     -- Markdown and Pandoc {{{
