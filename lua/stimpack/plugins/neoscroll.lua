@@ -23,6 +23,5 @@ return {
         t['<C-d>'] = { 'scroll', { scroll_amount, 'true', delay, easing_function } }
 
         require('neoscroll.config').set_mappings(t)
-        V(t)
     end,
 }
