@@ -21,8 +21,8 @@
 return {
 
     -- Essential building block dependencies for my config and many plugins
-    'nvim-lua/plenary.nvim',
-    'kyazdani42/nvim-web-devicons',
+    -- 'nvim-lua/plenary.nvim',
+    -- 'kyazdani42/nvim-web-devicons',
 
     -- Web
     -- Only run firenvim from the actual host, don't use WSL
@@ -36,13 +36,10 @@ return {
     --     })
     -- end
 
-    -- Help neovim start faster and see what takes the most time to source
-    'lewis6991/impatient.nvim',
-
     -- Vimwiki {{{
-    'vimwiki/vimwiki',
+    -- 'vimwiki/vimwiki',
     -- 'mattn/calendar-vim', -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    'godlygeek/tabular',
+    -- 'godlygeek/tabular',
     -- 'plasticboy/vim-markdown', -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
     -- }}}
 
@@ -85,18 +82,18 @@ return {
     -- https://github.com/williamboman/mason.nvim/issues/455
     -- 'williamboman/nvim-lsp-installer', -- language server settings defined in json for
     -- 'tamago324/nlsp-settings.nvim', -- language server settings defined in json for -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    'jose-elias-alvarez/null-ls.nvim', -- for formatters and linters
+    -- 'jose-elias-alvarez/null-ls.nvim', -- for formatters and linters
     -- }}}
 
-    -- Treesitter {{{
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/playground',
-    -- }}}
+    -- -- Treesitter {{{
+    -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    -- 'nvim-treesitter/nvim-treesitter-textobjects',
+    -- 'nvim-treesitter/playground',
+    -- -- }}}
 
     -- Code action {{{
-    'kosayoda/nvim-lightbulb',
-    { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' },
+    -- 'kosayoda/nvim-lightbulb',
+    -- { 'weilbith/nvim-code-action-menu', cmd = 'CodeActionMenu' },
     -- }}}
     -- }}}
 
@@ -106,7 +103,7 @@ return {
     -- }}}
 
     -- Colors and themes {{{
-    'rcarriga/nvim-notify',
+    -- 'rcarriga/nvim-notify',
     -- use({
     --     'norcalli/nvim-colorizer.lua',
     --     config = function()
@@ -130,40 +127,39 @@ return {
     --         })
     --     end,
     -- })
-    'folke/which-key.nvim', -- Shows mappings with helpful pop up
-    'ggandor/leap.nvim',
+    -- 'folke/which-key.nvim', -- Shows mappings with helpful pop up
+    -- 'ggandor/leap.nvim',
     -- use({ -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
     --   'goolord/alpha-nvim',
     --   config = function()
     --     require('alpha').setup(require('alpha.themes.startify').config)
     --   end,
     -- })
-    'karb94/neoscroll.nvim', -- Smooth scroll with <C-d> and <C-u>
+    -- 'karb94/neoscroll.nvim', -- Smooth scroll with <C-d> and <C-u>
     -- }}}
 
     -- Coding helpers {{{
-    'rafcamlet/nvim-luapad', -- Real time nvim lua scratch pad
-    'folke/neodev.nvim',
+    -- 'rafcamlet/nvim-luapad', -- Real time nvim lua scratch pad
+    -- 'folke/neodev.nvim',
     -- 'szw/vim-maximizer', -- Maximize a vim pane, to be used with vimspector -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    'stefandtw/quickfix-reflector.vim',
+    -- 'stefandtw/quickfix-reflector.vim',
     -- 'dbeniamine/cheat.sh-vim', -- Another cheat sheet tool
 
     -- Debugging {{{
     'mfussenegger/nvim-dap',
     'theHamsta/nvim-dap-virtual-text',
     'rcarriga/nvim-dap-ui',
-    'jbyuki/one-small-step-for-vimkind',
     -- 'kndndrj/nvim-projector',
     -- { get_my_plugin_path('nvim-projector'), branch = 'master' },
     'nvim-telescope/telescope-dap.nvim',
     -- }}}
 
     -- File navigation {{{
-    'nvim-telescope/telescope.nvim',
-    'nvim-telescope/telescope-file-browser.nvim',
-    -- Telescope extensions
-    'xiyaowong/telescope-emoji.nvim',
-    'nvim-telescope/telescope-ui-select.nvim',
+    -- 'nvim-telescope/telescope.nvim',
+    -- 'nvim-telescope/telescope-file-browser.nvim',
+    -- -- Telescope extensions
+    -- 'xiyaowong/telescope-emoji.nvim',
+    -- 'nvim-telescope/telescope-ui-select.nvim',
     -- }}}
 
     -- Git helpers {{{
@@ -173,13 +169,13 @@ return {
     --         'sindrets/diffview.nvim',
     --     },
     -- })
-    'tpope/vim-fugitive',
+    -- 'tpope/vim-fugitive',
     -- 'lewis6991/gitsigns.nvim',
     -- 'airblade/vim-rooter', -- Sets directory to git root
     -- }}}
 
     -- Markdown and Pandoc {{{
-    'conornewton/vim-pandoc-markdown-preview',
+    -- 'conornewton/vim-pandoc-markdown-preview',
     -- use({
     --     -- using cmd = 'MarkdownPreview' just causes problems and plugin does not load properly
     --     'iamcco/markdown-preview.nvim',

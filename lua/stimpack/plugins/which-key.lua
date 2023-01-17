@@ -1,7 +1,7 @@
 -- Which-key is AMAZING to help you remember your mappings
 return {
     'folke/which-key.nvim',
-    event = 'VeryLazy',
+    lazy = true,
     config = {
         plugins = {
             marks = true, -- shows a list of your marks on ' and `

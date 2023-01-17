@@ -1,6 +1,6 @@
 return {
     'williamboman/mason.nvim',
-    dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig' },
+    dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig', 'folke/neodev.nvim' },
     event = 'VeryLazy',
     config = function()
         -- First load mason

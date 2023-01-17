@@ -1,7 +1,3 @@
-require('stimpack.git.diffview')
-require('stimpack.git.neogit')
-require('stimpack.git.gitsigns-settings')
-
 local which_key_mapper = require('stimpack.which-key-mapping')
 which_key_mapper({
   g = {

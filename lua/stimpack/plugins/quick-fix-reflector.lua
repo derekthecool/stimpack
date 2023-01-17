@@ -12,10 +12,15 @@ You can delete lines from the list but they will be out of sync, just save the
 buffer and it will resync. Deleting lines from the quick fix list does not
 delete them from the source files.
 --]]
+return {
+    'stefandtw/quickfix-reflector.vim',
+    event = 'VeryLazy',
+    config = function()
+        vim.g.qf_modifiable = 1
+        vim.g.qf_join_changes = 1
+        vim.g.qf_write_changes = 1
 
-vim.g.qf_modifiable = 1
-vim.g.qf_join_changes = 1
-vim.g.qf_write_changes = 1
-
--- Another nice feature to have to help narrow down quick fix lists. Run :h Cfilter for help
-vim.api.nvim_cmd({ cmd = 'packadd', args = { 'cfilter' } }, {})
+        -- Another nice feature to have to help narrow down quick fix lists. Run :h Cfilter for help
+        vim.api.nvim_cmd({ cmd = 'packadd', args = { 'cfilter' } }, {})
+    end,
+}

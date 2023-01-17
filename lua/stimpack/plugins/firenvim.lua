@@ -1,6 +1,7 @@
 return {
     'glacambre/firenvim',
     event = 'VeryLazy',
+    priority = 1, -- very low priority
     cond = (vim.fn.has('wsl') ~= 1),
     config = function()
         if vim.g.started_by_firenvim == true then

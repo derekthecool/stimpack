@@ -1,6 +1,6 @@
 return {
     'L3MON4D3/LuaSnip',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     config = function()
         -- Load my treesitter helper functions now
         require('stimpack.my-treesitter-functions')
