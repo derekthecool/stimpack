@@ -41,22 +41,6 @@ M.setup = function()
     })
 end
 
--- local function lsp_highlight_document(client)
---     -- Set autocommands conditional on server_capabilities
---     if client.server_capabilities.document_highlight then
---         vim.api.nvim_exec(
---             [[
---       augroup lsp_document_highlight
---         autocmd! * <buffer>
---         autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
---         autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
---       augroup END
---     ]],
---             false
---         )
---     end
--- end
-
 local opts = { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
@@ -76,11 +60,5 @@ vim.api.nvim_set_keymap('n', 'gl', '<cmd>lua vim.lsp.diagnostic.open_float()<CR>
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-
-local cmp_nvim_lsp = require('cmp_nvim_lsp')
-
--- M.capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
 
 return M

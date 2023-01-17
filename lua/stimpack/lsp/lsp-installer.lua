@@ -3,9 +3,9 @@
 -- https://github.com/williamboman/mason.nvim/issues/455
 local lsp_installer = require('nvim-lsp-installer')
 lsp_installer.on_server_ready(function(server)
-  local opts = {
-    on_attach = require('stimpack.lsp.handlers').on_attach,
-    capabilities = require('stimpack.lsp.handlers').capabilities,
-  }
-  server:setup(opts)
+    local opts = {
+        -- on_attach = require('stimpack.lsp.handlers').on_attach,
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
+    }
+    server:setup(opts)
 end)

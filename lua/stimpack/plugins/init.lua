@@ -62,28 +62,28 @@ return {
     -- LSP setup {{{
 
     -- cmp plugins {{{
-    'hrsh7th/nvim-cmp', -- The completion plugin
-    'hrsh7th/cmp-buffer', -- buffer completions
-    'hrsh7th/cmp-path', -- path completions
-    'hrsh7th/cmp-cmdline', -- cmdline completions
-    'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lua',
+    -- 'hrsh7th/nvim-cmp', -- The completion plugin
+    -- 'hrsh7th/cmp-buffer', -- buffer completions
+    -- 'hrsh7th/cmp-path', -- path completions
+    -- 'hrsh7th/cmp-cmdline', -- cmdline completions
+    -- 'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
+    -- 'hrsh7th/cmp-nvim-lsp',
+    -- 'hrsh7th/cmp-nvim-lua',
     -- 'hrsh7th/cmp-emoji', -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
-    'hrsh7th/cmp-calc',
-    'saadparwaiz1/cmp_luasnip', -- snippet completions
-    'neovim/nvim-lspconfig', -- enable LSP
+    -- 'hrsh7th/cmp-calc',
+    -- 'saadparwaiz1/cmp_luasnip', -- snippet completions
+    -- 'neovim/nvim-lspconfig', -- enable LSP
     -- Successor to 'williamboman/nvim-lsp-installer' which supports LSP, DAP, and other tools like linters etc.
-    {
-        'williamboman/mason.nvim',
-        dependencies = { 'williamboman/mason-lspconfig.nvim' },
-    },
+    -- {
+    --     'williamboman/mason.nvim',
+    --     dependencies = { 'williamboman/mason-lspconfig.nvim' },
+    -- },
     -- LSP for F#, make sure to run 'dotnet tool install -g fsautocomplete'
-    'ionide/Ionide-vim',
+    -- 'ionide/Ionide-vim',
     -- I'm using the old nvim-lsp-installer only for omnisharp because it is not working on windows
     -- This is a requirement for me. I've created this GitHub issue to track
     -- https://github.com/williamboman/mason.nvim/issues/455
-    'williamboman/nvim-lsp-installer', -- language server settings defined in json for
+    -- 'williamboman/nvim-lsp-installer', -- language server settings defined in json for
     -- 'tamago324/nlsp-settings.nvim', -- language server settings defined in json for -- TODO: 2022-09-25, suspension state. Do I really use this plugin??
     'jose-elias-alvarez/null-ls.nvim', -- for formatters and linters
     -- }}}
