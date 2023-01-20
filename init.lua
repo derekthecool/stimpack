@@ -34,4 +34,4 @@ require('stimpack.file-watcher')
 -- require('stimpack.lualine-settings')
 
 -- Firenvim plugin settings very last
---require('stimpack.firenvim-settings')
+-- require('stimpack.firenvim-settings')

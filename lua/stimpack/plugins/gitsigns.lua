@@ -10,7 +10,7 @@ return {
               '<cmd>lua require(\'neogit\').open()<cr>',
               'Neogit',
             },
-            gs = {
+            f = {
               '<cmd>G<CR>',
               'Vim fugitive',
             },

@@ -1,7 +1,8 @@
 -- Vimwiki is a great personal wiki and diary
 return {
     'vimwiki/vimwiki',
-    ft = { 'markdown', 'vimwiki' },
+    lazy = false,
+    -- ft = { 'markdown', 'vimwiki' },
     -- init = function()
     --     vim.filetype.add({
     --         pattern = { ['*.md'] = 'vimwiki' },
