@@ -68,6 +68,19 @@ local snippets = {
             }
         )
     ),
+    s(
+        'map',
+        fmt(
+            [[
+        vim.keymap.set('{}', '{}', '{}', {{ silent = true }})
+        ]]   ,
+            {
+                i(1, 'mode'),
+                i(2, 'lhs'),
+                i(3, 'rhs'),
+            }
+        )
+    ),
 
     -- }}}
 
