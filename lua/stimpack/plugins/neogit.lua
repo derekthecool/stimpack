@@ -3,6 +3,7 @@ return {
     dependencies = {
         'sindrets/diffview.nvim',
     },
+    enabled = false,
     keys = {
         {
             '<leader>gg',

@@ -6,14 +6,6 @@ return {
         which_key_mapper({
           g = {
             name = 'git', -- optional group name
-            g = {
-              '<cmd>lua require(\'neogit\').open()<cr>',
-              'Neogit',
-            },
-            f = {
-              '<cmd>G<CR>',
-              'Vim fugitive',
-            },
             G = {
               '<cmd>Gitsigns toggle_deleted<cr>',
               'Gitsigns toggle display of deleted lines',
@@ -54,6 +46,12 @@ return {
               '<cmd>lua require \'gitsigns\'.undo_stage_hunk()<cr>',
               'Undo Stage Hunk',
             },
+            t = {
+              '<cmd>Gitsigns diffthis HEAD<cr>',
+              'Diff',
+            },
+
+            -- telescope
             o = {
               '<cmd>Telescope git_status<cr>',
               'Telescope: Open changed file',
@@ -66,6 +64,8 @@ return {
               '<cmd>Telescope git_commits<cr>',
               'Telescope: Checkout commit',
             },
+
+            -- 'sindrets/diffview.nvim'
             d = {
               '<cmd>lua require(\'diffview\').open()<cr>',
               'DiffViewOpen',
@@ -73,10 +73,6 @@ return {
             D = {
               '<cmd>lua require(\'diffview\').close()<cr>',
               'DiffViewClose',
-            },
-            t = {
-              '<cmd>Gitsigns diffthis HEAD<cr>',
-              'Diff',
             },
           },
         })

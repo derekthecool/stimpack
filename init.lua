@@ -12,7 +12,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.mapleader = ',' -- Map leader to comma instead of space since switching to stenography. Spacing is done after each word so comma is better for me now.
+-- Map leader to comma instead of space since switching to stenography.
+-- Spacing is done after each word so comma is better for me now.
+vim.g.mapleader = ','
 
 require('stimpack.global-helpers')
 
@@ -29,9 +31,3 @@ require('stimpack.file-watcher')
 
 -- Configuration for my personal plugins that I wrote
 -- require('stimpack.dereks-plugins-config')
-
--- Source last
--- require('stimpack.lualine-settings')
-
--- Firenvim plugin settings very last
--- require('stimpack.firenvim-settings')
