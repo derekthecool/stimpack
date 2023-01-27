@@ -1,9 +1,9 @@
 return {
     'akinsho/toggleterm.nvim', -- Awesome terminal helper in lua
-    -- event = 'VeryLazy',
     keys = {
         '⏫',
-        '<leader>gg',
+        { '<leader>gg', desc = 'Lazygit' },
+        { '<leader>gz', desc = 'Open lazygit to dotfiles bare repo ~/.cfg' },
     },
     config = function()
         require('toggleterm').setup({
@@ -69,6 +69,29 @@ return {
             lazygit:toggle()
         end
 
+        local dotfileslazygit = Terminal:new({
+            cmd = 'lazygit --git-dir=$HOME/.cfg --work-tree=$HOME',
+            direction = 'float',
+            hidden = true,
+            float_opts = {
+                border = 'double',
+            },
+            -- function to run on opening the terminal
+            on_open = function(term)
+                vim.cmd('startinsert!')
+                vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+            end,
+            -- function to run on closing the terminal
+            on_close = function(term)
+                vim.cmd('startinsert!')
+            end,
+        })
+
+        local function dotfileslazygit_toggle()
+            dotfileslazygit:toggle()
+        end
+
         vim.keymap.set('n', '<leader>gg', lazygit_toggle, { noremap = true, silent = true })
+        vim.keymap.set('n', '<leader>gz', dotfileslazygit_toggle, { noremap = true, silent = true })
     end,
 }
