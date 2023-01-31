@@ -49,6 +49,7 @@ return {
         local Terminal = require('toggleterm.terminal').Terminal
         local lazygit = Terminal:new({
             cmd = 'lazygit',
+            count = 8,
             dir = 'git_dir',
             direction = 'float',
             float_opts = {
@@ -71,6 +72,7 @@ return {
 
         local dotfileslazygit = Terminal:new({
             cmd = 'lazygit --git-dir=$HOME/.cfg --work-tree=$HOME',
+            count = 9,
             direction = 'float',
             hidden = true,
             float_opts = {

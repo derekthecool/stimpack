@@ -28,7 +28,6 @@ vim.o.timeoutlen = 500 -- Faster than default 1000 ms
 vim.o.updatetime = 300 -- Faster completion
 vim.o.swapfile = false -- Do not create swp files
 vim.bo.swapfile = false -- Do not create swp files
-vim.o.termguicolors = true -- Needed for better color display
 
 -- Default text formatting options: see overrides to these in ftplugin/*.lua
 vim.o.shiftwidth = 4 -- Number of space characters for indentation

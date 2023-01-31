@@ -1,16 +1,4 @@
 -- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        'git',
-        'clone',
-        '--filter=blob:none',
-        'https://github.com/folke/lazy.nvim.git',
-        '--branch=stable', -- latest stable release
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
 
 -- Map leader to comma instead of space since switching to stenography.
 -- Spacing is done after each word so comma is better for me now.
@@ -18,7 +6,8 @@ vim.g.mapleader = ','
 
 require('stimpack.global-helpers')
 
-require('lazy').setup('stimpack.plugins')
+-- Load lazy.nvim
+require('stimpack.package-manager-config')
 
 -- Lua basic configuration
 require('stimpack.settings')

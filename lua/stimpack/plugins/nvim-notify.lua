@@ -1,6 +1,8 @@
 return {
     'rcarriga/nvim-notify',
     config = function()
+        vim.o.termguicolors = true -- Needed for better color display
+
         require('notify').setup({
             -- Minimum level to show
             level = 'info',
