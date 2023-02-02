@@ -15,7 +15,7 @@ local snippets = {
       // clang-format off
       {}
       // clang-format on
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -34,7 +34,7 @@ local snippets = {
         returnValue += atoi(p);
       }}
       {}
-      ]]     ,
+      ]],
             { i(1, 'InputStringToParse'), i(2) }
         )
     ),
@@ -46,7 +46,7 @@ local snippets = {
         fmt(
             [[
       ESP_ERROR_CHECK({});
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -55,7 +55,7 @@ local snippets = {
         fmt(
             [[
       ESP_LOGI({});
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -87,7 +87,7 @@ local snippets = {
 
               ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
         }}
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -96,11 +96,46 @@ local snippets = {
 local autosnippets = {
 
     s(
+        'IF',
+        fmt(
+            [[
+        if({})
+        {{
+            {}
+        }}{}
+        ]],
+            {
+                i(1),
+                i(2),
+                i(0),
+            }
+        )
+    ),
+
+    s(
+      'ELSE',
+      fmt(
+        [[
+        else
+        {{
+            {}
+        }}{}
+        ]],
+        {
+             i(1),
+             i(0),
+             
+        }
+      )
+    ),
+    
+
+    s(
         'var var',
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()

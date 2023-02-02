@@ -99,5 +99,10 @@ return {
         end)
         -- STWHEUFLS
         map('n', '👇👇', '<cmd>source ' .. OS.nvim .. 'lua/stimpack/luasnip-settings.lua<cr>')
+
+        -- Snippet extensions, AKA get snippets of one filetype to use another as well
+        -- This enables the new filetypes to appear in the snippet edit menu
+        require('luasnip').filetype_extend('fsharp', { 'dotnet' })
+        require('luasnip').filetype_extend('csharp', { 'dotnet' })
     end,
 }
