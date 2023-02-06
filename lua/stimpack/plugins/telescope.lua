@@ -95,6 +95,14 @@ return {
             '<cmd>lua require (\'telescope.builtin\').buffers({sort_mru=true, sort_lastused=true, ignore_current_buffer=true})<CR>'
         )
 
+        vim.keymap.set('n', '<leader>fv', function()
+            require('telescope.builtin').git_files({ cwd = OS.nvim, prompt_title = 'Nvim config: git files' })
+        end, { desc = 'Nvim config files' })
+
+        vim.keymap.set('n', '<leader>fV', function()
+            require('telescope.builtin').live_grep({ cwd = OS.nvim, prompt_title = 'Nvim config: grep files' })
+        end, { desc = 'Nvim config files' })
+
         local which_key_mapper = require('stimpack.which-key-mapping')
         local builtins = require('telescope.builtin')
         which_key_mapper({
@@ -119,10 +127,10 @@ return {
                 --   prompt_title = 'Search vim config'
                 -- }, "Search vim config" }, -- search vim config files
 
-                V = {
-                    '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.config/nvim\'                            , prompt_title=\'Live grep through vim config\'})<CR>',
-                    'Search vim config live grep',
-                }, -- grep over vim config files
+                -- V = {
+                --     '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.config/nvim\'                            , prompt_title=\'Live grep through vim config\'})<CR>',
+                --     'Search vim config live grep',
+                -- }, -- grep over vim config files
                 t = { '<cmd>lua require("telescope").extensions.file_browser.file_browser)', 'Telescope file browser' },
                 d = {
                     '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/\'                         , prompt_title=\'Search WSL home directory\'})<CR>',

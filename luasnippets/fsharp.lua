@@ -22,6 +22,23 @@ local snippets = {
     ),
 
     s(
+        'plot single stack with shared axis',
+        fmt(
+            [[
+        [ Chart.Line(X, Y1) |> Chart.withYAxisStyle ("Y1")
+        Chart.Line(X, Y2) |> Chart.withYAxisStyle ("Y2") ]
+        |> Chart.SingleStack(Pattern = StyleParam.LayoutGridPattern.Coupled)
+        |> Chart.withLayoutGridStyle (YGap = 0.1, XGap = 0.8)
+        |> Chart.withTitle ("AFE4404 PPG Sensor Values")
+        |> Chart.withXAxisStyle ("Time")
+        |> Chart.withSize (1400.0, 800.0)
+        |> Chart.show
+        ]]   ,
+            {}
+        )
+    ),
+
+    s(
         'read line',
         fmt(
             [[
@@ -220,7 +237,9 @@ local autosnippets = {
                 t('(?# Punctuation, Initial quote (may behave like Ps or Pe depending on usage))\\p{Pi}'),
                 t('(?# Punctuation, Final quote (may behave like Ps or Pe depending on usage))\\p{Pf}'),
                 t('(?# Punctuation, Other)\\p{Po}'),
-                t('(?# All punctuation characters. This includes the Pc, Pd, Ps, Pe, Pi, Pf, and Po categories.)\\p{P}'),
+                t(
+                    '(?# All punctuation characters. This includes the Pc, Pd, Ps, Pe, Pi, Pf, and Po categories.)\\p{P}'
+                ),
                 t('(?# Symbol, Math)\\p{Sm}'),
                 t('(?# Symbol, Currency)\\p{Sc}'),
                 t('(?# Symbol, Modifier)\\p{Sk}'),
