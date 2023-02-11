@@ -15,7 +15,7 @@ local snippets = {
       // clang-format off
       {}
       // clang-format on
-      ]],
+      ]]     ,
             { i(1) }
         )
     ),
@@ -34,7 +34,7 @@ local snippets = {
         returnValue += atoi(p);
       }}
       {}
-      ]],
+      ]]     ,
             { i(1, 'InputStringToParse'), i(2) }
         )
     ),
@@ -42,11 +42,44 @@ local snippets = {
 
     -- ESP32 snippets
     s(
+        'ESP32interrupt',
+        fmt(
+            [[
+        
+#define INTERRUPT_INPUT_PIN 23
+#define ESP_INTR_FLAG_DEFAULT 0
+
+TaskHandle_t ISR = NULL;
+
+void IRAM_ATTR button_isr_handler(void *arg) {{ xTaskResumeFromISR(ISR); }}
+
+void button_task(void *arg) {{
+  while (true) {{
+    ESP_LOGI("interrupt", "interrupt hit");
+    RegularSensorRead();
+    vTaskSuspend(NULL);
+  }}
+}}
+
+  void app_main(void) {{
+      // Setup hardware interrupt for PPG ADC ready
+      gpio_set_direction(INTERRUPT_INPUT_PIN, GPIO_MODE_INPUT);
+      gpio_set_intr_type(INTERRUPT_INPUT_PIN, GPIO_INTR_HIGH_LEVEL);
+      gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
+      gpio_isr_handler_add(INTERRUPT_INPUT_PIN, button_isr_handler, NULL);
+      xTaskCreate(button_task, "button_task", 4096, NULL, 10, &ISR);
+  }}
+        ]]   ,
+            {}
+        )
+    ),
+
+    s(
         'ESP32error',
         fmt(
             [[
       ESP_ERROR_CHECK({});
-      ]],
+      ]]     ,
             { i(1) }
         )
     ),
@@ -55,7 +88,7 @@ local snippets = {
         fmt(
             [[
       ESP_LOGI({});
-      ]],
+      ]]     ,
             { i(1) }
         )
     ),
@@ -87,13 +120,34 @@ local snippets = {
 
               ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
         }}
-        ]],
+        ]]   ,
             {}
         )
     ),
 }
 
 local autosnippets = {
+
+    s(
+        'FOR',
+        fmt(
+            [[
+        for(int i = {}; i < {}; i{})
+        {{
+            {}
+        }}
+        ]]   ,
+            {
+                i(1, '0'),
+                i(2, '10'),
+                c(3, {
+                    t('++'),
+                    t('--'),
+                }),
+                i(4),
+            }
+        )
+    ),
 
     s(
         'IF',
@@ -103,7 +157,7 @@ local autosnippets = {
         {{
             {}
         }}{}
-        ]],
+        ]]   ,
             {
                 i(1),
                 i(2),
@@ -113,34 +167,133 @@ local autosnippets = {
     ),
 
     s(
-      'ELSE',
-      fmt(
-        [[
+        'ELSE',
+        fmt(
+            [[
         else
         {{
             {}
         }}{}
-        ]],
-        {
-             i(1),
-             i(0),
-             
-        }
-      )
+        ]]   ,
+            {
+                i(1),
+                i(0),
+            }
+        )
     ),
-    
 
     s(
         'var var',
         fmt(
             [[
       {}
-      ]],
+      ]]     ,
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()
                     return variable
                 end, {}),
+            }
+        )
+    ),
+
+    s(
+        'FUNCTION',
+        fmt(
+            [[
+            {} {}({})
+            {{
+                {}
+            }}
+            ]],
+            {
+                i(1, 'int'),
+                i(2, 'MyFunction'),
+                i(3),
+                i(4),
+            }
+        )
+    ),
+
+    s(
+        'WHILE',
+        fmt(
+            [[
+        while({})
+        {{
+            {}
+        }}
+        ]]   ,
+            {
+                i(1, 'true'),
+                i(2),
+            }
+        )
+    ),
+
+    s(
+        'PRINT',
+        fmt(
+            [[
+        printf("{}", {});
+        ]]   ,
+            {
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    s(
+        'INCLUDE',
+        fmt(
+            [[
+            {}
+        ]]   ,
+            {
+                c(1, {
+                    sn(nil, {
+                        t('#include "'),
+                        i(1),
+                        t('"'),
+                    }),
+                    sn(nil, {
+                        t('#include <'),
+                        i(1),
+                        t('>'),
+                    }),
+                    t('#include <assert.h>'),
+                    t('#include <complex.h>'),
+                    t('#include <ctype.h>'),
+                    t('#include <errno.h>'),
+                    t('#include <fenv.h>'),
+                    t('#include <float.h>'),
+                    t('#include <inttypes.h>'),
+                    t('#include <iso646.h>'),
+                    t('#include <limits.h>'),
+                    t('#include <locale.h>'),
+                    t('#include <math.h>'),
+                    t('#include <setjmp.h>'),
+                    t('#include <signal.h>'),
+                    t('#include <stdalign.h>'),
+                    t('#include <stdarg.h>'),
+                    t('#include <stdatomic.h>'),
+                    t('#include <stdbit.h>'),
+                    t('#include <stdbool.h>'),
+                    t('#include <stdckdint.h>'),
+                    t('#include <stddef.h>'),
+                    t('#include <stdint.h>'),
+                    t('#include <stdio.h>'),
+                    t('#include <stdlib.h>'),
+                    t('#include <stdnoreturn.h>'),
+                    t('#include <string.h>'),
+                    t('#include <tgmath.h>'),
+                    t('#include <threads.h>'),
+                    t('#include <time.h>'),
+                    t('#include <uchar.h>'),
+                    t('#include <wchar.h>'),
+                    t('#include <wctype.h>'),
+                }),
             }
         )
     ),

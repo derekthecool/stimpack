@@ -55,3 +55,5 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
 })
 
 vim.filetype.add({ pattern = { ['*.md'] = 'vimwiki' } })
+-- vim.filetype.add({ pattern = { ['*.h'] = 'c' }, priority = 100 })
+vim.filetype.add({ extension = { h = 'c' }, priority = 100 })

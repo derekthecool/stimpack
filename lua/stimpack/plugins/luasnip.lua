@@ -102,7 +102,12 @@ return {
 
         -- Snippet extensions, AKA get snippets of one filetype to use another as well
         -- This enables the new filetypes to appear in the snippet edit menu
+        -- Dotnet
         require('luasnip').filetype_extend('fsharp', { 'dotnet' })
         require('luasnip').filetype_extend('csharp', { 'dotnet' })
+
+        -- C
+        require('luasnip').filetype_set('h', { 'c' })
+        -- require('luasnip').filetype_extend('c', { 'h' })
     end,
 }

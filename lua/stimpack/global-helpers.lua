@@ -11,6 +11,7 @@ if vim.loop.os_uname().sysname == 'Linux' then
     OS['nvim'] = vim.fn.stdpath('config') .. '/'
     OS['OS'] = 'Linux'
     OS['home'] = os.getenv('HOME')
+    OS['plover'] = OS['home'] .. '/.config/plover/'
     OS['my_plugins'] = OS['home'] .. '/neovim_plugins'
     OS['snippets'] = string.format('%sluasnippets/', OS['nvim'])
     OS['executable_extension'] = ''
@@ -20,6 +21,7 @@ elseif vim.loop.os_uname().sysname == 'Windows_NT' then
     OS['nvim'] = vim.fn.stdpath('config') .. '\\'
     OS['OS'] = 'Windows'
     OS['home'] = os.getenv('USERPROFILE')
+    OS['plover'] = os.getenv('LOCALAPPDATA') .. '\\plover\\'
     OS['my_plugins'] = OS['home'] .. '\\neovim_plugins'
     OS['snippets'] = string.format('%sluasnippets\\', OS['nvim'])
     OS['executable_extension'] = '.exe'

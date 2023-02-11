@@ -101,7 +101,15 @@ return {
 
         vim.keymap.set('n', '<leader>fV', function()
             require('telescope.builtin').live_grep({ cwd = OS.nvim, prompt_title = 'Nvim config: grep files' })
-        end, { desc = 'Nvim config files' })
+        end, { desc = 'Nvim config grep files' })
+
+        vim.keymap.set('n', '<leader>fp', function()
+            require('telescope.builtin').find_files({ cwd = OS.plover, prompt_title = 'Plover config: git files' })
+        end, { desc = 'Plover config files' })
+
+        vim.keymap.set('n', '<leader>fP', function()
+            require('telescope.builtin').live_grep({ cwd = OS.plover, prompt_title = 'Plover config: grep files' })
+        end, { desc = 'Plover config grep files' })
 
         local which_key_mapper = require('stimpack.which-key-mapping')
         local builtins = require('telescope.builtin')
@@ -117,6 +125,7 @@ return {
                 E = { '<cmd>Telescope emoji<CR>', 'Telescope extension: emoji' },
                 b = { builtins.buffers, 'Local buffers' },
                 g = { builtins.live_grep, 'Live grep' }, -- search locally with live grep (uses ripgrep in the background)
+                s = { builtins.grep_string, 'Grep string under cursor' },
                 h = { builtins.help_tags, 'Help Search' },
                 c = { builtins.command_history, 'Command history' },
                 z = { builtins.current_buffer_fuzzy_find, 'Current buffer fuzzy find' },
