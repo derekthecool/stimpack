@@ -77,7 +77,7 @@ return {
           },
         })
     end,
-    config = {
+    opts = {
         signs = {
             add = {
                 hl = 'GitSignsAdd',

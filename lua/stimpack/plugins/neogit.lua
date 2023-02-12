@@ -11,7 +11,7 @@ return {
             desc = 'Neogit',
         },
     },
-    config = {
+    opts = {
         disable_signs = false,
         disable_hint = false,
         disable_context_highlighting = false,

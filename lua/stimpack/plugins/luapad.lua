@@ -1,7 +1,7 @@
 return {
     'rafcamlet/nvim-luapad',
     keys = { { '<leader>dV', '<cmd>lua require(\'luapad\').toggle()<CR>', desc = 'Luapad neovim interactive buffer' } },
-    config = {
+    opts = {
         count_limit = 150000,
         error_indicator = true,
         eval_on_move = true,
