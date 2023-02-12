@@ -23,15 +23,12 @@ One basic fact that allows for so much power usage is the sheer number of key
 combinations. A steno keyboard has 23 keys and one or more can be pressed at
 once to create any output. So that means there are `2^23 - 1` or `8388607`
 unique single chords. Compare that with your archaic keyboard with around 100
-keys. There are only 4 modifier keys (Win, shift, alt, ctrl) and ignoring multi
-key options like `Ctrl-A-B-C` because there are very rare and deathly
-unergonomic and counting key combos like `Ctrl-A` or with all 4 modifiers
-`Ctrl+Shift+Win+Alt-R` that makes for
+keys.
 
-level 1: 1 of 4 = 4 : C,W,S,A
-level 2: 2 of 4 = 6 : CW,CS,CA,WS,WA,SA
-level 3: 3 of 4 = 4 : CWS,WSA,CSA,CWA
-level 4: 4 of 4 = 1 : CWSA
+According to this
+[website](https://keyboardcloud.com/how-many-keyboard-combinations-are-there/)
+the total key combo count is `526100`. Though the realistic number is likely much
+lower than this.
 
 ## TODO
 
@@ -59,29 +56,6 @@ Using a nerd font you can use characters as icons. This
 [website](https://www.nerdfonts.com/cheat-sheet) is a great reference to look up
 an icon. You can copy to neovim and see if is shows up properly, if it does not
 show up right choose another one.
-
-## Tracking My Open Source Involement
-
-### Neovim Plugins
-
-#### Fixes To Work On
-
-- [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim) globals in status line disappear if colored
-- mason.nvim omnisharp not working well
-https://github.com/folke/lazy.nvim
-```yaml
- Detected filetype:   cs
-
- 1 client(s) attached to this buffer:
-
- Client: omnisharp (id: 1, pid: nil, bufnr: [1])
- 	filetypes:       cs, vb
- 	autostart:       true
- 	root directory:  C:/Users/Derek Lomax/source/repos/Freeus.Tools/BXFota
- 	cmd:             dotnet C:\Users\Derek Lomax\AppData\Local\nvim-data\lsp_servers\omnisharp\omnisharp\OmniSharp.dll --languageserver --hostPID 16700
-
- Configured servers list: jedi_language_server, powershell_es, sumneko_lua, lemminx, omnisharp
-```
 
 ## 2023-01-12 Migrating From Packer.nvim to Lazy.Nvim
 
