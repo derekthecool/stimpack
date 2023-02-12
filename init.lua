@@ -17,6 +17,3 @@ require('stimpack.mappings')
 require('stimpack.visualsettings')
 require('stimpack.code-auto-run')
 require('stimpack.file-watcher')
-
--- Configuration for my personal plugins that I wrote
--- require('stimpack.dereks-plugins-config')
