@@ -25,7 +25,7 @@ local snippets = {
       }}
 
       return snippets, autosnippets
-      ]]     ,
+      ]],
             { i(1), i(2) }
         )
     ),
@@ -41,7 +41,7 @@ local snippets = {
          for _, line in ipairs(lines) do
              {}
          end
-         ]]  ,
+         ]],
             {
                 i(1),
             }
@@ -57,7 +57,7 @@ local snippets = {
             '{}',
             {{ pattern = {{ '{}' }}, command = '{}', group = {} }}
         )
-        ]]   ,
+        ]],
             {
                 i(1, 'autocommandGroupName'),
                 rep(1),
@@ -73,7 +73,7 @@ local snippets = {
         fmt(
             [[
         vim.keymap.set('{}', '{}', '{}', {{ silent = true }})
-        ]]   ,
+        ]],
             {
                 i(1, 'mode'),
                 i(2, 'lhs'),
@@ -103,7 +103,7 @@ local snippets = {
             --
             -- }},
         }}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -156,7 +156,7 @@ local autosnippets = {
             [[
         elseif {} then
             {}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -170,7 +170,7 @@ local autosnippets = {
             [[
         else
             {}
-        ]]   ,
+        ]],
             {
                 i(1),
             }
@@ -186,7 +186,7 @@ local autosnippets = {
         end
 
         {}
-        ]]   ,
+        ]],
             {
                 c(1, {
                     t(''),
@@ -218,7 +218,7 @@ local autosnippets = {
         end
 
         {}
-        ]]   ,
+        ]],
             {
                 d(1, function(args, snip)
                     -- Check for numeric for loop, only lower bound needs to be number
@@ -256,7 +256,7 @@ local autosnippets = {
         end
 
         {}
-        ]]   ,
+        ]],
             {
                 i(1, 'item'),
                 i(2, 'table'),
@@ -275,7 +275,7 @@ local autosnippets = {
         end
 
         {}
-        ]]   ,
+        ]],
             {
                 i(1, 'condition'),
                 i(2),
@@ -290,7 +290,7 @@ local autosnippets = {
             [[
       string.format('{}',{})
       {}
-      ]]     ,
+      ]],
             {
                 i(1),
                 i(2),
@@ -305,7 +305,7 @@ local autosnippets = {
             [[
       print({})
       {}
-      ]]     ,
+      ]],
             { i(1), i(0) }
         )
     ),
@@ -319,7 +319,7 @@ local autosnippets = {
         end)
 
         {}
-    ]]       ,
+    ]],
             {
                 i(1, 'Test group name '),
                 d(2, function()
@@ -328,7 +328,7 @@ local autosnippets = {
           it('{}', function()
               {}
           end)
-          ]]             ,
+          ]],
                         {
                             i(1, 'Test name'),
                             i(2),
@@ -356,7 +356,7 @@ local autosnippets = {
             vim.cmd('set runtimepath+=' .. path_to_plugin)
             print(string.format("Adding: %s to neovim runtimepath because plenary tests fail without this", path_to_plugin))
           end)
-          ]]             ,
+          ]],
 
                         {}
                     )
@@ -370,7 +370,7 @@ local autosnippets = {
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
@@ -399,7 +399,7 @@ local autosnippets = {
         it('{}', function()
             {}
         end)
-    ]]       ,
+    ]],
             {
                 i(1, 'Test name'),
                 i(2),
@@ -430,7 +430,7 @@ local autosnippets = {
         )
       ),
       {}
-      ]=]    ,
+      ]=],
             {
                 c(1, {
                     i(1, 'short snippet trigger'),
@@ -443,7 +443,7 @@ local autosnippets = {
                 regTrig = {},
                 descr = '{}',
               }}
-              ]]             ,
+              ]],
                             {
                                 i(1, 'long snippet trigger'),
                                 c(2, {
@@ -463,19 +463,66 @@ local autosnippets = {
     ),
 
     s(
+        'snip simple',
+        fmt([[s('{}', t('{}')),]], {
+            i(1),
+            i(2),
+        })
+    ),
+
+    s(
         'snippet node',
         fmt(
             [[
-            sn({}, {{
+            sn({},
                 {}
-            }}),
+            )
             ]],
             {
                 c(1, {
                     t('nil'),
                     i(1, 'jump index'),
                 }),
-                i(2),
+                c(2, {
+
+                    -- Version that includes the fmt function
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                            fmt(
+                            {}
+                            {}
+                            {},
+                            {{
+                                {}
+                            }}
+                            )
+                      ]],
+                            {
+                                t('[['),
+                                i(1),
+                                t(']]'),
+                                i(2),
+                            }
+                        )
+                    ),
+
+                    -- Version where you just create your table of nodes
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                      {{
+                          {}
+                      }}
+                      ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+                }),
             }
         )
     ),
@@ -489,7 +536,7 @@ local autosnippets = {
             [[
       t('{}'),
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'text'),
                 i(0),
@@ -507,7 +554,7 @@ local autosnippets = {
             [[
       i({}),
       {}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     sn(nil, {
@@ -526,7 +573,7 @@ local autosnippets = {
     ),
 
     s(
-    -- This node is not a real node. It is just easier to remember by calling it this.
+        -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[
@@ -534,10 +581,10 @@ local autosnippets = {
           <>
           <>
           <>,
-          {{
+          {
               <>
-          }})
-        ]]   ,
+          })
+        ]],
             {
                 t('[['),
                 i(1),
@@ -559,7 +606,7 @@ local autosnippets = {
       end,
       {{ {} }}),
       {}
-      ]]     ,
+      ]],
             {
                 i(1),
                 i(2, ''),
@@ -580,7 +627,7 @@ local autosnippets = {
         {}
       }}),
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'node number'),
                 sn(
@@ -607,7 +654,7 @@ local autosnippets = {
         {{ {} }}
        )
        {}
-      ]]     ,
+      ]],
             {
                 i(1, '1'),
                 i(2),
@@ -624,7 +671,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     return my_treesitter_functions.lua.get_recent_var()
@@ -663,7 +710,7 @@ local autosnippets = {
         fmt(
             [[
         {}
-        ]]   ,
+        ]],
             {
                 t('You are on an even line!'),
             }
@@ -689,7 +736,7 @@ local autosnippets = {
         fmt(
             [[
             {}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     return snip.captures[1]
@@ -704,7 +751,7 @@ local autosnippets = {
             [[
         for i={} do
         end
-        ]]   ,
+        ]],
             {
                 d(1, function(_, snip)
                     return sn(nil, {

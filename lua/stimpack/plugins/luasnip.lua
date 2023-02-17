@@ -105,6 +105,7 @@ return {
         -- Dotnet
         require('luasnip').filetype_extend('fsharp', { 'dotnet' })
         require('luasnip').filetype_extend('csharp', { 'dotnet' })
+        require('luasnip').filetype_extend('cs', { 'dotnet' })
 
         -- C
         require('luasnip').filetype_set('h', { 'c' })

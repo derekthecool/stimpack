@@ -87,7 +87,6 @@ return {
         end
 
         local map = require('stimpack.mapping-function')
-        map('n', '<leader>fz', require('telescope').extensions.file_browser.file_browser)
         map('n', '<C-f>', gitfiles_or_findfiles)
         map(
             'n',
@@ -140,7 +139,7 @@ return {
                 --     '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.config/nvim\'                            , prompt_title=\'Live grep through vim config\'})<CR>',
                 --     'Search vim config live grep',
                 -- }, -- grep over vim config files
-                t = { '<cmd>lua require("telescope").extensions.file_browser.file_browser)', 'Telescope file browser' },
+                t = { require('telescope').extensions.file_browser.file_browser, 'Telescope file browser' },
                 d = {
                     '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/\'                         , prompt_title=\'Search WSL home directory\'})<CR>',
                     'Find files',

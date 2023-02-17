@@ -2,16 +2,47 @@
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
-local snippets = {}
+local snippets = {
+    s(
+        'starter',
+        fmt(
+            [[
+    #!/usr/bin/env bash
+
+    # Set safer defaults, do not proceed past unhandled errors
+    set -euxo pipefail
+    ]]       ,
+            {}
+        )
+    ),
+}
 
 local autosnippets = {
+
+    s(
+
+        'shebang',
+        fmt(
+            [[
+        {}
+        ]]   ,
+            {
+                c(1, {
+                    t('#!/usr/bin/env bash'),
+                    t('#!/usr/bin/env sh'),
+                    t('#!/bin/bash'),
+                    t('#!/bin/sh'),
+                }),
+            }
+        )
+    ),
 
     s(
         'var var',
         fmt(
             [[
       {}
-      ]],
+      ]]     ,
             {
                 f(function()
                     local variable = my_treesitter_functions.bash.get_recent_var()

@@ -355,25 +355,6 @@ local autosnippets = {
         })
     ),
 
-    -- {{{ XML autosnippet starter
-    s(
-        {
-            trig = '///',
-            descr = 'XML comment summary',
-        },
-        fmt(
-            [[
-    /// <summary>
-    /// {}
-    /// </summary>
-    ]]       ,
-            {
-                i(1),
-            }
-        )
-    ),
-    -- }}}
-
     -- {{{ Fast steno commands to trigger snippets
     s(
         'IF',
