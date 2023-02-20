@@ -10,6 +10,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 return {
     'kyazdani42/nvim-tree.lua',
+    lazy = false,
     keys = { { '<leader>fe', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTreeToggle' } },
     opts = {
         auto_reload_on_write = true,
@@ -18,8 +19,6 @@ return {
         hijack_netrw = true,
         hijack_unnamed_buffer_when_opening = false,
         ignore_buffer_on_setup = false,
-        open_on_setup = false,
-        open_on_setup_file = false,
         open_on_tab = false,
         sort_by = 'name',
         update_cwd = false,

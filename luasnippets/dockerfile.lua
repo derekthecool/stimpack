@@ -33,14 +33,14 @@ local snippets = {
 
 local autosnippets = {
     -- Simple set of snippets to get uppercase
-    s('from', t('FROM')),
-    s('work dir', t('WORKDIR')),
-    s('copy', t('COPY')),
-    s('run', t('RUN')),
-    s('expose', t('EXPOSE')),
+    s('from', t('FROM ')),
+    s('work dir', t('WORKDIR ')),
+    s('copy', t('COPY ')),
+    s('run', t('RUN ')),
+    s('expose', t('EXPOSE ')),
     s('cmd', t('CMD')),
-    s('environment', t('ENV')),
-    s('arg', t('ARG')),
+    s('environment', t('ENV ')),
+    s('arg', t('ARG ')),
 
     s(
         'command',
