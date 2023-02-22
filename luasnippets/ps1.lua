@@ -73,11 +73,45 @@ local snippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
                 i(3),
+            }
+        )
+    ),
+
+    s(
+        'param',
+        fmt(
+            [[
+    {}[Parameter(
+        Mandatory=${},
+        ValueFromPipeline=$true,
+        ValueFromPipelineByPropertyName=$true,
+        ValueFromRemainingArguments=$false,
+        Position=0,
+        ParameterSetName='Parameter Set 1')]
+    [{}]${}
+        ]],
+            {
+                c(1, {
+                    t(''),
+                    t(','),
+                }),
+
+                c(2, {
+                    t('true'),
+                    t('false'),
+                }),
+                c(3, {
+                    t('switch'),
+                    i(1, 'WriteYourOwnType'),
+                    t('string'),
+                    t('int32'),
+                }),
+                i(4, 'VariableName'),
             }
         )
     ),
@@ -93,7 +127,7 @@ local autosnippets = {
             {}
         }}
         {}{}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -110,7 +144,7 @@ local autosnippets = {
         function {} {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -123,7 +157,7 @@ local autosnippets = {
         fmt(
             [[
         Write-Host "{}"
-        ]]   ,
+        ]],
             {
                 i(1),
             }
@@ -143,7 +177,7 @@ local autosnippets = {
             {}
         }}
         {}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -157,7 +191,7 @@ local autosnippets = {
         fmt(
             [[
         Write-Host "{}" -ForegroundColor {}
-        ]]   ,
+        ]],
             {
                 i(1),
                 c(2, {
@@ -187,7 +221,7 @@ local autosnippets = {
         fmt(
             [[
         Write-Output "{}"
-        ]]   ,
+        ]],
             {
                 i(1),
             }

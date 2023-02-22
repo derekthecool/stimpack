@@ -139,7 +139,12 @@ return {
                 --     '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.config/nvim\'                            , prompt_title=\'Live grep through vim config\'})<CR>',
                 --     'Search vim config live grep',
                 -- }, -- grep over vim config files
-                t = { require('telescope').extensions.file_browser.file_browser, 'Telescope file browser' },
+                t = {
+                    function()
+                        require('telescope').extensions.file_browser.file_browser({ hidden = true })
+                    end,
+                    'Telescope file browser',
+                },
                 d = {
                     '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/\'                         , prompt_title=\'Search WSL home directory\'})<CR>',
                     'Find files',
