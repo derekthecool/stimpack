@@ -14,7 +14,7 @@ return {
         require('lualine').setup({
             options = {
                 icons_enabled = true,
-                -- theme = 'base16',
+                theme = 'base16',
                 component_separators = { left = Icons.ui.rightarrowhollow, right = Icons.ui.leftarrowhollow },
                 section_separators = { left = Icons.ui.rightarrowfilled, right = Icons.ui.leftarrowfilled },
                 disabled_filetypes = {},
@@ -40,7 +40,24 @@ return {
                 lualine_z = {},
             },
             tabline = {},
-            extensions = { 'quickfix', 'man', 'toggleterm', 'nvim-tree', 'nvim-dap-ui' },
+            winbar = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = { 'filename' },
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {},
+            },
+
+            inactive_winbar = {
+                lualine_a = {},
+                lualine_b = {},
+                lualine_c = { 'filename' },
+                lualine_x = {},
+                lualine_y = {},
+                lualine_z = {},
+            },
+            extensions = { 'quickfix', 'man', 'toggleterm', 'nvim-tree', 'nvim-dap-ui', 'symbols-outline' },
         })
     end,
 }

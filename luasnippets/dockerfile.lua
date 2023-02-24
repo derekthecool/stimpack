@@ -23,9 +23,24 @@ local snippets = {
          ENV DOTNET_EnableDiagnostics=0
 
          ENTRYPOINT ["dotnet", "{}.dll"]
-         ]]  ,
+         ]],
             {
                 i(1, 'dll_name'),
+            }
+        )
+    ),
+
+    s(
+        'alpine',
+        fmt(
+            [[
+        FROM alpine
+
+        RUN apk add --no-cache \
+            {}
+        ]],
+            {
+                i(1, 'htop'),
             }
         )
     ),

@@ -3,6 +3,7 @@
 return {
     'derekthecool/plover-tapey-tape.nvim',
     event = 'CursorMoved',
+    enabled = false, -- There are still bugs with fresh installs that I need to fix
     config = function()
         require('plover-tapey-tape').setup({
             filepath = 'auto',
