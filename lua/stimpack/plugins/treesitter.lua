@@ -4,8 +4,8 @@ return {
         'nvim-treesitter/nvim-treesitter-textobjects',
         'nvim-treesitter/playground',
     },
-    build = ':TSUpdate all',
-    event = 'VeryLazy',
+    build = ':TSUpdate',
+    -- event = 'VeryLazy', -- try disabled for docker setup
     config = function()
         require('nvim-treesitter.configs').setup({
 
