@@ -17,9 +17,22 @@ return {
         require('mini.indentscope').setup()
 
         -- Auto underline the word under cursor after set amount of time. Quite nice for easy spell check in code.
+        -- TODO: find a way to not do it on commentstring
         require('mini.cursorword').setup()
 
+        -- Generate vim help docs by calling 'lua MiniDoc.generate()
         require('mini.doc').setup()
+
+        -- Amazing plugin for nice movement animations
+        -- Replaces plugin https://github.com/karb94/neoscroll.nvim
+        require('mini.animate').setup()
+
+        -- Does most of what base16 colorscheme plugin can do, however colorcolumn and others look bad
+        -- require('mini.base16').setup()
+
+        -- A true powerhose of movement commands, I really like ]f to go to next file on disk
+        -- TODO: plover work needed here, this is a good use for a python dictionary
+        require('mini.bracketed').setup()
     end,
 }
 

@@ -1,6 +1,7 @@
 return {
     'karb94/neoscroll.nvim',
     -- keys = {'<C-d>', '<C-u>'},
+    enabled = false,
     config = function()
         require('neoscroll').setup({
             hide_cursor = true, -- Hide cursor while scrolling
