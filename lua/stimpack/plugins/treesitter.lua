@@ -5,7 +5,7 @@ return {
         'nvim-treesitter/playground',
     },
     build = ':TSUpdate',
-    -- event = 'VeryLazy', -- try disabled for docker setup
+    event = 'VeryLazy',
     config = function()
         require('nvim-treesitter.configs').setup({
 
