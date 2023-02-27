@@ -1,5 +1,6 @@
 return {
     'airblade/vim-rooter',
+    enabled = false,
     event = 'VeryLazy',
     config = function()
         vim.g.rooter_patterns = { '.git', '*.sln', 'lua' } -- Set which directories should be set as root project directories

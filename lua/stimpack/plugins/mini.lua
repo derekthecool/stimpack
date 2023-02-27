@@ -11,7 +11,9 @@ return {
         -- A serious collection of awesome features
         -- function setup_auto_root() replaces https://github.com/airblade/vim-rooter
         -- function zoom() replaces https://github.com/szw/vim-maximizer which I used to use for vimspector
-        require('mini.misc').setup()
+        require('mini.misc').setup({ make_global = { 'put' } })
+        MiniMisc.setup_auto_root()
+        MiniMisc.setup_restore_cursor()
 
         -- Very magic plugin that shows indentscope with a nice animation. This will be wonderful for fsharp.
         require('mini.indentscope').setup()
@@ -33,6 +35,9 @@ return {
         -- A true powerhose of movement commands, I really like ]f to go to next file on disk
         -- TODO: plover work needed here, this is a good use for a python dictionary
         require('mini.bracketed').setup()
+
+        -- Awesome function which seems to work as well as Comment.nvim
+        require('mini.comment').setup()
     end,
 }
 
