@@ -247,8 +247,6 @@ local autosnippets = {
             ```{}
             {}
             ```
-
-            {}
             ]],
             {
                 c(1, {
@@ -258,7 +256,6 @@ local autosnippets = {
                     i(1),
                 }),
                 i(2),
-                i(0),
             }
         )
     ),

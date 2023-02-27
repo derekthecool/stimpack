@@ -38,6 +38,52 @@ return {
 
         -- Awesome function which seems to work as well as Comment.nvim
         require('mini.comment').setup()
+
+        -- Awesome plugin for moving highlighted text easily
+        require('mini.move').setup({
+            -- Module mappings. Use `''` (empty string) to disable one.
+            mappings = {
+                -- Move visual selection in Visual mode. Defaults are Alt (Meta) + hjkl.
+                -- left = '<M-h>',
+                -- right = '<M-l>',
+                -- down = '<M-j>',
+                -- up = '<M-k>',
+
+                -- Move current line in Normal mode
+                line_left = '<',
+                line_right = '>',
+                -- line_down = '',
+                -- line_up = '<M-k>',
+            },
+
+            -- Options which control moving behavior
+            options = {
+                -- Automatically reindent selection during linewise vertical move
+                reindent_linewise = true,
+            },
+        })
+
+        -- Easy auto pairs
+        require('mini.pairs').setup()
+
+        -- Sessions
+        require('mini.sessions').setup()
+
+        -- Start screen, works nice with sessions
+        require('mini.starter').setup()
+
+        -- Simple surround. Does everything I need it to.
+        -- Replaces plugin https://github.com/kylechui/nvim-surround
+        -- Use sr, sa, sd, to replace, add, and delete surrounds
+        require('mini.surround').setup()
+
+        require('mini.tabline').setup()
+
+        require('mini.trailspace').setup()
+        vim.keymap.set('n', '<leader>mt', MiniTrailspace.trim, { silent = true, desc = 'MiniTrailspace.trim' })
+        vim.keymap.set('n', '<leader>mT', MiniTrailspace.trim_last_lines, { silent = true, desc = 'MiniTrailspace.trim_last_lines' })
+
+        require('mini.ai').setup()
     end,
 }
 

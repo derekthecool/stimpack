@@ -34,6 +34,20 @@ local snippets = {
 
     -- {{{ Neovim command and API snippets
     s(
+        'highlight',
+        fmt(
+            [[
+        vim.api.nvim_set_hl(0, '{}', {{ bg = '#{}', fg = '#{}' }})
+        ]],
+            {
+                i(1, 'ColorColumn'),
+                i(2, 'FF99CC'),
+                i(3, 'CCCCCC'),
+            }
+        )
+    ),
+
+    s(
         'lines',
         fmt(
             [[

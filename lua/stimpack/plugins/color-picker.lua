@@ -1,6 +1,5 @@
 return {
-    'kylechui/nvim-surround',
-    enabled = false,
+    'ziontee113/color-picker.nvim',
     event = 'CursorMoved',
     opts = {},
 }
