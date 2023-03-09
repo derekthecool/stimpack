@@ -128,27 +128,13 @@ return {
                 h = { builtins.help_tags, 'Help Search' },
                 c = { builtins.command_history, 'Command history' },
                 z = { builtins.current_buffer_fuzzy_find, 'Current buffer fuzzy find' },
-                -- c = { builtins.command_history, 'Command history' },
-
-                -- v = { builtins.find_files {
-                --   cwd = OS.nvim,
-                --   prompt_title = 'Search vim config'
-                -- }, "Search vim config" }, -- search vim config files
-
-                -- V = {
-                --     '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\'        , cwd=\'~/.config/nvim\'                            , prompt_title=\'Live grep through vim config\'})<CR>',
-                --     'Search vim config live grep',
-                -- }, -- grep over vim config files
+                S = { builtins.git_status, 'Search git changed files' },
                 t = {
                     function()
                         require('telescope').extensions.file_browser.file_browser({ hidden = true })
                     end,
                     'Telescope file browser',
                 },
-                d = {
-                    '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/\'                         , prompt_title=\'Search WSL home directory\'})<CR>',
-                    'Find files',
-                }, -- find files
                 m = { builtins.keymaps, 'List key maps' }, -- list keymaps
             },
 

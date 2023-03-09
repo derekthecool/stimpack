@@ -37,7 +37,8 @@ return {
         require('mini.bracketed').setup()
 
         -- Awesome function which seems to work as well as Comment.nvim
-        require('mini.comment').setup()
+        -- 2023-02-27 comment string settings are not as awesome for F#, and C
+        -- require('mini.comment').setup()
 
         -- Awesome plugin for moving highlighted text easily
         require('mini.move').setup({

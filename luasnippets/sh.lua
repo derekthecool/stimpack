@@ -11,7 +11,7 @@ local snippets = {
 
     # Set safer defaults, do not proceed past unhandled errors
     set -euxo pipefail
-    ]]       ,
+    ]],
             {}
         )
     ),
@@ -20,12 +20,24 @@ local snippets = {
 local autosnippets = {
 
     s(
+        '${',
+        fmt(
+            [[
+        ${{{}}}
+        ]],
+            {
+                i(1, 'variable'),
+            }
+        )
+    ),
+
+    s(
 
         'shebang',
         fmt(
             [[
         {}
-        ]]   ,
+        ]],
             {
                 c(1, {
                     t('#!/usr/bin/env bash'),
@@ -42,7 +54,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     local variable = my_treesitter_functions.bash.get_recent_var()

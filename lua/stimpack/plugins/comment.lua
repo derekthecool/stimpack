@@ -1,6 +1,5 @@
 return {
     'numToStr/Comment.nvim',
-    enabled = false,
     opts = {
         ---Add a space b/w comment and the line
         ---@type boolean|fun():boolean

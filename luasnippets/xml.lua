@@ -282,7 +282,12 @@ local autosnippets = {
                     -- Database
                     t('<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0-rc.2.22472.11" />'),
                     t('<PackageReference Include="Dapper" Version="2.0.123" />'),
-                    t('<PackageReference Include="MySql.Data" Version="8.0.31" />'),
+                    t('<PackageReference Include="MySqlConnector" Version="2.2.5" />'),
+                    -- This version sucks and only works with MySQL, it fails for MariaDB
+                    -- t('<PackageReference Include="MySql.Data" Version="8.0.31" />'),
+                    t('<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />'),
+                    -- -- Helps to get items from appSettings.json
+                    t('<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.1.23110.8" />'),
                     -- Networking
                     t('<PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />'),
                     -- Encoding
