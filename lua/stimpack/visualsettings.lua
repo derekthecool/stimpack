@@ -3,6 +3,7 @@ vim.o.termguicolors = true -- Needed for better color display
 vim.wo.cursorcolumn = true
 vim.wo.colorcolumn = '80' -- Display color column at 80 characters
 vim.o.showtabline = 2 -- Always show tabline. Needed for mini.nvim tabline
+vim.o.cmdheight = 0
 -- vim.opt.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
 
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars

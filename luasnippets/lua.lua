@@ -10,7 +10,8 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr =
+            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -127,6 +128,20 @@ local snippets = {
 }
 
 local autosnippets = {
+
+    s(
+        'TABLE',
+        fmt(
+            [[
+        = {{
+        {},
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
 
     -- {{{ Neovim command and API snippets
     s(
@@ -384,7 +399,7 @@ local autosnippets = {
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
@@ -587,7 +602,7 @@ local autosnippets = {
     ),
 
     s(
-        -- This node is not a real node. It is just easier to remember by calling it this.
+    -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[

@@ -198,13 +198,13 @@ return {
         }
 
         vim.diagnostic.config(config)
-        vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-            border = 'rounded',
-        })
-
-        vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-            border = 'rounded',
-        })
+        -- TODO: disable for noice
+        -- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
+        --     border = 'rounded',
+        -- })
+        -- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+        --     border = 'rounded',
+        -- })
 
         local opts = { noremap = true, silent = true }
         vim.api.nvim_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)

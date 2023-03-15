@@ -64,9 +64,6 @@ return {
             },
         })
 
-        -- Easy auto pairs
-        require('mini.pairs').setup()
-
         -- Sessions
         require('mini.sessions').setup()
 

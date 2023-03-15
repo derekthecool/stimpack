@@ -30,8 +30,8 @@ map('v', '>', '>gv')
 
 -- Eazy saving with zzzz
 -- Press zzz
-map('n', 'zzz', ':update<CR>')
-map('i', 'zzz', '<C-o>:update<CR><ESC>^')
+map('n', 'zzz', ':update<CR>', {silent = true})
+map('i', 'zzz', '<C-o>:update<CR><ESC>^', {silent = true})
 
 -- -- Permanent Very Magic Mode - Helps To Get PCRE Type Regex
 map('n', '/', '/\\v')
