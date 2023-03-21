@@ -134,7 +134,7 @@ local autosnippets = {
         fmt(
             [[
         = {{
-        {},
+        {}
         }}
         ]],
             {
