@@ -8,3 +8,12 @@ print(cmd)
 vim.api.nvim_command(cmd)
 
 vim.api.nvim_buf_add_highlight(0, 1, 'MyCoolHighlight', 2, 0, -1)
+
+-- List all available highlights
+local all_highlights = vim.fn.getcompletion('', 'highlight')
+
+for index, value in ipairs(all_highlights) do
+    if value:match('Telescope') then
+        print(value)
+    end
+end

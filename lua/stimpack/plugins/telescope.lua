@@ -21,7 +21,6 @@ return {
                     },
                 },
             },
-
             pickers = {
                 find_files = {
                     layout_strategy = layout_config,
@@ -64,7 +63,6 @@ return {
                     },
                 },
             },
-
             extensions = {
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown({}),
@@ -115,7 +113,6 @@ return {
         which_key_mapper({
             f = {
                 name = 'file', -- optional group name
-
                 -- Undocumented command that replaces the vim command Telescope... I looked through the telescope source code to find this
                 f = { require('telescope.command').load_command, 'Telescope' }, -- create a binding with label
                 -- f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
@@ -137,7 +134,6 @@ return {
                 },
                 m = { builtins.keymaps, 'List key maps' }, -- list keymaps
             },
-
             l = {
                 name = 'LSP',
                 -- A = { builtins.code_actions{}, "Telescope: code action" },

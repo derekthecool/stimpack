@@ -1,5 +1,6 @@
 return {
     'rafcamlet/nvim-luapad',
+    -- To jump to the printed preview window, use ^w w
     keys = { { '<leader>dV', '<cmd>lua require(\'luapad\').toggle()<CR>', desc = 'Luapad neovim interactive buffer' } },
     opts = {
         count_limit = 150000,
