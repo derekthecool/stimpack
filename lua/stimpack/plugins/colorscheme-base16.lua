@@ -1,4 +1,4 @@
 return {
-    'chriskempson/base16-vim',
+    'RRethy/nvim-base16',
     priority = 1000, --set high priority for colorscheme
 }
