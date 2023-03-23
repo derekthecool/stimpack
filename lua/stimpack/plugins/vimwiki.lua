@@ -25,7 +25,7 @@ return {
 
         -- Personal Wiki Setup
         local personal = {
-            path = OS.home .. '/.mywiki/personal/',
+            path = OS.join_path({OS.home, '.mywiki', 'personal'}),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
@@ -34,7 +34,7 @@ return {
 
         -- Work Wiki Setup
         local work = {
-            path = OS.home .. '/.mywiki/work/',
+            path = OS.join_path({OS.home, '.mywiki', 'work'}),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
