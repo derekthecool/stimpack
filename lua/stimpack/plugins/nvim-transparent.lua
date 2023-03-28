@@ -92,6 +92,13 @@ return {
             -- 'TelescopeSelection',
             -- 'TelescopeSelectionCaret',
             -- 'TelescopeTitle',
+
+            -- 'lualine_a_normal',
+            -- 'lualine_a_insert',
+            'lualine_b_normal',
+            'lualine_b_insert',
+            'lualine_c_normal',
+            'lualine_c_insert',
         },
         exclude_groups = {
             -- 'TelescopeBorder',

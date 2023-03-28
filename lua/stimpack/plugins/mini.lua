@@ -75,8 +75,6 @@ return {
         -- Use sr, sa, sd, to replace, add, and delete surrounds
         require('mini.surround').setup()
 
-        require('mini.tabline').setup()
-
         require('mini.trailspace').setup()
         vim.keymap.set('n', '<leader>mt', MiniTrailspace.trim, { silent = true, desc = 'MiniTrailspace.trim' })
         vim.keymap.set('n', '<leader>mT', MiniTrailspace.trim_last_lines, { silent = true, desc = 'MiniTrailspace.trim_last_lines' })

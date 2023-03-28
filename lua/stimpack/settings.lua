@@ -11,7 +11,6 @@ vim.opt.mouse = '' -- No mouse!!
 vim.o.conceallevel = 2
 vim.o.clipboard = 'unnamedplus' -- Copy paste between vim and everything else (for WSL clipboard usage see https://github.com/neovim/neovim/wiki/FAQ#how-to-use-the-windows-clipboard-from-wsl)
 vim.o.completeopt = 'menu,noselect,longest,menuone' -- Pop up menu settings
-vim.o.cursorline = true -- Highlight the line the cursor is currently on
 vim.o.hidden = true -- Required to keep multiple buffers open at once
 vim.o.ignorecase = true -- Ignore case when searching
 vim.o.inccommand = 'split' -- Watch live updates with search and replace
