@@ -362,7 +362,7 @@ local autosnippets = {
         { trig = 'DESCRIBE', descr = 'Plenary test group' },
         fmt(
             [[
-        describe('{}', function()
+        describe('{} --', function()
           {}
         end)
 

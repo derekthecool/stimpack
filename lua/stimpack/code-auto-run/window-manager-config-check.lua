@@ -1,4 +1,4 @@
-local autocommand_group = vim.api.nvim_create_augroup('code-auto-run', { clear = true })
+local autocommand_group = vim.api.nvim_create_augroup('awesome-window-manager-config-checker', { clear = true })
 
 -- Linux
 

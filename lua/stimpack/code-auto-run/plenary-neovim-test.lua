@@ -49,12 +49,13 @@ M.neovim_test = function()
             for _, line in ipairs(data) do
                 local possible_match = line:match(test_file_match_query)
                 if possible_match ~= nil then
-                    test_filename = possible_match
+                    test_filename = possible_match:gsub('\t', '')
                 end
 
                 local test_output = {}
                 test_output.result, test_output.test_group, test_output.test_name =
                     line:match('.-m(%w+)%c.-\t.-\t(.* --) (.*)\t')
+
                 if test_filename ~= nil then
                     test_output.filename = test_filename
                     test_output.buffer_number = vim.fn.getbufinfo(test_filename)
@@ -84,6 +85,11 @@ M.neovim_test = function()
 
         on_exit = function()
             local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
+
+            -- Uncomment for easy debugging
+            -- vim.notify(vim.inspect(test_names))
+            -- vim.notify(vim.inspect(output_list))
+
             for _, test_result in pairs(output_list) do
                 test_result['treesitter_details'] = test_names[test_result.test_name]
                 -- Make sure table is not empty first
