@@ -10,8 +10,7 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr =
-            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -125,9 +124,29 @@ local snippets = {
             }
         )
     ),
+
+    s(
+        'metaset',
+        fmt([[setmetatable({}, {})]], {
+            i(1, 'tableToSetMetaTableOn'),
+            i(2, 'metaTable'),
+        })
+    ),
 }
 
 local autosnippets = {
+
+    s(
+        'INCLUDE',
+        fmt(
+            [[
+        require('{}')
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
 
     s(
         'TABLE',
@@ -399,7 +418,7 @@ local autosnippets = {
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
@@ -602,7 +621,7 @@ local autosnippets = {
     ),
 
     s(
-    -- This node is not a real node. It is just easier to remember by calling it this.
+        -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[
