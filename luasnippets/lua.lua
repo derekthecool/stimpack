@@ -63,6 +63,16 @@ local snippets = {
     ),
 
     s(
+        'get current line',
+        fmt(
+            [[
+        vim.api.nvim_get_current_line()
+        ]],
+            {}
+        )
+    ),
+
+    s(
         'autocommand',
         fmt(
             [[
@@ -97,6 +107,24 @@ local snippets = {
     ),
 
     -- }}}
+
+    s(
+        'module',
+        fmt(
+            [[
+        local {} = {{}}
+
+        {}
+
+        return {}
+        ]],
+            {
+                i(1, 'M'),
+                i(2),
+                rep(1),
+            }
+        )
+    ),
 
     s(
         'plugin',
@@ -441,15 +469,43 @@ local autosnippets = {
     ),
 
     s(
-        { trig = 'TEST', descr = 'Single Plenary test' },
+        'TEST',
         fmt(
             [[
-        it('{}', function()
-            {}
-        end)
-    ]],
+            it('{}', function()
+                {}
+            end)
+            ]],
             {
-                i(1, 'Test name'),
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    s(
+        'ASSERT',
+        fmt(
+            [[
+        assert.{}({})
+        ]],
+            {
+                c(1, {
+                    t('are.same'),
+                    t('is.same'),
+                    t('are_not.equals'),
+                    t('are_not.equal'),
+                    t('is_not.equal'),
+                    t('truthy'),
+                    t('is.truthy'),
+                    t('True'),
+                    t('is_true'),
+                    t('falsy'),
+                    t('is.falsy'),
+                    t('has_error(function() end)'),
+                    t('has_no_errors(function() end)'),
+                    t('are.unique'),
+                }),
                 i(2),
             }
         )
@@ -460,10 +516,7 @@ local autosnippets = {
     -- Luasnip functions
 
     s(
-        {
-            trig = 'snip snip',
-            descr = 'New luasnip snippet starter',
-        },
+        'snip snip',
         fmt(
             [=[
       s(
@@ -664,10 +717,7 @@ local autosnippets = {
     ),
 
     s(
-        {
-            trig = 'choice node',
-            descr = 'insert a choice node',
-        },
+        'choice node',
         fmt(
             [[
       c({},
