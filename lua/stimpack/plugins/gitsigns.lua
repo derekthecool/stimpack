@@ -4,96 +4,94 @@ return {
     init = function()
         local which_key_mapper = require('stimpack.which-key-mapping')
         which_key_mapper({
-          g = {
-            name = 'git', -- optional group name
-            G = {
-              '<cmd>Gitsigns toggle_deleted<cr>',
-              'Gitsigns toggle display of deleted lines',
+            g = {
+                name = 'git', -- optional group name
+                G = {
+                    '<cmd>Gitsigns toggle_deleted<cr>',
+                    'Gitsigns toggle display of deleted lines',
+                },
+                B = {
+                    '<cmd>Gitsigns toggle_current_line_blame<cr>',
+                    'Gitsigns toggle display of deleted lines',
+                },
+                j = {
+                    '<cmd>lua require \'gitsigns\'.next_hunk()<cr>',
+                    'Next Hunk',
+                },
+                k = {
+                    '<cmd>lua require \'gitsigns\'.prev_hunk()<cr>',
+                    'Prev Hunk',
+                },
+                l = {
+                    '<cmd>lua require \'gitsigns\'.blame_line()<cr>',
+                    'Blame',
+                },
+                p = {
+                    '<cmd>lua require \'gitsigns\'.preview_hunk()<cr>',
+                    'Preview Hunk',
+                },
+                r = {
+                    '<cmd>lua require \'gitsigns\'.reset_hunk()<cr>',
+                    'Reset Hunk',
+                },
+                R = {
+                    '<cmd>lua require \'gitsigns\'.reset_buffer()<cr>',
+                    'Reset Buffer',
+                },
+                s = {
+                    '<cmd>lua require \'gitsigns\'.stage_hunk()<cr>',
+                    'Stage Hunk',
+                },
+                u = {
+                    '<cmd>lua require \'gitsigns\'.undo_stage_hunk()<cr>',
+                    'Undo Stage Hunk',
+                },
+                t = {
+                    '<cmd>Gitsigns diffthis HEAD<cr>',
+                    'Diff',
+                },
+                -- telescope
+                o = {
+                    '<cmd>Telescope git_status<cr>',
+                    'Telescope: Open changed file',
+                },
+                b = {
+                    '<cmd>Telescope git_branches<cr>',
+                    'Telescope: Checkout branch',
+                },
+                c = {
+                    '<cmd>Telescope git_commits<cr>',
+                    'Telescope: Checkout commit',
+                },
+                -- 'sindrets/diffview.nvim'
+                d = {
+                    '<cmd>lua require(\'diffview\').open()<cr>',
+                    'DiffViewOpen',
+                },
+                D = {
+                    '<cmd>lua require(\'diffview\').close()<cr>',
+                    'DiffViewClose',
+                },
             },
-            B = {
-              '<cmd>Gitsigns toggle_current_line_blame<cr>',
-              'Gitsigns toggle display of deleted lines',
-            },
-            j = {
-              '<cmd>lua require \'gitsigns\'.next_hunk()<cr>',
-              'Next Hunk',
-            },
-            k = {
-              '<cmd>lua require \'gitsigns\'.prev_hunk()<cr>',
-              'Prev Hunk',
-            },
-            l = {
-              '<cmd>lua require \'gitsigns\'.blame_line()<cr>',
-              'Blame',
-            },
-            p = {
-              '<cmd>lua require \'gitsigns\'.preview_hunk()<cr>',
-              'Preview Hunk',
-            },
-            r = {
-              '<cmd>lua require \'gitsigns\'.reset_hunk()<cr>',
-              'Reset Hunk',
-            },
-            R = {
-              '<cmd>lua require \'gitsigns\'.reset_buffer()<cr>',
-              'Reset Buffer',
-            },
-            s = {
-              '<cmd>lua require \'gitsigns\'.stage_hunk()<cr>',
-              'Stage Hunk',
-            },
-            u = {
-              '<cmd>lua require \'gitsigns\'.undo_stage_hunk()<cr>',
-              'Undo Stage Hunk',
-            },
-            t = {
-              '<cmd>Gitsigns diffthis HEAD<cr>',
-              'Diff',
-            },
-
-            -- telescope
-            o = {
-              '<cmd>Telescope git_status<cr>',
-              'Telescope: Open changed file',
-            },
-            b = {
-              '<cmd>Telescope git_branches<cr>',
-              'Telescope: Checkout branch',
-            },
-            c = {
-              '<cmd>Telescope git_commits<cr>',
-              'Telescope: Checkout commit',
-            },
-
-            -- 'sindrets/diffview.nvim'
-            d = {
-              '<cmd>lua require(\'diffview\').open()<cr>',
-              'DiffViewOpen',
-            },
-            D = {
-              '<cmd>lua require(\'diffview\').close()<cr>',
-              'DiffViewClose',
-            },
-          },
         })
     end,
     opts = {
         signs = {
             add = {
-                hl = 'GitSignsAdd',
+                hl = 'DevIconCsv',
                 text = Icons.git.gutterbar,
                 numhl = 'GitSignsAddNr',
                 linehl = 'GitSignsAddLn',
             },
             change = {
-                hl = 'GitSignsChange',
+                hl = 'DevIconAi',
                 text = Icons.git.gutterbar,
                 numhl = 'GitSignsChangeNr',
                 linehl = 'GitSignsChangeLn',
             },
             delete = {
-                hl = 'GitSignsDelete',
-                text = Icons.ui.arrowclosed4,
+                hl = 'DevIconJava',
+                text = Icons.git.gutterbar,
                 numhl = 'GitSignsDeleteNr',
                 linehl = 'GitSignsDeleteLn',
             },

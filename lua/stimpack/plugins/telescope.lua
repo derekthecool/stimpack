@@ -123,6 +123,7 @@ return {
                 g = { builtins.live_grep, 'Live grep' }, -- search locally with live grep (uses ripgrep in the background)
                 s = { builtins.grep_string, 'Grep string under cursor' },
                 h = { builtins.help_tags, 'Help Search' },
+                H = { builtins.highlights, 'Highlights' },
                 c = { builtins.command_history, 'Command history' },
                 z = { builtins.current_buffer_fuzzy_find, 'Current buffer fuzzy find' },
                 S = { builtins.git_status, 'Search git changed files' },
