@@ -63,6 +63,20 @@ local snippets = {
     ),
 
     s(
+        'nvimget cursor',
+        fmt([[vim.api.nvim_win_get_cursor({})]], {
+            i(1, '0'),
+        })
+    ),
+    s(
+        'nvimset cursor',
+        fmt([[vim.api.nvim_win_set_cursor({}, {})]], {
+            i(1, '0'),
+            i(1, 'location tuple {line, column}'),
+        })
+    ),
+
+    s(
         'get current line',
         fmt(
             [[
