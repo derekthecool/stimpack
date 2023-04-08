@@ -1,7 +1,5 @@
 local M = {}
 
--- TODO: decide if I should use lualine for winbar https://github.com/nvim-lualine/lualine.nvim#winbar
-
 MacroWinbarIdentifier = ''
 
 local function join_status_line(input, highlight, item)
@@ -22,6 +20,11 @@ function M.eval()
 
     if not MacroWinbarIdentifier then
         MacroWinbarIdentifier = ''
+    end
+
+    if MacroWinbarIdentifier == nil or MacroWinbarIdentifier == '' then
+        vim.api.nvim_set_hl(0, 'WinBar', { fg = '#7d14ff' })
+        vim.api.nvim_set_hl(0, 'WinBarNC', { link = 'Normal' })
     end
 
     if modified == '' then
