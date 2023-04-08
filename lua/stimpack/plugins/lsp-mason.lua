@@ -65,133 +65,64 @@ return {
         })
 
         -- Help with neovim development
-        -- require('neodev').setup()
+        require('neodev').setup()
 
         -- Auto setup all LSPs
         require('mason-lspconfig').setup_handlers({
             function(server_name) -- default handler (optional)
                 if server_name == 'lua_ls' then
                     require('lspconfig')[server_name].setup({
-                        -- Lua = {
-                        --     workspace = { checkThirdParty = false },
-                        --     telemetry = { enable = false },
-                        -- },
-
-                        Lua = {
-                            runtime = {
-                                -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                                version = 'LuaJIT',
-                            },
-                            diagnostics = {
-                                -- Get the language server to recognize the `vim` global
-                                globals = { 'vim', 'use', 'it', 'describe' },
-                                -- globals = { 'vim' },
-                            },
-                            workspace = {
-                                -- Make the server aware of Neovim runtime files
-                                library = {
-                                    vim.api.nvim_get_runtime_file('', true),
-                                    -- Add awesome WM libraries
-                                    '/usr/share/awesome/lib/awful/',
-                                    '/usr/share/awesome/lib/beautiful/',
-                                    '/usr/share/awesome/lib/gears/',
-                                    '/usr/share/awesome/lib/menubar/',
-                                    '/usr/share/awesome/lib/naughty/',
-                                    '/usr/share/awesome/lib/wibox/',
+                        settings = {
+                            Lua = {
+                                runtime = {
+                                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
+                                    version = 'LuaJIT',
                                 },
-                                [vim.fn.stdpath('config') .. '/lua'] = true,
-                            },
-                            -- Do not send telemetry data containing a randomized but unique identifier
-                            telemetry = {
-                                enable = false,
+                                diagnostics = {
+                                    -- Get the language server to recognize the `vim` global
+                                    globals = { 'vim', 'use', 'it', 'describe' },
+                                },
+                                completion = {
+                                    callSnippet = 'Replace',
+                                },
+                                workspace = {
+                                    -- Make the server aware of Neovim runtime files
+                                    library = {
+                                        vim.api.nvim_get_runtime_file('', true),
+                                        -- Add awesome WM libraries
+                                        '/usr/share/awesome/lib/awful/',
+                                        '/usr/share/awesome/lib/beautiful/',
+                                        '/usr/share/awesome/lib/gears/',
+                                        '/usr/share/awesome/lib/menubar/',
+                                        '/usr/share/awesome/lib/naughty/',
+                                        '/usr/share/awesome/lib/wibox/',
+                                    },
+                                    [vim.fn.stdpath('config') .. '/lua'] = true,
+                                },
+                                -- Do not send telemetry data containing a randomized but unique identifier
+                                telemetry = {
+                                    enable = false,
+                                },
                             },
                         },
                     })
-
-                    require('neodev').setup()
                 else
                     require('lspconfig')[server_name].setup({})
                 end
             end,
-
-            -- TODO: commenting this out seems best for now. After sumneko_lua was deprecated and I named to lua_ls to get rid of warnings is stopped working
-            -- ['lua_ls'] = function()
-            --     require('neodev').setup()
-            --     require('lspconfig')['lua_ls'].setup({
-            --         settings = {
-            --             Lua = {
-            --                 runtime = {
-            --                     -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-            --                     version = 'LuaJIT',
-            --                 },
-            --                 diagnostics = {
-            --                     -- Get the language server to recognize the `vim` global
-            --                     globals = { 'vim', 'use', 'it', 'describe' },
-            --                     -- globals = { 'vim' },
-            --                 },
-            --                 workspace = {
-            --                     -- Make the server aware of Neovim runtime files
-            --                     library = {
-            --                         vim.api.nvim_get_runtime_file('', true),
-            --                         -- Add awesome WM libraries
-            --                         '/usr/share/awesome/lib/awful/',
-            --                         '/usr/share/awesome/lib/beautiful/',
-            --                         '/usr/share/awesome/lib/gears/',
-            --                         '/usr/share/awesome/lib/menubar/',
-            --                         '/usr/share/awesome/lib/naughty/',
-            --                         '/usr/share/awesome/lib/wibox/',
-            --                     },
-            --                     [vim.fn.stdpath('config') .. '/lua'] = true,
-            --                 },
-            --                 -- Do not send telemetry data containing a randomized but unique identifier
-            --                 telemetry = {
-            --                     enable = false,
-            --                 },
-            --             },
-            --         },
-            --     })
-            -- end,
         })
 
         -- Third load lspconfig
         require('lspconfig')
         local signs = {
             { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-            { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
-            { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
-            { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
+            { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
+            { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
+            { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
         }
 
         for _, sign in ipairs(signs) do
             vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
         end
-
-        -- local config = {
-        --     -- virtual_text = true,
-        --     -- show signs
-        --     signs = {
-        --         active = signs,
-        --     },
-        --     update_in_insert = true,
-        --     underline = true,
-        --     severity_sort = true,
-        --     float = {
-        --         focusable = false,
-        --         style = 'minimal',
-        --         border = 'rounded',
-        --         source = 'always',
-        --         header = '',
-        --         prefix = '',
-        --     },
-        -- }
-        --
-        -- vim.diagnostic.config(config)
-        -- vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
-        --     border = 'rounded',
-        -- })
-        --
-        -- vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-        --     border = 'rounded',
-        -- })
     end,
 }
