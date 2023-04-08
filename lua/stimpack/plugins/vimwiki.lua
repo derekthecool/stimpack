@@ -12,20 +12,21 @@ return {
         'godlygeek/tabular',
     },
     config = function()
-        -- Autocommand to trigger diary template.
-        -- TODO: find a way to fully trigger the snippet
+        vim.filetype.add({ pattern = { ['*.md'] = 'vimwiki' } })
+
+        -- Autocommand to trigger diary template using plugin template.nvim
         local VimwikiSettingsGroup = vim.api.nvim_create_augroup('Vimwiki snippets', { clear = true })
         vim.api.nvim_create_autocmd('BufNewFile', {
             pattern = '*/diary/*.md',
             callback = function()
-                vim.api.nvim_feedkeys('ivimwikiDiaryStarter', 'nti', false)
+                vim.cmd([[Template vimwiki_diary_starter]])
             end,
             group = VimwikiSettingsGroup,
         })
 
         -- Personal Wiki Setup
         local personal = {
-            path = OS.join_path({OS.home, '.mywiki', 'personal'}),
+            path = OS.join_path({ OS.home, '.mywiki', 'personal' }),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
@@ -34,7 +35,7 @@ return {
 
         -- Work Wiki Setup
         local work = {
-            path = OS.join_path({OS.home, '.mywiki', 'work'}),
+            path = OS.join_path({ OS.home, '.mywiki', 'work' }),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
@@ -60,7 +61,6 @@ return {
                     'Search my wiki',
                 },
             },
-
             v = {
                 name = 'vimwiki',
                 D = {
@@ -69,7 +69,24 @@ return {
                 },
                 d = { '<cmd>VimwikiDiaryPrevDay<cr>', 'Diary previous day' },
                 h = { '<cmd>VimwikiSplitLink<cr>', 'Follow Link Horizontal' },
-                l = { '<cmd>VimwikiToggleListItem<cr>', 'Toggle list item' },
+                l = {
+                    -- Vimwiki function VimwikiToggleListItem is limiting
+                    -- These series of commands make it easier for me to use
+                    function()
+                        local currentLine = vim.api.nvim_get_current_line()
+                        local match = currentLine:match('- %[.%]')
+                        if not match or match == '' then
+                            vim.cmd('/- \\[.\\]')
+                            vim.cmd('nohlsearch')
+                        end
+
+                        vim.cmd('VimwikiToggleListItem')
+                        local cursor = vim.api.nvim_win_get_cursor(0)
+                        cursor[1] = cursor[1] + 1
+                        vim.api.nvim_win_set_cursor(0, cursor)
+                    end,
+                    'Toggle list item',
+                },
                 ['/'] = { '<cmd>VimwikiSearch<cr>', 'Vimwiki Search' },
                 j = { '<cmd>lnext<cr>', 'Next search result' },
                 k = { '<cmd>lprevious<cr>', 'Previous search result' },
