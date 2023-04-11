@@ -18,7 +18,7 @@ return {
                 lualine_c = { 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
                 -- Color does not work for globals
                 -- lualine_c = { 'TapeyTape', color = 'WarningMsg' },
-                lualine_x = { 'filesize', 'encoding', 'fileformat', 'filetype' },
+                lualine_x = { '%S', 'filesize', 'encoding', 'fileformat', 'filetype' },
                 lualine_y = { 'progress', 'WatchFileJumpToEnd' },
                 lualine_z = { 'location' },
             },
