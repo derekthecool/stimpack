@@ -17,4 +17,7 @@ require('stimpack.mappings')
 require('stimpack.visualsettings')
 require('stimpack.code-auto-run')
 require('stimpack.file-watcher')
-require('stimpack.internal-mini-plugins')
+
+-- Personal boosters e.g. mini plugins that are to narrow scoped to create into full plugins
+-- See ./lua/stimpack/boosters/init.lua for all the boosters
+require('stimpack.boosters')
