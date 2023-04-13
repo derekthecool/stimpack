@@ -107,6 +107,12 @@ return {
                 numhl = 'GitSignsChangeNr',
                 linehl = 'GitSignsChangeLn',
             },
+            untracked = {
+                hl = 'DevIconToml',
+                text = Icons.git.gutterbar_dashed,
+                numhl = 'GitSignsChangeNr',
+                linehl = 'GitSignsChangeLn',
+            },
         },
         signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
         numhl = false, -- Toggle with `:Gitsigns toggle_numhl`

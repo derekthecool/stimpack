@@ -80,6 +80,7 @@ Icons = {
         repo = '',
         octoface = '',
         gutterbar = '▎',
+        gutterbar_dashed = '┆',
     },
 
     ui = {
