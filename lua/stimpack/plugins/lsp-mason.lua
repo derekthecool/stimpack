@@ -70,42 +70,13 @@ return {
         -- Auto setup all LSPs
         require('mason-lspconfig').setup_handlers({
             function(server_name) -- default handler (optional)
-                if server_name == 'lua_ls' then
-                    require('lspconfig')[server_name].setup({
-                        settings = {
-                            Lua = {
-                                runtime = {
-                                    -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
-                                    version = 'LuaJIT',
-                                },
-                                diagnostics = {
-                                    -- Get the language server to recognize the `vim` global
-                                    globals = { 'vim', 'use', 'it', 'describe' },
-                                },
-                                completion = {
-                                    callSnippet = 'Replace',
-                                },
-                                workspace = {
-                                    -- Make the server aware of Neovim runtime files
-                                    library = {
-                                        vim.api.nvim_get_runtime_file('', true),
-                                        -- Add awesome WM libraries
-                                        '/usr/share/awesome/lib/awful/',
-                                        '/usr/share/awesome/lib/beautiful/',
-                                        '/usr/share/awesome/lib/gears/',
-                                        '/usr/share/awesome/lib/menubar/',
-                                        '/usr/share/awesome/lib/naughty/',
-                                        '/usr/share/awesome/lib/wibox/',
-                                    },
-                                    [vim.fn.stdpath('config') .. '/lua'] = true,
-                                },
-                                -- Do not send telemetry data containing a randomized but unique identifier
-                                telemetry = {
-                                    enable = false,
-                                },
-                            },
-                        },
-                    })
+                local localConfigurationFound, localConfiguration =
+                    pcall(require, string.format('stimpack.lsp.%s', server_name))
+
+                -- Start LSP with my local configuration settings from lua/stimpack/lsp/*
+                -- Else start LSP with default settings if not found
+                if localConfigurationFound then
+                    require('lspconfig')[server_name].setup(localConfiguration)
                 else
                     require('lspconfig')[server_name].setup({})
                 end
