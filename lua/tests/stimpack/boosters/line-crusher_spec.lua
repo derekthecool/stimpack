@@ -18,9 +18,30 @@ describe('Stimpack line-crusher --', function()
         print(string.format('Adding: %s to neovim runtimepath because plenary tests fail without this', path_to_plugin))
     end)
 
+    local crush = require('stimpack.boosters.line-crusher')
+
     it('Require the file', function()
         assert.has_no_errors(function()
             require('stimpack.boosters.line-crusher')
+        end)
+    end)
+
+    it('crush_current_line text should remain unchanged', function()
+        -- Create new temp file
+
+        -- Set text width to 80 chars
+
+        -- Set exactly 80 chars of text
+
+        -- Run crush_current_line
+
+        -- Verify that file still only has one line
+
+        -- Optionally check that contents are the same as well
+
+        -- Dummy test for now
+        assert.has_no_errors(function()
+            crush.crush_current_line()
         end)
     end)
 end)

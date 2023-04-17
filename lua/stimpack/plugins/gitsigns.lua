@@ -1,7 +1,7 @@
 return {
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
-    init = function()
+    config = function()
         local which_key_mapper = require('stimpack.which-key-mapping')
         which_key_mapper({
             g = {
@@ -74,80 +74,83 @@ return {
                 },
             },
         })
+
+        require('gitsigns').setup({
+            signs = {
+                add = {
+                    hl = 'DevIconCsv',
+                    text = Icons.git.gutterbar,
+                    numhl = 'GitSignsAddNr',
+                    linehl = 'GitSignsAddLn',
+                },
+                change = {
+                    hl = 'DevIconAi',
+                    text = Icons.git.gutterbar,
+                    numhl = 'GitSignsChangeNr',
+                    linehl = 'GitSignsChangeLn',
+                },
+                delete = {
+                    hl = 'DevIconJava',
+                    text = Icons.git.gutterbar,
+                    numhl = 'GitSignsDeleteNr',
+                    linehl = 'GitSignsDeleteLn',
+                },
+                topdelete = {
+                    hl = 'GitSignsDelete',
+                    text = Icons.ui.arrowclosed4,
+                    numhl = 'GitSignsDeleteNr',
+                    linehl = 'GitSignsDeleteLn',
+                },
+                changedelete = {
+                    hl = 'GitSignsChange',
+                    text = Icons.git.gutterbar,
+                    numhl = 'GitSignsChangeNr',
+                    linehl = 'GitSignsChangeLn',
+                },
+                untracked = {
+                    hl = 'DevIconToml',
+                    text = Icons.git.gutterbar_dashed,
+                    numhl = 'GitSignsChangeNr',
+                    linehl = 'GitSignsChangeLn',
+                },
+            },
+            signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
+            numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
+            linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+            word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
+            watch_gitdir = {
+                interval = 1000,
+                follow_files = true,
+            },
+            attach_to_untracked = true,
+            current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+            current_line_blame_opts = {
+                virt_text = true,
+                virt_text_pos = 'eol', -- 'overlay':replaces your text... rude! | 'right_align': right align is so far over I can't read it
+                delay = 10000,
+                ignore_whitespace = true,
+            },
+            current_line_blame_formatter_opts = {
+                relative_time = true,
+            },
+            sign_priority = 6,
+            update_debounce = 100,
+            status_formatter = nil, -- Use default
+            max_file_length = 40000,
+            show_deleted = false,
+            preview_config = {
+                -- Options passed to nvim_open_win
+                border = 'single',
+                style = 'minimal',
+                relative = 'cursor',
+                row = 0,
+                col = 1,
+            },
+            yadm = {
+                enable = false,
+            },
+        })
+
+        vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', {  fg = '#553355' })
     end,
-    opts = {
-        signs = {
-            add = {
-                hl = 'DevIconCsv',
-                text = Icons.git.gutterbar,
-                numhl = 'GitSignsAddNr',
-                linehl = 'GitSignsAddLn',
-            },
-            change = {
-                hl = 'DevIconAi',
-                text = Icons.git.gutterbar,
-                numhl = 'GitSignsChangeNr',
-                linehl = 'GitSignsChangeLn',
-            },
-            delete = {
-                hl = 'DevIconJava',
-                text = Icons.git.gutterbar,
-                numhl = 'GitSignsDeleteNr',
-                linehl = 'GitSignsDeleteLn',
-            },
-            topdelete = {
-                hl = 'GitSignsDelete',
-                text = Icons.ui.arrowclosed4,
-                numhl = 'GitSignsDeleteNr',
-                linehl = 'GitSignsDeleteLn',
-            },
-            changedelete = {
-                hl = 'GitSignsChange',
-                text = Icons.git.gutterbar,
-                numhl = 'GitSignsChangeNr',
-                linehl = 'GitSignsChangeLn',
-            },
-            untracked = {
-                hl = 'DevIconToml',
-                text = Icons.git.gutterbar_dashed,
-                numhl = 'GitSignsChangeNr',
-                linehl = 'GitSignsChangeLn',
-            },
-        },
-        signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-        numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-        linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
-        word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
-        watch_gitdir = {
-            interval = 1000,
-            follow_files = true,
-        },
-        attach_to_untracked = true,
-        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
-        current_line_blame_opts = {
-            virt_text = true,
-            virt_text_pos = 'eol', -- 'overlay':replaces your text... rude! | 'right_align': right align is so far over I can't read it
-            delay = 10000,
-            ignore_whitespace = true,
-        },
-        current_line_blame_formatter_opts = {
-            relative_time = true,
-        },
-        sign_priority = 6,
-        update_debounce = 100,
-        status_formatter = nil, -- Use default
-        max_file_length = 40000,
-        show_deleted = false,
-        preview_config = {
-            -- Options passed to nvim_open_win
-            border = 'single',
-            style = 'minimal',
-            relative = 'cursor',
-            row = 0,
-            col = 1,
-        },
-        yadm = {
-            enable = false,
-        },
-    },
 }
