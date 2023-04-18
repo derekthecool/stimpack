@@ -15,4 +15,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Load plugin manager
-require('lazy').setup('stimpack.plugins')
+require('lazy').setup('stimpack.plugins', {
+    change_detection = { enabled = false },
+    checker = {
+        enabled = true,
+        concurrency = 4,
+        notify = false,
+        frequency = 3600 * 5, -- In seconds
+    },
+    install = {
+        missing = true,
+        colorscheme = { 'base16-atelier-sulphurpool', 'habamax' },
+    },
+})

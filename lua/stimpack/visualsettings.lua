@@ -1,9 +1,5 @@
 -- Visual settings
 vim.o.termguicolors = true -- Needed for better color display
--- vim.wo.cursorcolumn = true
--- vim.o.cursorline = true -- Highlight the line the cursor is currently on
--- vim.wo.colorcolumn = '80' -- Display color column at 80 characters
--- vim.o.showtabline = 2 -- Always show tabline. Needed for mini.nvim tabline
 vim.o.cmdheight = 1
 vim.opt.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
 
@@ -13,6 +9,7 @@ vim.go.listchars = 'trail:·,precedes:«,extends:»,tab:▸\\ ' -- specify chars
 vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:,eob:▎'
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'ColorColumn', { fg = '#750495'})
 
 -- Set highlight for mini.nvim trailspace
 vim.api.nvim_set_hl(0, 'MiniTrailspace', { bg = '#4a50fa', fg = '#000000' })
