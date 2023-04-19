@@ -60,7 +60,26 @@ return {
 
         -- Second load mason-lspconfig
         require('mason-lspconfig').setup({
-            ensure_installed = { 'lua_ls' },
+            ensure_installed = {
+                -- C programming
+                'clangd',
+                'cmake',
+
+                -- Lua programming
+                'lua_ls',
+
+                -- C# programming
+                'csharp_ls',
+
+                -- Json
+                'jsonls',
+
+                -- Powershell
+                'powershell_es',
+
+                -- Python
+                'pylsp',
+            },
             -- automatic_installation = true, -- This one sounds good but it really means it will auto install any lsp for a file with variable lsp.
         })
 

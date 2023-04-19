@@ -96,13 +96,13 @@ return {
                     linehl = 'GitSignsDeleteLn',
                 },
                 topdelete = {
-                    hl = 'GitSignsDelete',
+                    hl = 'DevIconPackageLockJson',
                     text = Icons.ui.arrowclosed4,
                     numhl = 'GitSignsDeleteNr',
                     linehl = 'GitSignsDeleteLn',
                 },
                 changedelete = {
-                    hl = 'GitSignsChange',
+                    hl = 'DevIconCs',
                     text = Icons.git.gutterbar,
                     numhl = 'GitSignsChangeNr',
                     linehl = 'GitSignsChangeLn',

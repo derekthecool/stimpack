@@ -190,16 +190,30 @@ local autosnippets = {
         )
     ),
 
+    -- TODO: possible enhancement check if inside lua table with treesitter field table_constructor
     s(
         'TABLE',
         fmt(
             [[
         = {{
-        {}
+            {}
         }}
         ]],
             {
                 i(1),
+            }
+        )
+    ),
+
+    s(
+        'KEY',
+        fmt(
+            [[
+        {} = {},
+        ]],
+            {
+                i(1, 'key'),
+                i(2, 'value'),
             }
         )
     ),
