@@ -67,10 +67,9 @@ end
 my_treesitter_functions.lua = {
     get_recent_var = function()
         local language = 'lua'
-        local query_recent_var_lua = vim.treesitter.parse_query(language, '(variable_list) @lua_variable')
+        local query_recent_var_lua = vim.treesitter.query.parse(language, '(variable_list) @lua_variable')
         return get_recent_var_from_node(query_recent_var_lua, language)
     end,
-
     get_test_function_names = function()
         local language = 'lua'
 
@@ -79,7 +78,7 @@ my_treesitter_functions.lua = {
 
         -- Better version to get the test name (location comes with it as well)
         -- ((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))
-        local get_test_function_names_query = vim.treesitter.parse_query(
+        local get_test_function_names_query = vim.treesitter.query.parse(
             language,
             '((function_call name: (identifier) @test_function_name (#eq? @test_function_name "it") arguments: (arguments (string)@test_name)))'
         )
@@ -102,14 +101,13 @@ my_treesitter_functions.cs = {
     get_recent_var = function()
         local language = 'c_sharp'
         local query_recent_var_cs =
-        vim.treesitter.parse_query(language, '(variable_declarator (identifier) @cs_variable)')
+            vim.treesitter.query.parse(language, '(variable_declarator (identifier) @cs_variable)')
         local variable = get_recent_var_from_node(query_recent_var_cs, language)
         return variable
     end,
-
     get_test_function_names = function()
         local language = 'c_sharp'
-        local functions = vim.treesitter.parse_query(
+        local functions = vim.treesitter.query.parse(
             language,
             '((method_declaration (attribute_list (attribute name: (identifier) @xUnitTest (#match? @xUnitTest "(Fact|Theory)"))) name: (identifier) @xUnitTestMethodName))'
         )
@@ -117,10 +115,9 @@ my_treesitter_functions.cs = {
 
         return function_list
     end,
-
     get_class_name = function()
         local language = 'c_sharp'
-        local class_query = vim.treesitter.parse_query(
+        local class_query = vim.treesitter.query.parse(
             language,
             '(class_declaration (modifier) @public_private name: (identifier) @class_name)'
         )
@@ -145,7 +142,7 @@ my_treesitter_functions.cs = {
 my_treesitter_functions.c = {
     get_recent_var = function()
         local language = 'c'
-        local query_recent_var_c = vim.treesitter.parse_query(
+        local query_recent_var_c = vim.treesitter.query.parse(
             language,
             'declarator: (init_declarator declarator: (identifier) @non_array) declarator: (array_declarator declarator: (identifier) @array)'
         )
@@ -158,7 +155,7 @@ my_treesitter_functions.bash = {
     get_recent_var = function()
         local language = 'bash'
         local query_recent_var_bash =
-        vim.treesitter.parse_query(language, '(variable_assignment name: (variable_name) @bash_variable)')
+            vim.treesitter.query.parse(language, '(variable_assignment name: (variable_name) @bash_variable)')
         local variable = get_recent_var_from_node(query_recent_var_bash, language)
         return variable
     end,
