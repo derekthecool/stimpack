@@ -56,7 +56,6 @@ M.dotnet_test = function()
                 end
             end
         end,
-
         on_exit = function(_, exit_code)
             if exit_code ~= 0 then
                 vim.notify(

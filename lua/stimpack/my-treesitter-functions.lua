@@ -1,5 +1,16 @@
 local my_treesitter_functions = {}
 
+vim.keymap.set('n', '<leader><leader>ab', function()
+    package.loaded['stimpack.my-treesitter-functions'] = nil
+    require('stimpack.my-treesitter-functions')
+end, { desc = 'Reload my-treesitter-functions' })
+
+-- Keep a hotkey mapping for my current function under test here
+local functionName = 'current_location_is_in_lua_table'
+vim.keymap.set('n', '<leader><leader>ui', function()
+    my_treesitter_functions.lua[functionName]()
+end, { desc = string.format('Run TS function: %s', functionName) })
+
 local get_root = function(bufnr, language)
     local parser = vim.treesitter.get_parser(bufnr, language, {})
     local tree = parser:parse()[1]
@@ -64,6 +75,71 @@ local function get_recent_var_from_node(query, language)
     return variable_name
 end
 
+--- Return table of nodes until parent node is found
+---@param node TSNode
+---@return TSNode | nil
+my_treesitter_functions.find_chain_to_parent_node = function(node)
+    local nodes = {}
+
+    local root_parent_found = false
+    while root_parent_found == false and node ~= nil do
+        getmetatable(node)
+        if node.parent ~= nil then
+            local next_parent = node:parent()
+            if next_parent then
+                node = next_parent
+                -- V(node:type())
+                table.insert(nodes, node)
+            else
+                root_parent_found = true
+                -- V('Root node of parent found')
+            end
+        end
+    end
+
+    return nodes
+end
+
+--- Find parent node not to be confused with the total root node
+---@param node TSNode
+---@return TSNode | nil
+my_treesitter_functions.find_parent_node = function(node)
+    local root_parent_found = false
+    while root_parent_found == false and node ~= nil do
+        getmetatable(node)
+        if node.parent ~= nil then
+            local next_parent = node:parent()
+            if next_parent then
+                node = next_parent
+                V(node:type())
+            else
+                root_parent_found = true
+                V('Root node of parent found')
+            end
+        end
+    end
+
+    return node
+end
+
+--- Check if node contains child of certain type
+---@param node TSNode
+---@param type string
+---@return boolean
+my_treesitter_functions.does_node_contain_child = function(node, type)
+    local match = false
+    if node ~= nil and type ~= nil then
+        for child, field in node:iter_children() do
+            V(child, field)
+            if field == child:type() then
+                match = true
+            end
+        end
+    end
+
+    return match
+end
+
 my_treesitter_functions.lua = {
     get_recent_var = function()
         local language = 'lua'
@@ -95,6 +171,50 @@ my_treesitter_functions.lua = {
         -- return final_output
         return output
     end,
+    ---@return boolean
+    current_location_is_in_lua_table = function()
+        local language = 'lua'
+        -- local inside_table_query = vim.treesitter.query.parse(language, '(variable_list) @lua_variable')
+        -- local node_at_cursor = vim.treesitter.get_node_at_cursor(winnr)
+        local node_at_cursor = vim.treesitter.get_node()
+
+        -- V(node_at_cursor:parent():type())
+        -- V(node_at_cursor:parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+
+        -- local parent = my_treesitter_functions.find_parent_node(node_at_cursor)
+        local parent_node_chain = my_treesitter_functions.find_chain_to_parent_node(node_at_cursor)
+
+        local inTable = false
+        for k, v in ipairs(parent_node_chain) do
+            if v:type() == 'table_constructor' then
+                inTable = true
+            end
+        end
+
+        V(string.format('Currently inside lua table: %s', tostring(inTable)))
+
+        return inTable
+    end,
+}
+
+local function test()
+    print(1)
+end
+
+local table = {
+    first = 1,
 }
 
 my_treesitter_functions.cs = {
