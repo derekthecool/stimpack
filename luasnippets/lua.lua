@@ -192,6 +192,21 @@ local autosnippets = {
 
     -- TODO: possible enhancement check if inside lua table with treesitter field table_constructor
     s(
+        'have',
+        fmt([[{} = {}{}]], {
+            i(1, 'variable'),
+            i(2, 'true'),
+            f(function(args, snip)
+                returnString = ''
+
+                if require('stimpack.my-treesitter-functions').lua.current_location_is_in_lua_table() then
+                    returnString = ','
+                end
+            end, {}),
+        })
+    ),
+
+    s(
         'TABLE',
         fmt(
             [[

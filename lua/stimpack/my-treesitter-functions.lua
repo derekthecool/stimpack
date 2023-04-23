@@ -83,7 +83,6 @@ my_treesitter_functions.find_chain_to_parent_node = function(node)
 
     local root_parent_found = false
     while root_parent_found == false and node ~= nil do
-        getmetatable(node)
         if node.parent ~= nil then
             local next_parent = node:parent()
             if next_parent then
@@ -106,15 +105,14 @@ end
 my_treesitter_functions.find_parent_node = function(node)
     local root_parent_found = false
     while root_parent_found == false and node ~= nil do
-        getmetatable(node)
         if node.parent ~= nil then
             local next_parent = node:parent()
             if next_parent then
                 node = next_parent
-                V(node:type())
+                -- V(node:type())
             else
                 root_parent_found = true
-                V('Root node of parent found')
+                -- V('Root node of parent found')
             end
         end
     end
@@ -174,38 +172,67 @@ my_treesitter_functions.lua = {
     ---@return boolean
     current_location_is_in_lua_table = function()
         local language = 'lua'
-        -- local inside_table_query = vim.treesitter.query.parse(language, '(variable_list) @lua_variable')
-        -- local node_at_cursor = vim.treesitter.get_node_at_cursor(winnr)
         local node_at_cursor = vim.treesitter.get_node()
 
-        -- V(node_at_cursor:parent():type())
-        -- V(node_at_cursor:parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
-        -- V(node_at_cursor:parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():parent():type())
+        local self = node_at_cursor:type()
+        local parent = node_at_cursor:parent():type()
+        local grandparent = node_at_cursor:parent():parent():type()
 
-        -- local parent = my_treesitter_functions.find_parent_node(node_at_cursor)
-        local parent_node_chain = my_treesitter_functions.find_chain_to_parent_node(node_at_cursor)
+        local nodes = {
+            self = self,
+            parent = parent,
+            grandparent = grandparent,
+            zreturnValue = inTable,
+        }
+        V(nodes)
 
         local inTable = false
-        for k, v in ipairs(parent_node_chain) do
-            if v:type() == 'table_constructor' then
-                inTable = true
-            end
+        -- if self == 'identifier' and parent == 'field' then
+        --     if grandparent == 'table_constructor' then
+        --         inTable = true
+        --     end
+        -- elseif parent == 'table_constructor' then
+        --     inTable = true
+        -- elseif self == 'table_constructor' then
+        --     inTable = true
+        -- end
+        if self == 'table_constructor' or parent == 'table_constructor' or grandparent == 'table_constructor' then
+            inTable = true
         end
 
-        V(string.format('Currently inside lua table: %s', tostring(inTable)))
-
+        local parent_node_chain = my_treesitter_functions.find_chain_to_parent_node(node_at_cursor)
+        local parent_node_chain_types = {}
+        for key, value in ipairs(parent_node_chain) do
+            table.insert(parent_node_chain_types, value:type())
+        end
+        V(parent_node_chain_types)
         return inTable
+
+        -- return node_at_cursor:type() == 'table_constructor'
+
+        -- local parent_node = my_treesitter_functions.find_parent_node(node_at_cursor)
+        --
+        -- local checker = {
+        --     first = {},
+        --     second = {},
+        -- }
+        -- local inTable = false
+        -- for k, v in ipairs(parent_node_chain) do
+        --     table.insert(checker.first, v:type())
+        --     if v:type() == 'table_constructor' then
+        --         inTable = true
+        --     end
+        -- end
+        --
+        -- V(parent_node)
+        -- for node, node_type in parent_node:iter_children() do
+        --     table.insert(checker.second, node:type())
+        -- end
+        --
+        -- V(string.format('Currently inside lua table: %s', tostring(inTable)))
+        -- V(checker)
+        --
+        -- return inTable
     end,
 }
 
@@ -215,6 +242,13 @@ end
 
 local table = {
     first = 1,
+    second = function()
+        print(1)
+    end,
+    third = bool,
+    forth = {
+        inner = 1,
+    },
 }
 
 my_treesitter_functions.cs = {
