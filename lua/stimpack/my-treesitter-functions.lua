@@ -126,6 +126,7 @@ my_treesitter_functions.lua = {
         local output = get_test_function_names(get_test_function_names_query, language, '.*_spec%.lua', 'test_name')
         return output
     end,
+    --- Function to check if cursor is in lua table
     ---@return boolean
     current_location_is_in_lua_table = function()
         local node_at_cursor = vim.treesitter.get_node()
@@ -141,6 +142,7 @@ my_treesitter_functions.lua = {
 
             table.insert(table3, value:type())
 
+            -- If node within range is a table_constructor, cursor is in a lua table
             if value:type() == 'table_constructor' then
                 inTable = true
             end
@@ -171,6 +173,19 @@ local table = {
         print(1)
         local test = 4
     end,
+    great = 12346,
+    test = true,
+    have = 1,
+    tight = true,
+    test = true,
+    bylaw = true,
+    my = {
+        tang = {
+            also = {
+                will = false,
+            },
+        },
+    },
     third = bool,
     forth = {
         inner = 1,
