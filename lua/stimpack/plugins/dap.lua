@@ -67,8 +67,8 @@ return {
 
         -- Set global variables to help with path locations
         Mason = {}
-        Mason.bin = OS.join_path({ vim.fn.stdpath('data'), 'mason', 'bin' })
-        Mason.packages = OS.join_path({ vim.fn.stdpath('data'), 'mason', 'packages' })
+        Mason.bin = OS.join_path( vim.fn.stdpath('data'), 'mason', 'bin' )
+        Mason.packages = OS.join_path( vim.fn.stdpath('data'), 'mason', 'packages' )
 
         -- Source configuration files for each language
         require('stimpack.debugging.dap-csharp')

@@ -5,52 +5,69 @@ require('stimpack.icons')
 -- This will solve all cross platform path issues
 OS = {}
 
-OS['init_lua'] = vim.env.MYVIMRC
-
-if vim.loop.os_uname().sysname == 'Linux' then
-    OS['nvim'] = vim.fn.stdpath('config') .. '/'
-    OS['OS'] = 'Linux'
-    OS['home'] = os.getenv('HOME')
-    OS['plover'] = OS['home'] .. '/.config/plover/'
-    OS['my_plugins'] = OS['home'] .. '/neovim_plugins'
-    OS['snippets'] = string.format('%sluasnippets/', OS['nvim'])
-    OS['executable_extension'] = ''
-    OS['executable_extension_alt'] = ''
-    OS['separator'] = '/'
-elseif vim.loop.os_uname().sysname == 'Windows_NT' then
-    OS['nvim'] = vim.fn.stdpath('config') .. '\\'
-    OS['OS'] = 'Windows'
-    OS['home'] = os.getenv('USERPROFILE')
-    OS['plover'] = os.getenv('LOCALAPPDATA') .. '\\plover\\'
-    OS['my_plugins'] = OS['home'] .. '\\neovim_plugins'
-    OS['snippets'] = string.format('%sluasnippets\\', OS['nvim'])
-    OS['executable_extension'] = '.exe'
-    OS['executable_extension_alt'] = '.cmd'
-    OS['separator'] = '\\'
+---The file system path separator for the current platform.
+OS.separator = '/'
+if OS.OS == 'Windows' then
+    OS.separator = '\\'
 end
 
----@param input (table|string)
+---Split string into a table of strings using a separator.
+---Found here https://www.reddit.com/r/neovim/comments/su0em7/comment/hx96ur0/?utm_source=share&utm_medium=web3x
+---@param inputString string The string to split.
+---@param sep string The separator to use.
+---@return table table A table of strings.
+OS.split = function(inputString, sep)
+    local fields = {}
+
+    local pattern = string.format('([^%s]+)', sep)
+    local _ = string.gsub(inputString, pattern, function(c)
+        fields[#fields + 1] = c
+    end)
+
+    return fields
+end
+
+---Joins arbitrary number of paths together.
+---Found here https://www.reddit.com/r/neovim/comments/su0em7/comment/hx96ur0/?utm_source=share&utm_medium=web3x
+---@param ... string The paths to join.
 ---@return string
-OS.join_path = function(input)
-    local output = ''
-    if type(input) == 'table' then
-        for key, value in pairs(input) do
-            if key < #input and value ~= '' then
-                output = output .. value .. OS.separator
-            else
-                output = output .. value
-            end
-        end
-    else
-        if OS.OS == 'Linux' then
-            output = input:gsub('\\', '/')
-        elseif OS.OS == 'Windows' then
-            output = input:gsub('/', '\\')
-        end
+OS.join_path = function(...)
+    local args = { ... }
+    if #args == 0 then
+        return ''
     end
 
-    return output
+    local all_parts = {}
+    if type(args[1]) == 'string' and args[1]:sub(1, 1) == OS.separator then
+        all_parts[1] = ''
+    end
+
+    for _, arg in ipairs(args) do
+        arg_parts = OS.split(arg, OS.separator)
+        vim.list_extend(all_parts, arg_parts)
+    end
+    return vim.fs.normalize(table.concat(all_parts, OS.separator))
 end
+
+if vim.loop.os_uname().sysname == 'Linux' then
+    OS['OS'] = 'Linux'
+    OS['home'] = vim.fn.normalize(os.getenv('HOME'))
+    OS['plover'] = OS.join_path(OS['home'], '.config', 'plover ')
+    OS['executable_extension'] = ''
+    OS['executable_extension_alt'] = ''
+elseif vim.loop.os_uname().sysname == 'Windows_NT' then
+    OS['OS'] = 'Windows'
+    OS['home'] = vim.fs.normalize(os.getenv('USERPROFILE'))
+    OS['plover'] = OS.join_path(os.getenv('LOCALAPPDATA'), 'plover')
+    OS['executable_extension'] = '.exe'
+    OS['executable_extension_alt'] = '.cmd'
+end
+
+OS['init_lua'] = vim.fs.normalize(vim.env.MYVIMRC)
+OS['nvim'] = vim.fs.normalize(vim.fn.stdpath('config'))
+OS['my_plugins'] = OS.join_path(OS['home'], 'neovim_plugins')
+OS['snippets'] = OS.join_path(OS.nvim, 'luasnippets')
+OS['stimpack'] = OS.join_path(OS.nvim, 'lua', 'stimpack')
 
 ---Function to return telescope.utils command runner
 ---@param command string the single string input command
