@@ -23,6 +23,7 @@ return {
                     '/usr/share/awesome/lib/menubar/',
                     '/usr/share/awesome/lib/naughty/',
                     '/usr/share/awesome/lib/wibox/',
+                    OS.join_path( OS.stimpack, 'lsp', 'lua-workspace-meta-support' ),
                 },
                 [vim.fn.stdpath('config') .. '/lua'] = true,
             },

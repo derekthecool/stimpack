@@ -29,7 +29,7 @@ end
 
 ---Joins arbitrary number of paths together.
 ---Found here https://www.reddit.com/r/neovim/comments/su0em7/comment/hx96ur0/?utm_source=share&utm_medium=web3x
----@param ... string The paths to join.
+---@vararg <string> The paths to join.
 ---@return string
 OS.join_path = function(...)
     local args = { ... }
