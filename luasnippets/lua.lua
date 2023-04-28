@@ -634,7 +634,6 @@ local autosnippets = {
           }}
         )
       ),
-      {}
       ]=],
             {
                 c(1, {
@@ -662,7 +661,6 @@ local autosnippets = {
                 }),
                 i(2),
                 i(3),
-                i(0),
             }
         )
     ),

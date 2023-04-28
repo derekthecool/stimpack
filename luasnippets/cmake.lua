@@ -141,8 +141,27 @@ local snippets = {
         )
     ),
     -- }}}
+
+    s(
+        'export compile',
+        fmt(
+            [[
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    ]],
+            {}
+        )
+    ),
 }
 
-local autosnippets = {}
+local autosnippets = {
+    s(
+        'trigger',
+        fmt(
+            [[
+       ]],
+            {}
+        )
+    ),
+}
 
 return snippets, autosnippets

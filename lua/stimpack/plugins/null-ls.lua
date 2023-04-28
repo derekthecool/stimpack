@@ -1,7 +1,7 @@
 return {
     'jose-elias-alvarez/null-ls.nvim',
     event = 'VeryLazy',
-    config = function()
+    opts = function()
         local null_ls = require('null-ls')
 
         -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
@@ -12,8 +12,16 @@ return {
         local code_actions = null_ls.builtins.code_actions
         local hover = null_ls.builtins.hover
 
-        null_ls.setup({
+        return {
             debug = false,
+            root_dir = require('null-ls.utils').root_pattern(
+                '.null-ls-root',
+                '.neoconf.json',
+                'Makefile',
+                '.git',
+                '.sln',
+                'README.md'
+            ),
             sources = {
                 formatting.csharpier,
                 formatting.prettier.with({ extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' } }),
@@ -36,6 +44,6 @@ return {
                 diagnostics.shellcheck, -- https://github.com/koalaman/shellcheck#installing Needs version 0.8.0 at least
                 code_actions.shellcheck,
             },
-        })
+        }
     end,
 }
