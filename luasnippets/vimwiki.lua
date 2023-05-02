@@ -31,34 +31,6 @@ local snippets = {
     ),
 
     s(
-        'vimwikiDiaryStarter',
-        fmt(
-            [[
-        # {} Notes
-
-        ## Work Objectives
-
-        ### Planned
-
-        - [ ] {}
-
-        ## Rock Progress
-
-        - [FloatingTodoList](FloatingTodoList)
-        - [Rocks](../rocks/Rocks.md)
-
-        ## Notes
-        ]],
-            {
-                f(function(args, snip)
-                    return os.date('%Y-%m-%d')
-                end, {}),
-                i(1),
-            }
-        )
-    ),
-
-    s(
         'footnote',
         fmt(
             [[
@@ -96,7 +68,7 @@ local snippets = {
             {
                 i(1),
                 f(function()
-                    return vim.fn.getreg("+")
+                    return vim.fn.getreg('+')
                 end, {}),
                 i(0),
             }
@@ -280,6 +252,34 @@ local autosnippets = {
         fmt('- [ ] {}', {
             i(1),
         })
+    ),
+
+    s(
+        'FIRST',
+        fmt(
+            [[
+        # {} Notes
+
+        ## Work Objectives
+
+        ### Planned
+
+        - [ ] {}
+
+        ## Rock Progress
+
+        - [FloatingTodoList](FloatingTodoList)
+        - [Rocks](../rocks/Rocks.md)
+
+        ## Notes
+        ]],
+            {
+                f(function(args, snip)
+                    return os.date('%Y-%m-%d')
+                end, {}),
+                i(1),
+            }
+        )
     ),
 }
 

@@ -15,7 +15,7 @@ local snippets = {
       // clang-format off
       {}
       // clang-format on
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -34,7 +34,7 @@ local snippets = {
         returnValue += atoi(p);
       }}
       {}
-      ]]     ,
+      ]],
             { i(1, 'InputStringToParse'), i(2) }
         )
     ),
@@ -45,7 +45,7 @@ local snippets = {
         'ESP32interrupt',
         fmt(
             [[
-        
+
 #define INTERRUPT_INPUT_PIN 23
 #define ESP_INTR_FLAG_DEFAULT 0
 
@@ -69,7 +69,7 @@ void button_task(void *arg) {{
       gpio_isr_handler_add(INTERRUPT_INPUT_PIN, button_isr_handler, NULL);
       xTaskCreate(button_task, "button_task", 4096, NULL, 10, &ISR);
   }}
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -79,7 +79,7 @@ void button_task(void *arg) {{
         fmt(
             [[
       ESP_ERROR_CHECK({});
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -88,7 +88,7 @@ void button_task(void *arg) {{
         fmt(
             [[
       ESP_LOGI({});
-      ]]     ,
+      ]],
             { i(1) }
         )
     ),
@@ -120,7 +120,28 @@ void button_task(void *arg) {{
 
               ESP_ERROR_CHECK(ledc_channel_config(&ledc_channel));
         }}
-        ]]   ,
+        ]],
+            {}
+        )
+    ),
+
+    s(
+        'macro stringize',
+        fmt(
+            [[
+        #define Stringize(x) #x
+        ]],
+            {}
+        )
+    ),
+
+    s(
+        'macro double stringize',
+        fmt(
+            [[
+        #define Stringize(x) #x
+        #define DoubleStringize(x) Stringize(x)
+        ]],
             {}
         )
     ),
@@ -136,7 +157,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1, '0'),
                 i(2, '10'),
@@ -157,7 +178,7 @@ local autosnippets = {
         {{
             {}
         }}{}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -174,7 +195,7 @@ local autosnippets = {
         {{
             {}
         }}{}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(0),
@@ -187,7 +208,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()
@@ -223,7 +244,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1, 'true'),
                 i(2),
@@ -236,7 +257,7 @@ local autosnippets = {
         fmt(
             [[
         printf("{}", {});
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),
@@ -249,7 +270,7 @@ local autosnippets = {
         fmt(
             [[
             {}
-        ]]   ,
+        ]],
             {
                 c(1, {
                     sn(nil, {
