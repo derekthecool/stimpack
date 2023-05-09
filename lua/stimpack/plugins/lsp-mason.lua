@@ -63,7 +63,7 @@ return {
             ensure_installed = {
                 -- C programming
                 'clangd',
-                'cmake',
+                -- 'cmake',
 
                 -- Lua programming
                 'lua_ls',

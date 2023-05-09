@@ -33,6 +33,34 @@ local snippets = {
             }
         )
     ),
+
+    s(
+        'file exists',
+        fmt(
+            [[
+        import os.path
+        os.path.isfile({})
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    s(
+        'file read',
+        fmt(
+            [[
+        {} = open("{}", "r")
+        print({}.read())
+        ]],
+            {
+                i(1, 'f'),
+                i(2, 'filename'),
+                rep(1),
+            }
+        )
+    ),
 }
 
 local autosnippets = {

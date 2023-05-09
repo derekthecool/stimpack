@@ -85,14 +85,14 @@ return {
                 end,
             },
             sources = {
+                { name = 'luasnip' },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lua' },
-                { name = 'luasnip' },
-                { name = 'buffer' },
                 { name = 'path' },
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'emoji' },
                 { name = 'calc' },
+                { name = 'buffer', keyword_length = 5 },
             },
             confirm_opts = {
                 behavior = cmp.ConfirmBehavior.Replace,

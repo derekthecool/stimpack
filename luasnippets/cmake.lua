@@ -151,6 +151,32 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
             {}
         )
     ),
+
+    s(
+        'message',
+        fmt(
+            [[
+        message({})
+        ]],
+            {
+                i(1, '"Error here"'),
+            }
+        )
+    ),
+
+    s(
+        'variable_watch',
+        fmt(
+            [[
+variable_watch({})
+
+        ]],
+            {
+
+                i(1, 'EXTRA_COMPONENT_DIRS'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
