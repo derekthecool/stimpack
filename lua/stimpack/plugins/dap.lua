@@ -5,7 +5,7 @@ return {
         'theHamsta/nvim-dap-virtual-text',
         'rcarriga/nvim-dap-ui',
         'nvim-telescope/telescope-dap.nvim',
-        -- 'kndndrj/nvim-projector',
+        'kndndrj/nvim-projector',
         -- { get_my_plugin_path('nvim-projector'), branch = 'master' },
     },
     config = function()

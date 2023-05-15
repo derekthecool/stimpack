@@ -15,35 +15,51 @@ return {
                     'Gitsigns toggle display of deleted lines',
                 },
                 j = {
-                    '<cmd>lua require \'gitsigns\'.next_hunk()<cr>',
+                    function()
+                        require('gitsigns').next_hunk()
+                    end,
                     'Next Hunk',
                 },
                 k = {
-                    '<cmd>lua require \'gitsigns\'.prev_hunk()<cr>',
+                    function()
+                        require('gitsigns').prev_hunk()
+                    end,
                     'Prev Hunk',
                 },
                 l = {
-                    '<cmd>lua require \'gitsigns\'.blame_line()<cr>',
+                    function()
+                        require('gitsigns').blame_line()
+                    end,
                     'Blame',
                 },
                 p = {
-                    '<cmd>lua require \'gitsigns\'.preview_hunk()<cr>',
+                    function()
+                        require('gitsigns').preview_hunk()
+                    end,
                     'Preview Hunk',
                 },
                 r = {
-                    '<cmd>lua require \'gitsigns\'.reset_hunk()<cr>',
+                    function()
+                        require('gitsigns').reset_hunk()
+                    end,
                     'Reset Hunk',
                 },
                 R = {
-                    '<cmd>lua require \'gitsigns\'.reset_buffer()<cr>',
+                    function()
+                        require('gitsigns').reset_buffer()
+                    end,
                     'Reset Buffer',
                 },
                 s = {
-                    '<cmd>lua require \'gitsigns\'.stage_hunk()<cr>',
+                    function()
+                        require('gitsigns').stage_hunk()
+                    end,
                     'Stage Hunk',
                 },
                 u = {
-                    '<cmd>lua require \'gitsigns\'.undo_stage_hunk()<cr>',
+                    function()
+                        require('gitsigns').undo_stage_hunk()
+                    end,
                     'Undo Stage Hunk',
                 },
                 t = {
@@ -65,11 +81,15 @@ return {
                 },
                 -- 'sindrets/diffview.nvim'
                 d = {
-                    '<cmd>lua require(\'diffview\').open()<cr>',
+                    function()
+                        require('diffview').open()
+                    end,
                     'DiffViewOpen',
                 },
                 D = {
-                    '<cmd>lua require(\'diffview\').close()<cr>',
+                    function()
+                        require('diffview').close()
+                    end,
                     'DiffViewClose',
                 },
             },
@@ -151,6 +171,6 @@ return {
             },
         })
 
-        vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', {  fg = '#553355' })
+        vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#553355' })
     end,
 }

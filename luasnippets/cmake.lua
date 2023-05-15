@@ -2,6 +2,68 @@
 
 local snippets = {
 
+    s(
+        'project',
+        fmt(
+            [[
+        project({}
+            LANGUAGES C
+            DESCRIPTION "project description")
+        ]],
+            {
+                i(1, 'ProjectName'),
+            }
+        )
+    ),
+
+    s(
+        'add_executable',
+        fmt(
+            [[
+        add_executable({}
+            # Sources
+            {})
+        ]],
+            {
+                i(1, 'ProgramName'),
+                i(2, 'main.c'),
+            }
+        )
+    ),
+
+    s(
+        'add_library',
+        fmt(
+            [[
+        add_library({} {}
+            # Sources
+            {})
+        ]],
+            {
+                i(1, 'LibraryName'),
+                c(2, {
+                    t('STATIC'),
+                    t('DYNAMIC'),
+                }),
+
+                i(3, 'file.c'),
+            }
+        )
+    ),
+
+    s(
+        'target_link_libraries',
+        fmt(
+            [[
+        target_link_libraries({} {})
+        ]],
+            {
+                i(1, 'ProgramName'),
+                i(2, 'LibraryName'),
+            }
+        )
+    ),
+
     -- {{{ Cmake C library and test app for test driven development (tdd) setup
     s(
         {
@@ -197,11 +259,36 @@ variable_watch({})
 
 local autosnippets = {
     s(
-        'trigger',
+        'FIRST',
         fmt(
             [[
-       ]],
-            {}
+        cmake_minimum_required(VERSION {})
+        ]],
+            {
+                f(function(args, snip)
+                    local DEFAULT = '3.17'
+                    local cmakeVersion = Execute('cmake --version')
+                    if cmakeVersion.stdout ~= nil then
+                        -- Remove anything that is not a number or a .to get the version string
+                        return (cmakeVersion.stdout[1]:gsub('[^0-9.]', ''))
+                    else
+                        return DEFAULT
+                    end
+                end, {}),
+            }
+        )
+    ),
+
+    s(
+        'SECOND',
+        fmt(
+            [[
+        set({} {})
+        ]],
+            {
+                i(1, 'Variable'),
+                i(2, 'Value'),
+            }
         )
     ),
 }
