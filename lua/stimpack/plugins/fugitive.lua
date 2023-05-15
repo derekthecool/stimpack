@@ -1,7 +1,8 @@
 return {
     'tpope/vim-fugitive',
     keys = { {
-        '<leader>gf',
+        -- Set as third git plugin
+        '<leader>g3',
         '<cmd>G<CR>',
         desc = 'Vim fugitive',
     } },

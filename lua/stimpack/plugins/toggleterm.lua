@@ -1,8 +1,11 @@
+local toggleterm_git_level = 2
+
 return {
     'akinsho/toggleterm.nvim', -- Awesome terminal helper in lua
     keys = {
         '⏫',
-        { '<leader>gg', desc = 'Lazygit' },
+        -- Set as second git plugin use <leader>g1
+        { '<leader>g' .. toggleterm_git_level, desc = 'Lazygit' },
         { '<leader>gz', desc = 'Open lazygit to dotfiles bare repo ~/.cfg' },
     },
     config = function()
@@ -93,7 +96,7 @@ return {
             dotfileslazygit:toggle()
         end
 
-        vim.keymap.set('n', '<leader>gg', lazygit_toggle, { noremap = true, silent = true })
+        vim.keymap.set('n', '<leader>g' .. toggleterm_git_level, lazygit_toggle, { noremap = true, silent = true })
         vim.keymap.set('n', '<leader>gz', dotfileslazygit_toggle, { noremap = true, silent = true })
     end,
 }
