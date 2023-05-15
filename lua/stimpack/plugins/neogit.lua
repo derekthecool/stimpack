@@ -3,14 +3,14 @@ return {
     dependencies = {
         'sindrets/diffview.nvim',
     },
-    enabled = false,
-    keys = {
-        {
-            '<leader>gg',
-            '<cmd>lua require(\'neogit\').open()<cr>',
-            desc = 'Neogit',
-        },
-    },
+    -- enabled = false,
+    -- keys = {
+    --     {
+    --         '<leader>gg',
+    --         '<cmd>lua require(\'neogit\').open()<cr>',
+    --         desc = 'Neogit',
+    --     },
+    -- },
     opts = {
         disable_signs = false,
         disable_hint = false,
