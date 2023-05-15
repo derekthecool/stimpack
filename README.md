@@ -6,6 +6,17 @@ game, there is no self harm from using this repo. Also stim sounds like vim.
 
 ![stim pack image](https://imgs.search.brave.com/V_nzTEk0ywpLC6F8D1hqxCqz-HMsh-qvmW9AJ3PzqeU/rs:fit:592:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5u/UWZkLWRMZ0JCY1BR/Z2xMOENBQnl3SGFG/NyZwaWQ9QXBp)
 
+## System Requirements
+
+- Yarn: needed for [Markdown Preview](https://github.com/iamcco/markdown-preview.nvim)
+- C compiler: needed for treesitter.
+  - Windows version can be installed with `scoop install make gcc`
+  - Linux is easy, just install the main build packages for your distro e.g.
+    `apt install build-essential`
+- Dotnet 6.0 and 7.0:
+  - F# tools
+  - C# tools
+
 ## Stenography Design
 
 This config is not your every day neovim config. Stimpack is designed for use

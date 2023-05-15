@@ -33,8 +33,8 @@ local snippets = {
         .FUNCTIONALITY
            The functionality that best describes this cmdlet
         #>
-        [CmdletBinding(DefaultParameterSetName='Parameter Set 1', 
-            SupportsShouldProcess=$true, 
+        [CmdletBinding(DefaultParameterSetName='Parameter Set 1',
+            SupportsShouldProcess=$true,
             PositionalBinding=$false,
             HelpUri = 'http://www.microsoft.com/',
             ConfirmImpact='Medium')]
@@ -53,7 +53,7 @@ local snippets = {
             [ValidateNotNullOrEmpty()]
             [ValidateCount(0,5)]
             [ValidateSet("sun", "moon", "earth")]
-            [Alias("p1")] 
+            [Alias("p1")]
             $Param1
 
         )
@@ -112,6 +112,18 @@ local snippets = {
                     t('int32'),
                 }),
                 i(4, 'VariableName'),
+            }
+        )
+    ),
+
+    s(
+        'get-date',
+        fmt(
+            [[
+     Get-Date -Format "{}"
+        ]],
+            {
+                i(1, 'yyyy-MM-dd'),
             }
         )
     ),

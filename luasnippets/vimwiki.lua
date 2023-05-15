@@ -213,6 +213,25 @@ local snippets = {
 local autosnippets = {
 
     s(
+        {
+            trig = '`(%w)',
+            regTrig = true,
+        },
+        fmt(
+            [[
+        `{}{}`
+        ]],
+            {
+                f(function(args, snip)
+                    return (snip.captures[1]:gsub('`', ''))
+                end, {}),
+
+                i(1),
+            }
+        )
+    ),
+
+    s(
         '```',
         fmt(
             [[
