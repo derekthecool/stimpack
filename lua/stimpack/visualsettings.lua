@@ -5,7 +5,7 @@ vim.opt.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
 
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
 vim.wo.list = true -- enable the feature
-vim.go.listchars = 'trail:·,precedes:«,extends:»,tab:▸\\ ' -- specify chars
+vim.go.listchars = 'trail:·,precedes:«,extends:»,tab: ' -- specify chars
 vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:,eob:▎'
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })

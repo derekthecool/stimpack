@@ -29,6 +29,18 @@ return {
         -- Replaces plugin https://github.com/karb94/neoscroll.nvim
         require('mini.animate').setup()
 
+        local miniAnimateAutocommands = vim.api.nvim_create_augroup('miniAnimateAutocommands', { clear = true })
+
+        -- Disable mini.animate for toggleterm.
+        -- It is too slow an annoying to scroll terminal output.
+        vim.api.nvim_create_autocmd('FileType', {
+            pattern = { 'toggleterm' },
+            callback = function()
+                vim.b.minianimate_disable = true
+            end,
+            group = miniAnimateAutocommands,
+        })
+
         -- Does most of what base16 colorscheme plugin can do, however colorcolumn and others look bad
         -- require('mini.base16').setup()
 
@@ -56,7 +68,6 @@ return {
                 -- line_down = '',
                 -- line_up = '<M-k>',
             },
-
             -- Options which control moving behavior
             options = {
                 -- Automatically reindent selection during linewise vertical move
@@ -77,7 +88,12 @@ return {
 
         require('mini.trailspace').setup()
         vim.keymap.set('n', '<leader>mt', MiniTrailspace.trim, { silent = true, desc = 'MiniTrailspace.trim' })
-        vim.keymap.set('n', '<leader>mT', MiniTrailspace.trim_last_lines, { silent = true, desc = 'MiniTrailspace.trim_last_lines' })
+        vim.keymap.set(
+            'n',
+            '<leader>mT',
+            MiniTrailspace.trim_last_lines,
+            { silent = true, desc = 'MiniTrailspace.trim_last_lines' }
+        )
 
         require('mini.ai').setup()
     end,
