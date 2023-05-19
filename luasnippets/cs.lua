@@ -39,7 +39,7 @@ local snippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1, '"source"'),
                 i(2, '.*'),
@@ -66,7 +66,7 @@ local snippets = {
                            .Cast<Match>()
                            .Select(match => {})
                            .Distinct();
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2, '.*'),
@@ -93,7 +93,7 @@ local snippets = {
         fmt(
             [[
       {} {} {} {{ get; set; }}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     t('public'),
@@ -115,7 +115,7 @@ local snippets = {
       {{
           {}?.Invoke(this, e);
       }}
-      ]]     ,
+      ]],
             {
                 i(1, 'string'),
                 i(2, 'EventName'),
@@ -196,7 +196,7 @@ local snippets = {
         }}
 
         {}
-      ]]     ,
+      ]],
             {
                 i(1, 'int'),
                 i(2, 'variableNameWithLoweredFirstChar'),
@@ -222,7 +222,7 @@ local snippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 i(1, 'Enum1'),
                 i(2),
@@ -235,7 +235,7 @@ local snippets = {
         fmt(
             [[
         var line = Console.ReadLine();
-        ]]   ,
+        ]],
             {}
         ),
         {
@@ -260,7 +260,7 @@ local snippets = {
         {{
             Lines.Add(Line);
         }}
-        ]]   ,
+        ]],
             {}
         ),
         {
@@ -289,7 +289,7 @@ local snippets = {
         {}
 
         Console.WriteLine({});
-        ]]   ,
+        ]],
             {
                 c(1, {
                     t('var Line = Console.ReadLine();'),
@@ -313,7 +313,7 @@ local snippets = {
         fmt(
             [[
         Enumerable.Range({}, {})
-        ]]   ,
+        ]],
             {
                 i(1, '1'),
                 i(2, '50'),
@@ -325,11 +325,11 @@ local snippets = {
 local autosnippets = {
 
     s(
-        'PRINT',
+        'ERRORPRINT',
         fmt(
             [[
-      Console.WriteLine($"{}");
-      ]]     ,
+      Console.Error.WriteLine($"{}");
+      ]],
             {
                 i(1),
             }
@@ -341,7 +341,7 @@ local autosnippets = {
         fmt(
             [[
       $"{}"
-      ]]     ,
+      ]],
             {
                 i(1),
             }
@@ -365,7 +365,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'true'),
                 i(2),
@@ -383,7 +383,7 @@ local autosnippets = {
         {}
       }}
       {}
-      ]]     ,
+      ]],
             {
                 i(1, 'false'),
                 i(2),
@@ -402,7 +402,7 @@ local autosnippets = {
       }}
 
       {}
-      ]]     ,
+      ]],
             {
                 i(1),
                 i(0),
@@ -420,7 +420,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     -- Get csharp namespace
@@ -461,7 +461,7 @@ local autosnippets = {
         {{
             {}
         }}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     local class_information = my_treesitter_functions.cs.get_class_name()
@@ -546,7 +546,7 @@ local autosnippets = {
       }}
 
       {}
-      ]]     ,
+      ]],
             {
                 c(1, {
                     t('public'),
@@ -600,7 +600,7 @@ local autosnippets = {
         fmt(
             [[
       {} {}
-      ]]     ,
+      ]],
             {
                 t(' Derek test: '),
 
@@ -616,7 +616,7 @@ local autosnippets = {
         fmt(
             [[
       {}
-      ]]     ,
+      ]],
             {
                 f(function()
                     local variable = my_treesitter_functions.cs.get_recent_var()

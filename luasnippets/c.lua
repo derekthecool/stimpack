@@ -4,6 +4,25 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
 local snippets = {
 
+    s(
+        'main',
+        fmt(
+            [[
+        #include <stdio.h>
+        #include <stdlib.h>
+
+        int main(void)
+        {{
+             printf("{}\n");
+             return 0;
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
     -- {{{ clang format disable block
     s(
         {

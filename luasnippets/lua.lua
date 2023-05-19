@@ -106,16 +106,40 @@ local snippets = {
             }
         )
     ),
+
+    -- Error, snippet is corrupted. Issue seems to be coming from first insert node with place holder text.
     s(
-        'map',
+
+        { trig = 'yours', regTrig = false, wordTrig = true },
         fmt(
             [[
-        vim.keymap.set('{}', '{}', '{}', {{ silent = true }})
+        vim.keymap.set('{}', '{}', function()
+            {}
+        end, {{ silent = true, desc = '{}' }})
         ]],
             {
                 i(1, 'mode'),
                 i(2, 'lhs'),
-                i(3, 'rhs'),
+                i(3, 'vim.opt.textwidth = 100'),
+                i(4, 'My awesome mapping'),
+            }
+        )
+    ),
+
+    -- No issues because first nodes place holder text is removed
+    s(
+        'map2',
+        fmt(
+            [[
+        vim.keymap.set('{}', '{}', function()
+            {}
+        end, {{ silent = true, desc = '{}' }})
+        ]],
+            {
+                i(1),
+                i(2, 'lhs'),
+                i(3, 'vim.opt.textwidth = 100'),
+                i(4, 'My awesome mapping'),
             }
         )
     ),
@@ -447,6 +471,24 @@ local autosnippets = {
     ),
 
     s(
+        'FOR',
+        fmt(
+            [[
+        for index, value in {}pairs(t) do
+            {}
+        end
+        ]],
+            {
+                c(1, {
+                    t(''),
+                    t('i'),
+                }),
+                i(2),
+            }
+        )
+    ),
+
+    s(
         'WHILE',
         fmt(
             [[
@@ -637,7 +679,7 @@ local autosnippets = {
       ]=],
             {
                 c(1, {
-                    i(1, 'short snippet trigger'),
+                    i(1),
                     sn(
                         1,
                         fmt(
@@ -649,7 +691,7 @@ local autosnippets = {
               }}
               ]],
                             {
-                                i(1, 'long snippet trigger'),
+                                i(1),
                                 c(2, {
                                     t('true'),
                                     t('false'),
@@ -963,8 +1005,44 @@ local autosnippets = {
             }
         )
     ),
-
     --}}}
+
+    -- Error, snippet is corrupted. Issue seems to be coming from first insert node with place holder text.
+    s(
+        'mine',
+        fmt(
+        [[
+        vim.keymap.set('{iNode1}', '{}', function()
+            {}
+        end, {{ silent = true, desc = '{}' }})
+        ]],
+            {
+                iNode1 = i(1, "mode"),
+                i(2, 'lhs'),
+                i(3, 'vim.opt.textwidth = 100'),
+                i(4, 'My awesome mapping'),
+            }
+        )
+    ),
+    s(
+        'sup',
+        fmt(
+        [[
+        vim.keymap.set('<>', '<>', function()
+            <>
+        end, { silent = true, desc = '<>' })
+        ]],
+            {
+                i(1, 'mode'),
+                i(2, 'lhs'),
+                i(3, 'vim.opt.textwidth = 100'),
+                i(4, 'My awesome mapping'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets

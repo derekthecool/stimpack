@@ -3,6 +3,34 @@
 local snippets = {
 
     s(
+      'file',
+      fmt(
+        [[
+        # Copy the file to build always
+        file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{}
+             DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}})
+        ]],
+        {
+            i(1),
+        }
+      )
+
+    ),
+    s(
+      'configure_file',
+      fmt(
+        [[
+        # Copy the file to build and rerun project if modified
+        configure_file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{}
+             DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}} COPYONLY)
+        ]],
+        {
+            i(1),
+        }
+      )
+    ),
+
+    s(
         'project',
         fmt(
             [[
@@ -60,6 +88,21 @@ local snippets = {
             {
                 i(1, 'ProgramName'),
                 i(2, 'LibraryName'),
+            }
+        )
+    ),
+
+    -- ESP32 stuff
+    s(
+        'idf_component_register',
+        fmt(
+            [[
+        idf_component_register("{}"
+            {})
+        ]],
+            {
+                i(1, 'library_name'),
+                i(2, 'source.c'),
             }
         )
     ),
@@ -255,6 +298,104 @@ variable_watch({})
             {}
         )
     ),
+
+    -- Lua embed build setup
+    s(
+      'lua setup',
+      fmt(
+        [[
+        add_library("lua" STATIC
+            ./lua-5.1.5/src/lapi.c
+            ./lua-5.1.5/src/lcode.c
+            ./lua-5.1.5/src/ldebug.c
+            ./lua-5.1.5/src/ldo.c
+            ./lua-5.1.5/src/ldump.c
+            ./lua-5.1.5/src/lfunc.c
+            ./lua-5.1.5/src/lgc.c
+            ./lua-5.1.5/src/llex.c
+            ./lua-5.1.5/src/lmem.c
+            ./lua-5.1.5/src/lobject.c
+            ./lua-5.1.5/src/lopcodes.c
+            ./lua-5.1.5/src/lparser.c
+            ./lua-5.1.5/src/lstate.c
+            ./lua-5.1.5/src/lstring.c
+            ./lua-5.1.5/src/ltable.c
+            ./lua-5.1.5/src/ltm.c
+            ./lua-5.1.5/src/lundump.c
+            ./lua-5.1.5/src/lvm.c
+            ./lua-5.1.5/src/lzio.c
+            ./lua-5.1.5/src/lauxlib.c
+            ./lua-5.1.5/src/lbaselib.c
+            ./lua-5.1.5/src/ldblib.c
+            ./lua-5.1.5/src/liolib.c
+            ./lua-5.1.5/src/lmathlib.c
+            ./lua-5.1.5/src/loslib.c
+            ./lua-5.1.5/src/ltablib.c
+            ./lua-5.1.5/src/lstrlib.c
+            ./lua-5.1.5/src/loadlib.c
+            ./lua-5.1.5/src/linit.c
+            )
+
+        # Copy a lua script file from source directory to build directory
+        configure_file(${{CMAKE_CURRENT_SOURCE_DIR}}/script.lua
+            ${{CMAKE_CURRENT_BINARY_DIR}} COPYONLY)
+
+        target_link_libraries(Luatest lua)
+        ]],
+        {
+          
+        }
+      )
+    ),
+
+    s(
+      'lua idf_component_register',
+      fmt(
+        [[
+        idf_component_register("lua"
+            SRCS
+            "lua515/src/lapi.c"
+            "lua515/src/lcode.c"
+            "lua515/src/ldebug.c"
+            "lua515/src/ldo.c"
+            "lua515/src/ldump.c"
+            "lua515/src/lfunc.c"
+            "lua515/src/lgc.c"
+            "lua515/src/llex.c"
+            "lua515/src/lmem.c"
+            "lua515/src/lobject.c"
+            "lua515/src/lopcodes.c"
+            "lua515/src/lparser.c"
+            "lua515/src/lstate.c"
+            "lua515/src/lstring.c"
+            "lua515/src/ltable.c"
+            "lua515/src/ltm.c"
+            "lua515/src/lundump.c"
+            "lua515/src/lvm.c"
+            "lua515/src/lzio.c"
+            "lua515/src/lauxlib.c"
+            "lua515/src/lbaselib.c"
+            "lua515/src/ldblib.c"
+            "lua515/src/liolib.c"
+            "lua515/src/lmathlib.c"
+            "lua515/src/loslib.c"
+            "lua515/src/ltablib.c"
+            "lua515/src/lstrlib.c"
+            "lua515/src/loadlib.c"
+            "lua515/src/linit.c"
+            INCLUDE_DIRS
+            "lua515/src"
+            )
+
+        # Ignore this error in the lua library
+        target_compile_options(${{COMPONENT_LIB}} PRIVATE -Wno-error=misleading-indentation)
+        ]],
+        {
+          
+        }
+      )
+    ),
+
 }
 
 local autosnippets = {
