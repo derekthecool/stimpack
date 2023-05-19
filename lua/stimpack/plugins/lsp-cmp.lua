@@ -9,6 +9,7 @@ return {
         'hrsh7th/cmp-nvim-lua',
         'hrsh7th/cmp-calc',
         'saadparwaiz1/cmp_luasnip', -- snippet completions
+        'L3MON4D3/LuaSnip',
     },
     event = { 'InsertEnter', 'CursorMoved' },
     config = function()
@@ -40,6 +41,7 @@ return {
                 -- Accept currently selected item. If none selected, `select` first item.
                 -- Set `select` to `false` to only confirm explicitly selected items.
                 ['∃'] = cmp.mapping.confirm({ select = true }),
+                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
                 ['<Tab>'] = cmp.mapping(function(fallback)
                     if cmp.visible() then
                         cmp.select_next_item()
@@ -85,7 +87,7 @@ return {
                 end,
             },
             sources = {
-                { name = 'luasnip' },
+                { name = 'luasnip', --[[ option = { show_autosnippets = true  }]] },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lua' },
                 { name = 'path' },
