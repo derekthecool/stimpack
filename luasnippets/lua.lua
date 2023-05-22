@@ -165,28 +165,61 @@ local snippets = {
     ),
 
     s(
-        'plugin',
+        'lazy',
         fmt(
             [[
         return {{
             '{}',
-            dependencies = {{
+
+            -- Basic plugin settings
+            -- enabled = true,
+            -- cond = function()
+            --    return true
+            -- end,
+            -- dependencies = {{
+            --     'other plugins to load first',
+            -- }},
+
+            -- Plugin version settings
+            -- branch = 'branch name',
+            -- tag = 'tag name',
+            -- commit = 'commit hash',
+            -- version = 'semver version string',
+            -- pin = true, -- if true, never update
+            -- submodules = true, -- if false git submodules will not be fetched
+            -- priority = 50, -- Only needed for start plugins, default 50
+
+            -- Lazy loading settings
+            -- lazy = true,
+            -- event = 'VeryLazy',
+            -- cmd = 'MyExCommandNameToLoadThisPlugin',
+            -- ft = {{ 'cs', 'help', 'lua' }},
+            -- keys = {{ "<C-a>", {{ "<C-x>", mode = "i" }} }}, -- LazyKeys table
+
+            -- Configuration
+            -- opts = configuration table to be passed to plugin's setup function
+            -- config = function to execute when plugin loads
+            -- init = function that is always run on startup
+            opts = {{
                 {}
             }},
-            -- event = 'VeryLazy',
-            -- cmd = {{{{""}}}},
-            -- lazy = true,
-            -- ft = "cs",
-            -- cond = (1 == 1) -- decide to load plugin or not
-            -- priority = 50, --default 50
-            -- config = {{
-            --
-            -- }},
+            config = function()
+                {}
+            end,
+            init = function()
+                {}
+            end,
+
+            -- Plugin development
+            -- dir = 'plugin local path',
+            -- dev = true,
         }}
         ]],
             {
-                i(1),
-                i(2),
+                i(1, 'plugin URL'),
+                i(2, 'opts table'),
+                i(3, 'config function'),
+                i(4, 'init function'),
             }
         )
     ),
@@ -679,7 +712,7 @@ local autosnippets = {
       ]=],
             {
                 c(1, {
-                    i(1),
+                    i(1, 'trigger'),
                     sn(
                         1,
                         fmt(
@@ -691,7 +724,7 @@ local autosnippets = {
               }}
               ]],
                             {
-                                i(1),
+                                i(1, 'long trigger'),
                                 c(2, {
                                     t('true'),
                                     t('false'),

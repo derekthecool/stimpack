@@ -1,5 +1,6 @@
 return {
     'glacambre/firenvim',
+    enabled = false,
     event = 'VeryLazy',
     priority = 1, -- very low priority
     cond = (vim.fn.has('wsl') ~= 1),
