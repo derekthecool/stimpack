@@ -24,7 +24,7 @@ function M.eval()
 
     if MacroWinbarIdentifier == nil or MacroWinbarIdentifier == '' then
         vim.api.nvim_set_hl(0, 'WinBar', { fg = '#7d14ff' })
-        vim.api.nvim_set_hl(0, 'WinBarNC', { fg = '#FFF000'})
+        vim.api.nvim_set_hl(0, 'WinBarNC', { fg = '#444444'})
     end
 
     if modified == '' then

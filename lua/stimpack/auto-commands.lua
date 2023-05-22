@@ -30,11 +30,26 @@ vim.api.nvim_create_autocmd('SearchWrapped', {
     group = generalSettingsGroup,
 })
 
+vim.api.nvim_create_autocmd('BufWinEnter', {
+    pattern = { '*' },
+    callback = function()
+        local no_winbar_filetypes = {
+            ['toggleterm'] = true,
+            ['qf'] = true,
+        }
+        if no_winbar_filetypes[vim.bo.filetype] then
+            return
+        end
+
+        vim.wo.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
+    end,
+    group = generalSettingsGroup,
+})
+
 vim.api.nvim_create_autocmd('RecordingEnter', {
     pattern = { '*' },
     callback = function()
         -- Print notification and set win bar to another color
-        -- vim.opt.winbar = '%f -- recording macro ' .. vim.fn.reg_recording()
         MacroWinbarIdentifier = ' -- recording macro ' .. vim.fn.reg_recording()
         vim.api.nvim_set_hl(0, 'WinBar', { bg = '#33FF33', fg = '#3333ff' })
         vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })
@@ -46,7 +61,6 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     pattern = { '*' },
     callback = function()
         -- Print notification and set win bar to another color
-        -- vim.opt.winbar = '%f'
         MacroWinbarIdentifier = ''
         vim.api.nvim_set_hl(0, 'WinBar', { bg = 'none' })
         vim.api.nvim_set_hl(0, 'WinBarNC', { bg = 'none' })

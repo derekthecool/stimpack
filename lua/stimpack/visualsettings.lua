@@ -1,7 +1,6 @@
 -- Visual settings
 vim.o.termguicolors = true -- Needed for better color display
 vim.o.cmdheight = 1
-vim.opt.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
 
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
 vim.wo.list = true -- enable the feature
