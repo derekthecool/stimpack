@@ -51,7 +51,7 @@ end
 
 if vim.loop.os_uname().sysname == 'Linux' then
     OS['OS'] = 'Linux'
-    OS['home'] = vim.fn.normalize(os.getenv('HOME'))
+    OS['home'] = vim.fs.normalize(os.getenv('HOME'))
     OS['plover'] = OS.join_path(OS['home'], '.config', 'plover ')
     OS['executable_extension'] = ''
     OS['executable_extension_alt'] = ''
