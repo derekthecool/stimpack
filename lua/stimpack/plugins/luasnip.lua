@@ -61,6 +61,24 @@ return {
             },
         })
 
+        local miniAnimateAutocommands_luasnip =
+            vim.api.nvim_create_augroup('miniAnimateAutocommands_luasnip', { clear = true })
+
+        vim.api.nvim_create_autocmd('User', {
+            pattern = 'LuasnipPreExpand',
+            callback = function()
+                -- Disable mini.nvim animate right away
+                vim.b.minianimate_disable = true
+
+                -- Set timer to reenable mini.nvim animate after the delay period
+                local delay_ms = 100
+                vim.defer_fn(function()
+                    vim.b.minianimate_disable = false
+                end, delay_ms)
+            end,
+            group = miniAnimateAutocommands_luasnip,
+        })
+
         local map = require('stimpack.mapping-function')
         map('i', '<c-j>', function()
             require('luasnip').jump(1)
