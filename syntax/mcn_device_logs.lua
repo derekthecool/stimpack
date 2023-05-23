@@ -16,7 +16,7 @@ vim.fn.matchadd('log_error', '\\[\'Warning:data, or topic is empty;please check 
 vim.fn.matchadd('log_error', 'ERROR')
 vim.fn.matchadd('log_error', 'ERROR')
 vim.fn.matchadd('log_error', 'Error encoding.*')
-vim.fn.matchadd('ATcommand', '\\v(AT|at)\\+.*')
+vim.fn.matchadd('ATcommand', '\\v(AT|at)[+#].*')
 vim.fn.matchadd('ATcommandOK', 'OK')
 vim.fn.matchadd('log_keywords', '+RESP.*')
 vim.fn.matchadd('FA', 'FA:[^,]\\+')
