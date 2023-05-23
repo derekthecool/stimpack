@@ -65,7 +65,7 @@ return {
             vim.api.nvim_create_augroup('miniAnimateAutocommands_luasnip', { clear = true })
 
         vim.api.nvim_create_autocmd('User', {
-            pattern = 'LuasnipPreExpand',
+            pattern = 'LuasnipInsertNodeEnter',
             callback = function()
                 -- Disable mini.nvim animate right away
                 vim.b.minianimate_disable = true

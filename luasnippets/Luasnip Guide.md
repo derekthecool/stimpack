@@ -63,28 +63,37 @@ local lazy_snip_env = {
 - [Basic guide to luasnip](https://sbulav.github.io/vim/neovim-setting-up-luasnip/)
 - [Awesome guide with YouTube video on luasnip by zionteel113](https://github.com/ziontee113/luasnip-tutorial)
 
-## Guide to creating snippets
+## User Events
 
-Use the locals at the top of this file for shorter writing
-for example you can define a snippet with "s" because of this line at the top
-local s = ls.snippet
+Following this documentation you can find all about user events.
+<https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#events>
 
-Escape characters:
-$ --> $$
-Quotes are tough, but the following should work:
-" --> \"
-"word"..'"'.."text wrapped in quotes"..'"'
--- For use in fmt
-{ --> {{
-} --> }}
+User events can be very helpful.
 
-Examples: Use captures from the regex-trigger using a functionNode:
+### Fix Issues With Mini.Animate With User Events
 
->
+I thought there was a bug with [luasnip](https://github.com/L3MON4D3/LuaSnip/issues/887)
+but it turned out to be the plugin mini.animate which provides nice scrolling
+effects. However, it was messing up my insert node expansion.
 
-    s({trig = "b(%d)", regTrig = true},
-        f(function(args, snip) return
-            "Captured Text: " .. snip.captures[1] .. "." end, {})
-    )
+I solved it with a luasnip user event like this
 
-]]
+```lua
+local miniAnimateAutocommands_luasnip =
+    vim.api.nvim_create_augroup('miniAnimateAutocommands_luasnip', { clear = true })
+
+vim.api.nvim_create_autocmd('User', {
+    pattern = 'LuasnipInsertNodeEnter',
+    callback = function()
+        -- Disable mini.nvim animate right away
+        vim.b.minianimate_disable = true
+
+        -- Set timer to reenable mini.nvim animate after the delay period
+        local delay_ms = 100
+        vim.defer_fn(function()
+            vim.b.minianimate_disable = false
+        end, delay_ms)
+    end,
+    group = miniAnimateAutocommands_luasnip,
+})
+```
