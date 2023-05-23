@@ -36,6 +36,7 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
         local no_winbar_filetypes = {
             ['toggleterm'] = true,
             ['qf'] = true,
+            [''] = true,
         }
         if no_winbar_filetypes[vim.bo.filetype] then
             return
