@@ -219,7 +219,7 @@ local autosnippets = {
         },
         fmt(
             [[
-        `{}{}`
+        `{}{}` {}
         ]],
             {
                 f(function(args, snip)
@@ -227,6 +227,7 @@ local autosnippets = {
                 end, {}),
 
                 i(1),
+                i(0),
             }
         )
     ),

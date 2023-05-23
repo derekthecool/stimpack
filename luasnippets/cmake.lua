@@ -304,6 +304,7 @@ variable_watch({})
       'lua setup',
       fmt(
         [[
+        # Add these if using newer lua like 5.4.6: lctype.c lcorolib.c lutf8lib.c
         add_library("lua" STATIC
             ./lua-5.1.5/src/lapi.c
             ./lua-5.1.5/src/lcode.c
