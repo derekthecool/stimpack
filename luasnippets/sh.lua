@@ -20,6 +20,43 @@ local snippets = {
 local autosnippets = {
 
     s(
+        'PRINT',
+        fmt(
+            [[
+        {}
+        ]],
+            {
+                c(1, {
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+               echo "{}"
+               ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+               printf "{}\n" {}
+               ]],
+                            {
+                                i(1, 'Hello world'),
+                                i(2, 'Variables'),
+                            }
+                        )
+                    ),
+                }),
+            }
+        )
+    ),
+
+    s(
         '${',
         fmt(
             [[

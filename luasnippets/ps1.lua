@@ -1,4 +1,42 @@
 ---@diagnostic disable: undefined-global
+
+local powershell_foreground_highlights = {
+    t('Gray'),
+    t('Green'),
+    t('Yellow'),
+    t('Red'),
+    t('Blue'),
+    t('Cyan'),
+    t('Magenta'),
+    t('White'),
+    t('Black'),
+    t('DarkBlue'),
+    t('DarkGreen'),
+    t('DarkCyan'),
+    t('DarkRed'),
+    t('DarkMagenta'),
+    t('DarkYellow'),
+    t('DarkGray'),
+}
+local powershell_background_highlights = {
+    t('Black'),
+    t('DarkGreen'),
+    t('DarkYellow'),
+    t('DarkRed'),
+    t('DarkBlue'),
+    t('DarkCyan'),
+    t('DarkMagenta'),
+    t('Gray'),
+    t('DarkGray'),
+    t('Blue'),
+    t('Green'),
+    t('Cyan'),
+    t('Red'),
+    t('Magenta'),
+    t('Yellow'),
+    t('White'),
+}
+
 local snippets = {
     s(
         'list',
@@ -150,6 +188,37 @@ local autosnippets = {
     ),
 
     s(
+        'ELS_EI_F',
+        fmt(
+            [[
+        else if({})
+        {{
+            {}
+        }}
+        ]],
+            {
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    s(
+        'ELSE',
+        fmt(
+            [[
+        else
+        {{
+            {}
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    s(
         'FUNCTION',
         fmt(
             [[
@@ -168,10 +237,48 @@ local autosnippets = {
         'PRINT',
         fmt(
             [[
-        Write-Host "{}"
+            {}
         ]],
             {
-                i(1),
+                c(1, {
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                     Write-Host "{}" -ForegroundColor {} -BackgroundColor {}
+                     ]],
+                            {
+                                i(1),
+                                c(2, powershell_foreground_highlights),
+                                c(3, powershell_background_highlights),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    Write-Output "{}"
+                    ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    Write-Error "{}"
+                    ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+                }),
             }
         )
     ),
@@ -194,48 +301,6 @@ local autosnippets = {
                 i(1),
                 i(2),
                 i(0),
-            }
-        )
-    ),
-
-    s(
-        'write host',
-        fmt(
-            [[
-        Write-Host "{}" -ForegroundColor {}
-        ]],
-            {
-                i(1),
-                c(2, {
-                    t('Black'),
-                    t('DarkBlue'),
-                    t('DarkGreen'),
-                    t('DarkCyan'),
-                    t('DarkRed'),
-                    t('DarkMagenta'),
-                    t('DarkYellow'),
-                    t('Gray'),
-                    t('DarkGray'),
-                    t('Blue'),
-                    t('Green'),
-                    t('Cyan'),
-                    t('Red'),
-                    t('Magenta'),
-                    t('Yellow'),
-                    t('White'),
-                }),
-            }
-        )
-    ),
-
-    s(
-        'write output',
-        fmt(
-            [[
-        Write-Output "{}"
-        ]],
-            {
-                i(1),
             }
         )
     ),
