@@ -9,7 +9,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 
 return {
-    'kyazdani42/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua',
     lazy = false,
     keys = { { '<leader>fe', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTreeToggle' } },
     config = function()
@@ -224,7 +224,11 @@ return {
             },
             filters = {
                 dotfiles = false,
-                custom = {},
+                custom = {
+                    -- I was getting nasty errors from creating and deleting symlinked files, ignore them
+                    [[test/OtaCommandOutput/*.proto]],
+                    [[test/OtaCommandOutput/*.options]],
+                },
                 exclude = {},
             },
             git = {
