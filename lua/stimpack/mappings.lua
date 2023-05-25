@@ -30,8 +30,8 @@ map('v', '>', '>gv')
 
 -- Eazy saving with zzzz
 -- Press zzz
-map('n', 'zzz', ':update<CR>', {silent = true})
-map('i', 'zzz', '<C-o>:update<CR><ESC>^', {silent = true})
+map('n', 'zzz', ':update<CR>', { silent = true })
+map('i', 'zzz', '<C-o>:update<CR><ESC>^', { silent = true })
 
 -- -- Permanent Very Magic Mode - Helps To Get PCRE Type Regex
 map('n', '/', '/\\v')
@@ -47,7 +47,9 @@ map('n', '<leader>ab', '<cmd>TSPlaygroundToggle<CR>')
 map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
 -- Show recent notifications
-map('n', '<leader>ad', require('notify')._print_history)
+map('n', '<leader>ad', function()
+    require('notify')._print_history()
+end)
 
 -- Conceal level mappings from ziontee113
 
@@ -90,7 +92,6 @@ v:lnum		Line number for the 'foldexpr' |fold-expr|, 'formatexpr' and
 		expressions is being evaluated.  Read-only when in the
 		|sandbox|.
 ]]
-
 local function ReloadConfig()
     local count = 0
     for name, _ in pairs(package.loaded) do
