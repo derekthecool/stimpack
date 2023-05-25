@@ -57,13 +57,34 @@ local autosnippets = {
     ),
 
     s(
-        '${',
+        '$$',
         fmt(
             [[
         ${{{}}}
         ]],
             {
-                i(1, 'variable'),
+                d(1, function()
+                    local snippet_table = {}
+
+                    -- Load table with nodes here
+                    local variables = require('stimpack.my-treesitter-functions').bash.get_all_variables_in_file()
+                    for _, value in pairs(variables) do
+                        local text_node = t(value)
+                        table.insert(snippet_table, text_node)
+                    end
+
+                    return sn(
+                        nil,
+                        fmt(
+                            [[
+                            {}
+                            ]],
+                            {
+                                c(1, snippet_table),
+                            }
+                        )
+                    )
+                end, {}),
             }
         )
     ),
