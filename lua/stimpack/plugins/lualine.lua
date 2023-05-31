@@ -21,6 +21,7 @@ return {
                 lualine_x = {
                     '%S',
                     'filesize',
+                    'selectioncount',
                     'encoding',
                     'fileformat',
                     'filetype',

@@ -304,6 +304,20 @@ local autosnippets = {
             }
         )
     ),
+
+    s(
+        { trig = '?', regTrig = false, wordTrig = false },
+        fmt(
+            [[
+        | Where-Object {{
+            $_{}
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets
