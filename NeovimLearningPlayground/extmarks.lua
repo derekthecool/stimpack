@@ -45,14 +45,12 @@ vim.api.nvim_buf_set_extmark(bufnr, namespace, location[1].row, location[1].col,
     virt_text = { { ext_mark_text, 'GoodHappyGreen' } },
 })
 
-
 -- |>
 vim.api.nvim_buf_set_extmark(bufnr, namespace, 48, 3, {
     -- virt_text_win_col = (window_width / 2) - 20,
     virt_text_pos = 'overlay',
     virt_text = { { '😄', 'GoodHappyGreen' } },
 })
-
 
 -- Test two: simulate Visual Studio test virtual texi and references to functions
 local grayHighlight = 'Gray'
@@ -73,96 +71,137 @@ vim.api.nvim_buf_set_extmark(bufnr, namespace, location[2].row, location[2].col,
     },
 })
 
-local plain_steno_start_row = 70
-local plain_steno_start_col = 5
+-- local plain_steno_start_row = 70
+-- local plain_steno_start_col = 5
+--
+-- local plain_steno = {
+--     '#STPH*FPLTD',
+--     '#SKWR*RBGSZ',
+--     '   AO EU   ',
+-- }
+--
+-- local function format_hex(number)
+--     return string.format('#%.6X', number)
+-- end
+--
+-- local hex_color = 0x000000
+-- print(format_hex(hex_color))
+--
+-- for i = 1, 30 do
+--     vim.api.nvim_set_hl(0, 'hl' .. i, { fg = format_hex(hex_color), bg = format_hex(math.random(0x888888)) })
+--     hex_color = hex_color + 1000
+-- end
+--
+-- local highlight_count = 1
+-- for k, v in ipairs(plain_steno) do
+--     local char_column = 0
+--     for char in v:gmatch('.') do
+--         vim.api.nvim_buf_set_extmark(bufnr, namespace, plain_steno_start_row + k, plain_steno_start_col + char_column, {
+--             virt_text_pos = 'overlay',
+--             virt_text = { { char, 'hl' .. highlight_count } },
+--         })
+--         char_column = char_column + 1
+--         highlight_count = highlight_count + 1
+--     end
+-- end
+--
+-- local fancy_steno_start_row = 105
+-- local fancy_steno_start_col = 5
+--
+-- local fancy_steno = {
+--     '+-+-+-+-+-+-+-+-+-+-+-+',
+--     '|#|S|T|P|H|*|F|P|L|T|D|',
+--     '+-+-+-+-+-+-+-+-+-+-+-+',
+--     '|#|S|K|W|R|*|R|B|G|S|Z|',
+--     '+-+-+-+-+-+-+-+-+-+-+-+',
+--     '      |A|O| |E|U|      ',
+--     '      +-+-+ +-+-+      ',
+-- }
+--
+--
+-- local window_height = vim.api.nvim_win_get_height(0)
+-- local window_width = vim.api.nvim_win_get_width(0)
+-- local cursor_row = vim.api.nvim_win_get_cursor(0)[1]
+-- print(window_height, window_width, cursor_row)
+--
+-- vim.api.nvim_buf_set_extmark(bufnr, namespace, math.floor(cursor_row - window_height / 2), 0, {
+--     virt_text_win_col = (window_width / 2) - 20,
+--     virt_text_pos = 'overlay',
+--     virt_text = { { 'Derek is cool!', 'GoodHappyGreen' } },
+-- })
+--
+-- vim.api.nvim_set_hl(0, 'FancyStenoBorder', { fg = '#6c25be', bg = '#39028d' })
+-- vim.api.nvim_set_hl(0, 'FancyStenoActive', { fg = '#222222', bg = '#22ffff', bold = true, italic = true })
+-- vim.api.nvim_set_hl(0, 'FancyStenoInactive', { bg = '#000000' })
+--
+-- print(fancy_steno[#fancy_steno])
+-- for row, row_text in ipairs(fancy_steno) do
+--     -- for row=1,(#fancy_steno + 1) do
+--     local char_column = 0
+--     print(fancy_steno[row])
+--     for char in fancy_steno[row]:gmatch('.') do
+--         if char:match('[%+%-%| ]') then
+--             highlight = 'Title'
+--         else
+--             local steno_key = char:match('[A-Z#*]')
+--             if steno_key ~= nil and steno_key:match('[STG]') then
+--                 highlight = 'FancyStenoActive'
+--             else
+--                 highlight = 'Folded'
+--             end
+--         end
+--
+--         vim.api.nvim_buf_set_extmark(
+--             bufnr,
+--             namespace,
+--             fancy_steno_start_row + (row - 1),
+--             fancy_steno_start_col + char_column,
+--             {
+--                 virt_text_pos = 'overlay',
+--                 virt_text = { { char, highlight } },
+--             }
+--         )
+--         char_column = char_column + 1
+--     end
+-- end
 
-local plain_steno = {
-    '#STPH*FPLTD',
-    '#SKWR*RBGSZ',
-    '   AO EU   ',
-}
+--[[
+Log lines to try and paste extra error above
+2023-05-26 09:44:04.405 -06:00 [DBG] +CME ERROR: 36
+2023-05-26 09:44:04.652 -06:00 [DBG] +CME ERROR: 36
+2023-05-26 09:44:04.730 -06:00 [DBG] +CME ERROR: 4
+2023-05-26 09:44:06.447 -06:00 [DBG] +CME ERROR: 100
+2023-05-26 09:44:06.727 -06:00 [DBG] +CME ERROR: 3
+]]
+local log_lines = vim.regex('CME ERROR'):match_str('the the the the CME ERROR')
+print(log_lines)
+log_lines = vim.regex('CME ERROR'):match_str('the the the the CME')
+print(log_lines)
 
-local function format_hex(number)
-    return string.format('#%.6X', number)
-end
+local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+for line_number, line in ipairs(lines) do
+    local match_column_start = vim.regex('CME ERROR'):match_str(line)
+    if match_column_start then
+        print(line_number, match_column_start)
 
-local hex_color = 0x000000
-print(format_hex(hex_color))
-
-for i = 1, 30 do
-    vim.api.nvim_set_hl(0, 'hl' .. i, { fg = format_hex(hex_color), bg = format_hex(math.random(0x888888)) })
-    hex_color = hex_color + 1000
-end
-
-local highlight_count = 1
-for k, v in ipairs(plain_steno) do
-    local char_column = 0
-    for char in v:gmatch('.') do
-        vim.api.nvim_buf_set_extmark(bufnr, namespace, plain_steno_start_row + k, plain_steno_start_col + char_column, {
-            virt_text_pos = 'overlay',
-            virt_text = { { char, 'hl' .. highlight_count } },
+        vim.api.nvim_buf_set_extmark(bufnr, namespace, line_number - 1, match_column_start, {
+            -- virt_text = { { 'wow, virtual text and virtual lines???', 'DevIconMotoko' } },
+            --[[ line_hl_group = 'Comment', -- this seems weird to highlight the whole line]]
+            virt_lines_above = true,
+            virt_lines = {
+                {
+                    { '', 'DevIconPy' },
+                },
+                {
+                    { '☑️  CME error found', 'Error' },
+                },
+                {
+                    { 'This error means no cell service', 'DevIconPy' },
+                },
+                {
+                    { '', 'DevIconPy' },
+                },
+            },
         })
-        char_column = char_column + 1
-        highlight_count = highlight_count + 1
-    end
-end
-
-local fancy_steno_start_row = 105
-local fancy_steno_start_col = 5
-
-local fancy_steno = {
-    '+-+-+-+-+-+-+-+-+-+-+-+',
-    '|#|S|T|P|H|*|F|P|L|T|D|',
-    '+-+-+-+-+-+-+-+-+-+-+-+',
-    '|#|S|K|W|R|*|R|B|G|S|Z|',
-    '+-+-+-+-+-+-+-+-+-+-+-+',
-    '      |A|O| |E|U|      ',
-    '      +-+-+ +-+-+      ',
-}
-
-
-local window_height = vim.api.nvim_win_get_height(0)
-local window_width = vim.api.nvim_win_get_width(0)
-local cursor_row = vim.api.nvim_win_get_cursor(0)[1]
-print(window_height, window_width, cursor_row)
-
-vim.api.nvim_buf_set_extmark(bufnr, namespace, math.floor(cursor_row - window_height / 2), 0, {
-    virt_text_win_col = (window_width / 2) - 20,
-    virt_text_pos = 'overlay',
-    virt_text = { { 'Derek is cool!', 'GoodHappyGreen' } },
-})
-
-vim.api.nvim_set_hl(0, 'FancyStenoBorder', { fg = '#6c25be', bg = '#39028d' })
-vim.api.nvim_set_hl(0, 'FancyStenoActive', { fg = '#222222', bg = '#22ffff', bold = true, italic = true })
-vim.api.nvim_set_hl(0, 'FancyStenoInactive', { bg = '#000000' })
-
-print(fancy_steno[#fancy_steno])
-for row, row_text in ipairs(fancy_steno) do
-    -- for row=1,(#fancy_steno + 1) do
-    local char_column = 0
-    print(fancy_steno[row])
-    for char in fancy_steno[row]:gmatch('.') do
-        if char:match('[%+%-%| ]') then
-            highlight = 'Title'
-        else
-            local steno_key = char:match('[A-Z#*]')
-            if steno_key ~= nil and steno_key:match('[STG]') then
-                highlight = 'FancyStenoActive'
-            else
-                highlight = 'Folded'
-            end
-        end
-
-        vim.api.nvim_buf_set_extmark(
-            bufnr,
-            namespace,
-            fancy_steno_start_row + (row - 1),
-            fancy_steno_start_col + char_column,
-            {
-                virt_text_pos = 'overlay',
-                virt_text = { { char, highlight } },
-            }
-        )
-        char_column = char_column + 1
     end
 end

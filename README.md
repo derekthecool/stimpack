@@ -33,13 +33,76 @@ Here is what a steno keyboard looks like:
 One basic fact that allows for so much power usage is the sheer number of key
 combinations. A steno keyboard has 23 keys and one or more can be pressed at
 once to create any output. So that means there are `2^23 - 1` or `8388607`
-unique single chords. Compare that with your archaic keyboard with around 100
-keys.
+unique single chords.
 
-According to this
-[website](https://keyboardcloud.com/how-many-keyboard-combinations-are-there/)
-the total key combo count is `526100`. Though the realistic number is likely much
-lower than this.
+Compare that to a normal keyboard. You have about 60 usable keys and 4 modifiers.
+We can get some help from chatGPT on these numbers with this prompt:
+
+```
+How many keyboard shortcut possiblities are there for a keyboard with 4 modifier keys
+(control, shift, alt, windows) where 0-4 modifiers can be pressed at once with one other key.
+
+The other keys to be included are:
+a-z (26 keys total),
+0-9 (10 keys total),
+F1-F12 (12 keys total),
+These non-letter keys should be included as well:
+1. space
+2. tab
+3. left arrow
+4. right arrow
+5. up arrow
+6. down arrow
+7. ,
+8. .
+9. /
+10. ;
+11. '
+12. [
+13. ]
+14. \
+15. `
+16. -
+17. +
+18. backspace
+19. delete
+20. insert
+21. escape
+22. enter
+
+Total key count to include is 60
+
+Calculate the total number of key combos using 0-4 modifiers and
+only 1 key from this list.
+```
+
+Response from 2023-06-01, using ChatGPT May 24 (2023) version
+
+> To calculate the total number of keyboard shortcut possibilities using 0-4 modifiers and only 1 key from the provided list of 60 keys, we need to consider the number of combinations for each case.
+>
+> For 0 modifiers pressed:
+> There is only one possibility: pressing any of the 60 keys individually.
+>
+> For 1 modifier pressed:
+> There are four modifier keys to choose from, and for each modifier key, there are 60 possibilities for the other key. So, the total number of combinations is 4 \* 60 = 240.
+>
+> For 2 modifiers pressed:
+> There are four modifier keys to choose from, and for each combination of two modifiers, there are 60 possibilities for the other key. Since order does not matter for the modifiers, we can calculate the combinations using the formula for choosing 2 items from a set of 4 items: C(4, 2) = 6. So, the total number of combinations is 6 \* 60 = 360.
+>
+> For 3 modifiers pressed:
+> Similarly, we have C(4, 3) = 4 combinations of three modifiers, and for each combination, there are 60 possibilities for the other key. So, the total number of combinations is 4 \* 60 = 240.
+>
+> For 4 modifiers pressed:
+> There is only one possibility since all four modifiers are pressed simultaneously.
+>
+> Therefore, the total number of keyboard shortcut possibilities using 0-4 modifiers and only 1 key from the provided list is:
+>
+> Number of possibilities for 0 modifiers + Number of possibilities for 1 modifier + Number of possibilities for 2 modifiers + Number of possibilities for 3 modifiers + Number of possibilities for 4 modifiers
+>
+> = 60 + 240 + 360 + 240 + 1
+> = 901
+>
+> So, there are a total of 901 keyboard shortcut possibilities with 0-4 modifiers and only 1 key from the given list.
 
 ## TODO
 

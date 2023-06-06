@@ -16,9 +16,11 @@ return {
                 lualine_a = { 'mode' },
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
-                -- Color does not work for globals
-                -- lualine_c = { 'TapeyTape', color = 'WarningMsg' },
                 lualine_x = {
+                    {
+                        GetLuasnipAvailableSnippetCountForCurrentFile,
+                        color = { fg = '#1155ff', bg = 'Normal' },
+                    },
                     '%S',
                     'filesize',
                     'selectioncount',
@@ -28,10 +30,13 @@ return {
                     {
                         require('lazy.status').updates,
                         cond = require('lazy.status').has_updates,
-                        color = { fg = '#ff9e64' },
+                        color = { fg = '#ff9e64', bg = 'Normal' },
                     },
                 },
-                lualine_y = { 'progress', 'WatchFileJumpToEnd' },
+                lualine_y = {
+                    'progress',
+                    'WatchFileJumpToEnd',
+                },
                 lualine_z = { 'location' },
             },
             inactive_sections = {

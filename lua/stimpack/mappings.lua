@@ -4,19 +4,38 @@ local map = require('stimpack.mapping-function')
 -- These are really only possible with Plover steno so don't feel crazy if you
 -- can't type this with your keyboard
 -- Quick fix maps
-map('n', '→', ':cnext<CR>')
-map('n', '→→→', ':cnfile<CR>')
-map('n', '→→', ':clast<CR>')
-map('n', '←', ':cprev<CR>')
-map('n', '←←←', ':cNfile<CR>')
-map('n', '←←', ':cfirst<CR>')
-map('n', '↓', ':cclose<CR>')
-map('n', '↑', ':copen<CR>')
+map({ 'n', 'i' }, '→', function()
+    vim.api.nvim_cmd({ cmd = 'cnext' }, {})
+end)
+map({ 'i', 'n' }, '→', function()
+    vim.api.nvim_cmd({ cmd = 'cnext' }, {})
+end)
+map({ 'n', 'i' }, '→→→', function()
+    vim.api.nvim_cmd({ cmd = 'cnfile' }, {})
+end)
+map({ 'n', 'i' }, '→→', function()
+    vim.api.nvim_cmd({ cmd = 'clast' }, {})
+end)
+map({ 'n', 'i' }, '←', function()
+    vim.api.nvim_cmd({ cmd = 'cprev' }, {})
+end)
+map({ 'n', 'i' }, '←←←', function()
+    vim.api.nvim_cmd({ cmd = 'cNfile' }, {})
+end)
+map({ 'n', 'i' }, '←←', function()
+    vim.api.nvim_cmd({ cmd = 'cfirst' }, {})
+end)
+map({ 'n', 'i' }, '↓', function()
+    vim.api.nvim_cmd({ cmd = 'cclose' }, {})
+end)
+map({ 'n', 'i' }, '↑', function()
+    vim.api.nvim_cmd({ cmd = 'copen' }, {})
+end)
 
 -- Buffer maps
-map('n', '⊃', ':bnext<cr>') -- Use right mod
-map('n', '⊂', ':bprevious<cr>') -- Use left mod
-map('n', 'π', ':bdelete<cr>') -- Use down mod
+map('', '⊃', ':bnext<cr>') -- Use right mod
+map('', '⊂', ':bprevious<cr>') -- Use left mod
+map('', 'π', ':bdelete<cr>') -- Use down mod
 
 -- Ｉｎｓｅｒｔ ｍａｐｓ
 -- Control + j/k to select from popup menu

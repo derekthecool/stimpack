@@ -23,6 +23,33 @@ local snippets = {
         )
     ),
 
+    s(
+      'main lua',
+        fmt(
+            [[
+        #include <stdio.h>
+        #include <stdlib.h>
+
+        #include <lua.h>
+        #include <lualib.h>
+        #include <lauxlib.h>
+
+        int main(void)
+        {{
+             lua_State* L = luaL_newstate();
+             luaL_openlibs(L);
+
+             luaL_dostring(L, "print('{}')");
+
+             return 0;
+        }}
+        ]],
+            {
+                i(1, 'Hello world from lua!'),
+            }
+        )
+    ),
+
     -- {{{ clang format disable block
     s(
         {

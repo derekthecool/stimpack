@@ -52,7 +52,7 @@ return {
 
         local map = require('stimpack.mapping-function')
 
-        map('n', '<leader>dd', require('projector').continue)
+        -- map('n', '<leader>dd', require('projector').continue)
         map('n', '_', require('projector').continue)
     end,
 }

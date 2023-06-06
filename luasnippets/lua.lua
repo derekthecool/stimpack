@@ -6,6 +6,26 @@ local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
 local snippets = {
 
+    -- File snippets
+
+    s(
+        'file exists',
+        fmt(
+            [[
+        function FileExists(filename)
+            local f = io.open(filename, 'r')
+            if f ~= nil then
+                io.close(f)
+                return true
+            else
+                return false
+            end
+        end
+        ]],
+            {}
+        )
+    ),
+
     -- {{{ Snippets to help create luasnip snippets
     s(
         {
@@ -107,10 +127,8 @@ local snippets = {
         )
     ),
 
-    -- Error, snippet is corrupted. Issue seems to be coming from first insert node with place holder text.
     s(
-
-        { trig = 'yours', regTrig = false, wordTrig = true },
+        'map',
         fmt(
             [[
         vim.keymap.set('{}', '{}', function()
@@ -119,24 +137,6 @@ local snippets = {
         ]],
             {
                 i(1, 'mode'),
-                i(2, 'lhs'),
-                i(3, 'vim.opt.textwidth = 100'),
-                i(4, 'My awesome mapping'),
-            }
-        )
-    ),
-
-    -- No issues because first nodes place holder text is removed
-    s(
-        'map2',
-        fmt(
-            [[
-        vim.keymap.set('{}', '{}', function()
-            {}
-        end, {{ silent = true, desc = '{}' }})
-        ]],
-            {
-                i(1),
                 i(2, 'lhs'),
                 i(3, 'vim.opt.textwidth = 100'),
                 i(4, 'My awesome mapping'),
@@ -1028,43 +1028,6 @@ local autosnippets = {
         )
     ),
     --}}}
-
-    -- Error, snippet is corrupted. Issue seems to be coming from first insert node with place holder text.
-    s(
-        'mine',
-        fmt(
-        [[
-        vim.keymap.set('{iNode1}', '{}', function()
-            {}
-        end, {{ silent = true, desc = '{}' }})
-        ]],
-            {
-                iNode1 = i(1, "mode"),
-                i(2, 'lhs'),
-                i(3, 'vim.opt.textwidth = 100'),
-                i(4, 'My awesome mapping'),
-            }
-        )
-    ),
-    s(
-        'sup',
-        fmt(
-        [[
-        vim.keymap.set('<>', '<>', function()
-            <>
-        end, { silent = true, desc = '<>' })
-        ]],
-            {
-                i(1, 'mode'),
-                i(2, 'lhs'),
-                i(3, 'vim.opt.textwidth = 100'),
-                i(4, 'My awesome mapping'),
-            },
-            {
-                delimiters = '<>',
-            }
-        )
-    ),
 }
 
 return snippets, autosnippets

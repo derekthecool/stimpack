@@ -103,3 +103,14 @@ function V(...)
         vim.notify(vim.inspect(value), vim.log.levels.INFO, { title = 'Stimpack notification (' .. key .. ')' })
     end
 end
+
+-- Help from here https://stackoverflow.com/a/4991602/9842112
+function FileExists(filename)
+    local f = io.open(filename, 'r')
+    if f ~= nil then
+        io.close(f)
+        return true
+    else
+        return false
+    end
+end
