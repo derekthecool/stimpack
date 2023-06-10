@@ -23,12 +23,22 @@ return {
             close_on_exit = true,
             shell = vim.o.shell,
             float_opts = {
-                border = 'curved',
+                border = 'double',
                 winblend = 0,
                 highlights = {
                     border = 'Normal',
                     background = 'Normal',
                 },
+                width = function()
+                    local win_width = vim.api.nvim_win_get_width(0)
+                    local subtract_amount = 4
+                    return win_width - subtract_amount
+                end,
+                height = function()
+                    local win_height = vim.api.nvim_win_get_height(0)
+                    local subtract_amount = 2
+                    return win_height - subtract_amount
+                end,
             },
         })
 
@@ -55,9 +65,6 @@ return {
             count = 8,
             dir = 'git_dir',
             direction = 'float',
-            float_opts = {
-                border = 'double',
-            },
             -- function to run on opening the terminal
             on_open = function(term)
                 vim.cmd('startinsert!')
@@ -78,9 +85,6 @@ return {
             count = 9,
             direction = 'float',
             hidden = true,
-            float_opts = {
-                border = 'double',
-            },
             -- function to run on opening the terminal
             on_open = function(term)
                 vim.cmd('startinsert!')
