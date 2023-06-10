@@ -15,6 +15,37 @@ local snippets = {
             {}
         )
     ),
+
+    s(
+        'trap',
+        fmt(
+            [[
+        {} ()
+        {{
+            {}
+        }}
+
+        # Run the function: {} upon script exit (includes control-c press)
+        trap {} EXIT
+        ]],
+            {
+                i(1, 'run_before_shutdown'),
+                i(2, 'echo "Hello World"'),
+                rep(1),
+                rep(1),
+            }
+        )
+    ),
+
+    s(
+        'tcpdump',
+        fmt([[tcpdump -i any {} -w "$filename" -v]], {
+            c(1, {
+                t('port 5000'),
+                t('portrange 5000-6000'),
+            }),
+        })
+    ),
 }
 
 local autosnippets = {
@@ -89,6 +120,39 @@ local autosnippets = {
                         )
                     )
                 end, {}),
+            }
+        )
+    ),
+
+    s(
+        'FUNCTION',
+        fmt(
+            [[
+        {} ()
+        {{
+            {}
+        }}
+        ]],
+            {
+                i(1, 'MyFunction'),
+                i(2, 'echo "Hello World"'),
+            }
+        )
+    ),
+
+    s(
+        'WHILE',
+        fmt(
+            [[
+        while {} {} {}; do
+            {}
+        done
+        ]],
+            {
+                t('[['),
+                i(1),
+                t(']]'),
+                i(2),
             }
         )
     ),

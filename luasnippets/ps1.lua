@@ -50,10 +50,12 @@ local snippets = {
         fmt(
             [[
         <#
+        .Name
+           {}
         .Synopsis
-           Short description
+           {}
         .DESCRIPTION
-           Long description
+           {}
         .EXAMPLE
            Example of how to use this cmdlet
         .EXAMPLE
@@ -80,20 +82,20 @@ local snippets = {
         [OutputType([String])]
         Param
         (
-            # Param1 help description
             [Parameter(Mandatory=$true,
                 ValueFromPipeline=$true,
                 ValueFromPipelineByPropertyName=$true,
-                ValueFromRemainingArguments=$false,
-                Position=0,
-                ParameterSetName='Parameter Set 1')]
+                ValueFromRemainingArguments=$false)]
             [ValidateNotNull()]
             [ValidateNotNullOrEmpty()]
-            [ValidateCount(0,5)]
-            [ValidateSet("sun", "moon", "earth")]
-            [Alias("p1")]
-            $Param1
-
+            # Checks to make sure path is valid first
+            # [ValidateScript({{Test-Path $_}})]
+            # [ValidateLength(1,5)]
+            # [ValidatePattern('match this regex .*')]
+            # [ValidateCount(0,5)]
+            # [ValidateSet('sun', 'moon', 'earth')]
+            # [Alias('p1','test','anothername')]
+            ${}
         )
 
         Begin
@@ -113,9 +115,16 @@ local snippets = {
         }}
         ]],
             {
-                i(1),
-                i(2),
-                i(3),
+                f(function(args, snip)
+                  return vim.fn.expand('%:t')
+                end,
+                {  }),
+                i(1, 'Short script description'),
+                i(2, 'Long script description'),
+                i(3, 'param1'),
+                i(4, 'echo "start code"'),
+                i(5, 'echo "perform code"'),
+                i(6, 'echo "end code"'),
             }
         )
     ),
