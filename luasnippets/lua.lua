@@ -6,6 +6,20 @@ local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
 local snippets = {
 
+    s(
+        'require',
+        fmt(
+            [[
+        local {} = require('{}')
+        ]],
+
+            {
+                l(l._1:gsub('.*%.(%w+)', '%1'), { 1 }),
+                i(1, 'initial text'),
+            }
+        )
+    ),
+
     -- File snippets
 
     s(
@@ -47,6 +61,70 @@ local snippets = {
       return snippets, autosnippets
       ]],
             { i(1), i(2) }
+        )
+    ),
+
+    s(
+        'luasnip_lambda_node',
+        fmt(
+            [[
+        -- A shortcut for functionNodes that only do very basic string manipulation.
+        -- l(lambda, argnodes):
+        l(l._{}:gsub('{}', '{}'), {{ {} }}),
+        ]],
+            {
+                i(1, 'node_number_to_perform_function_on'),
+                i(2, 'find'),
+                i(3, 'replace'),
+                i(4, '{ 1, 2 }]]'),
+            }
+        )
+    ),
+
+    s(
+        'luasnip_dynamic_lambda_node',
+        fmt(
+            [[
+        -- Pretty much the same as lambda, but it inserts the resulting text as an insertNode, and, as such, it can be quickly overridden.
+        -- dynamic_lambda(jump_indx, lambda, node_references)
+        dl(l._{}:gsub('{}', '{}'), {{ {} }}),
+        ]],
+            {
+                i(1, 'node_number_to_perform_function_on'),
+                i(2, 'find'),
+                i(3, 'replace'),
+                i(4, 'dependant_nodes --[[ { 1, 2 }]]'),
+            }
+        )
+    ),
+
+    s(
+        'luasnip_partial_node',
+        fmt(
+            [[
+        -- Evaluates a function on expand and inserts its value
+        ---partial(fn, params...)
+        partial({})
+        ]],
+            {
+                i(1, 'os.date, "%Y"'),
+            }
+        )
+    ),
+
+    s(
+        'luasnip_nonempty_node',
+        fmt(
+            [[
+        -- Inserts text if the referenced node doesn't contain any text.
+        -- nonempty(node_reference, not_empty, empty):
+        nonempty({}, "{}", "{}")
+        ]],
+            {
+                i(1, '1'),
+                i(2, 'Text to insert if not empty'),
+                i(3, 'Text to insert if empty'),
+            }
         )
     ),
 
