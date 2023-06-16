@@ -4,6 +4,8 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
+local auxiliary = require('luasnippets.functions.auxiliary')
+
 local snippets = {
 
     s(

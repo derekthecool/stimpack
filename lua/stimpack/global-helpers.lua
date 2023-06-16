@@ -66,7 +66,7 @@ end
 OS['init_lua'] = vim.fs.normalize(vim.env.MYVIMRC)
 OS['nvim'] = vim.fs.normalize(vim.fn.stdpath('config'))
 OS['my_plugins'] = OS.join_path(OS['home'], 'neovim_plugins')
-OS['snippets'] = OS.join_path(OS.nvim, 'luasnippets')
+OS['snippets'] = OS.join_path(OS.nvim,'lua', 'luasnippets')
 OS['stimpack'] = OS.join_path(OS.nvim, 'lua', 'stimpack')
 
 ---Function to return telescope.utils command runner

@@ -75,13 +75,14 @@ local snippets = {
         },
         fmt(
             [[
-      for (char *p = strtok({}, ","); p != NULL; p = strtok(NULL, ","))
+      char separator[] = "{}";
+      for (char *p = strtok({}, separator); p != NULL; p = strtok(NULL, separator))
       {{
         returnValue += atoi(p);
       }}
       {}
       ]],
-            { i(1, 'InputStringToParse'), i(2) }
+            { i(1, ','), i(2, 'InputStringToParse'), i(3) }
         )
     ),
     -- }}}
