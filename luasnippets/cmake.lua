@@ -3,31 +3,30 @@
 local snippets = {
 
     s(
-      'file',
-      fmt(
-        [[
+        'file',
+        fmt(
+            [[
         # Copy the file to build always
         file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{}
              DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}})
         ]],
-        {
-            i(1),
-        }
-      )
-
+            {
+                i(1),
+            }
+        )
     ),
     s(
-      'configure_file',
-      fmt(
-        [[
+        'configure_file',
+        fmt(
+            [[
         # Copy the file to build and rerun project if modified
         configure_file(COPY ${{CMAKE_CURRENT_SOURCE_DIR}}/{}
              DESTINATION ${{CMAKE_CURRENT_BINARY_DIR}} COPYONLY)
         ]],
-        {
-            i(1),
-        }
-      )
+            {
+                i(1),
+            }
+        )
     ),
 
     s(
@@ -301,9 +300,9 @@ variable_watch({})
 
     -- Lua embed build setup
     s(
-      'lua setup',
-      fmt(
-        [[
+        'lua setup',
+        fmt(
+            [[
         # Add these if using newer lua like 5.4.6: lctype.c lcorolib.c lutf8lib.c
         add_library("lua" STATIC
             ./lua-5.1.5/src/lapi.c
@@ -343,16 +342,14 @@ variable_watch({})
 
         target_link_libraries(Luatest lua)
         ]],
-        {
-          
-        }
-      )
+            {}
+        )
     ),
 
     s(
-      'lua idf_component_register',
-      fmt(
-        [[
+        'lua idf_component_register',
+        fmt(
+            [[
         idf_component_register("lua"
             SRCS
             "lua515/src/lapi.c"
@@ -391,12 +388,9 @@ variable_watch({})
         # Ignore this error in the lua library
         target_compile_options(${{COMPONENT_LIB}} PRIVATE -Wno-error=misleading-indentation)
         ]],
-        {
-          
-        }
-      )
+            {}
+        )
     ),
-
 }
 
 local autosnippets = {

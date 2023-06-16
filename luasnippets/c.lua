@@ -24,7 +24,7 @@ local snippets = {
     ),
 
     s(
-      'main lua',
+        'main lua',
         fmt(
             [[
         #include <stdio.h>
@@ -361,6 +361,19 @@ local autosnippets = {
                     t('#include <wchar.h>'),
                     t('#include <wctype.h>'),
                 }),
+            }
+        )
+    ),
+
+    s(
+        'DEFINE',
+        fmt(
+            [[
+        #define {} {}
+        ]],
+            {
+                i(1, 'VARIABLE'),
+                i(2, 'VALUE'),
             }
         )
     ),

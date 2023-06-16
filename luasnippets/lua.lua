@@ -230,14 +230,21 @@ local snippets = {
             [[
         local {} = {{}}
 
+        {}.setup = function({}) do
+            {}
+        end
+
         {}
 
         return {}
         ]],
             {
                 i(1, 'M'),
-                i(2),
                 rep(1),
+                i(2, 'opts'),
+                i(3),
+                i(4),
+                i(5),
             }
         )
     ),
