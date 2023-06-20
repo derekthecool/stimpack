@@ -9,6 +9,31 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
 
     s(
+        'format',
+        fmt(
+            [[
+        string.format("{}"{})
+        ]],
+            {
+                i(1),
+                d(2, function(args, snip)
+                    local output = {}
+                    local test = args[1][1]
+                    local insert_location = 1
+                    if test then
+                        for format_modifier in test:gmatch('(%%%w)') do
+                            table.insert(output, t(','))
+                            table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
+                            insert_location = insert_location + 1
+                        end
+                    end
+                    return sn(nil, output)
+                end, { 1 }),
+            }
+        )
+    ),
+
+    s(
         'require',
         fmt(
             [[

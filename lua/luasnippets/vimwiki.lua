@@ -109,12 +109,13 @@ local snippets = {
 
     -- {{{ hugo snippets
     s(
-        'front',
+        'hugo_front',
         fmt(
             [[
       ---
       title: "{}"
       date: {}
+      categories: {}
       draft: {}
       ---
 
@@ -128,8 +129,21 @@ local snippets = {
                     return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
                 end),
                 t(os.date('%Y-%m-%dT%H:%M:%S')),
-                i(2, 'false'),
-                require('luasnip.extras').rep(1),
+                sn(
+                    1,
+                    fmt('[\'{}\']', {
+                        i(1, 'stenography'),
+                    })
+                ),
+
+                c(2, {
+                    t('true'),
+                    t('false'),
+                }),
+
+                f(function()
+                    return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
+                end),
                 i(0),
             }
         )
