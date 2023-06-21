@@ -1,3 +1,5 @@
+local neogit_git_level = 3
+
 return {
     'TimUntersberger/neogit',
     dependencies = {
@@ -5,7 +7,7 @@ return {
     },
     keys = {
         {
-            '<leader>g1',
+            '<leader>g' .. neogit_git_level,
             function()
                 require('neogit').open()
             end,
@@ -23,10 +25,10 @@ return {
         disable_builtin_notifications = false,
         use_magit_keybindings = false,
         commit_popup = {
-            kind = 'split',
+            kind = 'floating',
         },
         -- Change the default way of opening neogit
-        kind = 'split',
+        kind = 'tab',
         -- customize displayed signs
         signs = {
             -- { CLOSED, OPENED }

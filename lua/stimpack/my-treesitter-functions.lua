@@ -19,17 +19,17 @@ local get_root = function(bufnr, language)
 end
 
 my_treesitter_functions.all = {
-    get_all_buffers = function(pattern)
+    get_all_buffers = function(pattern, needbuflisted)
         local buffer_list = {}
 
-        for _, open_buffers in pairs(vim.fn.getbufinfo({ buflisted = true })) do
+        for _, open_buffers in pairs(vim.fn.getbufinfo({ buflisted = needbuflisted })) do
             local buffer_number
             if type(pattern) == 'string' and open_buffers.name:match(pattern) then
                 if next(open_buffers) then
                     buffer_number = open_buffers.bufnr
                 end
+                table.insert(buffer_list, buffer_number)
             end
-            table.insert(buffer_list, buffer_number)
         end
         return buffer_list
     end,
@@ -37,7 +37,7 @@ my_treesitter_functions.all = {
 
 local function get_test_function_names(query, language, buffer_filter, capture_id_filter)
     local test_function_locations = {}
-    for _, bufnr in pairs(my_treesitter_functions.all.get_all_buffers(buffer_filter)) do
+    for _, bufnr in pairs(my_treesitter_functions.all.get_all_buffers(buffer_filter, true)) do
         local root = get_root(bufnr, language)
 
         for id, node in query:iter_captures(root, bufnr, 0, -1) do
@@ -74,6 +74,34 @@ local function get_recent_var_from_node(query, language)
     end
 
     return variable_name
+end
+
+local function get_all_variables(query, language, filter_function)
+    local output = {}
+    local bufnr = vim.api.nvim_get_current_buf()
+    local root = get_root(bufnr, language)
+
+    local stuff = query:iter_captures(root, bufnr, 0, -1)
+    V(type(stuff))
+    V(stuff)
+    local output = filter_function(stuff)
+    V(output)
+
+    -- for _, node in query:iter_captures(root, bufnr, 0, -1) do
+    --     local variable = vim.treesitter.get_node_text(node, bufnr)
+    --     -- 2023-05-25T11:34:07 Stimpack notification (1)  INFO { 12, 0, 12, 1 }
+    --     -- 2023-05-25T11:34:07 Stimpack notification (1)  INFO { 14, 0, 14, 34 }
+    --     local node_details = {
+    --         range = { node:range() },
+    --         text = vim.treesitter.get_node_text(node, bufnr),
+    --         type = node:type(),
+    --     }
+    --     V(node_details)
+    --
+    --     table.insert(output, variable)
+    -- end
+
+    return output
 end
 
 --- Return table of nodes until parent node is found
@@ -253,6 +281,31 @@ my_treesitter_functions.bash = {
             vim.treesitter.query.parse(language, '(variable_assignment name: (variable_name) @bash_variable)')
         local variable = get_recent_var_from_node(query_recent_var_bash, language)
         return variable
+    end,
+    get_all_variables_in_file = function()
+        local language = 'bash'
+        local query_recent_var_bash =
+            vim.treesitter.query.parse(language, '(variable_assignment name: (variable_name) @bash_variable)')
+        local variables = get_all_variables(query_recent_var_bash, language, function(TS_node_iterator)
+            for _, node in TS_node_iterator do
+                -- V('tester', index, node, node:type())
+
+                local bufnr = 0
+                -- local variable = node:get_node_text(bufnr)
+                local variable = vim.treesitter.get_node_text(node, bufnr)
+                -- 2023-05-25T11:34:07 Stimpack notification (1)  INFO { 12, 0, 12, 1 }
+                -- 2023-05-25T11:34:07 Stimpack notification (1)  INFO { 14, 0, 14, 34 }
+                local node_details = {
+                    range = { node:range() },
+                    text = vim.treesitter.get_node_text(node, bufnr),
+                    type = node:type(),
+                }
+                -- V(node_details)
+                return node_details
+            end
+        end)
+        V(variables)
+        return variables
     end,
 }
 

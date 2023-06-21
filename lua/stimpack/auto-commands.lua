@@ -12,7 +12,7 @@ vim.api.nvim_create_autocmd('TextYankPost * ', {
 -- This autocommand does not seem to work right on nonhelp files, not able to do macros
 vim.api.nvim_create_autocmd(
     'FileType',
-    { pattern = { 'qf', 'help' }, command = 'nnoremap <silent> <buffer> q :close<cr>', group = generalSettingsGroup }
+    { pattern = { 'qf', 'help', 'fugitive' }, command = 'nnoremap <silent> <buffer> q :close<cr>', group = generalSettingsGroup }
 )
 vim.api.nvim_create_autocmd('BufWinEnter', { command = ':set formatoptions-=cro', group = generalSettingsGroup })
 

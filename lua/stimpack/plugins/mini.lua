@@ -6,6 +6,20 @@ return {
         -- Amazing text alignment
         -- Replaces plugin: https://github.com/godlygeek/tabular
         -- Though I still need tabular because vimwiki needs it for nice markdown table auto formatting
+
+        --[[
+        Mini align demo https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+        Press gaip to start formatting the block
+        Press s to choose delimiter
+        Press , to align on commas boom-boom-boom
+
+        cord, dog, cow, supercalifragilisticexpialidocious
+        log, trig, micron, blockyinging
+
+        cord, dog , cow   , supercalifragilisticexpialidocious
+        log , trig, micron, blockyinging
+
+        ]]
         require('mini.align').setup()
 
         -- A serious collection of awesome features
@@ -46,7 +60,29 @@ return {
 
         -- A true powerhose of movement commands, I really like ]f to go to next file on disk
         -- TODO: plover work needed here, this is a good use for a python dictionary
-        require('mini.bracketed').setup()
+        require('mini.bracketed').setup({
+            -- First-level elements are tables describing behavior of a target:
+            -- - <suffix> - single character suffix. Used after `[` / `]` in mappings.
+            --   For example, with `b` creates `[B`, `[b`, `]b`, `]B` mappings.
+            --   Supply empty string `''` to not create mappings.
+            -- - <options> - table overriding target options.
+
+            buffer = { suffix = 'b', options = {} },
+            -- Disable the comment movements
+            comment = { suffix = '', options = {} },
+            conflict = { suffix = 'x', options = {} },
+            diagnostic = { suffix = 'd', options = {} },
+            file = { suffix = 'f', options = {} },
+            indent = { suffix = 'i', options = {} },
+            jump = { suffix = 'j', options = {} },
+            location = { suffix = 'l', options = {} },
+            oldfile = { suffix = 'o', options = {} },
+            quickfix = { suffix = 'q', options = {} },
+            treesitter = { suffix = 't', options = {} },
+            undo = { suffix = 'u', options = {} },
+            window = { suffix = 'w', options = {} },
+            yank = { suffix = 'y', options = {} },
+        })
 
         -- Awesome function which seems to work as well as Comment.nvim
         -- 2023-02-27 comment string settings are not as awesome for F#, and C
@@ -98,17 +134,3 @@ return {
         require('mini.ai').setup()
     end,
 }
-
---[[
-
-# Mini align demo https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
-# Press gaip to start formatting the block
-# Press s to choose delimiter
-# Press , to align on commas boom-boom-boom
-cord, dog, cow, supercalifragilisticexpialidocious
-log, trig, micron, blockyinging
-
-cord, dog , cow   , supercalifragilisticexpialidocious
-log , trig, micron, blockyinging
-
-]]

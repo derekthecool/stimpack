@@ -32,7 +32,7 @@ return {
                     end,
                     'Blame',
                 },
-                p = {
+                q = {
                     function()
                         require('gitsigns').preview_hunk()
                     end,
@@ -78,19 +78,6 @@ return {
                 c = {
                     '<cmd>Telescope git_commits<cr>',
                     'Telescope: Checkout commit',
-                },
-                -- 'sindrets/diffview.nvim'
-                d = {
-                    function()
-                        require('diffview').open()
-                    end,
-                    'DiffViewOpen',
-                },
-                D = {
-                    function()
-                        require('diffview').close()
-                    end,
-                    'DiffViewClose',
                 },
             },
         })

@@ -4,7 +4,7 @@ return {
     'akinsho/toggleterm.nvim', -- Awesome terminal helper in lua
     keys = {
         '⏫',
-        -- Set as second git plugin use <leader>g1
+        -- Set as second git plugin use <leader>g2
         { '<leader>g' .. toggleterm_git_level, desc = 'Lazygit' },
         { '<leader>gz', desc = 'Open lazygit to dotfiles bare repo ~/.cfg' },
     },
