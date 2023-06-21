@@ -1,3 +1,32 @@
+--[[
+This plugin is quite powerful. Here is my list of favorite commands
+
+
+-- The main command: easy mapping for toggle is my command <leader>gd
+:DiffviewOpen
+:DiffviewOpen HEAD~2
+:DiffviewOpen HEAD~4..HEAD~2
+:DiffviewOpen d4a7b0d
+:DiffviewOpen d4a7b0d^!
+:DiffviewOpen d4a7b0d..519b30e
+:DiffviewOpen origin/main...HEAD
+:DiffviewOpen HEAD~2 -- lua/diffview plugin
+:DiffviewOpen d4a7b0d -uno
+
+:DiffviewFileHistory
+:DiffviewFileHistory %
+:DiffviewFileHistory path/to/some/file.txt
+:DiffviewFileHistory path/to/some/directory
+:DiffviewFileHistory multiple/paths foo/bar baz/qux
+:DiffviewFileHistory --base=HEAD~4
+:DiffviewFileHistory --base=LOCAL
+:DiffviewFileHistory --range=origin..HEAD
+:DiffviewFileHistory --range=feat/some-branch
+:'<,'>DiffviewFileHistory
+
+See :h diffview-maps for other mappings available
+
+]]
 return {
     'sindrets/diffview.nvim',
     config = function()
