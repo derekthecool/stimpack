@@ -14,8 +14,19 @@ return {
             pattern = { 'fugitive:*' },
             callback = function()
                 -- Mappings to use fugitive to push and pull
-                vim.keymap.set('n', '<leader>gP', ':G push<CR>', { buffer = true })
-                vim.keymap.set('n', '<leader>gp', ':G pull<CR>', { buffer = true })
+                vim.keymap.set('n', '<leader>gP', ':G push<CR>')
+                vim.keymap.set('n', '<leader>gp', ':G pull<CR>')
+
+                local fugitive_user_group = vim.api.nvim_create_augroup('fugitive_user_group', { clear = true })
+                -- Change to file type detection of ft=fugitive to run command start insert
+                vim.api.nvim_create_autocmd('BufNew', {
+                    pattern = { '*COMMIT_EDITMSG' },
+                    callback = function()
+                        V('in commit')
+                        vim.api.nvim_feedkeys('i', 'n', nil)
+                    end,
+                    group = fugitive_user_group,
+                })
             end,
         })
     end,
