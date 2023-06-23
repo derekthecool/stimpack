@@ -320,11 +320,21 @@ local autosnippets = {
         ]],
             {
                 c(1, {
-                    sn(nil, {
-                        t('#include "'),
-                        i(1),
-                        t('"'),
-                    }),
+                    d(nil, function(args, snip)
+                        local extension = vim.fn.expand('%:e')
+                        local matching_h_file_or_default = 'HeaderFilename.h'
+                        if extension == 'c' or extension == 'cpp' then
+                            matching_h_file_or_default = vim.fn.expand('%:t'):gsub('%.c', '.h')
+                        end
+
+                        return sn(
+                            nil,
+                            fmt([[#include "{}"]], {
+                                i(1, matching_h_file_or_default),
+                            })
+                        )
+                    end, {}),
+
                     sn(nil, {
                         t('#include <'),
                         i(1),

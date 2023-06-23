@@ -21,7 +21,6 @@ return {
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             delete_check_events = { 'TextChanged', 'InsertLeave' },
             enable_autosnippets = true, -- I NEED autosnippets to live, default is false
-
             -- Add awesome highlights to help show where you are at in a snippet
             -- Think of them as a road map of where you're going
             ext_opts = {
@@ -180,7 +179,7 @@ return {
                         end
                         file:close()
 
-                        vim.api.nvim_cmd({ cmd = 'split', args = { luasnip_snippet_path }, range = { 20 } }, {})
+                        vim.api.nvim_cmd({ cmd = 'tabnew', args = { luasnip_snippet_path } }, {})
                     end
                 end)
             else
@@ -189,7 +188,7 @@ return {
                 if FileExists(luasnip_snippet_path) then
                     require('luasnip.loaders').edit_snippet_files({
                         edit = function(file)
-                            vim.api.nvim_cmd({ cmd = 'split', args = { file }, range = { 20 } }, {})
+                            vim.api.nvim_cmd({ cmd = 'tabnew', args = { file } }, {})
                         end,
                     })
                 end
