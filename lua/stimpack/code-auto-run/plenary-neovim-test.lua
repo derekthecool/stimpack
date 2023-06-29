@@ -82,13 +82,14 @@ M.neovim_test = function()
             end
             StimpackTestSummary = summary
         end,
-
         on_exit = function()
             local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
 
-            -- Uncomment for easy debugging
+            -- -- Uncomment for easy debugging
             -- vim.notify(vim.inspect(test_names))
             -- vim.notify(vim.inspect(output_list))
+
+            local error_diagnostic_list = {}
 
             for _, test_result in pairs(output_list) do
                 test_result['treesitter_details'] = test_names[test_result.test_name]
@@ -106,19 +107,27 @@ M.neovim_test = function()
                         )
                     elseif test_result.result == 'Fail' then
                         local diagnostic_message = {
-                            {
-                                bufnr = test_result.buffer_number[1].bufnr,
-                                lnum = test_result.treesitter_details.range[1],
-                                col = 0,
-                                severity = vim.diagnostic.severity.ERROR,
-                                source = 'neovim lua test',
-                                message = string.format('Test Failed %s', Icons.diagnostics.error2),
-                                user_data = {},
-                            },
+                            bufnr = test_result.buffer_number[1].bufnr,
+                            lnum = test_result.treesitter_details.range[1],
+                            col = 0,
+                            severity = vim.diagnostic.severity.ERROR,
+                            source = 'neovim lua test',
+                            message = string.format('Test Failed %s', Icons.diagnostics.error2),
+                            user_data = {},
                         }
-                        vim.diagnostic.set(namespace_id, test_result.buffer_number[1].bufnr, diagnostic_message, {})
+                        -- table.insert(error_diagnostic_list, diagnostic_message)
+                        local buffer = test_result.buffer_number[1].bufnr
+
+                        -- Create a table for each buffer
+                        error_diagnostic_list[buffer] = error_diagnostic_list[buffer] or {}
+                        table.insert(error_diagnostic_list[buffer], diagnostic_message)
                     end
                 end
+            end
+
+            for buffer_number, diagnostic_table in pairs(error_diagnostic_list) do
+                -- V(buffer_number, diagnostic_table)
+                vim.diagnostic.set(namespace_id, buffer_number, diagnostic_table, {})
             end
         end,
     })

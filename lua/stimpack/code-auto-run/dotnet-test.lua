@@ -16,7 +16,7 @@ M.dotnet_test = function()
     local output_log_filename = nil
     local namespace_id = vim.api.nvim_create_namespace('dotnet_test_runner')
 
-    local buffer_list = require('stimpack/my-treesitter-functions').all.get_all_buffers('.*Tests.cs')
+    local buffer_list = require('stimpack/my-treesitter-functions').all.get_all_buffers('.*Tests.cs', true)
     if #buffer_list == 0 then
         -- vim.notify('No open test files')
         return

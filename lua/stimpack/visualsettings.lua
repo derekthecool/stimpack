@@ -13,12 +13,6 @@ vim.api.nvim_set_hl(0, 'ColorColumn', { fg = '#750495'})
 -- Set highlight for mini.nvim trailspace
 vim.api.nvim_set_hl(0, 'MiniTrailspace', { bg = '#4a50fa', fg = '#000000' })
 
-require('nvim-web-devicons').setup({
-    -- globally enable default icons (default to false)
-    -- will get overriden by `get_icons` option
-    default = true,
-})
-
 -- Function to select a color scheme from my installed list with some filtering
 function NewRandomColorscheme()
     local color_list = {}
