@@ -4,6 +4,8 @@
 
 ### C Debugging
 
+#### Local (Executable)
+
 This one was a bit tricky. But after working through some items in this GitHub
 [nvim-dap #260](https://github.com/mfussenegger/nvim-dap/issues/260)
 
@@ -40,6 +42,11 @@ Debugee configuration
     "showLog": false
 }
 ```
+
+#### Remote (Server)
+
+TODO: Find a way to debug an application running in a docker container through localhost
+network access.
 
 ### dotnet csharp netcoredbg
 

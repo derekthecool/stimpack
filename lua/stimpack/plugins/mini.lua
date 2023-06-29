@@ -26,7 +26,11 @@ return {
         -- function setup_auto_root() replaces https://github.com/airblade/vim-rooter
         -- function zoom() replaces https://github.com/szw/vim-maximizer which I used to use for vimspector
         require('mini.misc').setup({ make_global = { 'put' } })
-        MiniMisc.setup_auto_root()
+
+        local directory_root = MiniMisc.find_root()
+        if directory_root ~= nil and directory_root:match('Exercism') == nil then
+            MiniMisc.setup_auto_root()
+        end
         MiniMisc.setup_restore_cursor()
 
         -- Very magic plugin that shows indentscope with a nice animation. This will be wonderful for fsharp.

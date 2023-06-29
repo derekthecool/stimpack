@@ -32,6 +32,37 @@ end
 local snippets = {
 
     s(
+        'lua NLua starter',
+        fmt(
+            [[
+            // Create new lua state and open libs so print and other functions can be used
+            Lua L = new Lua(openLibs: true);
+            // Load CLRPackage to let lua load csharp namespaces and functions
+            L.LoadCLRPackage();
+
+            L.DoFile("test.lua");
+            LuaFunction f = L.GetFunction("TestFunction");
+            if (f != null)
+            {{
+                var result = f.Call(5);
+                Console.WriteLine(result.GetValue(0));
+            }}
+        ]],
+            {}
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        add_csharp_using_statement_if_needed('NLua')
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
         'regex match',
         fmt(
             [[
