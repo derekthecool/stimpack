@@ -4,7 +4,23 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
-local auxiliary = require('luasnippets.functions.auxiliary')
+-- local auxiliary = require('luasnippets.functions.auxiliary')
+
+local FFF = function(jump_position)
+    return d(jump_position, function(args, snip)
+        local output = {}
+        local test = args[1][1]
+        local insert_location = 1
+        if test then
+            for format_modifier in test:gmatch('(%%%w)') do
+                table.insert(output, t(','))
+                table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
+                insert_location = insert_location + 1
+            end
+        end
+        return sn(nil, output)
+    end, { 1 })
+end
 
 local snippets = {
 
@@ -16,19 +32,7 @@ local snippets = {
         ]],
             {
                 i(1),
-                d(2, function(args, snip)
-                    local output = {}
-                    local test = args[1][1]
-                    local insert_location = 1
-                    if test then
-                        for format_modifier in test:gmatch('(%%%w)') do
-                            table.insert(output, t(','))
-                            table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
-                            insert_location = insert_location + 1
-                        end
-                    end
-                    return sn(nil, output)
-                end, { 1 }),
+                FFF(2),
             }
         )
     ),
@@ -352,18 +356,14 @@ local snippets = {
 
 -- EASYPOST.lua
 -- https://wiki.wireshark.org/uploads/6f35ec7531e1557df3f2964c81d80510/EASYPOST.lua
--- Replace occurrences of "easypost/EASYPOST" with protocol/dissector name.
--- Grab and format fields as needed
 
--- Step 1 - document as you go. See header above and set_plugin_info().
-local plugin_information = {{
+-- Step 1 - Set plugin plugin information
+set_plugin_info({{
     version = '{}',
     author = '{}',
     description = '{}',
     repository = '{}',
-}}
-
-set_plugin_info(plugin_information)
+}})
 
 --- Step 2 - create a protocol to attach new fields to
 ---@type Proto
@@ -813,25 +813,33 @@ local autosnippets = {
 
     -- Luasnip functions
 
+    -- This massive snippet is used to create snippets
+    -- It features several choice nodes with a simple and complex version
     s(
         'snip snip',
         fmt(
             [=[
       s(
-        '{}',
+        {},
         fmt(
           [[
           {}
           ]],
           {{
             {}
-          }}
+          }}{}
         )
       ),
       ]=],
             {
                 c(1, {
-                    i(1, 'trigger'),
+                    -- r(1, 'snippet_trigger'),
+                    sn(
+                        1,
+                        fmt([['{}']], {
+                            r(1, 'snippet_trigger'),
+                        })
+                    ),
                     sn(
                         1,
                         fmt(
@@ -843,7 +851,7 @@ local autosnippets = {
               }}
               ]],
                             {
-                                i(1, 'long trigger'),
+                                r(1, 'snippet_trigger'),
                                 c(2, {
                                     t('true'),
                                     t('false'),
@@ -853,10 +861,48 @@ local autosnippets = {
                         )
                     ),
                 }),
-                i(2),
-                i(3),
+                r(2, 'snippet_format'),
+                r(3, 'snippet_nodes'),
+                c(4, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    ,
+                    {{
+                    -- Special callback functions to run. Use the index of the node to run it at or -1 to run before all nodes
+                    callbacks = {{
+                        [-1] = {{
+                            -- Write needed using directives before expanding snippet so positions are not messed up
+                            [events.pre_expand] = function()
+                                add_csharp_using_statement_if_needed('NLua')
+                            end,
+                        }},
+                    }},
+
+                    -- For storing items for restore nodes
+                    stored = {{
+                        ['snippet_trigger'] = i(1, 'trigger'),
+                        ['snippet_format'] = i(2),
+                        ['snippet_nodes'] = i(3),
+                    }},
+                    }}
+
+                    ]],
+                            {}
+                        )
+                    ),
+                }),
             }
-        )
+        ),
+        {
+            stored = {
+                ['snippet_trigger'] = i(1, 'trigger'),
+                ['snippet_format'] = i(2),
+                ['snippet_nodes'] = i(3),
+            },
+        }
     ),
 
     s(
@@ -1036,7 +1082,8 @@ local autosnippets = {
         )
     ),
 
-    -- add dynamic node
+    -- dynamic node
+    -- The most glorious node of luasnip. You can use this to create anything!
     s(
         'dynamic node',
         fmt(

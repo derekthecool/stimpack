@@ -51,6 +51,21 @@ local snippets = {
 local autosnippets = {
 
     s(
+        'IF',
+        fmt(
+            [=[
+        if [[ {} ]]; do
+            {}
+        fi
+        ]=],
+            {
+                i(1, '10 -gt 5'),
+                i(2),
+            }
+        )
+    ),
+
+    s(
         'PRINT',
         fmt(
             [[

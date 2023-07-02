@@ -1,4 +1,6 @@
 local M = {}
+
+-- stylua: ignore start
 local s = function() return require("luasnip.nodes.snippet").S end
 local sn = function() return require("luasnip.nodes.snippet").SN end
 local isn = function() return require("luasnip.nodes.snippet").ISN end
@@ -24,15 +26,26 @@ local postfix = function() return require("luasnip.extras.postfix").postfix end
 local types = function() return require("luasnip.util.types") end
 local parse = function() return require("luasnip.util.parser").parse_snippet end
 local ms = function() return require("luasnip.nodes.multiSnippet").new_multisnippet end
+-- stylua: ignore end
+
+require('luasnip')
+M.dog = function()
+    return i(1)
+end
 
 M.printf_style_dynamic_formatter = function(jump_position)
-    return d(nil, function(args, snip)
-        local printf_dynamic_node = {}
-        table.insert(printf_dynamic_node, t('"'))
-        table.insert(printf_dynamic_node, i(1))
-        table.insert(printf_dynamic_node, t('"'))
-
-        return sn(nil, printf_dynamic_node)
+    return d(jump_position, function(args, snip)
+        local output = {}
+        local test = args[1][1]
+        local insert_location = 1
+        if test then
+            for format_modifier in test:gmatch('(%%%w)') do
+                table.insert(output, t(','))
+                table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
+                insert_location = insert_location + 1
+            end
+        end
+        return sn(nil, output)
     end, { 1 })
 end
 

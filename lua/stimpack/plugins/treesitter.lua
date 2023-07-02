@@ -16,7 +16,6 @@ return {
                 'cmake',
                 'comment',
                 'cpp',
-                'help',
                 'lua',
                 'markdown',
                 'proto',
