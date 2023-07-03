@@ -128,10 +128,21 @@ return {
         end, { silent = true, desc = 'ToggleLuasnipAutoChoiceExpand' })
 
         -- My mapping function causes an error
-        vim.api.nvim_set_keymap('i', '👉', '<Plug>luasnip-next-choice', {})
-        vim.api.nvim_set_keymap('s', '👉', '<Plug>luasnip-next-choice', {})
-        vim.api.nvim_set_keymap('i', '👈', '<Plug>luasnip-prev-choice', {})
-        vim.api.nvim_set_keymap('s', '👈', '<Plug>luasnip-prev-choice', {})
+        vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
+        vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
+
+        require('luasnippets.functions.auxiliary')
+        vim.cmd('map <c-t> <nop>')
+        vim.keymap.set({ 's', 'i' }, '<c-t>', function()
+            V('test 1')
+            Dynamic_node_external_update(1)
+        end, {desc = 'Dynamic_node_external_update(1)'})
+
+        vim.cmd('map <c-p> <nop>')
+        vim.keymap.set({ 's', 'i' }, '<c-p>', function()
+            V('test 2')
+            Dynamic_node_external_update(2)
+        end, {desc = 'Dynamic_node_external_update(2)'})
 
         -- STWHEUFL
         map('n', '👇', function()

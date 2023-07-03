@@ -1,8 +1,41 @@
----@diagnostic disable: undefined-global
+---@diagnostic disable: undefined-global, missing-parameter
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
+
+local function column_count_from_string(descr)
+    -- this won't work for all cases, but it's simple to improve
+    -- (feel free to do so! :D )
+    return #(descr:gsub('[^clm]', ''))
+end
+
+-- function for the dynamicNode.
+local tab = function(args, snip)
+    local cols = column_count_from_string(args[1][1])
+    -- snip.rows will not be set by default, so handle that case.
+    -- it's also the value set by the functions called from dynamic_node_external_update().
+    if not snip.rows then
+        snip.rows = 1
+    end
+    local nodes = {}
+    -- keep track of which insert-index we're at.
+    local ins_indx = 1
+    for j = 1, snip.rows do
+        -- use restoreNode to not lose content when updating.
+        table.insert(nodes, r(ins_indx, tostring(j) .. 'x1', i(1)))
+        ins_indx = ins_indx + 1
+        for k = 2, cols do
+            table.insert(nodes, t(' & '))
+            table.insert(nodes, r(ins_indx, tostring(j) .. 'x' .. tostring(k), i(1)))
+            ins_indx = ins_indx + 1
+        end
+        table.insert(nodes, t({ '\\\\', '' }))
+    end
+    -- fix last node.
+    nodes[#nodes] = t('')
+    return sn(nil, nodes)
+end
 
 -- 'recursive' dynamic snippet. Expands to some text followed by itself.
 local rec_ls = function()
@@ -11,7 +44,7 @@ local rec_ls = function()
         c(1, {
             -- Order is important, sn(...) first would cause infinite loop of expansion.
             t(''),
-            sn(nil, {  i(1), d(2, rec_ls, {}) }),
+            sn(nil, { i(1), d(2, rec_ls, {}) }),
         })
     )
 end
@@ -30,6 +63,20 @@ local FFF = function(jump_position)
                 insert_location = insert_location + 1
             end
         end
+        if snip then
+            string.format('test %f', '%f', '1 - my number', '1 - my number')
+        end
+        if snip ~= nil and snip.rows ~= nil then
+            table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
+        end
+        if not snip.rows then
+            snip.rows = 1
+        end
+
+        if snip ~= nil and snip.rows ~= nil then
+            table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
+        end
+
         return sn(nil, output)
     end, { 1 })
 end
@@ -43,6 +90,73 @@ local snippets = {
     }),
 
     s(
+        'test',
+        fmt([[{}]], {
+            d(1, function(args, snip)
+                if not snip.rows then
+                    snip.rows = 1
+                end
+                local nodes = {}
+                table.insert(nodes, i(1, 'Derek is cool'))
+
+                -- keep track of which insert-index we're at.
+                for j = 1, snip.rows do
+                    table.insert(nodes, t({ '', string.format('My node: %d', j) }))
+                end
+                table.insert(nodes, t({ '', 'Derek is awesome' }))
+                return sn(nil, nodes)
+            end, {}, {
+                user_args = {
+                    -- Pass the functions used to manually update the dynamicNode as user args.
+                    -- The n-th of these functions will be called by dynamic_node_external_update(n).
+                    -- These functions are pretty simple, there's probably some cool stuff one could do
+                    -- with `ui.input`
+                    function(snip)
+                        V('Increment row count')
+                        snip.rows = snip.rows + 1
+                    end,
+                    -- don't drop below one.
+                    function(snip)
+                        V('Decrement row count')
+                        snip.rows = math.max(snip.rows - 1, 1)
+                    end,
+                },
+            }),
+        })
+    ),
+
+    s(
+        'tab',
+        fmt(
+            [[
+\begin{{tabular}}{{{}}}
+{}
+\end{{tabular}}
+]],
+            {
+                i(1, 'c'),
+                d(2, tab, { 1 }, {
+                    user_args = {
+                        -- Pass the functions used to manually update the dynamicNode as user args.
+                        -- The n-th of these functions will be called by dynamic_node_external_update(n).
+                        -- These functions are pretty simple, there's probably some cool stuff one could do
+                        -- with `ui.input`
+                        function(snip)
+                            V('Increment row count')
+                            snip.rows = snip.rows + 1
+                        end,
+                        -- don't drop below one.
+                        function(snip)
+                            V('Decrement row count')
+                            snip.rows = math.max(snip.rows - 1, 1)
+                        end,
+                    },
+                }),
+            }
+        )
+    ),
+
+    s(
         'format',
         fmt(
             [[
@@ -50,9 +164,53 @@ local snippets = {
         ]],
             {
                 i(1),
-                FFF(2),
+                d(jump_position, function(args, snip)
+                    local output = {}
+                    local test = args[1][1]
+                    local insert_location = 1
+                    if test then
+                        for format_modifier in test:gmatch('(%%%w)') do
+                            table.insert(output, t(','))
+                            table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
+                            insert_location = insert_location + 1
+                        end
+                    end
+                    if snip then
+                        string.format('test %f', '%f', '1 - my number', '1 - my number')
+                    end
+                    if snip ~= nil and snip.rows ~= nil then
+                        table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
+                    end
+                    if not snip.rows then
+                        snip.rows = 1
+                    end
+
+                    if snip ~= nil and snip.rows ~= nil then
+                        table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
+                    end
+
+                    return sn(nil, output)
+                end, { 1 }),
             }
-        )
+        ),
+
+        {
+            user_args = {
+                -- Pass the functions used to manually update the dynamicNode as user args.
+                -- The n-th of these functions will be called by dynamic_node_external_update(n).
+                -- These functions are pretty simple, there's probably some cool stuff one could do
+                -- with `ui.input`
+                function(snip)
+                    V('Increment row count')
+                    snip.rows = snip.rows + 1
+                end,
+                -- don't drop below one.
+                function(snip)
+                    V('Decrement row count')
+                    snip.rows = math.max(snip.rows - 1, 1)
+                end,
+            },
+        }
     ),
 
     s(
@@ -98,7 +256,7 @@ local snippets = {
 
         fmt(
             [[
-      ---@diagnostic disable: undefined-global
+      ---@diagnostic disable: undefined-global, missing-parameter
       local snippets = {{
           {}
       }}
@@ -1105,18 +1263,47 @@ local autosnippets = {
         fmt(
             [[
       d({}, function(args, snip)
-        return sn(nil,{{
+          local nodes = {{}}
+
+          -- Add nodes for snippet
+          table.insert(nodes, t('Add this node'))
           {}
-        }}) end,
+
+        return sn(nil, nodes)
+       end,
         {{ {} }}
-       )
-       {}
+       {}),
       ]],
             {
                 i(1, '1'),
                 i(2),
                 i(3, '1'),
-                i(0),
+                c(4, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                                , {{
+                                        user_args = {{
+                                            -- Pass the functions used to manually update the dynamicNode as user args.
+                                            -- The n-th of these functions will be called by dynamic_node_external_update(n).
+                                            -- These functions are pretty simple, there's probably some cool stuff one could do
+                                            -- with `ui.input`
+                                            function(snip)
+                                                snip.rows = snip.rows + 1
+                                            end,
+                                            -- don't drop below one.
+                                            function(snip)
+                                                snip.rows = math.max(snip.rows - 1, 1)
+                                        end,
+                                    }},
+                                }}
+                   ]],
+                            {}
+                        )
+                    ),
+                }),
             }
         )
     ),
