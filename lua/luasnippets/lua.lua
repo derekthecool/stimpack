@@ -437,21 +437,86 @@ local snippets = {
             [[
         local {} = {{}}
 
-        {}.setup = function({}) do
-            {}
-        end
-
         {}
 
         return {}
         ]],
             {
                 i(1, 'M'),
+                d(2, function(args, snip)
+                    local module_name = args[1][1]
+                    local nodes = {}
+
+                    if not snip.rows then
+                        snip.rows = 1
+                    end
+
+                    local module_choices = c(1, {
+
+                        sn(
+                            nil,
+                            fmt(
+                                [[
+                                {}.{} = function({})
+                                    {}
+                                end]],
+                                {
+                                    t(module_name),
+                                    i(1, 'module_function'),
+                                    i(2, 'opts'),
+                                    i(3),
+                                }
+                            )
+                        ),
+                        sn(
+                            nil,
+                            fmt([[{}.{} = {}]], {
+                                t(module_name),
+                                i(1, 'property'),
+                                c(2, {
+                                    sn(
+                                        nil,
+                                        fmt([['{}']], {
+                                            i(1, 'custom'),
+                                        })
+                                    ),
+                                    t('true'),
+                                    t('false'),
+                                    t('nil'),
+                                }),
+                            })
+                        ),
+                    })
+
+                    for i = 1, snip.rows do
+                        if i == 1 then
+                            table.insert(nodes, t({ '' }))
+                        else
+                            table.insert(nodes, t({ '', '','' }))
+                        end
+
+                        table.insert(nodes, module_choices)
+                    end
+
+                    return sn(nil, nodes)
+                end, { 1 }, {
+                    user_args = {
+                        -- Pass the functions used to manually update the dynamicNode as user args.
+                        -- The n-th of these functions will be called by dynamic_node_external_update(n).
+                        -- These functions are pretty simple, there's probably some cool stuff one could do
+                        -- with `ui.input`
+                        function(snip)
+                            -- V('Increment module item')
+                            snip.rows = snip.rows + 1
+                        end,
+                        -- don't drop below one.
+                        function(snip)
+                            -- V('Decrement module item')
+                            snip.rows = math.max(snip.rows - 1, 1)
+                        end,
+                    },
+                }),
                 rep(1),
-                i(2, 'opts'),
-                i(3),
-                i(4),
-                i(5),
             }
         )
     ),
