@@ -4,6 +4,18 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
 
+-- 'recursive' dynamic snippet. Expands to some text followed by itself.
+local rec_ls = function()
+    return sn(
+        2,
+        c(1, {
+            -- Order is important, sn(...) first would cause infinite loop of expansion.
+            t(''),
+            sn(nil, {  i(1), d(2, rec_ls, {}) }),
+        })
+    )
+end
+
 -- local auxiliary = require('luasnippets.functions.auxiliary')
 
 local FFF = function(jump_position)
@@ -23,6 +35,12 @@ local FFF = function(jump_position)
 end
 
 local snippets = {
+    s('ls', {
+        t({ '\\begin{itemize}', '\t\\item ' }),
+        i(1),
+        d(2, rec_ls, {}),
+        t({ '', '\\end{itemize}' }),
+    }),
 
     s(
         'format',
@@ -637,16 +655,14 @@ local autosnippets = {
         'FOR',
         fmt(
             [[
-        for index, value in {}pairs(t) do
+        for {}, {} do
             {}
         end
         ]],
             {
-                c(1, {
-                    t(''),
-                    t('i'),
-                }),
-                i(2),
+                i(1, 'i=1'),
+                i(2, '10, 2'),
+                i(3),
             }
         )
     ),
@@ -655,7 +671,7 @@ local autosnippets = {
         'WHILE',
         fmt(
             [[
-        while({}) do
+        while {} do
             {}
         end
 
