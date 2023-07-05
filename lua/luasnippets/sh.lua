@@ -3,6 +3,7 @@
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
 local snippets = {
+    -- Help with the PS4 function here: https://stackoverflow.com/a/17805088/9842112
     s(
         'starter',
         fmt(
@@ -11,6 +12,9 @@ local snippets = {
 
     # Set safer defaults, do not proceed past unhandled errors
     set -euxo pipefail
+
+    # Easily debug the script with this special PS4 prompt
+    PS4='+(${{BASH_SOURCE}}:${{LINENO}}): ${{FUNCNAME[0]:+${{FUNCNAME[0]}}(): }}'
     ]],
             {}
         )
@@ -54,7 +58,7 @@ local autosnippets = {
         'IF',
         fmt(
             [=[
-        if [[ {} ]]; do
+        if [[ {} ]]; then
             {}
         fi
         ]=],

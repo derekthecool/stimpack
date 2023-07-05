@@ -251,7 +251,8 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr =
+            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -451,51 +452,26 @@ local snippets = {
                         snip.rows = 1
                     end
 
-                    local module_choices = c(1, {
-
-                        sn(
-                            nil,
-                            fmt(
-                                [[
-                                {}.{} = function({})
-                                    {}
-                                end]],
-                                {
-                                    t(module_name),
-                                    i(1, 'module_function'),
-                                    i(2, 'opts'),
-                                    i(3),
-                                }
-                            )
-                        ),
-                        sn(
-                            nil,
-                            fmt([[{}.{} = {}]], {
-                                t(module_name),
-                                i(1, 'property'),
-                                c(2, {
-                                    sn(
-                                        nil,
-                                        fmt([['{}']], {
-                                            i(1, 'custom'),
-                                        })
-                                    ),
-                                    t('true'),
-                                    t('false'),
-                                    t('nil'),
-                                }),
-                            })
-                        ),
-                    })
-
-                    for i = 1, snip.rows do
-                        if i == 1 then
+                    local insert_index = 1
+                    local module_item_count = 1
+                    for row = 1, snip.rows do
+                        if row == 1 then
                             table.insert(nodes, t({ '' }))
                         else
-                            table.insert(nodes, t({ '', '','' }))
+                            table.insert(nodes, t({ '', '', '' }))
                         end
 
-                        table.insert(nodes, module_choices)
+                        table.insert(nodes, t({ string.format('%s.', module_name) }))
+                        local restore_node_1 = string.format('module_item_%d', module_item_count)
+                        table.insert(nodes, r(insert_index, restore_node_1, i(1, restore_node_1)))
+                        insert_index = insert_index + 1
+                        module_item_count = module_item_count + 1
+
+                        table.insert(nodes, t({ ' = ' }))
+
+                        local restore_node_2 = string.format('module_item_content_%d', insert_index)
+                        table.insert(nodes, r(insert_index, restore_node_2, i(1, 'true')))
+                        insert_index = insert_index + 1
                     end
 
                     return sn(nil, nodes)
@@ -517,6 +493,22 @@ local snippets = {
                     },
                 }),
                 rep(1),
+            }
+        )
+    ),
+
+    s(
+        'test restore',
+        fmt(
+            [[
+        {}
+        ]],
+            {
+
+                c(1, {
+                    r(1, 'unique_key1', i(1)),
+                    r(1, 'unique_key2', i(1)),
+                }),
             }
         )
     ),
@@ -983,7 +975,7 @@ local autosnippets = {
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
@@ -1072,7 +1064,6 @@ local autosnippets = {
       ]=],
             {
                 c(1, {
-                    -- r(1, 'snippet_trigger'),
                     sn(
                         1,
                         fmt([['{}']], {
@@ -1255,7 +1246,7 @@ local autosnippets = {
     ),
 
     s(
-        -- This node is not a real node. It is just easier to remember by calling it this.
+    -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[

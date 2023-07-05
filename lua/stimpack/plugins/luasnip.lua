@@ -1,6 +1,5 @@
 return {
     'L3MON4D3/LuaSnip',
-    -- event = 'InsertEnter',
     config = function()
         -- Load my treesitter helper functions now
         require('stimpack.my-treesitter-functions')
@@ -16,10 +15,10 @@ return {
 
         -- Set my config options
         require('luasnip').config.set_config({
-            history = false,
-            update_events = { 'TextChanged', 'TextChangedI' }, -- update text as you type
+            history = true,
+            update_events = { 'TextChanged', 'TextChangedI' },
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
-            delete_check_events = { 'TextChanged', 'InsertLeave' },
+            -- delete_check_events = { 'TextChanged', 'InsertLeave' },
             enable_autosnippets = true, -- I NEED autosnippets to live, default is false
             -- Add awesome highlights to help show where you are at in a snippet
             -- Think of them as a road map of where you're going
@@ -68,22 +67,22 @@ return {
             group = luasnip_autocommands,
         })
 
-        -- Global variable to optionally disable auto choice select
-        LuasnipAutoChoice = true
-        function ToggleLuasnipAutoChoiceExpand()
-            LuasnipAutoChoice = not LuasnipAutoChoice
-        end
+        -- -- Global variable to optionally disable auto choice select
+        -- LuasnipAutoChoice = true
+        -- function ToggleLuasnipAutoChoiceExpand()
+        --     LuasnipAutoChoice = not LuasnipAutoChoice
+        -- end
 
-        -- Autocommand to autoexpand choice-node snippets selection
-        vim.api.nvim_create_autocmd('User', {
-            pattern = 'LuasnipChoiceNodeEnter',
-            callback = function()
-                if LuasnipAutoChoice then
-                    require('luasnip.extras.select_choice')()
-                end
-            end,
-            group = luasnip_autocommands,
-        })
+        -- -- Autocommand to autoexpand choice-node snippets selection
+        -- vim.api.nvim_create_autocmd('User', {
+        --     pattern = 'LuasnipChoiceNodeEnter',
+        --     callback = function()
+        --         if LuasnipAutoChoice then
+        --             require('luasnip.extras.select_choice')()
+        --         end
+        --     end,
+        --     group = luasnip_autocommands,
+        -- })
 
         local map = require('stimpack.mapping-function')
         map('i', '<c-j>', function()
