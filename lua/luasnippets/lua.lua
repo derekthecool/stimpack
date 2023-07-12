@@ -251,8 +251,7 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr =
-            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -399,15 +398,43 @@ local snippets = {
         local {} = vim.api.nvim_create_augroup('{}', {{ clear = true }})
         vim.api.nvim_create_autocmd(
             '{}',
-            {{ pattern = {{ '{}' }}, command = '{}', group = {} }}
+            {{
+                pattern = {{ '{}' }},
+                {},
+                group = {}
+            }}
         )
         ]],
             {
+                -- TODO: add dynamic_node here to optionally include the group
                 i(1, 'autocommandGroupName'),
                 rep(1),
                 i(2, 'Event'),
                 i(3, 'File pattern'),
-                i(4, 'Command'),
+                c(4, {
+                    sn(
+                        nil,
+                        -- TODO: the formatting is weird here, but stylua will fix it so not a huge priority
+                        fmt(
+                            [[
+                            callback = function()
+                                {}
+                            end
+                            ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt([[command = "{}"]], {
+                            i(1),
+                        })
+                    ),
+                }),
+
                 rep(1),
             }
         )
@@ -466,12 +493,10 @@ local snippets = {
                         table.insert(nodes, r(insert_index, restore_node_1, i(1, restore_node_1)))
                         insert_index = insert_index + 1
                         module_item_count = module_item_count + 1
-
-                        table.insert(nodes, t({ ' = ' }))
-
-                        local restore_node_2 = string.format('module_item_content_%d', insert_index)
-                        table.insert(nodes, r(insert_index, restore_node_2, i(1, 'true')))
-                        insert_index = insert_index + 1
+                        --
+                        -- local restore_node_2 = string.format('module_item_content_%d', insert_index)
+                        -- table.insert(nodes, r(insert_index, restore_node_2, i(1, 'true')))
+                        -- insert_index = insert_index + 1
                     end
 
                     return sn(nil, nodes)
@@ -583,7 +608,7 @@ local snippets = {
 
     -- Wireshark plugin snippets
     s(
-        'wireshark easy post',
+        'wireshark easy postdissector',
         fmt(
             [[
 
@@ -650,6 +675,113 @@ register_postdissector({})
                 rep(5),
                 rep(5),
             }
+        )
+    ),
+
+    s(
+        'wireshark tap simple',
+        fmt(
+            [[
+        -- https://wiki.wireshark.org/Lua/Taps
+        set_plugin_info({{
+            version = '{}',
+            author = '{}',
+            description = '{}',
+            repository = '{}',
+        }})
+
+        packets = 0
+
+        -- Create a new tap
+        local {} = Listener.new(nil, '{}')
+
+        -- This function is called once each time the filter of the tap matches
+        function {}.packet()
+            packets = packets + 1
+        end
+
+        -- This function will get called at the end of the capture to print the summary
+        function {}.draw()
+            print('http packets:' .. packets)
+        end
+
+        -- This function will be called at the end of the capture run
+        function {}.reset()
+            packets = 0
+            print('Script reset!')
+        end
+        ]],
+            {
+
+                i(1, 'Derek Lomax'),
+                i(2, '1.0.0'),
+                i(3, 'This is my awesome wireshark plugin that does something great'),
+                i(4, 'repo source'),
+                i(5, 'http_tap'),
+                i(6, 'http'),
+                rep(5),
+                rep(5),
+                rep(5),
+            }
+        )
+    ),
+
+    s(
+        'wireshark tap with GUI',
+        fmt(
+            [[
+        -- https://wiki.wireshark.org/Lua/Taps
+        -- text_window_tap.lua
+        -- an example of a tap that registers a menu
+        -- and prints to a text window
+
+        instances = 0 -- number of instances of the tap created so far
+
+        function mytap_menu()
+            instances = instances + 1
+
+            local td = {{}}
+            -- the tap data, locally accessible by every function of the tap
+            -- beware not to use a global for taps with multiple instances or you might
+            -- find it been written by more instances of the tap, not what we want.
+            -- each tap will have its own private instance of td.
+
+            td.win = TextWindow.new('My Tap ' .. instances) -- the window we'll use
+            td.text = '' -- the text of the tap
+            td.instance = instances -- the instance number of this tap
+
+            -- This tap will be local to the menu_function that called it
+            local tap = Listener.new()
+
+            -- Callback to remove the tap when the text window closes
+            function remove_tap()
+                if tap and tap.remove then
+                    tap:remove()
+                end
+            end
+
+            -- Make sure the tap doesn't hang around after the window was closed
+            td.win:set_atclose(remove_tap)
+
+            -- This function will be called for every packet
+            function tap.packet(pinfo, tvb, tapdata)
+                local text = 'packet ' .. pinfo.number
+                td.text = td.text .. '\n' .. text
+            end
+
+            -- This function will be called once every few seconds to redraw the window
+            function tap.draw()
+                td.win:set(td.text)
+            end
+        end
+
+        -- last we register the menu
+        -- the first arg is the menu name
+        -- the 2nd arg is the function to be called
+        -- the third argument is the menu to hold this new menu
+        register_menu('Lua Tap Test', mytap_menu, MENU_TOOLS_UNSORTED)
+                ]],
+            {}
         )
     ),
 }
@@ -781,29 +913,12 @@ local autosnippets = {
         'FUNCTION',
         fmt(
             [[
-        {}function{}({})
+        function({})
           {}
-        end
-
-        {}
-        ]],
+        end]],
             {
-                c(1, {
-                    t(''),
-                    t('local '),
-                }),
-
-                c(2, {
-                    sn(nil, {
-                        t(' '),
-                        i(1, 'FunctionName'),
-                    }),
-                    t(''),
-                }),
-
-                i(3),
-                i(4),
-                i(0),
+                i(1),
+                i(2),
             }
         )
     ),
@@ -975,7 +1090,7 @@ local autosnippets = {
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
@@ -1246,7 +1361,7 @@ local autosnippets = {
     ),
 
     s(
-    -- This node is not a real node. It is just easier to remember by calling it this.
+        -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[

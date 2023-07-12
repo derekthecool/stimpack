@@ -139,6 +139,15 @@ local snippets = {
 local autosnippets = {
 
     s(
+        'FIRST',
+        fmt([[<{}>{}</{}>]], {
+            i(1, 'Item'),
+            i(2),
+            rep(1),
+        })
+    ),
+
+    s(
         'setter',
         fmt([[<Setter Property="{}" Value="{}" />]], {
             i(1, 'FontSize'),
@@ -287,7 +296,9 @@ local autosnippets = {
                     -- t('<PackageReference Include="MySql.Data" Version="8.0.31" />'),
                     t('<PackageReference Include="Microsoft.Data.SqlClient" Version="5.1.0" />'),
                     -- -- Helps to get items from appSettings.json
-                    t('<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.1.23110.8" />'),
+                    t(
+                        '<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0-preview.1.23110.8" />'
+                    ),
                     -- Networking
                     t('<PackageReference Include="M2MqttDotnetCore" Version="1.1.0" />'),
                     -- Encoding

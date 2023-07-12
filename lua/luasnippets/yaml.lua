@@ -23,6 +23,32 @@ local snippets = {
             }
         )
     ),
+
+    s(
+        'compose',
+        fmt(
+            [[
+        services:
+          {}:
+            {}
+            ports:
+              - {}
+        ]],
+            {
+                i(1, 'container_name'),
+                c(2, {
+                    sn(
+                        nil,
+                        fmt([[image: "{}"]], {
+                            i(1, 'bash/bash:latest'),
+                        })
+                    ),
+                    t('build: .'),
+                }),
+                i(3, '8080:8080'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {}

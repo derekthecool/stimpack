@@ -192,6 +192,56 @@ void button_task(void *arg) {{
             {}
         )
     ),
+
+    s(
+        'clash of code',
+        fmt(
+            [[
+        #include <stdio.h>
+        #include <stdlib.h>
+        #include <string.h>
+        main() {{
+        {}
+        printf("%s\n", p);
+        {}
+        }}
+        ]],
+            {
+                c(1, {
+                    sn(
+                        1,
+                        fmt(
+                            [[
+                            char *p,*l=0;
+                            getline(&p,&l,stdin);
+                             ]],
+                            {}
+                        )
+                    ),
+
+                    sn(
+                        1,
+                        fmt(
+                            [[
+                            char *p,*l=0;
+                            // Read all stdin
+                            getdelim(&p,&l,0xff,stdin);
+                             ]],
+                            {}
+                        )
+                    ),
+                }),
+                i(2, 'test'),
+            }
+        )
+    ),
+
+    s(
+        'string length',
+        fmt([[ strlen({});]], {
+            i(1, 'string'),
+        })
+    ),
 }
 
 local autosnippets = {
