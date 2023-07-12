@@ -92,7 +92,26 @@ M.neovim_test = function()
             local error_diagnostic_list = {}
 
             for _, test_result in pairs(output_list) do
-                test_result['treesitter_details'] = test_names[test_result.test_name]
+                if test_result ~= nil and test_result.test_name ~= nil and test_names[test_result.test_name] ~= nil then
+                    test_result['treesitter_details'] = test_names[test_result.test_name]
+                else
+                    result_check = type(test_result)
+                    name_check = type(test_result.test_name) == nil
+                    testname_check = type(test_names[test_result.test_name])
+                    vim.notify(
+                        string.format(
+                            'Error with neovim plenary test: %s, cannot link the treesitter_details. result_check = %s, name_check = %s, testname_check = %s',
+                            test_result.test_name,
+                            result_check,
+                            name_check,
+                            testname_check
+                        ),
+                        vim.log.levels.ERROR,
+                        { title = 'Stimpack Notification' }
+                    )
+                    return
+                end
+
                 -- Make sure table is not empty first
                 if next(test_result.buffer_number) ~= nil then
                     if test_result.result == 'Success' then
