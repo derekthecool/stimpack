@@ -1,5 +1,7 @@
 # Luasnip Guide
 
+See the [StimpackLuasnipCoverage](StimpackLuasnipCoverage)
+
 ## Luasnip Todo
 
 - Set key maps for all choice nodes
