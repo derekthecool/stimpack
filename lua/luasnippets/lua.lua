@@ -81,6 +81,27 @@ local FFF = function(jump_position)
     end, { 1 })
 end
 
+-- Wireshark lua plugin helpers
+local wireshark_plugin_details = sn(
+    1,
+    fmt(
+        [[
+set_plugin_info({{
+    version = '{}',
+    author = '{}',
+    description = '{}',
+    repository = '{}',
+}})
+]],
+        {
+            i(1, '1.0.0'),
+            i(2, 'Derek Lomax'),
+            i(3, 'This is my awesome wireshark plugin that does something great'),
+            i(4, 'repo source'),
+        }
+    )
+)
+
 local snippets = {
     s('ls', {
         t({ '\\begin{itemize}', '\t\\item ' }),
@@ -616,12 +637,7 @@ local snippets = {
 -- https://wiki.wireshark.org/uploads/6f35ec7531e1557df3f2964c81d80510/EASYPOST.lua
 
 -- Step 1 - Set plugin plugin information
-set_plugin_info({{
-    version = '{}',
-    author = '{}',
-    description = '{}',
-    repository = '{}',
-}})
+{}
 
 --- Step 2 - create a protocol to attach new fields to
 ---@type Proto
@@ -659,21 +675,18 @@ end
 register_postdissector({})
         ]],
             {
-                i(1, 'Derek Lomax'),
-                i(2, '1.0.0'),
-                i(3, 'This is my awesome wireshark plugin that does something great'),
-                i(4, 'repo source'),
-                rep(5),
-                i(5, 'protocol_name'),
-                i(6, 'Protocol description'),
-                i(7, 'field_name'),
-                i(8, 'Field description'),
-                rep(5),
-                rep(5),
-                rep(5),
-                rep(5),
-                rep(5),
-                rep(5),
+                wireshark_plugin_details,
+                rep(2),
+                i(2, 'protocol_name'),
+                i(3, 'Protocol description'),
+                i(4, 'field_name'),
+                i(5, 'Field description'),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
+                rep(2),
             }
         )
     ),
@@ -683,12 +696,7 @@ register_postdissector({})
         fmt(
             [[
         -- https://wiki.wireshark.org/Lua/Taps
-        set_plugin_info({{
-            version = '{}',
-            author = '{}',
-            description = '{}',
-            repository = '{}',
-        }})
+        {}
 
         packets = 0
 
@@ -713,15 +721,16 @@ register_postdissector({})
         ]],
             {
 
-                i(1, 'Derek Lomax'),
-                i(2, '1.0.0'),
-                i(3, 'This is my awesome wireshark plugin that does something great'),
-                i(4, 'repo source'),
-                i(5, 'http_tap'),
-                i(6, 'http'),
-                rep(5),
-                rep(5),
-                rep(5),
+                -- i(1, '1.0.0'),
+                -- i(2, 'Derek Lomax'),
+                -- i(3, 'This is my awesome wireshark plugin that does something great'),
+                -- i(4, 'repo source'),
+                wireshark_plugin_details,
+                i(2, 'http_tap'),
+                i(3, 'http'),
+                rep(3),
+                rep(3),
+                rep(3),
             }
         )
     ),
@@ -782,6 +791,46 @@ register_postdissector({})
         register_menu('Lua Tap Test', mytap_menu, MENU_TOOLS_UNSORTED)
                 ]],
             {}
+        )
+    ),
+
+    s(
+        'wireshark register additional protocols on other ports',
+        fmt(
+            [[
+        -- https://wiki.wireshark.org/Lua/Examples#using-lua-to-register-protocols-to-more-ports
+        {}
+
+        -- Get the list of dissectors currently available for the given port
+        local {} = DissectorTable.get('{}')
+
+        -- Get the desired dissector from a known port
+        -- For example:
+        -- http: 80
+        -- mqtt: 1883
+        local {} = {}:get_dissector({})
+
+        -- For each port listed add the desired new protocol
+        for i, port in ipairs({{ {} }}) do
+            {}:add(port, {})
+        end
+
+        -- Port ranges work as well
+        -- {}:add("8000-8005", {})
+        ]],
+            {
+                wireshark_plugin_details,
+                i(2, 'tcp_port_table'),
+                i(3, 'tcp.port'),
+                i(4, 'mqtt_dissector'),
+                rep(3),
+                i(5, '1883'),
+                i(6, '8000, 8001, 8002'),
+                rep(3),
+                rep(4),
+                rep(2),
+                rep(4),
+            }
         )
     ),
 }
@@ -985,14 +1034,16 @@ local autosnippets = {
         'FOR',
         fmt(
             [[
-        for {}, {} do
+        for {}={}, {} do
             {}
-        end
+        end{}
         ]],
             {
-                i(1, 'i=1'),
+                i(0, 'i'),
+                i(1, '1'),
                 i(2, '10, 2'),
                 i(3),
+                i(4),
             }
         )
     ),
