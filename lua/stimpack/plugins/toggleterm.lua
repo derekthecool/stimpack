@@ -103,14 +103,17 @@ return {
         end
 
         local plain_git_tab = Terminal:new({
-            -- cmd = 'lazygit --git-dir=$HOME/.cfg --work-tree=$HOME',
+            -- cmd = 'git status --short',
+            -- close_on_exit = false,
             count = 9,
             direction = 'tab',
             hidden = true,
             -- function to run on opening the terminal
             on_open = function(term)
                 vim.cmd('startinsert!')
-                -- vim.api.nvim_buf_set_keymap(term.bufnr, 'n', 'q', '<cmd>close<CR>', { noremap = true, silent = true })
+                    -- For some reason these need to be out of order, newline first
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'i', true)
+                    vim.api.nvim_feedkeys('git status --short', 'i', false)
             end,
             -- function to run on closing the terminal
             on_close = function(term)

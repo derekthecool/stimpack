@@ -34,11 +34,7 @@ return {
                     extra_args = { '--embedded-language-formatting=off' },
                 }),
 
-                -- This is getting really annoying to see write good errors
-                -- diagnostics.write_good.with({ filetypes = { 'markdown', 'vimwiki', 'gitcommit', 'NeogitCommitMessage' } }), -- https://github.com/btford/write-good
-
                 diagnostics.protolint,
-                diagnostics.gitlint.with({ filetypes = { 'gitcommit', 'NeogitCommitMessage' } }), -- https://jorisroovers.com/gitlint/
                 hover.dictionary.with({ filetypes = { 'markdown', 'text', 'vimwiki' } }),
 
                 -- For .sh, .bat, .ps1 checks if word under cursor is environment variable

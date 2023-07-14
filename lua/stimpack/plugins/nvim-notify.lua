@@ -43,6 +43,8 @@ return {
                 DEBUG = Icons.debugging.bug,
                 TRACE = Icons.documents.write2,
             },
+
+            top_down = false,
         })
 
         -- Set as default notify system
