@@ -85,6 +85,13 @@ local snippets = {
             { i(1, ','), i(2, 'InputStringToParse'), i(3) }
         )
     ),
+
+    s(
+        'puts',
+        fmt([[puts("{}");]], {
+            i(1, 'Hello World!'),
+        })
+    ),
     -- }}}
 
     -- ESP32 snippets
@@ -242,6 +249,29 @@ void button_task(void *arg) {{
             i(1, 'string'),
         })
     ),
+
+    -- Algorithms start
+
+    s(
+        'swap case',
+        fmt(
+            [[
+        void StringSwapCase(*inputString) {
+          unsigned char A_to_a = 'a' - 'A';
+          for (int i = 0; i < strlen(inputString); i++) {
+            char isLetter = isalpha(inputString[i]) ? 1 : 0;
+            char isUpper = isupper(inputString[i]) ? 1 : -1;
+            inputString[i] += isLetter * isUpper * A_to_a;
+          }
+        }
+        ]],
+            {},
+            {
+                delimiters = [[/\]],
+            }
+        )
+    ),
+    -- Algorithms end
 }
 
 local autosnippets = {
@@ -435,6 +465,27 @@ local autosnippets = {
             {
                 i(1, 'VARIABLE'),
                 i(2, 'VALUE'),
+            }
+        )
+    ),
+
+    s(
+        'SWITCH',
+        fmt(
+            [[
+        case({})
+        {{
+             case {}:
+                 {}
+                 break;
+             default:
+                 break;
+        }}
+        ]],
+            {
+                i(1, 'variable'),
+                i(2, '1'),
+                i(3),
             }
         )
     ),

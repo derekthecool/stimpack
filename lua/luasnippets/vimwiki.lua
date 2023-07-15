@@ -172,13 +172,24 @@ local snippets = {
                 }),
 
                 c(2, {
-                    t({
-                        'A[Start] --> B{Is it?}',
-                        'B -- Yes --> C[OK]',
-                        'C --> D[Rethink]',
-                        'D --> B',
-                        'B -- No ----> E[End]',
-                    }),
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    read
+                    parse
+                    {}
+                    output
+
+                    read --> parse --> {} -->{} output
+                    ]],
+                            {
+                                i(1, 'calculate'),
+                                rep(1),
+                                i(2),
+                            }
+                        )
+                    ),
                     i(1),
                 }),
             }
