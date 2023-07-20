@@ -130,16 +130,22 @@ return {
         vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
         vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
 
+        -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#on-the-fly-snippets
+        vim.cmd([[vnoremap <c-y>  "lc<cmd>lua require('luasnip.extras.otf').on_the_fly("l")<cr>]])
+        vim.keymap.set('i', '<c-y>', function()
+            require('luasnip.extras.otf').on_the_fly()
+        end, { silent = true, desc = 'Luasnip on the fly activate snippet' })
+
         require('luasnippets.functions.auxiliary')
         vim.cmd('map <c-t> <nop>')
         vim.keymap.set({ 's', 'i' }, '<c-t>', function()
             Dynamic_node_external_update(1)
-        end, {desc = 'Dynamic_node_external_update(1)'})
+        end, { desc = 'Dynamic_node_external_update(1)' })
 
         vim.cmd('map <c-p> <nop>')
         vim.keymap.set({ 's', 'i' }, '<c-p>', function()
             Dynamic_node_external_update(2)
-        end, {desc = 'Dynamic_node_external_update(2)'})
+        end, { desc = 'Dynamic_node_external_update(2)' })
 
         -- STWHEUFL
         map('n', '👇', function()
