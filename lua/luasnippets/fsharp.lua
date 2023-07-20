@@ -16,7 +16,7 @@ local snippets = {
             Chart.Point(X, Y)
             |> Chart.show
             |> Chart.saveJPG ("test", Width = 600, Height = 600)
-         ]]  ,
+         ]],
             {}
         )
     ),
@@ -33,7 +33,7 @@ local snippets = {
         |> Chart.withXAxisStyle ("Time")
         |> Chart.withSize (1400.0, 800.0)
         |> Chart.show
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -43,7 +43,7 @@ local snippets = {
         fmt(
             [[
         Console.ReadLine()
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -55,7 +55,7 @@ local snippets = {
         match {} with
         | {} -> {}
         | _ -> {}
-        ]]   ,
+        ]],
             {
                 i(1, 'variable'),
                 i(2, 'item'),
@@ -72,7 +72,7 @@ local snippets = {
         module {}
 
         {}
-        ]]   ,
+        ]],
             {
                 f(function(args, snip)
                     local just_file_name = vim.fn.expand('%:t:r')
@@ -92,7 +92,7 @@ local snippets = {
         match matrix with
         | [] :: _ -> []
         | _ -> List.map List.head matrix :: transpose (List.map List.tail matrix)
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -118,7 +118,7 @@ local snippets = {
         driver.Navigate().GoToUrl("https://www.selenium.dev/selenium/web/web-form.html")
         let textfield = driver.FindElement(By.Id("my-text-id"))
         textfield.SendKeys("Derek was here")
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -142,7 +142,21 @@ local snippets = {
             port
 
         let port = OpenPort()
-        ]]   ,
+        ]],
+            {}
+        )
+    ),
+
+    s(
+        'script',
+        fmt(
+            [[
+        // https://learn.microsoft.com/en-us/dotnet/fsharp/tools/fsharp-interactive/
+
+        // Start timing
+        #time
+
+        ]],
             {}
         )
     ),
@@ -163,7 +177,7 @@ local autosnippets = {
             [[
         if {} then
             {}
-        ]]   ,
+        ]],
             {
                 i(1, 'true'),
                 i(2),
@@ -177,7 +191,7 @@ local autosnippets = {
             [[
         elif {} then
             {}
-        ]]   ,
+        ]],
             {
                 i(1, 'true'),
                 i(2),
@@ -191,7 +205,7 @@ local autosnippets = {
             [[
         else
             {}
-        ]]   ,
+        ]],
             {
                 i(1),
             }
@@ -203,7 +217,7 @@ local autosnippets = {
         fmt(
             [[while {} do
             {}
-        ]]   ,
+        ]],
             {
                 i(1),
                 i(2),

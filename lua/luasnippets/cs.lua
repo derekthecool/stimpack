@@ -351,6 +351,16 @@ local snippets = {
             }
         )
     ),
+
+    s(
+        'date',
+        fmt(
+            [[
+        DateTime.Now;
+        ]],
+            {}
+        )
+    ),
 }
 
 local autosnippets = {

@@ -14,11 +14,13 @@ local snippets = {
         int main(void)
         {{
              printf("{}\n");
+             {}
              return 0;
         }}
         ]],
             {
                 i(1),
+                i(0),
             }
         )
     ),
@@ -46,6 +48,44 @@ local snippets = {
         ]],
             {
                 i(1, 'Hello world from lua!'),
+            }
+        )
+    ),
+
+    s(
+        'memcpy',
+        fmt(
+            [[
+        memcpy({}, {}, {});
+        ]],
+            {
+                i(1, 'destination'),
+                i(2, 'source'),
+                i(3, 'size'),
+            }
+        )
+    ),
+
+    s(
+        'malloc',
+        fmt(
+            [[
+        {} {} = malloc(sizeof({}) * {});
+        if({} == NULL)
+        {{
+             printf("malloc for {} failed\n");
+             exit(1);
+        }}
+        ]],
+            {
+                i(1, 'int'),
+                i(2, 'variableName'),
+                rep(1),
+                i(3, '50'),
+                -- A shortcut for functionNodes that only do very basic string manipulation.
+                -- l(lambda, argnodes):
+                l(l._1:gsub('[*]', ''), { 2 }),
+                rep(2),
             }
         )
     ),
@@ -364,6 +404,51 @@ local autosnippets = {
     ),
 
     s(
+        'head head',
+        fmt(
+            [[
+        #pragma once
+
+        #if defined(__cplusplus)
+        extern "C" {{
+        #endif
+
+        {}
+
+        #if defined(__cplusplus)
+        }}
+        #endif
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    s(
+        'define define',
+        fmt(
+            [[
+        /*
+        @brief {}
+
+        @returns <{}> {}
+        */
+        {} {}({});
+        ]],
+            {
+                i(4, 'This function does does ...'),
+                rep(1),
+                i(5, 'Description about the return value'),
+
+                i(1, 'int'),
+                i(2, 'MyFunction'),
+                i(3, 'int a, int b'),
+            }
+        )
+    ),
+
+    s(
         'WHILE',
         fmt(
             [[
@@ -375,6 +460,38 @@ local autosnippets = {
             {
                 i(1, 'true'),
                 i(2),
+            }
+        )
+    ),
+
+    s(
+        'ENUM',
+        fmt(
+            [[
+        typedef enum
+        {{
+            {},{}
+        }} {};{}
+        ]],
+            {
+                i(2, 'KROOL'),
+                i(3),
+                i(1, 'EnumName'),
+                i(0),
+            }
+        )
+    ),
+
+    s(
+        '///',
+        fmt(
+            [[
+        /*
+        {}
+        */
+        ]],
+            {
+                i(1),
             }
         )
     ),
@@ -399,59 +516,108 @@ local autosnippets = {
             {}
         ]],
             {
-                c(1, {
-                    d(nil, function(args, snip)
-                        local extension = vim.fn.expand('%:e')
-                        local matching_h_file_or_default = 'HeaderFilename.h'
-                        if extension == 'c' or extension == 'cpp' then
-                            matching_h_file_or_default = vim.fn.expand('%:t'):gsub('%.c', '.h')
-                        end
+                d(1, function(args, snip)
+                    local extension = vim.fn.expand('%:e')
+                    local matching_h_file_or_default = 'HeaderFilename.h'
+                    if extension == 'c' or extension == 'cpp' then
+                        matching_h_file_or_default = vim.fn.expand('%:t'):gsub('%.c', '.h')
+                    end
 
-                        return sn(
+                    -- local better_lua_files = scan.scan_dir('.', { hidden = true, respect_gitignore = true, search_pattern = '%.lua$' })
+
+                    local system_headers = {
+                        t('#include <assert.h>'),
+                        t('#include <complex.h>'),
+                        t('#include <ctype.h>'),
+                        t('#include <errno.h>'),
+                        t('#include <fenv.h>'),
+                        t('#include <float.h>'),
+                        t('#include <inttypes.h>'),
+                        t('#include <iso646.h>'),
+                        t('#include <limits.h>'),
+                        t('#include <locale.h>'),
+                        t('#include <math.h>'),
+                        t('#include <setjmp.h>'),
+                        t('#include <signal.h>'),
+                        t('#include <stdalign.h>'),
+                        t('#include <stdarg.h>'),
+                        t('#include <stdatomic.h>'),
+                        t('#include <stdbit.h>'),
+                        t('#include <stdbool.h>'),
+                        t('#include <stdckdint.h>'),
+                        t('#include <stddef.h>'),
+                        t('#include <stdint.h>'),
+                        t('#include <stdio.h>'),
+                        t('#include <stdlib.h>'),
+                        t('#include <stdnoreturn.h>'),
+                        t('#include <string.h>'),
+                        t('#include <tgmath.h>'),
+                        t('#include <threads.h>'),
+                        t('#include <time.h>'),
+                        t('#include <uchar.h>'),
+                        t('#include <wchar.h>'),
+                        t('#include <wctype.h>'),
+                    }
+
+                    local headers_to_load_into_choice_node = {}
+
+                    -- Now get all the local headers in current directory and below
+                    local current_file_directory = vim.fn.expand('%:h')
+                    -- print(current_file_directory)
+                    local local_header_files = require('plenary.scandir').scan_dir(
+                        current_file_directory,
+                        { respect_gitignore = true, search_pattern = '.*%.h$' }
+                    )
+
+                    for _, local_header_name in ipairs(local_header_files) do
+                        -- Trim down path to be a true relative path to the current file
+                        local shortened_header_path = local_header_name:gsub(current_file_directory, '')
+                        -- Replace '\' with '/'
+                        shortened_header_path = shortened_header_path:gsub([[\+]], '/')
+                        -- Remove leading forward slash
+                        shortened_header_path = shortened_header_path:gsub('^/', '')
+                        local new_header = t(string.format('#include "%s"', shortened_header_path))
+                        table.insert(headers_to_load_into_choice_node, new_header)
+                    end
+
+                    local custom_insert_nodes = {
+                        sn(
                             nil,
-                            fmt([[#include "{}"]], {
-                                i(1, matching_h_file_or_default),
-                            })
-                        )
-                    end, {}),
+                            fmt(
+                                [[
+                         #include "{}"
+                         ]],
+                                {
+                                    i(1, 'custom_insert.h'),
+                                }
+                            )
+                        ),
+                        sn(
+                            nil,
+                            fmt(
+                                [[
+                         #include <{}>
+                         ]],
+                                {
+                                    i(1, 'custom_system_insert.h'),
+                                }
+                            )
+                        ),
+                    }
+                    -- Add the custom insert_nodes
+                    for _, custom_insert_node in ipairs(custom_insert_nodes) do
+                        table.insert(headers_to_load_into_choice_node, custom_insert_node)
+                    end
 
-                    sn(nil, {
-                        t('#include <'),
-                        i(1),
-                        t('>'),
-                    }),
-                    t('#include <assert.h>'),
-                    t('#include <complex.h>'),
-                    t('#include <ctype.h>'),
-                    t('#include <errno.h>'),
-                    t('#include <fenv.h>'),
-                    t('#include <float.h>'),
-                    t('#include <inttypes.h>'),
-                    t('#include <iso646.h>'),
-                    t('#include <limits.h>'),
-                    t('#include <locale.h>'),
-                    t('#include <math.h>'),
-                    t('#include <setjmp.h>'),
-                    t('#include <signal.h>'),
-                    t('#include <stdalign.h>'),
-                    t('#include <stdarg.h>'),
-                    t('#include <stdatomic.h>'),
-                    t('#include <stdbit.h>'),
-                    t('#include <stdbool.h>'),
-                    t('#include <stdckdint.h>'),
-                    t('#include <stddef.h>'),
-                    t('#include <stdint.h>'),
-                    t('#include <stdio.h>'),
-                    t('#include <stdlib.h>'),
-                    t('#include <stdnoreturn.h>'),
-                    t('#include <string.h>'),
-                    t('#include <tgmath.h>'),
-                    t('#include <threads.h>'),
-                    t('#include <time.h>'),
-                    t('#include <uchar.h>'),
-                    t('#include <wchar.h>'),
-                    t('#include <wctype.h>'),
-                }),
+                    -- Finally last priority is the system headers
+                    for _, header_snippet in ipairs(system_headers) do
+                        table.insert(headers_to_load_into_choice_node, header_snippet)
+                    end
+
+                    local header_choice_node = c(1, headers_to_load_into_choice_node)
+
+                    return sn(1, header_choice_node)
+                end, {}),
             }
         )
     ),
@@ -473,7 +639,7 @@ local autosnippets = {
         'SWITCH',
         fmt(
             [[
-        case({})
+        switch({})
         {{
              case {}:
                  {}

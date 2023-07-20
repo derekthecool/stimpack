@@ -326,6 +326,29 @@ local autosnippets = {
             }
         )
     ),
+
+    s(
+        'SECOND',
+        fmt(
+            [[
+        # {}
+
+        {}
+        ]],
+            {
+                f(function(args, snip)
+                    return vim.fn
+                        .expand('%:t')
+                        :gsub('_(%w)', function(a)
+                            return a:toupper()
+                        end)
+                        :gsub('%.md', '')
+                end, {}),
+
+                i(1),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets

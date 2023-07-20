@@ -103,6 +103,15 @@ set_plugin_info({{
 )
 
 local snippets = {
+
+    ms({
+        common = { snippetType = 'autosnippet' },
+        'test1',
+        'test2',
+    }, {
+        t('a or b (but autotriggered!!)'),
+    }),
+
     s('ls', {
         t({ '\\begin{itemize}', '\t\\item ' }),
         i(1),
@@ -298,13 +307,12 @@ local snippets = {
             [[
         -- A shortcut for functionNodes that only do very basic string manipulation.
         -- l(lambda, argnodes):
-        l(l._{}:gsub('{}', '{}'), {{ {} }}),
+        l(l._1:gsub('{}', '{}'), {{ {} }}),
         ]],
             {
-                i(1, 'node_number_to_perform_function_on'),
-                i(2, 'find'),
-                i(3, 'replace'),
-                i(4, '{ 1, 2 }]]'),
+                i(1, 'find'),
+                i(2, 'replace'),
+                i(3, '1, 2'),
             }
         )
     ),
