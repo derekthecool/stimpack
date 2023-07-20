@@ -20,3 +20,10 @@ print(fun.length(lua_files))
 local better_lua_files = scan.scan_dir('.', { hidden = true, respect_gitignore = true, search_pattern = '%.lua$' })
 print(better_lua_files)
 print(#better_lua_files)
+
+-- Scan directory of current opened file
+local current_file_directory = vim.fn.expand('%:h')
+print(current_file_directory)
+local depth_full = scan.scan_dir(current_file_directory, { respect_gitignore = true, search_pattern = '.*' })
+print(depth_full)
+print(#depth_full)
