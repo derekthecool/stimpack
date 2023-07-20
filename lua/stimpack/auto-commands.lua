@@ -70,5 +70,5 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
 })
 
 vim.filetype.add({ pattern = { ['*.md'] = 'vimwiki' } })
--- vim.filetype.add({ pattern = { ['*.h'] = 'c' }, priority = 100 })
+-- Set .h files as C filetype and not cpp
 vim.filetype.add({ extension = { h = 'c' }, priority = 100 })
