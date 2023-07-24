@@ -143,15 +143,15 @@ return {
             require('luasnip.extras.otf').on_the_fly()
         end, { silent = true, desc = 'Luasnip on the fly activate snippet' })
 
-        require('luasnippets.functions.auxiliary')
+        local auxiliary = require('luasnippets.functions.auxiliary')
         vim.cmd('map <c-t> <nop>')
         vim.keymap.set({ 's', 'i' }, '<c-t>', function()
-            Dynamic_node_external_update(1)
+            auxiliary.dynamic_node_external_update(1)
         end, { desc = 'Dynamic_node_external_update(1)' })
 
         vim.cmd('map <c-p> <nop>')
         vim.keymap.set({ 's', 'i' }, '<c-p>', function()
-            Dynamic_node_external_update(2)
+            M.dynamic_node_external_update(2)
         end, { desc = 'Dynamic_node_external_update(2)' })
 
         -- STWHEUFL
