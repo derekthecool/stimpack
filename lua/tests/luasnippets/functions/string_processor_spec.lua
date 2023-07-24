@@ -1,0 +1,16 @@
+local string_processor = require('luasnippets.functions.string_processor')
+
+describe('luasnippets string_processor functions --', function()
+    it('Most simple check', function()
+        local output = string_processor.printf_format_modifier_matcher('%d')
+        V(output)
+        vim.print(output)
+        assert.are.same(1, #output)
+    end)
+
+    it('Multiple format modifier check', function()
+        local output = string_processor.printf_format_modifier_matcher('My number is: %d, and my string is: %s')
+        vim.print(output)
+        assert.are.same(2, #output)
+    end)
+end)
