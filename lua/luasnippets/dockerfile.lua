@@ -66,6 +66,18 @@ local autosnippets = {
             t(']'),
         })
     ),
+
+    s(
+        'FIRST',
+        fmt(
+            [[
+        FROM {}
+        ]],
+            {
+                i(1, 'ubuntu:latest'),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets

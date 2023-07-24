@@ -1405,13 +1405,14 @@ local autosnippets = {
             {
                 c(1, {
                     sn(nil, {
-                        i(1, '1'),
-                    }),
-                    sn(nil, {
-                        i(1, '1'),
+                        -- i(1, '1'),
+                        r(1, 'insert_node', i(1, '1')),
                         t([[, ']]),
                         i(2, 'default'),
                         t([[']]),
+                    }),
+                    sn(nil, {
+                        r(1, 'insert_node', i(1, '1')),
                     }),
                 }),
                 i(0),
