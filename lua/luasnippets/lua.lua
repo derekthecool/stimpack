@@ -3,6 +3,7 @@
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
+local auxiliary = require('luasnippets.functions.auxiliary')
 
 local function column_count_from_string(descr)
     -- this won't work for all cases, but it's simple to improve
@@ -47,38 +48,6 @@ local rec_ls = function()
             sn(nil, { i(1), d(2, rec_ls, {}) }),
         })
     )
-end
-
--- local auxiliary = require('luasnippets.functions.auxiliary')
-
-local FFF = function(jump_position)
-    return d(jump_position, function(args, snip)
-        local output = {}
-        local test = args[1][1]
-        local insert_location = 1
-        if test then
-            for format_modifier in test:gmatch('(%%%w)') do
-                table.insert(output, t(','))
-                table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
-                insert_location = insert_location + 1
-            end
-        end
-        if snip then
-            string.format('test %f', '%f', '1 - my number', '1 - my number')
-        end
-        if snip ~= nil and snip.rows ~= nil then
-            table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
-        end
-        if not snip.rows then
-            snip.rows = 1
-        end
-
-        if snip ~= nil and snip.rows ~= nil then
-            table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
-        end
-
-        return sn(nil, output)
-    end, { 1 })
 end
 
 -- Wireshark lua plugin helpers
@@ -186,61 +155,26 @@ local snippets = {
         )
     ),
 
-    s(
-        'format',
+    ms(
+        {
+            'format',
+            {
+                trig = 'string format',
+                snippetType = 'autosnippet',
+                condition = function(line_to_cursor)
+                    return line_to_cursor:match([[']]) == nil
+                end,
+            },
+        },
         fmt(
             [[
         string.format("{}"{})
         ]],
             {
                 i(1),
-                d(jump_position, function(args, snip)
-                    local output = {}
-                    local test = args[1][1]
-                    local insert_location = 1
-                    if test then
-                        for format_modifier in test:gmatch('(%%%w)') do
-                            table.insert(output, t(','))
-                            table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
-                            insert_location = insert_location + 1
-                        end
-                    end
-                    if snip then
-                        string.format('test %f', '%f', '1 - my number', '1 - my number')
-                    end
-                    if snip ~= nil and snip.rows ~= nil then
-                        table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
-                    end
-                    if not snip.rows then
-                        snip.rows = 1
-                    end
-
-                    if snip ~= nil and snip.rows ~= nil then
-                        table.insert(output, t(string.format(',\'%d - my number\'', snip.rows)))
-                    end
-
-                    return sn(nil, output)
-                end, { 1 }),
+                auxiliary.printf_style_dynamic_formatter(2, 1),
             }
-        ),
-
-        {
-            user_args = {
-                -- Pass the functions used to manually update the dynamicNode as user args.
-                -- The n-th of these functions will be called by dynamic_node_external_update(n).
-                -- These functions are pretty simple, there's probably some cool stuff one could do
-                -- with `ui.input`
-                function(snip)
-                    V('Increment row count')
-                    snip.rows = snip.rows + 1
-                end,
-                -- don't drop below one.
-                function(snip)
-                    V('Decrement row count')
-                    snip.rows = math.max(snip.rows - 1, 1)
-                end,
-            },
-        }
+        )
     ),
 
     s(

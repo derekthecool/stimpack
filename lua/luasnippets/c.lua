@@ -1,8 +1,65 @@
 ---@diagnostic disable: undefined-global
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local string_processor = require('luasnippets.functions.string_processor')
 
 local snippets = {
+
+    -- s(
+    --     'printprint',
+    --     fmt(
+    --         [[
+    --     "{}" - {}
+    --     ]],
+    --         {
+    --             i(1, 'default'),
+    --             d(2, function(args, snip)
+    --                 local output = {}
+    --                 -- local test = (args[1] or {})[1]
+    --                 local test = args[1][1]
+    --                 local insert_location = 1
+    --                 -- vim.print(args)
+    --                 -- V(args)
+    --                 -- V(args[1][1])
+    --                 if test then
+    --                     for _, format_modifier in ipairs(string_processor.printf_format_modifier_matcher(test)) do
+    --                         table.insert(output, t(','))
+    --                         table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
+    --                         insert_location = insert_location + 1
+    --                     end
+    --                     -- table.insert(output,vim.inspect(args[1]))
+    --                     -- vim.print(args)
+    --                 end
+    --                 return sn(nil, output)
+    --             end, { 1 }),
+    --         }
+    --     )
+    -- ),
+
+    ms(
+        {
+            'printf',
+            'fprintf',
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        {}"{}"{});
+        ]],
+            {
+                f(function(args, snip)
+                    if snip.trigger == 'ERRORPRINT' or snip.trigger == 'fprintf' then
+                        return 'fprintf(stderr, '
+                    else
+                        return 'printf('
+                    end
+                end, {}),
+                i(1),
+                require('luasnippets.functions.auxiliary').printf_style_dynamic_formatter(2, 1),
+            }
+        )
+    ),
 
     s(
         'main',
@@ -407,19 +464,6 @@ local autosnippets = {
         ]],
             {
                 i(1),
-            }
-        )
-    ),
-
-    s(
-        'PRINT',
-        fmt(
-            [[
-        printf("{}", {});
-        ]],
-            {
-                i(1),
-                i(2),
             }
         )
     ),
