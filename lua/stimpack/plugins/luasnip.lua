@@ -110,6 +110,13 @@ return {
             require('luasnip').jump(-1)
         end)
 
+        vim.keymap.set({'i', 's'}, '§', function()
+            require('luasnip').jump(1)
+        end, { silent = true, desc = 'Snippet next' })
+        vim.keymap.set({'i', 's'}, '∏', function()
+            require('luasnip').jump(-1)
+        end, { silent = true, desc = 'Snippet previous' })
+
         map('i', '☝', function()
             require('luasnip.extras.select_choice')()
         end)
@@ -219,6 +226,8 @@ return {
 
         -- C
         require('luasnip').filetype_set('h', { 'c' })
+        -- Add microcontroller specific code snippets (all in C of course)
+        require('luasnip').filetype_extend('c', { 'mcu_ESP32' })
 
         -- Function for status line to show how many snippets available for current filetype
         function GetLuasnipAvailableSnippetCountForCurrentFile()
