@@ -67,12 +67,20 @@ return {
             group = luasnip_autocommands,
         })
 
+        -- Clear all scratch pad files when they are opened
+        vim.api.nvim_create_autocmd('BufEnter', {
+            pattern = string.format('%s/snippet_scratch_pad_files/*', OS.snippets),
+            callback = function()
+                vim.api.nvim_buf_set_lines(0, 0, -1, false, { '' })
+            end,
+            group = luasnip_autocommands,
+        })
+
         -- -- Global variable to optionally disable auto choice select
         -- LuasnipAutoChoice = true
         -- function ToggleLuasnipAutoChoiceExpand()
         --     LuasnipAutoChoice = not LuasnipAutoChoice
         -- end
-
         -- -- Autocommand to autoexpand choice-node snippets selection
         -- vim.api.nvim_create_autocmd('User', {
         --     pattern = 'LuasnipChoiceNodeEnter',
@@ -84,42 +92,30 @@ return {
         --     group = luasnip_autocommands,
         -- })
 
-        local map = require('stimpack.mapping-function')
-        map('i', '<c-j>', function()
-            require('luasnip').jump(1)
-        end)
-        map('s', '<c-j>', function()
-            require('luasnip').jump(1)
-        end)
-        map('i', '<c-k>', function()
-            require('luasnip').jump(-1)
-        end)
-        map('s', '<c-k>', function()
-            require('luasnip').jump(-1)
-        end)
-        map('i', '👉👉', function()
-            require('luasnip').jump(1)
-        end)
-        map('s', '👉👉', function()
-            require('luasnip').jump(1)
-        end)
-        map('i', '👈👈', function()
-            require('luasnip').jump(-1)
-        end)
-        map('s', '👈👈', function()
-            require('luasnip').jump(-1)
-        end)
-
-        vim.keymap.set({'i', 's'}, '§', function()
+        vim.keymap.set({ 'i', 's' }, '👉👉', function()
             require('luasnip').jump(1)
         end, { silent = true, desc = 'Snippet next' })
-        vim.keymap.set({'i', 's'}, '∏', function()
+        vim.keymap.set({ 'i', 's' }, '👈👈', function()
             require('luasnip').jump(-1)
         end, { silent = true, desc = 'Snippet previous' })
 
-        map('i', '☝', function()
+        vim.keymap.set({ 'i', 's' }, '<c-j>', function()
+            require('luasnip').jump(1)
+        end, { silent = true, desc = 'Snippet next' })
+        vim.keymap.set({ 'i', 's' }, '<c-k>', function()
+            require('luasnip').jump(-1)
+        end, { silent = true, desc = 'Snippet previous' })
+
+        vim.keymap.set({ 'i', 's' }, '§', function()
+            require('luasnip').jump(1)
+        end, { silent = true, desc = 'Snippet next' })
+        vim.keymap.set({ 'i', 's' }, '∏', function()
+            require('luasnip').jump(-1)
+        end, { silent = true, desc = 'Snippet previous' })
+
+        vim.keymap.set({ 'i', 's' }, '∄', function()
             require('luasnip.extras.select_choice')()
-        end)
+        end, { silent = true, desc = 'Open snippet choice' })
 
         vim.keymap.set('n', '☝', function()
             ToggleLuasnipAutoChoiceExpand()
@@ -133,9 +129,10 @@ return {
             )
         end, { silent = true, desc = 'ToggleLuasnipAutoChoiceExpand' })
 
-        -- My mapping function causes an error
         vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
         vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
+        vim.keymap.set({ 'i', 's' }, '∃', '<Plug>luasnip-next-choice', {})
+        vim.keymap.set({ 'i', 's' }, '∀', '<Plug>luasnip-prev-choice', {})
 
         -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#on-the-fly-snippets
         vim.cmd([[vnoremap <c-y>  "lc<cmd>lua require('luasnip.extras.otf').on_the_fly("l")<cr>]])
@@ -155,7 +152,7 @@ return {
         end, { desc = 'Dynamic_node_external_update(2)' })
 
         -- STWHEUFL
-        map('n', '👇', function()
+        vim.keymap.set({ 'n', 'i', 's' }, '👇', function()
             local current_filetype = vim.bo.filetype
             local expected_snippet_filename = string.format('%s.lua', current_filetype)
             local luasnip_snippet_path = OS.join_path(OS.snippets, expected_snippet_filename)
@@ -214,7 +211,7 @@ return {
                     })
                 end
             end
-        end)
+        end, { desc = 'Open snippets' })
 
         -- Snippet extensions, AKA get snippets of one filetype to use another as well
         -- This enables the new filetypes to appear in the snippet edit menu
