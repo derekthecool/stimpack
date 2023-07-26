@@ -72,6 +72,17 @@ set_plugin_info({{
 )
 
 local snippets = {
+    s(
+        'selected_text',
+        f(function(args, snip)
+            local res, env = {}, snip.env
+            table.insert(res, 'Selected Text (current line is ' .. env.TM_LINE_NUMBER .. '):')
+            for _, ele in ipairs(env.LS_SELECT_RAW) do
+                table.insert(res, ele)
+            end
+            return res
+        end, {})
+    ),
 
     ms({
         common = { snippetType = 'autosnippet' },
@@ -775,6 +786,38 @@ register_postdissector({})
             }
         )
     ),
+
+    ms(
+        {
+            '.nvim.lua',
+            'nvim.lua',
+        },
+        fmt(
+            [[
+-- Simple .nvim.lua
+local delay_ms = 3000
+
+vim.defer_fn(function()
+	local toggleterm = require("toggleterm")
+
+	vim.keymap.set("n", ",u;", function()
+		toggleterm.exec("idf.py build")
+	end, { silent = true, desc = "idf.py build" })
+
+	vim.keymap.set("n", ",uu", function()
+		toggleterm.exec("idf.py build flash monitor")
+	end, { silent = true, desc = "idf.py build flash monitor" })
+
+    vim.cmd('cd ./MQTT/mqtt3')
+    vim.notify('Ready to run', vim.log.levels.INFO, { title = 'Stimpack Notification' })
+end, delay_ms)
+        ]],
+            {},
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
 }
 
 local autosnippets = {
@@ -861,13 +904,13 @@ local autosnippets = {
         fmt(
             [[
             if {} then
-                {}
+            {}
             end
 
             {}]],
             {
                 i(1),
-                i(2),
+                auxiliary.wrap_selected_text(2),
                 i(0),
             }
         )

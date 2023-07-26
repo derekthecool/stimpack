@@ -130,4 +130,44 @@ M.printf_style_dynamic_formatter = function(jump_position, dependent_insert_node
     end, { dependent_insert_node_index })
 end
 
+M.wrap_selected_text = function(node_index)
+    return d(node_index, function(args, snip)
+        local nodes = {}
+
+        -- Check to see if a text selection has been stored
+        local selected_text = {}
+        --[[
+        snip.env.LS_SELECT_RAW - really bad indentation
+
+        snip.env.LS_SELECT_RAW
+        if  then
+            i(1),
+        auxiliary.wrap_selected_text(2),
+        i(0),
+        end
+
+        snip.env.LS_SELECTED_TEXT - does not work as DOC.md says
+        ]]
+        local selected_text_line_count = #snip.env.LS_SELECT_DEDENT
+        for index, item in ipairs(snip.env.LS_SELECT_DEDENT) do
+            -- for _, item in ipairs(snip.env.LS_SELECT_RAW) do
+            table.insert(selected_text, string.rep(' ', vim.bo.shiftwidth) .. item)
+            if index == selected_text_line_count then
+                table.insert(selected_text, '')
+            end
+        end
+
+        -- -- Add nodes for snippet
+        table.insert(nodes, t(selected_text))
+        table.insert(nodes, t(string.rep(' ', vim.bo.shiftwidth)))
+        table.insert(nodes, i(1))
+
+        local position = vim.api.nvim_win_get_cursor(0)
+
+        -- return isn(nil, nodes, string.rep(' ', vim.bo.shiftwidth + vim.bo.shiftwidth * position[2]))
+        return isn(nil, nodes, '$PARENT_INDENT')
+        -- return isn(nil, nodes, '$PARENT_INDENT' .. string.rep(' ',vim.bo.shiftwidth))
+    end, {})
+end
+
 return M

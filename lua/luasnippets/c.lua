@@ -5,37 +5,6 @@ local string_processor = require('luasnippets.functions.string_processor')
 
 local snippets = {
 
-    -- s(
-    --     'printprint',
-    --     fmt(
-    --         [[
-    --     "{}" - {}
-    --     ]],
-    --         {
-    --             i(1, 'default'),
-    --             d(2, function(args, snip)
-    --                 local output = {}
-    --                 -- local test = (args[1] or {})[1]
-    --                 local test = args[1][1]
-    --                 local insert_location = 1
-    --                 -- vim.print(args)
-    --                 -- V(args)
-    --                 -- V(args[1][1])
-    --                 if test then
-    --                     for _, format_modifier in ipairs(string_processor.printf_format_modifier_matcher(test)) do
-    --                         table.insert(output, t(','))
-    --                         table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
-    --                         insert_location = insert_location + 1
-    --                     end
-    --                     -- table.insert(output,vim.inspect(args[1]))
-    --                     -- vim.print(args)
-    --                 end
-    --                 return sn(nil, output)
-    --             end, { 1 }),
-    --         }
-    --     )
-    -- ),
-
     ms(
         {
             'printf',
@@ -255,9 +224,13 @@ local snippets = {
         )
     ),
 
-    s(
-        'string length',
-        fmt([[ strlen({});]], {
+    ms(
+        {
+            { trig = 'string length', snippetType = 'autosnippet' },
+            'strlen',
+        },
+        -- Do not add semicolon as it might need to be done in a loop
+        fmt([[ strlen({})]], {
             i(1, 'string'),
         })
     ),
@@ -292,7 +265,7 @@ local autosnippets = {
         'FOR',
         fmt(
             [[
-        for(int i = {}; i < {}; i{})
+        for(size_t i = {}; i < {}; i{})
         {{
             {}
         }}

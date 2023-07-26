@@ -110,6 +110,50 @@ void button_task(void *arg) {{
             {}
         )
     ),
+
+    -- FreeRTOS snippets
+    s(
+        'FreeRTOS_task_create',
+        -- // static inline BaseType_t xTaskCreate(TaskFunction_t pxTaskCode, const char *const pcName, const configSTACK_DEPTH_TYPE usStackDepth, void *const pvParameters, UBaseType_t uxPriority, TaskHandle_t *const pxCreatedTask)
+        -- // static inline TaskHandle_t xTaskCreateStatic(TaskFunction_t pxTaskCode, const char *const pcName, const uint32_t ulStackDepth, void *const pvParameters, UBaseType_t uxPriority, StackType_t *const puxStackBuffer, StaticTask_t *const pxTaskBuffer)
+        fmt(
+            [[
+        xTaskCreate({}, {}, {}, {}, {}, {});
+        ]],
+            {
+                i(1, 'TaskFunction_t pxTaskCode'),
+                i(2, 'const char *const pcName'),
+                i(3, 'const configSTACK_DEPTH_TYPE usStackDepth'),
+                i(4, 'void *const pvParameters'),
+                i(5, 'UBaseType_t uxPriority'),
+                i(6, 'TaskHandle_t *const pxCreatedTask'),
+            }
+        )
+    ),
+    s(
+        'FreeRTOS_task_delay',
+        fmt(
+            [[
+        // Consider using the function: xTaskDelayUntil(TickType_t *const pxPreviousWakeTime, const TickType_t xTimeIncrement)
+        vTaskDelay({} / portTICK_PERIOD_MS);
+        ]],
+            {
+                i(1, '1000'),
+            }
+        )
+    ),
+
+    s(
+        'FreeRTOS_task_delete',
+        fmt(
+            [[
+        vTaskDelete({});
+        ]],
+            {
+                i(1, 'task_handle'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {}
