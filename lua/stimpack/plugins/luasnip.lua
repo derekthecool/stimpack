@@ -20,6 +20,7 @@ return {
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
             enable_autosnippets = true, -- I NEED autosnippets to live, default is false
+            store_selection_keys = '<Tab>',
             -- Add awesome highlights to help show where you are at in a snippet
             -- Think of them as a road map of where you're going
             ext_opts = {
@@ -68,10 +69,11 @@ return {
         })
 
         -- Clear all scratch pad files when they are opened
-        vim.api.nvim_create_autocmd('BufEnter', {
-            pattern = string.format('%s/snippet_scratch_pad_files/*', OS.snippets),
+        vim.api.nvim_create_autocmd('BufNew', {
+            pattern = '*snippet_scratch_pad_files*',
             callback = function()
                 vim.api.nvim_buf_set_lines(0, 0, -1, false, { '' })
+                vim.cmd('w')
             end,
             group = luasnip_autocommands,
         })
@@ -92,12 +94,12 @@ return {
         --     group = luasnip_autocommands,
         -- })
 
-        vim.keymap.set({ 'i', 's' }, '👉👉', function()
-            require('luasnip').jump(1)
-        end, { silent = true, desc = 'Snippet next' })
-        vim.keymap.set({ 'i', 's' }, '👈👈', function()
-            require('luasnip').jump(-1)
-        end, { silent = true, desc = 'Snippet previous' })
+        -- vim.keymap.set({ 'i', 's' }, '👉👉', function()
+        --     require('luasnip').jump(1)
+        -- end, { silent = true, desc = 'Snippet next' })
+        -- vim.keymap.set({ 'i', 's' }, '👈👈', function()
+        --     require('luasnip').jump(-1)
+        -- end, { silent = true, desc = 'Snippet previous' })
 
         vim.keymap.set({ 'i', 's' }, '<c-j>', function()
             require('luasnip').jump(1)
@@ -129,8 +131,8 @@ return {
             )
         end, { silent = true, desc = 'ToggleLuasnipAutoChoiceExpand' })
 
-        vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
-        vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
+        -- vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
+        -- vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
         vim.keymap.set({ 'i', 's' }, '∃', '<Plug>luasnip-next-choice', {})
         vim.keymap.set({ 'i', 's' }, '∀', '<Plug>luasnip-prev-choice', {})
 
