@@ -1,14 +1,15 @@
 return {
     'skywind3000/asynctasks.vim',
+    enabled = false,
     dependencies = {
         'skywind3000/asyncrun.vim',
     },
     -- Lazy loading settings
-    keys = {
-        { '<leader>uu', desc = 'AsyncTask project-run' },
-        { '<leader>u;', desc = 'AsyncTask project-build' },
-        { '<leader>ue', desc = 'AsyncTaskEdit' },
-    },
+    -- keys = {
+    --     { '<leader>uu', desc = 'AsyncTask project-run' },
+    --     { '<leader>u;', desc = 'AsyncTask project-build' },
+    --     { '<leader>ue', desc = 'AsyncTaskEdit' },
+    -- },
     config = function()
         vim.g.asyncrun_open = 6
         vim.g.asyncrun_rootmarks = { '.git', '.svn', '.root', '.project', '.hg', '.exercism' }
