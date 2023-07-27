@@ -235,6 +235,17 @@ local snippets = {
         })
     ),
 
+    ms(
+        {
+            { trig = 'string copy', snippetType = 'autosnippet' },
+            'strcpy',
+        },
+        fmt([[strcpy({}, {});]], {
+            i(1, 'destination'),
+            i(2, 'item_to_copy_from'),
+        })
+    ),
+
     -- Algorithms start
 
     s(

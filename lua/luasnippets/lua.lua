@@ -1201,8 +1201,10 @@ local autosnippets = {
         'snip snip',
         fmt(
             [=[
-      s(
-        {},
+      ms(
+          {{
+            {}
+          }},
         fmt(
           [[
           {}
@@ -1217,29 +1219,24 @@ local autosnippets = {
                 c(1, {
                     sn(
                         1,
-                        fmt([['{}']], {
-                            r(1, 'snippet_trigger'),
-                        })
-                    ),
-                    sn(
-                        1,
                         fmt(
                             [[
               {{
-                trig = '{}',
-                regTrig = {},
-                descr = '{}',
+                trig = '{}', descr = '{}',
               }}
               ]],
                             {
                                 r(1, 'snippet_trigger'),
-                                c(2, {
-                                    t('true'),
-                                    t('false'),
-                                }),
                                 i(3, 'description'),
                             }
                         )
+                    ),
+
+                    sn(
+                        1,
+                        fmt([['{}']], {
+                            r(1, 'snippet_trigger'),
+                        })
                     ),
                 }),
                 r(2, 'snippet_format'),
@@ -1284,6 +1281,24 @@ local autosnippets = {
                 ['snippet_nodes'] = i(3),
             },
         }
+    ),
+
+    ms(
+        {
+            { trig = 'snip snap' },
+        },
+        fmt(
+            [[
+        {{ trig = '{}', snippetType = '{}', }},
+        ]],
+            {
+                i(1, 'trigger'),
+                c(2, {
+                    t('snippet'),
+                    t('autosnippet'),
+                }),
+            }
+        )
     ),
 
     s(

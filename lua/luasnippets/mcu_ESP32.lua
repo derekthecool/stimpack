@@ -112,6 +112,7 @@ void button_task(void *arg) {{
     ),
 
     -- FreeRTOS snippets
+    -- Needs #include "freertos/task.h"
     s(
         'FreeRTOS_task_create',
         -- // static inline BaseType_t xTaskCreate(TaskFunction_t pxTaskCode, const char *const pcName, const configSTACK_DEPTH_TYPE usStackDepth, void *const pvParameters, UBaseType_t uxPriority, TaskHandle_t *const pxCreatedTask)
@@ -130,6 +131,8 @@ void button_task(void *arg) {{
             }
         )
     ),
+
+    -- Needs #include "freertos/task.h"
     s(
         'FreeRTOS_task_delay',
         fmt(
@@ -143,6 +146,7 @@ void button_task(void *arg) {{
         )
     ),
 
+    -- Needs #include "freertos/task.h"
     s(
         'FreeRTOS_task_delete',
         fmt(
@@ -154,6 +158,25 @@ void button_task(void *arg) {{
             }
         )
     ),
+
+    -- Needs #include "freertos/queue.h"
+    s(
+        'FreeRTOS_queue_read',
+        fmt(
+            [[
+        // xTicksToWait sets the time to wait for a queue item, 0 returns immediately
+        // Return value of 0 means nothing in the queue changed, 1 means it has changed
+        xQueueReceive({}, &{}, (TickType_t){});
+        ]],
+            {
+                i(1, 'queue'),
+                i(2, 'variable_to_copy_queue_values'),
+                i(3, 'xTicksToWait'),
+            }
+        )
+    ),
+
+
 }
 
 local autosnippets = {}

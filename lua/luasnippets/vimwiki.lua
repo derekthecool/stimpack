@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+local auxiliary = require('luasnippets.functions.auxiliary')
+
 local snippets = {
 
     s(
@@ -272,7 +274,7 @@ local autosnippets = {
                     t('powershell'),
                     i(1),
                 }),
-                i(2),
+                auxiliary.wrap_selected_text(2),
             }
         )
     ),
