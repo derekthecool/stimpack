@@ -135,7 +135,7 @@ M.wrap_selected_text = function(node_index)
         local nodes = {}
 
         -- Check to see if a text selection has been stored
-        local selected_text = {}
+        -- local selected_text = {}
         --[[
         snip.env.LS_SELECT_RAW - really bad indentation
 
@@ -148,26 +148,87 @@ M.wrap_selected_text = function(node_index)
 
         snip.env.LS_SELECTED_TEXT - does not work as DOC.md says
         ]]
-        local selected_text_line_count = #snip.env.LS_SELECT_DEDENT
-        for index, item in ipairs(snip.env.LS_SELECT_DEDENT) do
-            -- for _, item in ipairs(snip.env.LS_SELECT_RAW) do
-            table.insert(selected_text, string.rep(' ', vim.bo.shiftwidth) .. item)
-            if index == selected_text_line_count then
-                table.insert(selected_text, '')
-            end
-        end
+        -- local selected_text_line_count = #snip.env.LS_SELECT_DEDENT
+        -- for index, item in ipairs(snip.env.LS_SELECT_DEDENT) do
+        --     -- for _, item in ipairs(snip.env.LS_SELECT_RAW) do
+        --     table.insert(selected_text, string.rep(' ', vim.bo.shiftwidth) .. item)
+        --     if index == selected_text_line_count then
+        --         table.insert(selected_text, '')
+        --     end
+        -- end
 
         -- -- Add nodes for snippet
-        table.insert(nodes, t(selected_text))
-        table.insert(nodes, t(string.rep(' ', vim.bo.shiftwidth)))
+        -- table.insert(nodes, t(selected_text))
+        -- table.insert(nodes, t(string.rep(' ', vim.bo.shiftwidth)))
+        -- local selected
+        -- if  then
+        --
+        -- end
+
+        table.insert(nodes, t(snip.env.LS_SELECT_DEDENT))
         table.insert(nodes, i(1))
 
-        local position = vim.api.nvim_win_get_cursor(0)
+        -- local position = vim.api.nvim_win_get_cursor(0)
 
         -- return isn(nil, nodes, string.rep(' ', vim.bo.shiftwidth + vim.bo.shiftwidth * position[2]))
-        return isn(nil, nodes, '$PARENT_INDENT')
+        -- return isn(nil, nodes, '$PARENT_INDENT')
         -- return isn(nil, nodes, '$PARENT_INDENT' .. string.rep(' ',vim.bo.shiftwidth))
+        vim.defer_fn(function()
+            vim.cmd('w')
+        end, 2000)
+        vim.defer_fn(function()
+            vim.lsp.buf.format({ async = true })
+        end, 5000)
+        return sn(nil, nodes)
     end, {})
+end
+
+---Function for luasnip to add using directives needed for snippets
+---@param include_items string|table
+M.insert_include_if_needed = function(include_items)
+    if type(include_items) == 'string' then
+        local temp = include_items
+        include_items = { temp }
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    for _, line in ipairs(lines) do
+        for index, using_directive in ipairs(include_items) do
+            if line:match(using_directive) ~= nil then
+                table.remove(include_items, index)
+            end
+        end
+    end
+
+    -- Add all using directives that remain in the list to be written to top of file
+    if #include_items > 0 then
+        local includes_to_write = {}
+
+        local filetype_include_format_strings = {
+            ['lua'] = [[require ('%s')]],
+            ['c'] = [[#include %s]],
+            ['cs'] = [[using %s;]],
+            ['fs'] = [[open %s]],
+            ['py'] = [[import %s]],
+        }
+
+        local current_filetype = vim.bo.filetype
+        local current_filetype_format_string = filetype_include_format_strings[current_filetype]
+
+        if not current_filetype_format_string then
+            vim.notify(
+                string.format('Filetype [%s] not supported with this include function', current_filetype),
+                vim.log.levels.ERROR,
+                { title = 'Stimpack Notification' }
+            )
+            return
+        end
+
+        for _, include in ipairs(include_items) do
+            table.insert(includes_to_write, string.format(current_filetype_format_string, include))
+        end
+        vim.api.nvim_buf_set_lines(0, 0, 0, false, includes_to_write)
+    end
 end
 
 return M

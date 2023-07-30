@@ -1,33 +1,7 @@
 ---@diagnostic disable: undefined-global
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
-
----Function for luasnip to add using directives needed for snippets
----@param required_using_directive_list string|table
-local function add_csharp_using_statement_if_needed(required_using_directive_list)
-    if type(required_using_directive_list) == 'string' then
-        local temp = required_using_directive_list
-        required_using_directive_list = { temp }
-    end
-
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    for _, line in ipairs(lines) do
-        for index, using_directive in ipairs(required_using_directive_list) do
-            if line:match(using_directive) ~= nil then
-                table.remove(required_using_directive_list, index)
-            end
-        end
-    end
-
-    -- Add all using directives that remain in the list to be written to top of file
-    if #required_using_directive_list > 0 then
-        local using_directives_to_write = {}
-        for _, using_directive in ipairs(required_using_directive_list) do
-            table.insert(using_directives_to_write, string.format('using %s;', using_directive))
-        end
-        vim.api.nvim_buf_set_lines(0, 0, 0, false, using_directives_to_write)
-    end
-end
+local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
 
@@ -55,7 +29,7 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        add_csharp_using_statement_if_needed('NLua')
+                        auxiliary.insert_include_if_needed('NLua')
                     end,
                 },
             },
@@ -82,7 +56,7 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        add_csharp_using_statement_if_needed('System.Text.RegularExpressions')
+                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
                     end,
                 },
             },
@@ -109,7 +83,8 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        add_csharp_using_statement_if_needed({
+                        auxiliary.insert_include_if_needed(
+                        {
                             'System.Linq',
                             'System.Text.RegularExpressions',
                         })
@@ -274,7 +249,7 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        add_csharp_using_statement_if_needed('System')
+                        auxiliary.insert_include_if_needed('System')
                     end,
                 },
             },
@@ -299,7 +274,7 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        add_csharp_using_statement_if_needed({ 'System', 'System.Collections.Generic' })
+                        auxiliary.insert_include_if_needed({ 'System', 'System.Collections.Generic' })
                     end,
                 },
             },
