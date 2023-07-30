@@ -50,6 +50,12 @@ return {
                     end,
                     'Reset Buffer',
                 },
+                B = {
+                    function()
+                        require('gitsigns').stage_buffer()
+                    end,
+                    'Stage Buffer',
+                },
                 s = {
                     function()
                         require('gitsigns').stage_hunk()
