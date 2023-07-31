@@ -639,6 +639,13 @@ error('Do not require this file, for wireshark completion only')
 function set_plugin_info(stuff) end
 
 ---@class Proto
+---@field prefs table WO The preferences changed routine of this dissector, a Lua function you define.
+---@field name string RO The name given to this dissector.
+---@field description string RO The description given to this dissector.
+---@field fields table RW The ProtoField's Lua table of this dissector.
+---@field experts table RW The expert info Lua table of this `Proto`.
+---@operator call:string
+---@operator tostring:string
 Proto = {}
 
 ---Create a new protocol
@@ -646,16 +653,22 @@ Proto = {}
 ---@param description The description of the protocol
 Proto.new = function(name, description) end
 
----Awesome function
----https://wiki.wireshark.org/Lua/Examples
---- 8 -- the dissector function callback
---- 9 function myproto.dissector(tvb,pinfo,tree)
---- 10     pinfo.cols.info:append(" " .. tostring(pinfo.dst).." -> "..tostring(pinfo.src))
---- 11 end
+---The protocol's dissector, a function you define.
 ---@param tvb userdata The buffer to dissect. A Tvb represents the packet's buffer. It is passed as an argument to listeners and dissectors, and can be used to extract information (via TvbRange) from the packet's data. Beware that Tvbs are usable only by the current listener or dissector call and are destroyed as soon as the listener/dissector returns, so references to them are unusable once the function has returned. To create a tvbrange the tvb must be called with offset and length as optional arguments ( the offset defaults to 0 and the length to tvb:len() )
 ---@param pinfo userdata The packet information
 ---@param tree userdata The tree on which to add the protocol items
 Proto.dissector = function(tvb, pinfo, tree) end
+
+---Registers a heuristic dissector function for this Proto protocol, for the given heuristic list name.
+---@param listname
+---@param func
+Proto.register_heuristic = function(listname, func) end
+
+---WO The preferences changed routine of this dissector, a Lua function you define.
+Proto.prefs_changed = function() end
+
+---WO The init routine of this dissector, a function you define.
+Proto.init = function() end
 
 ---@class ProtoField
 ProtoField = {}
@@ -665,17 +678,46 @@ ProtoField = {}
 ---@param description The description of the field
 ProtoField.string = function(name, description) end
 
----@class Field
+--           155       Field            WSLUA_CLASS_DEFINE   Field                                                            A Field extractor to obtain field values.
+--           156       Field            WSLUA_CONSTRUCTOR    Field.new(fieldname)                                             Create a Field extractor.
+--           157       Field            WSLUA_CONSTRUCTOR    Field.list()                                                     Gets a Lua array table of all registered field filter names.
+--           158       Field            WSLUA_ATTRIBUTE      field.name                                                       RO The filter name of this field, or nil.
+--           159       Field            WSLUA_ATTRIBUTE      field.display                                                    RO The full display name of this field, or nil.
+--           160       Field            WSLUA_ATTRIBUTE      field.type                                                       RO The `ftype` of this field, or nil.
+--           161       Field            WSLUA_METAMETHOD     field:__call()                                                   Obtain all values (see FieldInfo) for this field.
+--           162       Field            WSLUA_METAMETHOD     field:__tostring()                                               Obtain a string with the field filter name.
+--           163       Field            WSLUA_METAMETHOD     Field__gc
+
+---@class Field A Field extractor to obtain field values
+---@field name string RO The filter name of this field, or nil
+---@field display string RO The full display name of this field, or nil
+---@field type ftype|nil RO The `ftype` of this field, or nil.
 Field = {}
 
+---Create a Field extractor
 ---@param fieldName The name of the wireshark field to search for. For example mqtt.topic or tcp.port
 Field.new = function(fieldName) end
+
+---Gets a Lua array table of all registered field filter names.
+Field.list = function() end
 
 ---@param protocol The name of the wireshark field to search for. For example mqtt.topic or tcp.port
 DissectorTable.get = function(protocol) end
 
--- local tcp_port_table = DissectorTable.get('tcp.port')
--- local mqtt_dissector = tcp_port_table:get_dissector(1883)
--- for i, port in ipairs({ 8000, 8001 }) do
---     tcp_port_table:add(port, mqtt_dissector)
--- end
+---@class Tvb A Tvb represents the packet’s buffer
+Tvb = {}
+---tostring Convert the bytes of a Tvb into a string. This is primarily useful for debugging purposes since the string will be truncated if it is too long.
+Tvb.__tostring = function() end
+---Obtain the reported length (length on the network) of a Tvb
+Tvb.reported_len = function() end
+---Obtain the captured length (amount saved in the capture process) of a Tvb.
+Tvb.captured_len = function() end
+--Obtain the reported (not captured) length of packet data to end of a Tvb or 0 if the offset is beyond the end of the Tvb
+Tvb.reported_length_remaining = function() end
+
+--tvb:bytes([offset], [length])                                              Obtain a ByteArray from a Tvb.
+--tvb:offset()                                                               Returns the raw offset (from the beginning of the source Tvb) of a sub Tvb.
+--tvb:__call()                                                               Equivalent to tvb:range(…)
+--tvb:range([offset], [length])                                              Creates a TvbRange from this Tvb.
+--tvb:raw([offset], [length])                                                Obtain a Lua string of the binary bytes in a Tvb.
+--tvb:__eq()                                                                 Checks whether contents of two Tvbs are equal.
