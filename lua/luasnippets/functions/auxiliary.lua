@@ -207,7 +207,7 @@ M.insert_include_if_needed = function(include_items)
             ['c'] = [[#include %s]],
             ['cs'] = [[using %s;]],
             ['fs'] = [[open %s]],
-            ['py'] = [[import %s]],
+            ['python'] = [[import %s]],
         }
 
         local current_filetype = vim.bo.filetype

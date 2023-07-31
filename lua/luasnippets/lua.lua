@@ -906,10 +906,9 @@ local autosnippets = {
             if {} then
             {}
             end
-
             {}]],
             {
-                i(1),
+                i(1, 'true'),
                 auxiliary.wrap_selected_text(2),
                 i(0),
             }

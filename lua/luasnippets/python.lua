@@ -1,4 +1,7 @@
 ---@diagnostic disable: undefined-global
+
+local auxiliary = require('luasnippets.functions.auxiliary')
+
 local snippets = {
     s(
         'Plover dictionary',
@@ -38,13 +41,22 @@ local snippets = {
         'file exists',
         fmt(
             [[
-        import os.path
         os.path.isfile({})
         ]],
             {
-                i(1),
+                i(1, 'filename'),
             }
-        )
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('os.path')
+                    end,
+                },
+            },
+        }
     ),
 
     s(

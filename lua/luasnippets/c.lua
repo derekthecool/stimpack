@@ -1,6 +1,7 @@
 ---@diagnostic disable: undefined-global
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local auxiliary = require('luasnippets.functions.auxiliary')
 local string_processor = require('luasnippets.functions.string_processor')
 
 local snippets = {
@@ -25,7 +26,7 @@ local snippets = {
                     end
                 end, {}),
                 i(1),
-                require('luasnippets.functions.auxiliary').printf_style_dynamic_formatter(2, 1),
+                auxiliary.printf_style_dynamic_formatter(2, 1),
             }
         )
     ),
@@ -265,7 +266,17 @@ local snippets = {
             {
                 delimiters = [[/\]],
             }
-        )
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('<ctype.h>')
+                    end,
+                },
+            },
+        }
     ),
     -- Algorithms end
 }
