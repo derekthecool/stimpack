@@ -202,8 +202,6 @@ M.insert_include_if_needed = function(include_items)
 
     -- Add all using directives that remain in the list to be written to top of file
     if #include_items > 0 then
-        local includes_to_write = {}
-
         local filetype_include_format_strings = {
             ['lua'] = [[require ('%s')]],
             ['c'] = [[#include %s]],
@@ -224,6 +222,7 @@ M.insert_include_if_needed = function(include_items)
             return
         end
 
+        local includes_to_write = {}
         for _, include in ipairs(include_items) do
             table.insert(includes_to_write, string.format(current_filetype_format_string, include))
         end
