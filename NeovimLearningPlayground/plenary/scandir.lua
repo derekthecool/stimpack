@@ -27,3 +27,27 @@ print(current_file_directory)
 local depth_full = scan.scan_dir(current_file_directory, { respect_gitignore = true, search_pattern = '.*' })
 print(depth_full)
 print(#depth_full)
+
+-- Get all directories
+-- local dirs = fun.map(function(a)
+-- return vim.fs.normalize(a) .. 'test'
+-- end, scan.scan_dir('.', { respect_gitignore = true, only_dirs = true }))
+local dirs = scan.scan_dir('.', {
+    respect_gitignore = true,
+    only_dirs = true,
+})
+dirs_clean = fun.map(function(a)
+    return vim.fs.normalize(a)
+end, dirs)
+print(dirs)
+print(#dirs)
+print(dirs_clean)
+print(#dirs)
+
+-- Better version to normalize paths in functional style
+local fun_dirs = fun.map(function(a)
+    return vim.fs.normalize(a)
+end, scan.scan_dir('.', { respect_gitignore = true, only_dirs = true })):totable()
+-- Normal table now
+print(fun_dirs)
+print(fun_dirs[1])

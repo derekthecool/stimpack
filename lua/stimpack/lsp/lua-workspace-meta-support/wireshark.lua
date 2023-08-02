@@ -638,6 +638,33 @@ error('Do not require this file, for wireshark completion only')
 ---@param stuff versionTable
 function set_plugin_info(stuff) end
 
+---@class Tvb A Tvb represents the packet’s buffer
+Tvb = {}
+---tostring Convert the bytes of a Tvb into a string. This is primarily useful for debugging purposes since the string will be truncated if it is too long.
+Tvb.__tostring = function() end
+---Obtain the reported length (length on the network) of a Tvb
+Tvb.reported_len = function() end
+---Obtain the captured length (amount saved in the capture process) of a Tvb.
+Tvb.captured_len = function() end
+--Obtain the reported (not captured) length of packet data to end of a Tvb or 0 if the offset is beyond the end of the Tvb
+Tvb.reported_length_remaining = function() end
+---Obtain a ByteArray from a Tvb.
+---@param offset number
+---@param length number
+Tvb.bytes = function(offset, length) end
+---Creates a TvbRange from this Tvb.
+---@param offset number
+---@param length number
+Tvb.range = function(offset, length) end
+---Obtain a Lua string of the binary bytes in a Tvb.
+---@param offset number
+---@param length number
+Tvb.raw = function(offset, length) end
+---Returns the raw offset (from the beginning of the source Tvb) of a sub Tvb.
+Tvb.offset = function() end
+--tvb:__eq()                                                                 Checks whether contents of two Tvbs are equal.
+--tvb:__call()                                                               Equivalent to tvb:range(…)
+
 ---@class Proto
 ---@field prefs table WO The preferences changed routine of this dissector, a Lua function you define.
 ---@field name string RO The name given to this dissector.
@@ -654,7 +681,7 @@ Proto = {}
 Proto.new = function(name, description) end
 
 ---The protocol's dissector, a function you define.
----@param tvb userdata The buffer to dissect. A Tvb represents the packet's buffer. It is passed as an argument to listeners and dissectors, and can be used to extract information (via TvbRange) from the packet's data. Beware that Tvbs are usable only by the current listener or dissector call and are destroyed as soon as the listener/dissector returns, so references to them are unusable once the function has returned. To create a tvbrange the tvb must be called with offset and length as optional arguments ( the offset defaults to 0 and the length to tvb:len() )
+---@param tvb Tvb The buffer to dissect. A Tvb represents the packet's buffer. It is passed as an argument to listeners and dissectors, and can be used to extract information (via TvbRange) from the packet's data. Beware that Tvbs are usable only by the current listener or dissector call and are destroyed as soon as the listener/dissector returns, so references to them are unusable once the function has returned. To create a tvbrange the tvb must be called with offset and length as optional arguments ( the offset defaults to 0 and the length to tvb:len() )
 ---@param pinfo userdata The packet information
 ---@param tree userdata The tree on which to add the protocol items
 Proto.dissector = function(tvb, pinfo, tree) end
@@ -703,21 +730,3 @@ Field.list = function() end
 
 ---@param protocol The name of the wireshark field to search for. For example mqtt.topic or tcp.port
 DissectorTable.get = function(protocol) end
-
----@class Tvb A Tvb represents the packet’s buffer
-Tvb = {}
----tostring Convert the bytes of a Tvb into a string. This is primarily useful for debugging purposes since the string will be truncated if it is too long.
-Tvb.__tostring = function() end
----Obtain the reported length (length on the network) of a Tvb
-Tvb.reported_len = function() end
----Obtain the captured length (amount saved in the capture process) of a Tvb.
-Tvb.captured_len = function() end
---Obtain the reported (not captured) length of packet data to end of a Tvb or 0 if the offset is beyond the end of the Tvb
-Tvb.reported_length_remaining = function() end
-
---tvb:bytes([offset], [length])                                              Obtain a ByteArray from a Tvb.
---tvb:offset()                                                               Returns the raw offset (from the beginning of the source Tvb) of a sub Tvb.
---tvb:__call()                                                               Equivalent to tvb:range(…)
---tvb:range([offset], [length])                                              Creates a TvbRange from this Tvb.
---tvb:raw([offset], [length])                                                Obtain a Lua string of the binary bytes in a Tvb.
---tvb:__eq()                                                                 Checks whether contents of two Tvbs are equal.

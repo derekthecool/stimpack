@@ -58,7 +58,8 @@ Here are some related options:
 "console": "integratedTerminal",
 "externalConsole": false,
 "internalConsoleOptions": "openOnSessionStart",
-```
+
+````
 
 ```json
 {
@@ -68,4 +69,28 @@ Here are some related options:
   "stopAtEntry": true,
   "program": "${workspaceFolder}/DapperTesting/bin/Debug/net6.0/DapperTesting.dll"
 }
+````
+
+## Using The Plugin Nvimprojector
+
+Create a file named projector.json and put this in it for a dotnet project
+
+```json
+[
+  {
+    "name": "run",
+    "group": "dotnet",
+    "type": "coreclr",
+    "request": "launch",
+    "cwd": "${workspaceFolder}",
+    "stopAtEntry": true,
+    "program": "${workspaceFolder}/bin/Debug/net7.0/FsharpTcpToMqtt.dll",
+    "dependencies": ["project.dotnet.build"]
+  },
+  {
+    "name": "build",
+    "group": "dotnet",
+    "command": "dotnet build"
+  }
+]
 ```
