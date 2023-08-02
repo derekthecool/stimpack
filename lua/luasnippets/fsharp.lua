@@ -1,4 +1,7 @@
 ---@diagnostic disable: undefined-global
+
+local auxiliary = require('luasnippets.functions.auxiliary')
+
 local snippets = {
     s(
         'plot from fsx script',
@@ -163,11 +166,28 @@ local snippets = {
 }
 
 local autosnippets = {
-    s(
-        'PRINT',
-        fmt([[printfn "{}" {}]], {
+    ms(
+        {
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'printfn', snippetType = 'snippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'eprintfn', snippetType = 'snippet' },
+        },
+        fmt([[{}printf{} "{}"{}]], {
+            f(function(args, snip)
+                local print_type = ''
+                if snip.trigger == 'ERRORPRINT' or snip.trigger == 'eprintfn' then
+                    print_type = 'e'
+                end
+                return print_type
+            end, {}),
+            c(3, {
+                t('n'),
+                t(''),
+            }),
+
             i(1, '%d'),
-            i(2, 'variable'),
+            auxiliary.printf_style_dynamic_formatter(2, 1, ' '),
         })
     ),
 

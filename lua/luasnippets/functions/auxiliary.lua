@@ -114,14 +114,22 @@ M.dynamic_node_external_update = function(func_indx)
     end
 end
 
-M.printf_style_dynamic_formatter = function(jump_position, dependent_insert_node_index)
+---Function to make printf style functions easier
+---@param jump_position integer The node index for this dynamic_node to go
+---@param dependent_insert_node_index integer The node index for the insert_node of the main print layout
+---@param separator string|nil This optional separator will be used instead of the default ',' if desired
+M.printf_style_dynamic_formatter = function(jump_position, dependent_insert_node_index, separator)
     return d(jump_position, function(args, snip)
+        if not separator then
+            separator = ','
+        end
+
         local output = {}
         local test = (args[1] or {})[1]
         local insert_location = 1
         if test then
             for _, format_modifier in ipairs(string_processor.printf_format_modifier_matcher(test)) do
-                table.insert(output, t(','))
+                table.insert(output, t(separator))
                 table.insert(output, i(insert_location, string.format([['%s']], format_modifier)))
                 insert_location = insert_location + 1
             end

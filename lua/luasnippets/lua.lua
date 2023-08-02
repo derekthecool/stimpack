@@ -4,6 +4,8 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
 local auxiliary = require('luasnippets.functions.auxiliary')
+local scan = require('plenary.scandir')
+local fun = require('luafun.fun')
 
 local function column_count_from_string(descr)
     -- this won't work for all cases, but it's simple to improve
@@ -72,6 +74,27 @@ set_plugin_info({{
 )
 
 local snippets = {
+    ms(
+        {
+            {
+                trig = 'plenary scandir',
+                descr = 'description',
+            },
+        },
+        fmt(
+            [[
+        local scandir = require('plenary.scandir')
+        local files = scandir.scan_dir(
+            '{}',
+            {{ respect_gitignore = true, search_pattern = '{}' }}
+        )
+        ]],
+            {
+                i(1, 'directory_to_start_scan'),
+                i(2, 'lua_search_pattern'),
+            }
+        )
+    ),
     s(
         'selected_text',
         f(function(args, snip)
@@ -800,19 +823,44 @@ local delay_ms = 3000
 vim.defer_fn(function()
 	local toggleterm = require("toggleterm")
 
+    local build = '<>'
 	vim.keymap.set("n", ",u;", function()
-		toggleterm.exec("idf.py build")
-	end, { silent = true, desc = "idf.py build" })
+		toggleterm.exec(build)
+	end, { silent = true, desc = build })
 
+    local run = '<>'
 	vim.keymap.set("n", ",uu", function()
-		toggleterm.exec("idf.py build flash monitor")
-	end, { silent = true, desc = "idf.py build flash monitor" })
+		toggleterm.exec(run)
+	end, { silent = true, desc = run })
 
-    vim.cmd('cd ./MQTT/mqtt3')
-    vim.notify('Ready to run', vim.log.levels.INFO, { title = 'Stimpack Notification' })
+    vim.cmd('cd <>')
+
+    vim.notify('Ready to run', vim.log.levels.INFO, { title = '.nvim.lua commands' })
 end, delay_ms)
         ]],
-            {},
+            {
+                c(1, {
+                    t('dotnet build'),
+                    t('idf.py build'),
+                    i(1, 'custom command'),
+                }),
+                c(2, {
+                    t('dotnet run'),
+                    t('dotnet test'),
+                    t('idf.py build flash monitor'),
+                    i(1, 'custom command'),
+                }),
+                d(3, function(args, snip)
+                    local nodes = {}
+
+                    -- Add nodes for snippet
+                    local dirs = fun.map(function(a)
+                        return t(vim.fs.normalize(a))
+                    end, scan.scan_dir('.', { respect_gitignore = true, only_dirs = true, depth = 2 })):totable()
+
+                    return sn(nil, c(1, dirs))
+                end, { }),
+            },
             {
                 delimiters = '<>',
             }
@@ -999,17 +1047,19 @@ local autosnippets = {
         'FOREACH',
         fmt(
             [[
-        for {} in pairs({}) do
+        for {}, {} in {}({}) do
             {}
         end
-
-        {}
         ]],
             {
-                i(1, 'item'),
-                i(2, 'table'),
-                i(3),
-                i(0),
+                i(1, '_'),
+                i(2, 'value'),
+                c(3, {
+                    t('pairs'),
+                    t('ipairs'),
+                }),
+                i(4, 'table'),
+                i(5),
             }
         )
     ),

@@ -2,6 +2,8 @@
 
 -- This whole snippet file is for ESP32 microcontroller code
 
+local auxiliary = require('luasnippets.functions.auxiliary')
+
 local snippets = {
 
     s(
@@ -41,32 +43,15 @@ void button_task(void *arg) {{
         { 'ESP32log', 'ESP_LOGE' },
         fmt([[ESP_LOG{}({}, "{}"{});]], {
             c(1, {
-                t('E'),
-                t('W'),
                 t('I'),
                 t('D'),
+                t('W'),
+                t('E'),
                 t('V'),
             }),
             i(2, 'TAG'),
             i(3),
-            d(4, function(args, snip)
-                local nodes = {}
-
-                -- Add nodes for snippet
-                -- table.insert(nodes, t('Add this node'))
-                local text = args[1][1]
-                if text then
-                    local _, length = text:gsub('%%', '')
-                    if length and length > 0 then
-                        for i = 1, length do
-                            table.insert(nodes, t(','))
-                            table.insert(nodes, i(1))
-                        end
-                    end
-                end
-
-                return sn(nil, nodes)
-            end, { 3 }),
+            auxiliary.printf_style_dynamic_formatter(4, 3),
         })
     ),
     s(
@@ -175,8 +160,6 @@ void button_task(void *arg) {{
             }
         )
     ),
-
-
 }
 
 local autosnippets = {}
