@@ -17,10 +17,11 @@ return {
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
                 lualine_x = {
-                    {
-                        GetLuasnipAvailableSnippetCountForCurrentFile,
-                        color = { fg = '#1155ff', bg = 'Normal' },
-                    },
+                    -- TODO: 8/7/2023 3:32:28 PM, find a way to get this working again without nil references
+                    -- {
+                    --     GetLuasnipAvailableSnippetCountForCurrentFile or 0,
+                    --     color = { fg = '#1155ff', bg = 'Normal' },
+                    -- },
                     '%S',
                     'filesize',
                     'selectioncount',

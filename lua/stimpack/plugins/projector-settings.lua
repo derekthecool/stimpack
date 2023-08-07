@@ -1,5 +1,8 @@
 return {
     'kndndrj/nvim-projector',
+    keys = {
+        '_',
+    },
     config = function()
         require('projector').setup({
             loaders = {
@@ -50,9 +53,8 @@ return {
             },
         })
 
-        local map = require('stimpack.mapping-function')
-
-        -- map('n', '<leader>dd', require('projector').continue)
-        map('n', '_', require('projector').continue)
+        vim.keymap.set('n', '_', function()
+            require('projector').continue()
+        end, { silent = true, desc = 'Projector continue' })
     end,
 }

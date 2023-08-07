@@ -1,12 +1,14 @@
 return {
     'mfussenegger/nvim-dap',
-    -- lazy = true,
     dependencies = {
         'theHamsta/nvim-dap-virtual-text',
         'rcarriga/nvim-dap-ui',
         'nvim-telescope/telescope-dap.nvim',
         'kndndrj/nvim-projector',
-        -- { get_my_plugin_path('nvim-projector'), branch = 'master' },
+    },
+    -- TODO: 8/7/2023 3:13:27 PM, add all other keymappings here to help speed startup time
+    keys = {
+        '<leader>d',
     },
     config = function()
         local map = require('stimpack.mapping-function')
@@ -67,8 +69,8 @@ return {
 
         -- Set global variables to help with path locations
         Mason = {}
-        Mason.bin = OS.join_path( vim.fn.stdpath('data'), 'mason', 'bin' )
-        Mason.packages = OS.join_path( vim.fn.stdpath('data'), 'mason', 'packages' )
+        Mason.bin = OS.join_path(vim.fn.stdpath('data'), 'mason', 'bin')
+        Mason.packages = OS.join_path(vim.fn.stdpath('data'), 'mason', 'packages')
 
         -- Source configuration files for each language
         require('stimpack.debugging.dap-csharp')

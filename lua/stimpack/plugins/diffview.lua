@@ -29,6 +29,9 @@ See :h diffview-maps for other mappings available
 ]]
 return {
     'sindrets/diffview.nvim',
+    keys = {
+        '<leader>gd',
+    },
     config = function()
         require('diffview').setup({
             diff_binaries = false, -- Show diffs for binaries

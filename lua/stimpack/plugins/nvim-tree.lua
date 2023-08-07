@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd('BufEnter', {
 
 return {
     'nvim-tree/nvim-tree.lua',
-    lazy = false,
     keys = { { '<leader>fe', '<cmd>NvimTreeToggle<cr>', desc = 'NvimTreeToggle' } },
     config = function()
         local function on_attach(bufnr)

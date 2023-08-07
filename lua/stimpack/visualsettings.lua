@@ -3,12 +3,11 @@ vim.o.termguicolors = true -- Needed for better color display
 vim.o.cmdheight = 1
 
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
-vim.wo.list = true -- enable the feature
+vim.wo.list = true                                       -- enable the feature
 vim.go.listchars = 'trail:·,precedes:«,extends:»,tab: ' -- specify chars
 vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:,eob:▎'
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
-vim.api.nvim_set_hl(0, 'ColorColumn', { fg = '#750495'})
 
 -- Set highlight for mini.nvim trailspace
 vim.api.nvim_set_hl(0, 'MiniTrailspace', { bg = '#4a50fa', fg = '#000000' })

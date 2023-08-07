@@ -10,14 +10,11 @@ vim.api.nvim_create_autocmd('TextYankPost * ', {
 })
 
 -- This autocommand does not seem to work right on nonhelp files, not able to do macros
-vim.api.nvim_create_autocmd(
-    'FileType',
-    {
-        pattern = { 'qf', 'help', 'fugitive' },
-        command = 'nnoremap <silent> <buffer> q :close<cr>',
-        group = generalSettingsGroup,
-    }
-)
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = { 'qf', 'help', 'fugitive' },
+    command = 'nnoremap <silent> <buffer> q :close<cr>',
+    group = generalSettingsGroup,
+})
 vim.api.nvim_create_autocmd('BufWinEnter', { command = ':set formatoptions-=cro', group = generalSettingsGroup })
 
 -- Map xaml and axaml to have xml syntax
@@ -73,7 +70,6 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
     group = generalSettingsGroup,
 })
 
-vim.filetype.add({ pattern = { ['*.md'] = 'vimwiki' } })
 -- Set .h files as C filetype and not cpp
 vim.filetype.add({ extension = { h = 'c' }, priority = 100 })
 vim.filetype.add({ extension = { fsproj = 'xml' }, priority = 1 })

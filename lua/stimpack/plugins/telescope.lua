@@ -74,7 +74,6 @@ return {
         require('telescope').load_extension('emoji')
         -- require('telescope').load_extension('ui-select') -- TODO: decide if dressing.nvim meets my needs
         require('telescope').load_extension('file_browser')
-        require('telescope').load_extension('find_template')
 
         local function gitfiles_or_findfiles()
             local builtin = require('telescope.builtin')

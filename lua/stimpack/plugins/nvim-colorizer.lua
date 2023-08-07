@@ -1,6 +1,6 @@
 return {
     'NvChad/nvim-colorizer.lua',
-    -- event = 'VeryLazy',
+    event = 'CursorMoved',
     config = function()
         require('colorizer').setup()
     end,

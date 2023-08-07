@@ -1,5 +1,6 @@
 return {
     'dbeniamine/cheat.sh-vim',
+    enabled = false,
     event = 'VeryLazy',
     cmd = { 'Cheat', 'CheatReplace', 'CheatPast', 'CheatPager' },
     keys = '<leader>K',

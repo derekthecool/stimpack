@@ -1,13 +1,11 @@
 -- Vimwiki is a great personal wiki and diary
 return {
     'vimwiki/vimwiki',
-    lazy = false,
-    -- ft = { 'markdown', 'vimwiki' },
-    -- init = function()
-    --     vim.filetype.add({
-    --         pattern = { ['*.md'] = 'vimwiki' },
-    --     })
-    -- end,
+    ft = { 'markdown', 'vimwiki' },
+    -- Startup is different when using lazy loading. The links are not concealed.
+    init = function()
+        vim.filetype.add({ extension = { md = 'vimwiki' }, priority = 100 })
+    end,
     dependencies = {
         'godlygeek/tabular',
     },
@@ -26,7 +24,7 @@ return {
 
         -- Personal Wiki Setup
         local personal = {
-            path = OS.join_path( OS.home, '.mywiki', 'personal' ),
+            path = OS.join_path(OS.home, '.mywiki', 'personal'),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
@@ -35,7 +33,7 @@ return {
 
         -- Work Wiki Setup
         local work = {
-            path = OS.join_path( OS.home, '.mywiki', 'work' ),
+            path = OS.join_path(OS.home, '.mywiki', 'work'),
             syntax = 'markdown',
             ext = '.md',
             auto_diary_index = 1,
@@ -98,7 +96,7 @@ return {
             },
         })
 
-        local path = OS.join_path( OS.nvim, 'lua', 'stimpack', 'markdown-textobjects-codeblock.vim' )
+        local path = OS.join_path(OS.nvim, 'lua', 'stimpack', 'markdown-textobjects-codeblock.vim')
         vim.cmd('source ' .. path)
 
         ---@diagnostic disable: redundant-parameter
@@ -108,5 +106,12 @@ return {
         vim.fn.matchadd('Conceal', '[\\.\\]', nil, -1, { conceal = '🐌' })
         vim.fn.matchadd('Conceal', '[o\\]', nil, -1, { conceal = '🚙' })
         vim.fn.matchadd('Conceal', '[O\\]', nil, -1, { conceal = '🚁' })
+
+        vim.wo.colorcolumn = '80' -- Display color column at 80 characters
+        vim.opt.shiftwidth = 2
+
+        vim.defer_fn(function()
+            vim.api.nvim_set_hl(0, 'ColorColumn', { fg = '#750495' })
+        end, 50)
     end,
 }

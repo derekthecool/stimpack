@@ -1,5 +1,6 @@
 return {
     'andrewferrier/debugprint.nvim',
+    enabled = false,
     -- Basic plugin settings
     -- enabled = true,
     -- cond = function()

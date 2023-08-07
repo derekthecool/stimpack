@@ -1,5 +1,6 @@
 return {
     'nvim-neotest/neotest',
+    enabled = false,
     -- Basic plugin settings
     -- enabled = true,
     -- cond = function()

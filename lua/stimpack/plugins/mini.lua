@@ -1,7 +1,7 @@
 -- https://github.com/echasnovski/mini.nvim
 return {
     'echasnovski/mini.nvim',
-    version = false,
+    event = 'VeryLazy',
     config = function()
         -- Amazing text alignment
         -- Replaces plugin: https://github.com/godlygeek/tabular

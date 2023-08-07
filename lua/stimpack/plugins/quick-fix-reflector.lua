@@ -14,6 +14,7 @@ delete them from the source files.
 --]]
 return {
     'stefandtw/quickfix-reflector.vim',
+    enabled = false,
     event = 'VeryLazy',
     config = function()
         vim.g.qf_modifiable = 1

@@ -1,5 +1,6 @@
 return {
     'conornewton/vim-pandoc-markdown-preview',
+    enabled = false,
     config = function()
         vim.g.md_pdf_viewer = 'zathura'
         vim.g.md_args =
