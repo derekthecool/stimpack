@@ -4,6 +4,19 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
     s(
+        'measure',
+        fmt(
+            [=[
+            /// {}
+            [<Measure>] type {}
+            ]=],
+            {
+                i(2, 'Description of the unit: gold'),
+                i(1, 'G'),
+            }
+        )
+    ),
+    s(
         'plot from fsx script',
         fmt(
             [[

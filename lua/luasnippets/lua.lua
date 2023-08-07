@@ -249,7 +249,8 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr =
+            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -856,10 +857,13 @@ end, delay_ms)
                     -- Add nodes for snippet
                     local dirs = fun.map(function(a)
                         return t(vim.fs.normalize(a))
-                    end, scan.scan_dir('.', { respect_gitignore = true, only_dirs = true, depth = 2 })):totable()
+                    end, scan.scan_dir(
+                        '.',
+                        { respect_gitignore = true, only_dirs = true, depth = 2 }
+                    )):totable()
 
                     return sn(nil, c(1, dirs))
-                end, { }),
+                end, {}),
             },
             {
                 delimiters = '<>',
@@ -1175,7 +1179,7 @@ local autosnippets = {
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
@@ -1271,12 +1275,15 @@ local autosnippets = {
                         fmt(
                             [[
               {{
-                trig = '{}', descr = '{}',
+                trig = '{}', snippetType = '{}',
               }}
               ]],
                             {
                                 r(1, 'snippet_trigger'),
-                                i(3, 'description'),
+                                c(2, {
+                                    t('snippet'),
+                                    t('autosnippet'),
+                                }),
                             }
                         )
                     ),
@@ -1462,7 +1469,7 @@ local autosnippets = {
     ),
 
     s(
-        -- This node is not a real node. It is just easier to remember by calling it this.
+    -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[

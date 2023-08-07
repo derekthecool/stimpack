@@ -160,7 +160,7 @@ local snippets = {
         fmt(
             [[
       ```mermaid
-      graph {}
+      flowchart {}
 
       {}
       ```
@@ -194,6 +194,85 @@ local snippets = {
                     ),
                     i(1),
                 }),
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = '====',
+                wordTrig = false,
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt([[{}{} {}]], {
+            t(' '),
+            c(2, {
+                t('-->'),
+                t('---'),
+                sn(
+                    nil,
+                    fmt([[-- {} -->]], {
+                        i(1, 'yes'),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt([[-- {} --]], {
+                        i(1, 'yes'),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt([[-. {} .--]], {
+                        i(1, 'yes'),
+                    })
+                ),
+                t('-.->'),
+                t('==>'),
+                sn(
+                    nil,
+                    fmt([[== {} ==>]], {
+                        i(1, 'yes'),
+                    })
+                ),
+                t('~~~'),
+                t('--o'),
+                t('--x'),
+                t('o--o'),
+                t('<-->'),
+                t('x--x'),
+            }),
+            i(1),
+        }, {
+            trim_empty = false,
+        })
+    ),
+
+    ms(
+        {
+            {
+                trig = 'mermaid subgraph',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        subgraph {}
+            direction {}
+            {}
+        end
+        ]],
+            {
+                i(1, 'SubgraphName'),
+                c(2, {
+                    t('TB'),
+                    t('BT'),
+                    t('RL'),
+                    t('LR'),
+                }),
+                i(3, 'NodesInSubgraph'),
             }
         )
     ),
