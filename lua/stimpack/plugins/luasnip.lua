@@ -223,6 +223,12 @@ return {
         require('luasnip').filetype_extend('cs', { 'dotnet' })
         require('luasnip').filetype_extend('toggleterm', { 'ps1' })
 
+        -- Lua
+        require('luasnip').filetype_extend(
+            'lua',
+            { 'neovim_snippets', 'wireshark_snippets', 'luasnip_snippet_creation_snippets' }
+        )
+
         -- C
         require('luasnip').filetype_set('h', { 'c' })
         -- Add microcontroller specific code snippets (all in C of course)
