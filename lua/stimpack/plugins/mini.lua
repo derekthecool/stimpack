@@ -45,7 +45,13 @@ return {
 
         -- Amazing plugin for nice movement animations
         -- Replaces plugin https://github.com/karb94/neoscroll.nvim
-        require('mini.animate').setup()
+        require('mini.animate').setup({
+            cursor = { enable = true },
+            scroll = { enable = true },
+            open = { enable = false },
+            resize = { enable = false },
+            close = { enable = false },
+        })
 
         local miniAnimateAutocommands = vim.api.nvim_create_augroup('miniAnimateAutocommands', { clear = true })
 
