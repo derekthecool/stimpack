@@ -17,6 +17,30 @@ local autosnippets = {
             }
         )
     ),
+
+    ms(
+        {
+            {
+                trig = [['''']],
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt([['{}']], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            {
+                trig = [[""""]],
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt([["{}"]], {
+            i(1),
+        })
+    ),
 }
 
 return snippets, autosnippets
