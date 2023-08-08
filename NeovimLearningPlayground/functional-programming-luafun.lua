@@ -178,6 +178,10 @@ fun.each(
     end, fun.range(10)))
 )
 
+-- Reducing functions
+-- https://luafun.github.io/reducing.html
+
+-- Folds
 print(fun.foldl(function(acc, x)
     return acc + x
 end, 0, fun.range(5)))
@@ -186,10 +190,123 @@ print(fun.foldl(function(acc, x, y)
     return acc + x * y
 end, 0, fun.zip(fun.range(1, 5), { 4, 3, 2, 1 })))
 
--- Reducing functions
--- https://luafun.github.io/reducing.html
+-- More preferred name of reduce
+print(fun.reduce(function(acc, x)
+    return acc + x
+end, 0, fun.range(5)))
+print(fun.reduce(fun.operator.add, 0, fun.range(5)))
+print(fun.reduce(function(acc, x, y)
+    return acc + x * y
+end, 0, fun.zip(fun.range(1, 5), { 4, 3, 2, 1 })))
 
--- Folds
+-- Length
+print(fun.length({ 'a', 'b', 'c', 'd', 'e' }))
+print(fun.length({}))
+print(fun.length(fun.range(0)))
+print(fun.length(fun.range(100)))
+
+-- totable
+local tab = fun.totable('abcdef')
+print(type(tab), #tab)
+fun.each(print, tab)
+
+-- tomap
+local tab = fun.tomap(fun.zip(fun.range(1, 8), 'abcdefgh'))
+print(type(tab), #tab)
+fun.each(print, fun.iter(tab))
+print(tab)
+
+-- Predicates
+print(fun.is_prefix_of({ 'a' }, { 'a', 'b', 'c' }))
+print(fun.is_prefix_of(fun.range(6), fun.range(5)))
+
+print(fun.is_null({ 'a', 'b', 'c', 'd', 'e' }))
+print(fun.is_null({}))
+print(fun.is_null(fun.range(0)))
+
+print(fun.all(function(x)
+    return x
+end, { true, true, true, true }))
+print(fun.all(function(x)
+    return x
+end, { true, true, true, false }))
+
+-- Also alias: fun.some
+print(fun.any(function(x)
+    return x
+end, { false, false, false, false }))
+print(fun.any(function(x)
+    return x
+end, { false, false, false, true }))
+
+-- Special folds
+print(fun.sum(fun.range(5)))
+print(fun.range(5):sum())
+
+print(fun.product(fun.range(5)))
+print(fun.range(5):product())
+
+print(fun.min(fun.range(1, 10, 1)))
+print(fun.min({ 'f', 'd', 'c', 'd', 'e' }))
+
+function min_cmp(a, b)
+    if -a < -b then
+        return a
+    else
+        return b
+    end
+end
+
+print(fun.min_by(min_cmp, fun.range(1, 10, 1)))
+
+print(fun.max(fun.range(1, 10, 1)))
+print(fun.max({ 'f', 'd', 'c', 'd', 'e' }))
+function max_cmp(a, b)
+    if -a > -b then
+        return a
+    else
+        return b
+    end
+end
+
+print(fun.max_by(max_cmp, fun.range(1, 10, 1)))
+
+-- Transformation functions
+-- https://luafun.github.io/transformations.html
+fun.each(
+    print,
+    fun.map(function(x)
+        return 2 * x
+    end, fun.range(4))
+)
+
+fun.each(print, fun.enumerate({ 'a', 'b', 'c', 'd', 'e' }))
+fun.each(print, fun.enumerate(fun.zip({ 'one', 'two', 'three', 'four', 'five' }, { 'a', 'b', 'c', 'd', 'e' })))
+fun.each(print, fun.intersperse('x', { 'a', 'b', 'c', 'd', 'e' }))
+
+-- Composition functions
+-- https://luafun.github.io/compositions.html
+fun.each(print, fun.zip({ 'a', 'b', 'c', 'd' }, { 'one', 'two', 'three' }))
+fun.each(print, fun.zip())
+fun.each(print, fun.zip(fun.range(5), { 'a', 'b', 'c' }, fun.rands()))
+fun.each(
+    print,
+    fun.zip(fun.partition(function(x)
+        return x > 7
+    end, fun.range(1, 15, 1)))
+)
+
+fun.each(print, fun.take(15, fun.cycle(fun.range(5))))
+fun.range(3):cycle():take(100):each(print)
+fun.each(print, fun.take(15, fun.cycle(fun.zip(fun.range(5), { 'a', 'b', 'c', 'd', 'e' }))))
+
+fun.each(print, fun.chain(fun.range(2), { 'a', 'b', 'c' }, { 'one', 'two', 'three' }))
+fun.each(print, fun.take(15, fun.cycle(fun.chain(fun.enumerate({ 'a', 'b', 'c' }), { 'one', 'two', 'three' }))))
+
+-- Operators
+-- https://luafun.github.io/operators.html
+-- There are many of these, just use fun.operator LSP help to check them
+print(fun.reduce(fun.operator.concat, '', {'these','strings','should','concat'}))
 
 --[[
 -- Step size can't be 0
