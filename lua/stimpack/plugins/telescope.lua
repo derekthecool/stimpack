@@ -6,7 +6,7 @@ return {
         'xiyaowong/telescope-emoji.nvim',
         'nvim-telescope/telescope-ui-select.nvim',
     },
-    event = 'VeryLazy',
+    event = 'UIEnter',
     config = function()
         local layout_config = 'vertical'
 

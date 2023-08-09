@@ -1,6 +1,6 @@
 return {
     'nvim-lualine/lualine.nvim',
-    event = 'VeryLazy',
+    event = 'UIEnter',
     config = function()
         require('lualine').setup({
             options = {
@@ -28,6 +28,14 @@ return {
                     'encoding',
                     'fileformat',
                     'filetype',
+                    {
+                        function()
+                            local lazyStartTime = require('lazy').stats().startuptime or 0
+                            local time = string.format('%dms', lazyStartTime)
+                            return time
+                        end,
+                        color = { fg = '#ffff64', bg = 'Normal' },
+                    },
                     {
                         require('lazy.status').updates,
                         cond = require('lazy.status').has_updates,

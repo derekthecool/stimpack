@@ -41,6 +41,3 @@ luac.out
 
 # Spell files
 *.spl
-
-# lazy.nvim lock file
-lazy-lock.json

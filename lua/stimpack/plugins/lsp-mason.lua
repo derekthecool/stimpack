@@ -1,7 +1,10 @@
 return {
     'williamboman/mason.nvim',
     dependencies = { 'williamboman/mason-lspconfig.nvim', 'neovim/nvim-lspconfig', 'folke/neodev.nvim' },
-    event = 'VeryLazy',
+    -- TODO: 8/9/2023 10:22:33 AM, Why the heck is this plugin not able to lazy load?
+    -- event = 'VeryLazy',
+    -- event = 'BufRead',
+    -- event = { 'CursorHold', 'CursorHoldI' },
     config = function()
         -- First load mason
         require('mason').setup({
@@ -106,9 +109,9 @@ return {
         require('lspconfig')
         local signs = {
             { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-            { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-            { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-            { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+            { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+            { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+            { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
         }
 
         for _, sign in ipairs(signs) do
