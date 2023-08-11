@@ -10,7 +10,7 @@ local snippets = {
         {
             'printf',
             'fprintf',
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt(
@@ -373,21 +373,65 @@ local autosnippets = {
     s(
         'head head',
         fmt(
-            [[
-        #pragma once
-
-        #if defined(__cplusplus)
-        extern "C" {{
-        #endif
-
-        {}
-
-        #if defined(__cplusplus)
-        }}
-        #endif
-        ]],
+            [[{}]],
             {
-                i(1),
+                c(1, {
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    #pragma once
+
+                    #if defined(__cplusplus)
+                    extern "C" {{
+                    #endif
+
+                    {}
+
+                    #if defined(__cplusplus)
+                    }}
+                    #endif
+                    ]],
+                            {
+                                i(1),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                    #ifndef {}
+                    #define {}
+
+                    #if defined(__cplusplus)
+                    extern "C" {{
+                    #endif
+
+                    {}
+
+                    #if defined(__cplusplus)
+                    }}
+                    #endif
+
+                    #endif // {}
+                    ]],
+                            {
+                                f(function(args, snip)
+                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                                end, {}),
+                                f(function(args, snip)
+                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                                end, {}),
+                                i(1),
+                                f(function(args, snip)
+                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                                end, {}),
+                            }
+                        )
+                    ),
+                }),
             }
         )
     ),

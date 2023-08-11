@@ -427,6 +427,77 @@ local autosnippets = {
             }
         )
     ),
+
+    ms(
+        {
+            {
+                trig = 'IF',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt(
+            [[
+        if({})
+            {}
+        endif()
+        ]],
+            {
+                i(1, 'TRUE'),
+                d(2, function(args, snip)
+                    local nodes = {}
+
+                    -- Add nodes for snippet
+                    table.insert(nodes, i(1))
+
+                    table.insert(
+                        nodes,
+                        d(2, function(args, snip)
+                            local nodes = {}
+
+                            -- Add nodes for snippet
+                            if args ~= nil and args[1] ~= nil then
+                                for _, value in ipairs(args[1]) do
+                                    local else_if = 'TTT'
+                                    if value:match(else_if) then
+                                        -- table.insert(nodes, t('-- ' .. value))
+                                        table.insert(nodes, t({ '', 'elseif(' }))
+                                        table.insert(nodes, i(1))
+                                        table.insert(nodes, t({ ')', '' }))
+                                        vim.api.nvim_cmd({
+                                            cmd = '%s/' .. else_if .. '//',
+                                            args = {},
+                                        }, {
+                                            silent = true,
+                                            emsg_silent = true,
+                                        })
+                                    end
+                                end
+                            end
+
+                            return sn(nil, nodes)
+                        end, { 1 })
+                    )
+
+                    return sn(nil, nodes)
+                end, {}),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = '$$', wordtrig = false, snippetType = 'autosnippet' },
+            { trig = '${', wordtrig = false, snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ${{{}}}
+        ]],
+            {
+                i(1, 'variable'),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets
