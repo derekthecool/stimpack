@@ -4,6 +4,9 @@
 -- Spacing is done after each word so comma is better for me now.
 vim.g.mapleader = ','
 
+-- Enable project configuration, since neovim 0.9.0 you can use .nvim.lua
+vim.opt.exrc = true
+
 require('stimpack.global-helpers')
 
 -- Load lazy.nvim

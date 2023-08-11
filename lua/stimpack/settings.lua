@@ -42,9 +42,6 @@ vim.wo.signcolumn = 'auto:1-2' -- Allow for up to 4 items in the sign column
 vim.wo.foldmethod = 'expr'
 --vim.wo.foldexpr = vim.treesitter.foldexpr()
 
--- Enable project configuration, since neovim 0.9.0 you can use .nvim.lua
-vim.opt.exrc = true
-
 vim.opt.showcmdloc = 'statusline'
 
 -- Buffer options
