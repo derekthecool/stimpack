@@ -32,6 +32,10 @@ return {
     keys = {
         '<leader>gd',
     },
+    cmd = {
+        'DiffviewOpen',
+        'DiffviewFileHistory',
+    },
     config = function()
         require('diffview').setup({
             diff_binaries = false, -- Show diffs for binaries
