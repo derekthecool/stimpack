@@ -37,33 +37,6 @@ local snippets = {
     ),
 
     s(
-        'regex match',
-        fmt(
-            [[
-        if(Regex.IsMatch({}, @"{}"))
-        {{
-            {}
-        }}
-        ]],
-            {
-                i(1, '"source"'),
-                i(2, '.*'),
-                i(3),
-            }
-        ),
-        {
-            callbacks = {
-                [-1] = {
-                    -- Write needed using directives before expanding snippet so positions are not messed up
-                    [events.pre_expand] = function()
-                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
-                    end,
-                },
-            },
-        }
-    ),
-
-    s(
         'regex matches',
         fmt(
             [[
@@ -83,8 +56,7 @@ local snippets = {
                 [-1] = {
                     -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        auxiliary.insert_include_if_needed(
-                        {
+                        auxiliary.insert_include_if_needed({
                             'System.Linq',
                             'System.Text.RegularExpressions',
                         })

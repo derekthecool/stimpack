@@ -116,9 +116,8 @@ local snippets = {
         ]],
             {
                 f(function(args, snip)
-                  return vim.fn.expand('%:t')
-                end,
-                {  }),
+                    return vim.fn.expand('%:t')
+                end, {}),
                 i(1, 'Short script description'),
                 i(2, 'Long script description'),
                 i(3, 'param1'),
@@ -242,15 +241,24 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'PRINT',
+    ms(
+        {
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'PRINT',        snippetType = 'autosnippet' },
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
+            { trig = 'Write-Output', snippetType = 'snippet' },
+        },
         fmt(
             [[
             {}
         ]],
             {
-                c(1, {
-                    sn(
+
+                d(1, function(args, snip)
+                    local nodes = {}
+
+                    local write_host = sn(
                         nil,
                         fmt(
                             [[
@@ -262,9 +270,9 @@ local autosnippets = {
                                 c(3, powershell_background_highlights),
                             }
                         )
-                    ),
+                    )
 
-                    sn(
+                    local write_output = sn(
                         nil,
                         fmt(
                             [[
@@ -274,9 +282,9 @@ local autosnippets = {
                                 i(1),
                             }
                         )
-                    ),
+                    )
 
-                    sn(
+                    local write_error = sn(
                         nil,
                         fmt(
                             [[
@@ -286,10 +294,39 @@ local autosnippets = {
                                 i(1),
                             }
                         )
-                    ),
-                }),
+                    )
+
+                    local choices = {
+                        write_error,
+                        write_host,
+                        write_output,
+                    }
+
+                    local function tableMoveFirstToLast(items)
+                        local firstItem = items[1]
+                        table.remove(items, 1)
+                        items[#items + 1] = firstItem
+                    end
+                    if snip.trigger ~= 'ERRORPRINT' then
+                        tableMoveFirstToLast(choices)
+                    end
+
+                    table.insert(nodes, c(1, choices))
+
+                    return sn(nil, nodes)
+                end, {}),
             }
         )
+    ),
+
+    ms(
+        {
+            { trig = 'FOREACH',        snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object', snippetType = 'snippet' },
+        },
+        fmt([[ForEach-Object {{ {} }}]], {
+            i(1),
+        })
     ),
 
     s(

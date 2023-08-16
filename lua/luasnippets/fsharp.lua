@@ -185,12 +185,16 @@ local autosnippets = {
             { trig = 'printfn', snippetType = 'snippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'eprintfn', snippetType = 'snippet' },
+            { trig = 'FORMAT', snippetType = 'autosnippet' },
+            { trig = 'sprintf', snippetType = 'snippet' },
         },
         fmt([[{}printf{} "{}"{}]], {
             f(function(args, snip)
                 local print_type = ''
                 if snip.trigger == 'ERRORPRINT' or snip.trigger == 'eprintfn' then
                     print_type = 'e'
+                elseif snip.trigger == 'FORMAT' or snip.trigger == 'sprintf' then
+                    print_type = 's'
                 end
                 return print_type
             end, {}),

@@ -1,6 +1,16 @@
 ---@diagnostic disable: undefined-global
 
 -- TODO: create function to check file extension for cs and add semicolon to end of lines
+local add_optional_semicolon = f(function(args, snip)
+    local file_extension = vim.fn.expand('%:e')
+    local return_string
+    if file_extension == 'csharp' then
+        return_string = ';'
+    end
+    return return_string
+end, {})
+
+local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
     s(
@@ -8,7 +18,7 @@ local snippets = {
         fmt(
             [[
          Environment.GetEnvironmentVariable("{}"{})
-         ]]  ,
+         ]],
             {
                 i(1, 'EnvironmentVariableName'),
                 c(2, {
@@ -20,6 +30,61 @@ local snippets = {
             }
         )
     ),
+
+    s(
+        {
+            trig = 'Regex.Replace',
+        },
+        fmt(
+            [[
+        Regex.Replace({}, @"{}", @"{}"){}
+        ]],
+            {
+                i(1, 'InputString'),
+                i(2, 'Regex'),
+                i(3, 'Replacement'),
+                add_optional_semicolon,
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'regex match',
+        fmt(
+            [[
+        if(Regex.IsMatch({}, @"{}"))
+        {{
+            {}
+        }}
+        ]],
+            {
+                i(1, '"source"'),
+                i(2, '.*'),
+                i(3),
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        V('test')
+                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
+                    end,
+                },
+            },
+        }
+    ),
 }
 
 local autosnippets = {
@@ -28,7 +93,7 @@ local autosnippets = {
         fmt(
             [[
         Console.ReadLine()
-        ]]   ,
+        ]],
             {}
         )
     ),
@@ -44,7 +109,7 @@ local autosnippets = {
     /// <summary>
     /// {}
     /// </summary>{}
-    ]]       ,
+    ]],
             {
                 i(1),
                 i(2),
@@ -60,7 +125,6 @@ local autosnippets = {
                         P('made it')
                     end,
                 },
-
                 [2] = {
                     -- Disable the vim settings after leaving the snippet
                     [events.leave] = function()
@@ -92,7 +156,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                    <summary>{}</summary>
-                   ]]    ,
+                   ]],
                         {
                             i(1, 'Test test test'),
                         }
@@ -104,7 +168,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                  <remarks>{}</remarks>
-                 ]]      ,
+                 ]],
                         {
                             i(1, 'Specifies that text contains supplementary information about the program element'),
                         }
@@ -116,7 +180,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <param name="{}">{}</param>
-                ]]       ,
+                ]],
                         {
                             i(1),
                             i(2, 'Specifies the name and description for a function or method parameter'),
@@ -129,7 +193,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <typeparam name="{}">{}</typeparam>
-                ]]       ,
+                ]],
                         {
                             i(1),
                             i(2, 'Specifies the name and description for a type parameter'),
@@ -142,7 +206,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <returns>{}</returns>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Describe the return value of a function or method'),
                         }
@@ -154,7 +218,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <exception cref="{}">{}</exception>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Exception type'),
                             i(
@@ -170,7 +234,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <seealso cref="{}"/>
-                ]]       ,
+                ]],
                         {
                             i(
                                 1,
@@ -185,7 +249,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <para>{}</para>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Specifies a paragraph of text. This is used to separate text inside the remarks tag'),
                         }
@@ -197,7 +261,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <code>{}</code>
-                ]]       ,
+                ]],
                         {
                             i(
                                 1,
@@ -212,7 +276,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <paramref name="{}"/>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Specifies a reference to a parameter in the same documentation comment'),
                         }
@@ -224,7 +288,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <typeparamref name="{}"/>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Specifies a reference to a type parameter in the same documentation comment'),
                         }
@@ -236,7 +300,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <c>{}</c>
-                ]]       ,
+                ]],
                         {
                             i(1, 'Specifies a reference to a type parameter in the same documentation comment'),
                         }
@@ -248,7 +312,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                     fmt(
                         [[
                 <see cref="{}">{}</see>
-                ]]       ,
+                ]],
                         {
                             i(1, 'reference'),
                             i(2, 'Specifies a reference to a type parameter in the same documentation comment'),

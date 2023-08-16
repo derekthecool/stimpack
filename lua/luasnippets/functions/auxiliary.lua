@@ -194,6 +194,7 @@ end
 ---Function for luasnip to add using directives needed for snippets
 ---@param include_items string|table
 M.insert_include_if_needed = function(include_items)
+    V('adding')
     if type(include_items) == 'string' then
         local temp = include_items
         include_items = { temp }
@@ -214,7 +215,7 @@ M.insert_include_if_needed = function(include_items)
             ['lua'] = [[require ('%s')]],
             ['c'] = [[#include %s]],
             ['cs'] = [[using %s;]],
-            ['fs'] = [[open %s]],
+            ['fsharp'] = [[open %s]],
             ['python'] = [[import %s]],
         }
 

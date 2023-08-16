@@ -158,7 +158,17 @@ void button_task(void *arg) {{
                 i(2, 'variable_to_copy_queue_values'),
                 i(3, 'xTicksToWait'),
             }
-        )
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('<freertos/queue.h>')
+                    end,
+                },
+            },
+        }
     ),
 }
 
