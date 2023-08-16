@@ -17,7 +17,6 @@ vim.o.inccommand = 'split' -- Watch live updates with search and replace
 vim.o.magic = true -- Improved regex options, less backslashes
 vim.o.pumheight = 12 -- Height of the popup menu
 vim.o.scrolloff = 999 -- Keep cursor vertically centered
-vim.o.sidescrolloff = 999 -- Keep cursor horizontally centered
 vim.o.smartcase = true -- Uses exact case if any uppercase is used in the search
 vim.o.splitbelow = true -- Horizontal splits will be below current buffer
 vim.o.splitright = true -- Vertical splits will be to the right of the current buffer

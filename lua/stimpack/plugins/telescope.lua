@@ -8,12 +8,13 @@ return {
     },
     event = 'UIEnter',
     config = function()
-        local layout_config = 'vertical'
+        local default_layout_strategy = 'flex'
 
         require('telescope').setup({
             defaults = {
+                layout_strategy = default_layout_strategy,
                 layout_config = {
-                    vertical = { width = 0.85 },
+                    vertical = { width = 0.99, height = 0.99 },
                 },
                 mappings = {
                     i = {
@@ -23,22 +24,18 @@ return {
             },
             pickers = {
                 find_files = {
-                    layout_strategy = layout_config,
                     prompt_prefix = string.format('%s : ', Icons.documents.file2),
                 },
                 git_files = {
-                    layout_strategy = layout_config,
                     prompt_prefix = string.format('%s : ', Icons.git.git),
                     show_untracked = true,
                     preview_title = string.format('%s  File Preview', Icons.plugins.telescope),
                 },
                 help_tags = {
-                    layout_strategy = layout_config,
                     prompt_prefix = string.format('%s : ', Icons.miscellaneous.brain),
                     show_untracted = true,
                 },
                 buffers = {
-                    layout_strategy = layout_config,
                     prompt_prefix = string.format('%s : ', Icons.ui.righthandpoint),
                     sort_mru = true,
                     sort_lastused = true,
@@ -84,13 +81,10 @@ return {
             end
         end
 
-        local map = require('stimpack.mapping-function')
-        map('n', '<C-f>', gitfiles_or_findfiles)
-        map(
-            'n',
-            '<C-b>',
-            '<cmd>lua require (\'telescope.builtin\').buffers({sort_mru=true, sort_lastused=true, ignore_current_buffer=true})<CR>'
-        )
+        vim.keymap.set('n', '<C-f>', gitfiles_or_findfiles, { silent = true, desc = 'Telescope gitfiles_or_findfiles' })
+        vim.keymap.set('n', '<C-b>', function()
+            require('telescope.builtin').buffers({ sort_mru = true, sort_lastused = true, ignore_current_buffer = true })
+        end, { silent = true, desc = 'Telescope buffers' })
 
         vim.keymap.set('n', '<leader>fv', function()
             require('telescope.builtin').git_files({ cwd = OS.nvim, prompt_title = 'Nvim config: git files' })
