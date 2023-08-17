@@ -302,14 +302,14 @@ local autosnippets = {
                         write_output,
                     }
 
-                    local function tableMoveFirstToLast(items)
-                        local firstItem = items[1]
-                        table.remove(items, 1)
-                        items[#items + 1] = firstItem
-                    end
-                    if snip.trigger ~= 'ERRORPRINT' then
-                        tableMoveFirstToLast(choices)
-                    end
+                    -- local function tableMoveFirstToLast(items)
+                    --     local firstItem = items[1]
+                    --     table.remove(items, 1)
+                    --     items[#items + 1] = firstItem
+                    -- end
+                    -- if snip.trigger ~= 'ERRORPRINT' then
+                    --     tableMoveFirstToLast(choices)
+                    -- end
 
                     table.insert(nodes, c(1, choices))
 

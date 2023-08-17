@@ -151,12 +151,12 @@ vim.defer_fn(function()
 	local toggleterm = require("toggleterm")
 
     local build = '<>'
-	vim.keymap.set("n", ",u;", function()
+	vim.keymap.set({ "t", "n", "i" }, ",u;", function()
 		toggleterm.exec(build)
 	end, { silent = true, desc = build })
 
     local run = '<>'
-	vim.keymap.set("n", ",uu", function()
+	vim.keymap.set({ "t", "n", "i" }, ",uu", function()
 		toggleterm.exec(run)
 	end, { silent = true, desc = run })
 

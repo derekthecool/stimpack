@@ -39,8 +39,8 @@ void button_task(void *arg) {{
         )
     ),
 
-    ms(
-        { 'ESP32log', 'ESP_LOGE' },
+    s(
+        'ESP32log',
         fmt([[ESP_LOG{}({}, "{}"{});]], {
             c(1, {
                 t('I'),
@@ -52,10 +52,47 @@ void button_task(void *arg) {{
             i(2, 'TAG'),
             i(3),
             auxiliary.printf_style_dynamic_formatter(4, 3),
-        })
+        }),
+        {
+            callbacks = {
+                [-1] = {
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('"esp_log.h"')
+                    end,
+                },
+            },
+        }
+    ),
+    ms(
+        {
+            {
+                trig = 'esp_log_level_set',
+                snippetType = 'snippet',
+            },
+            {
+                trig = 'ESP32setloglevel',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        esp_log_level_set("{}", {});
+        ]],
+            {
+                i(1, 'logging_source'),
+                c(2, {
+                    t('ESP_LOG_DEBUG'),
+                    t('ESP_LOG_ERROR'),
+                    t('ESP_LOG_WARN'),
+                    t('ESP_LOG_INFO'),
+                    t('ESP_LOG_VERBOSE'),
+                    t('ESP_LOG_NONE'),
+                }),
+            }
+        )
     ),
     s(
-        'ESP32error',
+        'ESP32errorcheck',
         fmt(
             [[
       ESP_ERROR_CHECK({});
@@ -144,7 +181,22 @@ void button_task(void *arg) {{
         )
     ),
 
-    -- Needs #include "freertos/queue.h"
+    ms(
+        {
+            { trig = 'uxQueueMessagesWaiting',      snippetType = 'snippet' },
+            { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        int {} = uxQueueMessagesWaiting({});
+        ]],
+            {
+                i(1, 'queued_messages'),
+                i(1, 'queue'),
+            }
+        )
+    ),
+
     s(
         'FreeRTOS_queue_read',
         fmt(
@@ -162,9 +214,54 @@ void button_task(void *arg) {{
         {
             callbacks = {
                 [-1] = {
-                    -- Write needed using directives before expanding snippet so positions are not messed up
                     [events.pre_expand] = function()
-                        auxiliary.insert_include_if_needed('<freertos/queue.h>')
+                        auxiliary.insert_include_if_needed({ '<freertos/FreeRTOS.h>', '<freertos/queue.h>' })
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'FreeRTOS_queue_send',
+        fmt(
+            [[
+        xQueueSend({}, {}, {});
+        ]],
+            {
+                i(1, 'queue'),
+                i(2, 'pointer_to_queue'),
+                i(3, 'xTicksToWait'),
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed({ '<freertos/FreeRTOS.h>', '<freertos/queue.h>' })
+                    end,
+                },
+            },
+        }
+    ),
+
+    s(
+        'FreeRTOS_queue_create',
+        fmt(
+            [[
+            {} xQueueCreate({}, {});
+        ]],
+            {
+                i(1, 'QueueHandle_t queue'),
+                i(2, 'length'),
+                i(3, 'size_of_each'),
+            }
+        ),
+        {
+            callbacks = {
+                [-1] = {
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed({ '<freertos/FreeRTOS.h>', '<freertos/queue.h>' })
                     end,
                 },
             },

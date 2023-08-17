@@ -1,14 +1,14 @@
 return {
     'ggandor/leap.nvim',
-    keys = {'√', '\\'},
+    keys = { '√', '\\' },
     config = function()
         require('leap').setup({
-            max_phase_one_targets = nil,
-            highlight_unlabeled_phase_one_targets = false,
+            max_phase_one_targets = 0,
+            highlight_unlabeled_phase_one_targets = true,
             max_highlighted_traversal_targets = 10,
             case_sensitive = false,
             equivalence_classes = { ' \t\r\n' },
-            substitute_chars = {},
+            substitute_chars = { ['\r'] = '¬' },
             -- safe_labels = { 's', 'f', 'n', 'u', 't', . . . },
             -- labels = { 's', 'f', 'n', 'j', 'k', . . . },
             special_keys = {
