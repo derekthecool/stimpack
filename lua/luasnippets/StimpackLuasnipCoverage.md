@@ -17,21 +17,21 @@ Here the list with a basic description if needed.
 - ELSE
 - FOR
 - WHILE
-- FOREACH: loop through a sequence or list
+- FREACH: loop through a sequence or list
 - FUNCTION
 - PRINT: normal printing to stdout
 - ERRORPRINT: normal printing to stderr
 - INCLUDE: most languages have some sort of include. Map to what makes sense,
   (python:import, csharp:using, lua:require)
 - DEFINE: define constants
-- FORMAT: format a string. Could be used inside a print statement or be assigned
+- FRMAT: format a string. Could be used inside a print statement or be assigned
   to a variable. But by itself it just formats.
 - TASK: async programming
 - TRY: error catching block start
 - CLASS: create a class
 - CONSTRUCTOR: create a constructor for a class
 
-| Language - [FileTypes] | `FOR` | `WHILE` | `IF` | Else If stenoed as ELS_EI_F | ELSE | PRINT | ERRORPRINT | `INCLUDE` | `DEFINE` | FORMAT | TASK | TRY | CLASS | CONSTRUCTOR |
+| Language - [FileTypes] | `FOR` | `WHILE` | `IF` | Else If stenoed as ELS_EI_F | ELSE | PRINT | ERRORPRINT | `INCLUDE` | `DEFINE` | FRMAT | TASK | TRY | CLASS | CONSTRUCTOR |
 | ---------------------- | ----- | ------- | ---- | --------------------------- | ---- | ----- | ---------- | --------- | -------- | ------ | ---- | --- | ----- | ----------- |
 | C - [`.c,.h`]          | ✔️     | ✔️       | ✔️    | ✔️                           | ✔️    | ✔️     | ✔️          | ✔️         | ✔️        | ✔️      | ✔️    | ✔️   | ⛔    | ⛔          |
 | lua                    | ✔️     | ✔️       | ✔️    | ✔️                           | ✔️    | ✔️     |            |           |          | ✔️      |      |     |       |             |

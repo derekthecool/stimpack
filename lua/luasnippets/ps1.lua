@@ -321,7 +321,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FOREACH',        snippetType = 'autosnippet' },
+            { trig = 'FREACH',        snippetType = 'autosnippet' },
             { trig = 'ForEach-Object', snippetType = 'snippet' },
         },
         fmt([[ForEach-Object {{ {} }}]], {

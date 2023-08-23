@@ -6,6 +6,8 @@ local shiftwidth_match_string = string.rep(' ', shiftwidth)
 local auxiliary = require('luasnippets.functions.auxiliary')
 local scan = require('plenary.scandir')
 local fun = require('luafun.fun')
+local conds = require('luasnip.extras.expand_conditions')
+local conds_expand = require('luasnip.extras.conditions.expand')
 
 local function column_count_from_string(descr)
     -- this won't work for all cases, but it's simple to improve
@@ -208,6 +210,9 @@ local autosnippets = {
         ]],
             {
                 i(1),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -241,6 +246,9 @@ local autosnippets = {
         ]],
             {
                 i(1),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -254,6 +262,9 @@ local autosnippets = {
             {
                 i(1, 'key'),
                 i(2, 'value'),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -270,6 +281,9 @@ local autosnippets = {
                 i(1, 'true'),
                 auxiliary.wrap_selected_text(2),
                 i(0),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -284,6 +298,9 @@ local autosnippets = {
             {
                 i(1),
                 i(2),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -297,6 +314,9 @@ local autosnippets = {
         ]],
             {
                 i(1),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -312,7 +332,10 @@ local autosnippets = {
                 i(1),
                 i(2),
             }
-        )
+        ),
+        {
+            condition = conds_expand.line_begin,
+        }
     ),
 
     -- TODO: Call different function than pairs if two arguments are used
@@ -355,7 +378,7 @@ local autosnippets = {
     ),
 
     s(
-        'FOREACH',
+        'FREACH',
         fmt(
             [[
         for {}, {} in {}({}) do
@@ -372,7 +395,10 @@ local autosnippets = {
                 i(4, 'table'),
                 i(5),
             }
-        )
+        ),
+        {
+            condition = conds_expand.line_begin,
+        }
     ),
 
     s(
@@ -390,7 +416,10 @@ local autosnippets = {
                 i(3),
                 i(4),
             }
-        )
+        ),
+        {
+            condition = conds_expand.line_begin,
+        }
     ),
 
     s(
@@ -408,11 +437,14 @@ local autosnippets = {
                 i(2),
                 i(0),
             }
-        )
+        ),
+        {
+            condition = conds_expand.line_begin,
+        }
     ),
 
     s(
-        'FORMAT',
+        'FRMAT',
         fmt(
             [[
       string.format('{}',{})
@@ -422,6 +454,9 @@ local autosnippets = {
                 i(1),
                 i(2),
                 i(0),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -433,7 +468,10 @@ local autosnippets = {
       print({})
       {}
       ]],
-            { i(1), i(0) }
+            { i(1), i(0) },
+            {
+                condition = conds_expand.line_begin,
+            }
         )
     ),
 
@@ -491,6 +529,9 @@ local autosnippets = {
                 end, { 1 }),
 
                 i(3),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -519,6 +560,9 @@ local autosnippets = {
             {
                 i(1),
                 i(2),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -547,6 +591,9 @@ local autosnippets = {
                     t('are.unique'),
                 }),
                 i(2),
+            },
+            {
+                condition = conds_expand.line_begin,
             }
         )
     ),

@@ -325,7 +325,7 @@ local autosnippets = {
     ),
 
     s(
-        'FORMAT',
+        'FRMAT',
         fmt(
             [[
       $"{}"
@@ -462,7 +462,7 @@ local autosnippets = {
     ),
 
     s(
-        'FOREACH',
+        'FREACH',
         fmt(
             [[
             foreach(var item in {})
