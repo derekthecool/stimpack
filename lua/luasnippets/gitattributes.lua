@@ -15,8 +15,11 @@ local snippets = {
         )
     ),
 
-    s(
-        'full template',
+    ms(
+        {
+            { trig = 'full template', snippetType = 'snippet' },
+            { trig = 'FIRST',         snippetType = 'autosnippet' },
+        },
         fmt(
             [[
 ###############################

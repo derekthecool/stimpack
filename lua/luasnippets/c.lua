@@ -4,13 +4,68 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
 local string_processor = require('luasnippets.functions.string_processor')
 
+-- This document is used as a basic style/convention guide
+-- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
+
 local snippets = {
+
+    ms(
+        {
+            {
+                trig = 'FIRST',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt(
+            [[
+        {} {}{};
+        ]],
+            {
+                i(1, 'int'),
+                i(2, 'var'),
+                c(3, {
+                    sn(
+                        nil,
+                        fmt([[{}= {}]], {
+                            t(' '),
+                            i(1, 'value'),
+                        }, { trim_empty = false })
+                    ),
+                    t(''),
+                }),
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'CLASS',
+                snippetType = 'autosnippet',
+            },
+            {
+                trig = 'struct',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        typedef struct {{
+            {}
+        }} {}_t;
+        ]],
+            {
+                i(2),
+                i(1, 'my_struct_t'),
+            }
+        )
+    ),
 
     ms(
         {
             'printf',
             'fprintf',
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt(
@@ -372,14 +427,12 @@ local autosnippets = {
 
     s(
         'head head',
-        fmt(
-            [[{}]],
-            {
-                c(1, {
-                    sn(
-                        nil,
-                        fmt(
-                            [[
+        fmt([[{}]], {
+            c(1, {
+                sn(
+                    nil,
+                    fmt(
+                        [[
                     #pragma once
 
                     #if defined(__cplusplus)
@@ -392,16 +445,16 @@ local autosnippets = {
                     }}
                     #endif
                     ]],
-                            {
-                                i(1),
-                            }
-                        )
-                    ),
+                        {
+                            i(1),
+                        }
+                    )
+                ),
 
-                    sn(
-                        nil,
-                        fmt(
-                            [[
+                sn(
+                    nil,
+                    fmt(
+                        [[
                     #ifndef {}
                     #define {}
 
@@ -417,23 +470,22 @@ local autosnippets = {
 
                     #endif // {}
                     ]],
-                            {
-                                f(function(args, snip)
-                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
-                                end, {}),
-                                f(function(args, snip)
-                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
-                                end, {}),
-                                i(1),
-                                f(function(args, snip)
-                                    return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
-                                end, {}),
-                            }
-                        )
-                    ),
-                }),
-            }
-        )
+                        {
+                            f(function(args, snip)
+                                return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                            end, {}),
+                            f(function(args, snip)
+                                return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                            end, {}),
+                            i(1),
+                            f(function(args, snip)
+                                return vim.fn.expand('%:t'):gsub('%.h', ''):upper() .. '_H'
+                            end, {}),
+                        }
+                    )
+                ),
+            }),
+        })
     ),
 
     s(

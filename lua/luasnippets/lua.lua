@@ -6,7 +6,6 @@ local shiftwidth_match_string = string.rep(' ', shiftwidth)
 local auxiliary = require('luasnippets.functions.auxiliary')
 local scan = require('plenary.scandir')
 local fun = require('luafun.fun')
-local conds = require('luasnip.extras.expand_conditions')
 local conds_expand = require('luasnip.extras.conditions.expand')
 
 local function column_count_from_string(descr)
@@ -233,7 +232,10 @@ local autosnippets = {
                 end
                 return returnString
             end, {}),
-        })
+        }),
+        {
+            condition = conds_expand.line_begin,
+        }
     ),
 
     s(
