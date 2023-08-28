@@ -65,7 +65,7 @@ local snippets = {
         {
             'printf',
             'fprintf',
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt(
@@ -334,6 +334,33 @@ local snippets = {
         }
     ),
     -- Algorithms end
+
+    ms(
+        {
+            {
+                trig = 'STDINT',
+                snippetType = 'autosnippet',
+            },
+            {
+                trig = 'USTDINT',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt([[{}{}]], {
+            f(function(args, snip)
+                if snip.trigger == 'USTDINT' then
+                    return 'u'
+                end
+            end, {}),
+
+            c(1, {
+                t('int8_t'),
+                t('int16_t'),
+                t('int32_t'),
+                t('int64_t'),
+            }),
+        })
+    ),
 }
 
 local autosnippets = {
