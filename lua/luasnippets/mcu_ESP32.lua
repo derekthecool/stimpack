@@ -39,6 +39,33 @@ void button_task(void *arg) {{
         )
     ),
 
+    ms(
+        {
+            {
+                trig = 'ESP32register_console_command',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        const esp_console_cmd_t {} = {{
+            .command = "{}",
+            .help = "{}\n",
+            .hint = NULL,
+            .func = {},
+        }};
+        ESP_ERROR_CHECK(esp_console_cmd_register(&{}));
+        ]],
+            {
+                i(1, 'command'),
+                i(2, 'command to type at console'),
+                i(3, 'This command does something really awesome'),
+                i(4, 'function_to_map_to'),
+                rep(1),
+            }
+        )
+    ),
+
     s(
         'ESP32log',
         fmt([[ESP_LOG{}({}, "{}"{});]], {
@@ -183,7 +210,7 @@ void button_task(void *arg) {{
 
     ms(
         {
-            { trig = 'uxQueueMessagesWaiting',      snippetType = 'snippet' },
+            { trig = 'uxQueueMessagesWaiting', snippetType = 'snippet' },
             { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
         },
         fmt(

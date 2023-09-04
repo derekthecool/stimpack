@@ -65,7 +65,7 @@ local snippets = {
         {
             'printf',
             'fprintf',
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt(
@@ -386,16 +386,24 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'IF',
+    ms(
+        {
+            { trig = 'IF', snippetType = 'autosnippet' },
+            { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
+        },
         fmt(
             [[
-        if({})
+        {}if({})
         {{
             {}
         }}{}
         ]],
             {
+                f(function(args, snip)
+                    if snip.trigger == 'ELS_EI_F' then
+                        return 'else '
+                    end
+                end, {}),
                 i(1),
                 i(2),
                 i(0),

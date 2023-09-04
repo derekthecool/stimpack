@@ -78,7 +78,7 @@ local snippets = {
                     t('private'),
                 }),
                 i(2, 'int'),
-                i(3),
+                i(3, 'Name'),
             }
         )
     ),
