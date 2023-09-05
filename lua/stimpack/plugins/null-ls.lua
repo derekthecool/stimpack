@@ -36,9 +36,6 @@ return {
 
                 diagnostics.protolint,
                 hover.dictionary.with({ filetypes = { 'markdown', 'text', 'vimwiki' } }),
-
-                -- For .sh, .bat, .ps1 checks if word under cursor is environment variable
-                hover.printenv,
                 -- Shell scripting
                 -- args = { "-i 2", "-filename", "$FILENAME"}, -- You can't use extra args with this as all args must be before filename
                 formatting.shfmt,
