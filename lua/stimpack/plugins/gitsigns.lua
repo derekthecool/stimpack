@@ -50,7 +50,7 @@ return {
                     end,
                     'Reset Buffer',
                 },
-                B = {
+                S = {
                     function()
                         require('gitsigns').stage_buffer()
                     end,
