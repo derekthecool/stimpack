@@ -143,6 +143,25 @@ local autosnippets = {
         )
     ),
 
+    ms(
+        {
+            {
+                trig = 'FIRST',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt(
+            [[
+        {}="${{{}:-{}}}"
+        ]],
+            {
+                i(1, 'new_variable'),
+                i(2, 'variable_to_compare'),
+                i(3, 'default_value_if_variable_to_compare_is_null'),
+            }
+        )
+    ),
+
     s(
         'FUNCTION',
         fmt(

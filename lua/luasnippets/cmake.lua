@@ -260,10 +260,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
         'message',
         fmt(
             [[
-        message({})
+        message("{}")
         ]],
             {
-                i(1, '"Error here"'),
+                i(1, 'Error here'),
             }
         )
     ),
