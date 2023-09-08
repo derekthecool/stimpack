@@ -31,22 +31,22 @@ vim.api.nvim_create_autocmd('SearchWrapped', {
     group = generalSettingsGroup,
 })
 
-vim.api.nvim_create_autocmd('BufWinEnter', {
-    pattern = { '*' },
-    callback = function()
-        local no_winbar_filetypes = {
-            ['toggleterm'] = true,
-            ['qf'] = true,
-            [''] = true,
-        }
-        if no_winbar_filetypes[vim.bo.filetype] then
-            return
-        end
-
-        vim.wo.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
-    end,
-    group = generalSettingsGroup,
-})
+-- vim.api.nvim_create_autocmd('BufWinEnter', {
+--     pattern = { '*' },
+--     callback = function()
+--         local no_winbar_filetypes = {
+--             ['toggleterm'] = true,
+--             ['qf'] = true,
+--             [''] = true,
+--         }
+--         if no_winbar_filetypes[vim.bo.filetype] then
+--             return
+--         end
+--
+--         vim.wo.winbar = [[%{%v:lua.require'stimpack.winbar'.eval()%}]]
+--     end,
+--     group = generalSettingsGroup,
+-- })
 
 vim.api.nvim_create_autocmd('RecordingEnter', {
     pattern = { '*' },

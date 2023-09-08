@@ -2,6 +2,11 @@
 vim.o.termguicolors = true -- Needed for better color display
 vim.o.cmdheight = 1
 
+vim.opt.showtabline = 2
+-- vim.api.nvim_set_hl(0, 'TabLine', { bg = 'none' })
+-- vim.api.nvim_set_hl(0, 'TabLineFill', { link = 'Normal' })
+-- vim.api.nvim_set_hl(0, 'TabLineSel', { fg = '#7d14ff' })
+
 -- Set the chars that are displayed for trailing whitespace, line overflows, and tab chars
 vim.wo.list = true                                       -- enable the feature
 vim.go.listchars = 'trail:·,precedes:«,extends:»,tab: ' -- specify chars

@@ -15,6 +15,10 @@ return {
                 layout_strategy = default_layout_strategy,
                 layout_config = {
                     vertical = { width = 0.99, height = 0.99 },
+                    horizontal = { width = 0.99, height = 0.99 },
+                    center = { width = 0.99, height = 0.99 },
+                    flex = { width = 0.99, height = 0.99 },
+                    bottom_pane = { width = 0.99, height = 0.99 },
                 },
                 mappings = {
                     i = {

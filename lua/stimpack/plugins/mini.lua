@@ -36,6 +36,18 @@ return {
         -- Very magic plugin that shows indentscope with a nice animation. This will be wonderful for fsharp.
         require('mini.indentscope').setup()
 
+        -- -- Easy tabline
+        -- -- Awesome tabline, but I don't like how it makes each buffer a tab. Too disorienting.
+        -- vim.api.nvim_set_hl(0, 'MiniTablineCurrent', { fg = '#7d14ff' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineModifiedCurrent', { fg = '#5f00e1' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineFill', { link = 'Normal' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineVisible', { fg = '#0000ff' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineHidden', { link = 'DevIconConf' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineModifiedVisible', { fg = '#3300ff' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineModifiedHidden', { fg = '#7777ff' })
+        -- vim.api.nvim_set_hl(0, 'MiniTablineTabpagesection', { link = 'Normal' })
+        -- require('mini.tabline').setup({ tabpage_section = 'right' })
+
         -- Auto underline the word under cursor after set amount of time. Quite nice for easy spell check in code.
         -- TODO: find a way to not do it on commentstring
         require('mini.cursorword').setup()
