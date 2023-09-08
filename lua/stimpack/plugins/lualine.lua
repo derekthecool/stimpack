@@ -13,9 +13,7 @@ return {
                 globalstatus = true,
             },
             sections = {
-                lualine_a = {
-                    'mode',
-                },
+                lualine_a = { 'mode' },
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
                 lualine_x = {
@@ -95,7 +93,7 @@ return {
                 -- lualine_c = { 'filename' },
                 lualine_x = {},
                 lualine_y = {},
-                lualine_z = { 'tabs' },
+                lualine_z = {},
             },
             extensions = { 'quickfix', 'man', 'toggleterm', 'nvim-tree', 'nvim-dap-ui', 'symbols-outline' },
         })
