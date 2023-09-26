@@ -88,7 +88,9 @@ return {
                 end,
             },
             sources = {
-                { name = 'luasnip', --[[ option = { show_autosnippets = true  }]] },
+                {
+                    name = 'luasnip', --[[ option = { show_autosnippets = true  }]]
+                },
                 { name = 'nvim_lsp' },
                 { name = 'nvim_lua' },
                 { name = 'path' },
@@ -227,5 +229,8 @@ return {
         vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
         vim.api.nvim_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
         vim.api.nvim_set_keymap('n', '<leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+        vim.keymap.set('n', '<leader>li', function()
+            vim.lsp.inlay_hint(0, nil)
+        end, opts)
     end,
 }

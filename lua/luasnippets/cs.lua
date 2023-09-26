@@ -312,17 +312,39 @@ local snippets = {
 
 local autosnippets = {
 
-    s(
-        'ERRORPRINT',
-        fmt(
-            [[
-      Console.Error.WriteLine($"{}");
-      ]],
-            {
-                i(1),
-            }
-        )
+    ms(
+        {
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+        },
+        fmt([[Console{}.WriteLine($"{}");]], {
+
+            f(function(args, snip)
+                if snip.trigger == 'ERRORPRINT' or snip.trigger == 'Console.Error.WriteLine' then
+                    return '.Error'
+                end
+            end, {}),
+            i(1),
+        })
     ),
+
+    -- s(
+    --     'ERRORPRINT',
+    --     fmt(
+    --         [[
+    --   Console{}.WriteLine($"{}");
+    --   ]],
+    --         {
+    --             f(function(args, snip)
+    --                 if snip.trigger == 'ERRORPRINT' or snip.trigger == 'Console.Error.WriteLine' then
+    --                     return '.Error'
+    --                 end
+    --             end, {}),
+    --
+    --             i(1),
+    --         }
+    --     )
+    -- ),
 
     s(
         'FRMAT',

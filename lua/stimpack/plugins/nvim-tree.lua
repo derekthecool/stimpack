@@ -131,14 +131,6 @@ return {
                 number = false,
                 relativenumber = false,
                 signcolumn = 'yes',
-                mappings = {
-                    custom_only = false,
-                    -- list = {
-                    --     { key = { 'l', '<CR>', 'o' }, action = 'open_file' },
-                    --     { key = 'h', action = 'close_node' },
-                    --     { key = 'v', action = 'vsplit' },
-                    -- },
-                },
             },
             hijack_directories = {
                 enable = true,

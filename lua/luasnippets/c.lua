@@ -65,8 +65,10 @@ local snippets = {
         {
             'printf',
             'fprintf',
+            'sprintf',
             { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'FRMAT', snippetType = 'autosnippet' },
         },
         fmt(
             [[
@@ -76,6 +78,8 @@ local snippets = {
                 f(function(args, snip)
                     if snip.trigger == 'ERRORPRINT' or snip.trigger == 'fprintf' then
                         return 'fprintf(stderr, '
+                    elseif snip.trigger == 'FRMAT' or snip.trigger == 'sprintf' then
+                        return 'sprintf('
                     else
                         return 'printf('
                     end
@@ -360,6 +364,37 @@ local snippets = {
                 t('int64_t'),
             }),
         })
+    ),
+
+    ms(
+        {
+            { trig = 'sizeof', snippetType = 'snippet' },
+            { trig = 'SIZEOF', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        sizeof({})
+        ]],
+            {
+                i(1, 'int'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'getdelim',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        char *p, *l = 0;
+        getdelim(&p, &l, 0xFF, stdin);
+        ]],
+            {}
+        )
     ),
 }
 

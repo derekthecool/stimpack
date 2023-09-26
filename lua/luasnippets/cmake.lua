@@ -2,6 +2,63 @@
 
 local snippets = {
 
+    ms(
+        {
+            {
+                trig = '==',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt(
+            [[
+        {}
+        ]],
+            {
+                c(1, {
+                    -- Strings
+                    t('STREQUAL'),
+                    t('STRLESS'),
+                    t('STRGREATER'),
+                    -- REGEX
+                    t('MATCHES'),
+                    -- NUMBERS
+                    t('EQUAL'),
+                    t('LESS'),
+                    t('GREATER'),
+                    -- LOGICAL
+                    t('AND'),
+                    t('OR'),
+                    t('NOT'),
+                    -- LISTS
+                    t('IN_LIST'),
+                    -- FILE CHECKS
+                    t('EXISTS'),
+                    t('IS_DIRECTORY'),
+                    t('IS_FILE'),
+                }),
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'add_compile_definitions',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        # Preprocess definitions to add
+        # Use the syntax of VAR or VAR=value
+        add_compile_definitions({})
+        ]],
+            {
+                i(1, 'INCLUDE_MQTT'),
+            }
+        )
+    ),
+
     s(
         'file',
         fmt(
@@ -389,6 +446,37 @@ variable_watch({})
         target_compile_options(${{COMPONENT_LIB}} PRIVATE -Wno-error=misleading-indentation)
         ]],
             {}
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'set_tests_properties',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+    set_tests_properties(
+        # Tests
+        {}
+
+        PROPERTIES
+        # The test is passed if stdout matches this
+        PASS_REGULAR_EXPRESSION "{}"
+        # The test is a failure if stdout matches this
+        FAIL_REGULAR_EXPRESSION "{}"
+        # The test will be marked as skipped if stdout matches this
+        SKIP_REGULAR_EXPRESSION "{}"
+    )
+        ]],
+            {
+                i(1, 'MyTest1'),
+                i(2, '.*Test Passed.*'),
+                i(3, '.*Test Failed.*'),
+                i(4, '.*Skip this test.*'),
+            }
         )
     ),
 }

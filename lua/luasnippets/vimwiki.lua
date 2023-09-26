@@ -319,26 +319,6 @@ local snippets = {
 local autosnippets = {
 
     s(
-        {
-            trig = '`(%w)',
-            regTrig = true,
-        },
-        fmt(
-            [[
-        `{}{}` {}
-        ]],
-            {
-                f(function(args, snip)
-                    return (snip.captures[1]:gsub('`', ''))
-                end, {}),
-
-                i(1),
-                i(0),
-            }
-        )
-    ),
-
-    s(
         '```',
         fmt(
             [[
@@ -351,6 +331,9 @@ local autosnippets = {
                     t('yaml'),
                     t('sh'),
                     t('powershell'),
+                    t('fsharp'),
+                    t('csharp'),
+                    t('c'),
                     i(1),
                 }),
                 auxiliary.wrap_selected_text(2),

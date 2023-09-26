@@ -176,6 +176,28 @@ local snippets = {
             {}
         )
     ),
+
+    ms(
+        {
+            {
+                trig = 'clash',
+                snippetType = 'autosnippet',
+            },
+        },
+        fmt(
+            [[
+        open System
+        Seq.initInfinite(fun _->Console.ReadLine())
+        |>Seq.takeWhile(fun x->x<>null)
+        |>Seq.skip {}
+        |> {}
+        ]],
+            {
+                i(1, '1'),
+                i(2, 'Seq.map'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
