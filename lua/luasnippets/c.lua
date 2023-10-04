@@ -152,6 +152,26 @@ local snippets = {
         )
     ),
 
+    ms(
+        {
+          {
+      trig = 'memset', snippetType = 'snippet',
+    }
+        },
+      fmt(
+        [[
+        memset({}, {}, {});
+        ]],
+        {
+          i(1, 'target'),
+          i(2, '0'),
+          i( 3, 'length_to_write'),
+          
+          
+        }
+      )
+    ),
+
     s(
         'malloc',
         fmt(

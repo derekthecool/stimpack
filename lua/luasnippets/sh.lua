@@ -4,19 +4,34 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 
 local snippets = {
     -- Help with the PS4 function here: https://stackoverflow.com/a/17805088/9842112
-    s(
-        'starter',
+    ms(
+        {
+            { trig = 'starter', snippetType = 'snippet' },
+            { trig = 'shebang', snippetType = 'snippet' },
+        },
         fmt(
             [[
-    #!/usr/bin/env bash
+    {}
 
     # Set safer defaults, do not proceed past unhandled errors
-    set -euxo pipefail
+    set -e          # Exit the script in any command has a non-zero exit status
+    set -u          # Do not allow use of undefined variables
+    set -x          # Print the command about to be run fully expanded before running it
+    set -o pipefail # If any command in a pipe chain fails, the exit of the whole command fails
+    IFS=$'\n\t'     # Set a more sensible field separator
 
     # Easily debug the script with this special PS4 prompt
     PS4='+(${{BASH_SOURCE}}:${{LINENO}}): ${{FUNCNAME[0]:+${{FUNCNAME[0]}}(): }}'
     ]],
-            {}
+            {
+
+                c(1, {
+                    t('#!/usr/bin/env bash'),
+                    t('#!/usr/bin/env sh'),
+                    t('#!/bin/bash'),
+                    t('#!/bin/sh'),
+                }),
+            }
         )
     ),
 
@@ -191,24 +206,6 @@ local autosnippets = {
                 i(1),
                 t(']]'),
                 i(2),
-            }
-        )
-    ),
-
-    s(
-
-        'shebang',
-        fmt(
-            [[
-        {}
-        ]],
-            {
-                c(1, {
-                    t('#!/usr/bin/env bash'),
-                    t('#!/usr/bin/env sh'),
-                    t('#!/bin/bash'),
-                    t('#!/bin/sh'),
-                }),
             }
         )
     ),
