@@ -31,13 +31,15 @@ vim.api.nvim_create_autocmd('SearchWrapped', {
     group = generalSettingsGroup,
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-    pattern = { '*' },
-    callback = function()
-        vim.lsp.inlay_hint(0, true)
-    end,
-    group = generalSettingsGroup,
-})
+if vim.fn.has('nvim-0.10') == 1 then
+    vim.api.nvim_create_autocmd('LspAttach', {
+        pattern = { '*' },
+        callback = function()
+            vim.lsp.inlay_hint(0, true)
+        end,
+        group = generalSettingsGroup,
+    })
+end
 
 -- vim.api.nvim_create_autocmd('BufWinEnter', {
 --     pattern = { '*' },

@@ -424,7 +424,7 @@ local autosnippets = {
         'FOR',
         fmt(
             [[
-        for(size_t i = {}; i < {}; i{})
+        for(int i = {}; i < {}; i{})
         {{
             {}
         }}
@@ -548,15 +548,7 @@ local autosnippets = {
                     #ifndef {}
                     #define {}
 
-                    #if defined(__cplusplus)
-                    extern "C" {{
-                    #endif
-
                     {}
-
-                    #if defined(__cplusplus)
-                    }}
-                    #endif
 
                     #endif // {}
                     ]],

@@ -1,4 +1,8 @@
 ---@diagnostic disable: undefined-global, missing-parameter
+
+local fun = require('luafun.fun')
+local scan = require('plenary.scandir')
+
 local snippets = {
 
     s(
@@ -160,7 +164,12 @@ vim.defer_fn(function()
 		toggleterm.exec(run)
 	end, { silent = true, desc = run })
 
+    -- Set current working directory
     vim.cmd('cd <>')
+
+    -- Run initial start up commands in the terminal
+    vim.cmd('ToggleTerm direction=<>')
+    toggleterm.exec('<>')
 
     vim.notify('Ready to run', vim.log.levels.INFO, { title = '.nvim.lua commands' })
 end, delay_ms)
@@ -190,6 +199,16 @@ end, delay_ms)
 
                     return sn(nil, c(1, dirs))
                 end, {}),
+                c(4,
+                {
+                  t('tab'),
+                  t('vertical'),
+                  t('horizontal'),
+                  t('float'),
+                }),
+
+                i(5, 'ls -la'),
+
             },
             {
                 delimiters = '<>',
