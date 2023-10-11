@@ -232,6 +232,32 @@ local snippets = {
         )
     ),
 
+    ms(
+        {
+          {
+      trig = 'strtol', snippetType = 'snippet',
+    }
+        },
+      fmt(
+        [[
+        {} {} = ({})strtol({}, NULL, {});
+        ]],
+        {
+          i(1, 'int'),
+          i(2, 'hex_string_to_int'),
+          rep(1),
+          i(3, 'hex_string'),
+          c(4,
+          {
+            t('16'),
+            t('8'),
+            t('2'),
+            t('0 - magic mode - will interpret non-zero leading number as decimal, leading 0 as octal, leading 0X as hex'),
+          }),
+        }
+      )
+    ),
+
     s(
         'puts',
         fmt([[puts("{}");]], {

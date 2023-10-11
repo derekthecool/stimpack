@@ -14,6 +14,8 @@ vim.opt.fillchars = 'fold: ,diff:,foldclose:,foldopen:,eob:▎'
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'none' })
 
+vim.api.nvim_set_hl(0, 'FloatBoarder', { fg = '#ffffff' })
+
 -- Set highlight for mini.nvim trailspace
 vim.api.nvim_set_hl(0, 'MiniTrailspace', { bg = '#4a50fa', fg = '#000000' })
 

@@ -36,6 +36,9 @@ return {
             'BufferLineSeparator',
             -- 'BufferLineIndicatorSelected',
 
+            -- Floating windows
+            'NormalFloat',
+
             -- TODO: needs work, but it is better than default
             'TelescopeBorder',
             'TelescopeMatching',

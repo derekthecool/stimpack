@@ -154,13 +154,23 @@ local delay_ms = 3000
 vim.defer_fn(function()
 	local toggleterm = require("toggleterm")
 
+    -- Using leader key here causes delays in insert mode
+    local keymap_starter_key = '`'
+
+    local mapping_options = { 't', 'n', 'i', }
+
     local build = '<>'
-	vim.keymap.set({ "t", "n", "i" }, ",u;", function()
+	vim.keymap.set(mapping_options, keymap_starter_key .. "u;", function()
 		toggleterm.exec(build)
 	end, { silent = true, desc = build })
 
+    local test = '<>'
+	vim.keymap.set(mapping_options, keymap_starter_key .. "ui", function()
+		toggleterm.exec(test)
+	end, { silent = true, desc = test })
+
     local run = '<>'
-	vim.keymap.set({ "t", "n", "i" }, ",uu", function()
+	vim.keymap.set(mapping_options, keymap_starter_key .. "uu", function()
 		toggleterm.exec(run)
 	end, { silent = true, desc = run })
 
@@ -181,12 +191,16 @@ end, delay_ms)
                     i(1, 'custom command'),
                 }),
                 c(2, {
-                    t('dotnet run'),
                     t('dotnet test'),
+                    t('ctest'),
+                    i(1, 'custom command'),
+                }),
+                c(3, {
+                    t('dotnet run'),
                     t('idf.py build flash monitor'),
                     i(1, 'custom command'),
                 }),
-                d(3, function(args, snip)
+                d(4, function(args, snip)
                     local nodes = {}
 
                     -- Add nodes for snippet
@@ -199,7 +213,7 @@ end, delay_ms)
 
                     return sn(nil, c(1, dirs))
                 end, {}),
-                c(4,
+                c(5,
                 {
                   t('tab'),
                   t('vertical'),
@@ -207,7 +221,7 @@ end, delay_ms)
                   t('float'),
                 }),
 
-                i(5, 'ls -la'),
+                i(6, 'ls -la'),
 
             },
             {
