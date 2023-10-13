@@ -198,17 +198,98 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'webapi starter',      snippetType = 'snippet' },
+            { trig = 'api starter',         snippetType = 'snippet' },
+            { trig = 'Program api starter', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        open System
+        open System.Collections.Generic
+        open System.IO
+        open System.Linq
+        open System.Threading.Tasks
+        open Microsoft.AspNetCore
+        open Microsoft.AspNetCore.Builder
+        open Microsoft.AspNetCore.Hosting
+        open Microsoft.AspNetCore.HttpsPolicy
+        open Microsoft.Extensions.Configuration
+        open Microsoft.Extensions.DependencyInjection
+        open Microsoft.Extensions.Hosting
+        open Microsoft.Extensions.Logging
+
+        let builder = WebApplication.CreateBuilder()
+
+        let app = builder.Build()
+
+        // app.UseHttpsRedirection()
+        // app.UseAuthorization()
+        // app.MapControllers()
+
+        app.Run()
+        ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
+          {
+      trig = 'mqtt', snippetType = 'snippet',
+    }
+        },
+      fmt(
+        [[
+        // Mqtt starter using https://github.com/dotnet/MQTTnet
+        // MQTT Configuration
+        let mqttOptions =
+            (new MqttClientOptionsBuilder())
+                .WithTcpServer("192.168.100.35", 1883) // Replace with your MQTT broker details
+                .Build()
+
+        let mqttFactory = new MqttFactory()
+        let mqttClient = mqttFactory.CreateMqttClient()
+
+        let mqttConnectResult = mqttClient.ConnectAsync(mqttOptions)
+
+        // MQTT Message Received Handler
+        mqttClient.add_ApplicationMessageReceivedAsync (fun args ->
+
+            try
+                let payload = args.ApplicationMessage.PayloadSegment.ToArray()
+                printfn "Received MQTT message: %s" (byteArrayToHexString payload)
+                let stream = client.GetStream()
+
+                if stream.CanWrite then
+                    stream.Write(payload, 0, payload.Length)
+                else
+                    eprintfn "Error writing to tcp connection"
+
+                Task.FromResult("Bye-bye")
+            with :? IOException as ex ->
+                // Handle socket closure or write errors
+                printfn "Socket error occurred while writing to TCP client: %s" ex.Message
+                Task.FromResult("Bye-bye"))
+        ]],
+        {
+          
+        }
+      )
+    ),
 }
 
 local autosnippets = {
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet' },
-            { trig = 'printfn', snippetType = 'snippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'printfn',    snippetType = 'snippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'eprintfn', snippetType = 'snippet' },
-            { trig = 'FRMAT', snippetType = 'autosnippet' },
-            { trig = 'sprintf', snippetType = 'snippet' },
+            { trig = 'eprintfn',   snippetType = 'snippet' },
+            { trig = 'FRMAT',      snippetType = 'autosnippet' },
+            { trig = 'sprintf',    snippetType = 'snippet' },
         },
         fmt([[{}printf{} "{}"{}]], {
             f(function(args, snip)

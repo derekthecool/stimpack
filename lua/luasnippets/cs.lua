@@ -308,6 +308,66 @@ local snippets = {
             {}
         )
     ),
+
+    ms(
+        {
+            {
+                trig = 'http sync',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        string GetChuckNorisQuote()
+        {
+            using var client = new HttpClient(
+                new HttpClientHandler
+                {
+                    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+                }
+            );
+            var response = client.GetAsync("https://api.chucknorris.io/jokes/random").Result;
+            response.EnsureSuccessStatusCode();
+            var output = response.Content.ReadAsStringAsync().Result;
+            var joke = JsonSerializer.Deserialize<ChuckNorrisJoke>(output);
+
+            return joke?.value;
+        }
+        ]],
+            {},
+            {
+                delimiters = [[`']],
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'timer',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        Timer timer = new Timer
+        {{
+            Interval = TimeSpan.FromSeconds({}).Milliseconds,
+            AutoReset = true,
+            Enabled = true
+        }};
+
+        // Function callback lambda
+        timer.Elapsed += (sender, e) =>
+        {{
+            Console.WriteLine("Timer elapsed at: " + e.SignalTime);
+        }};
+        ]],
+            {
+                i(1, '3'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
