@@ -197,6 +197,88 @@ local snippets = {
             i(2, 'metaTable'),
         })
     ),
+
+    ms(
+        {
+            {
+                trig = 'io.lines',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        for line in io.lines() do
+            {}
+        end
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            {
+                trig = 'gsub table extract',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        {}={{}}
+        {}:gsub('{}, function(a)
+            table.insert({}, a)
+        end)
+        ]],
+            {
+                i(3, 'default'),
+                c(1, {
+                    t('io.read()'),
+                    i(1, 'my_string'),
+                }),
+                i(2, '%w+'),
+                rep(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'read line', snippetType = 'snippet', },
+            { trig = 'io.read()', snippetType = 'snippet', },
+        },
+        fmt(
+            [[
+        -- Read: {} line{} of input, as data type: {}
+        {}
+        ]],
+            {
+                i(1, '1'),
+                f(function(args, snip)
+                    if args[1] and args[1][1] and args[1][1] ~= '1' then
+                        return 's'
+                    end
+                end, {1}),
+                c(2, {
+                    t('string'),
+                    t('number'),
+                }),
+                 d(3, function(args, snip)
+                     local nodes = {}
+
+                     -- Add nodes for snippet
+                     table.insert(nodes, t('Add this node'))
+                     
+
+                   return sn(nil, nodes)
+                  end,
+                   { 1 }
+                  ),
+            }
+
+        )
+    ),
 }
 
 local autosnippets = {

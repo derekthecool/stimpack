@@ -1,5 +1,32 @@
 ---@diagnostic disable: undefined-global
+
+local fun = require('luafun.fun')
+local scan = require('plenary.scandir')
+
 local snippets = {
+
+    --[[
+     this version seems better
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+WORKDIR /App
+
+# Disable Microsoft diagnostics
+ENV DOTNET_EnableDiagnostics=0
+
+# Copy everything
+COPY . ./
+# Restore as distinct layers
+RUN dotnet restore
+# Build and publish a release
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:7.0
+WORKDIR /App
+COPY --from=build-env /App/out .
+
+ENTRYPOINT ["dotnet", "BelleLTE_DeviceId_Provisioner.dll"]
+    ]]
     s(
         'dotnet',
         fmt(
@@ -25,7 +52,26 @@ local snippets = {
          ENTRYPOINT ["dotnet", "{}.dll"]
          ]],
             {
-                i(1, 'dll_name'),
+                d(1, function(args, snip)
+                    -- -- Add nodes for snippet
+                    -- local dlls = fun.map(function(a)
+                    --     return t(vim.fs.normalize(a))
+                    -- end, scan.scan_dir('*.dll', { respect_gitignore = false, depth = 2 })):totable()
+
+                    -- Scan directory of current opened file
+                    local current_file_directory = vim.fn.expand('%:h')
+                    -- print(current_file_directory)
+                    local depth_full =
+                        scan.scan_dir(current_file_directory, { respect_gitignore = true, search_pattern = '*.dll' })
+                    -- print(depth_full)
+                    -- print(#depth_full)
+                    local dlls = {}
+                    for _, value in pairs(depth_full) do
+                        table.insert(dlls, t(value))
+                    end
+
+                    return sn(nil, c(1, dlls))
+                end, { 1 }),
             }
         )
     ),

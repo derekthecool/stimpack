@@ -66,9 +66,9 @@ local snippets = {
             'printf',
             'fprintf',
             'sprintf',
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'FRMAT', snippetType = 'autosnippet' },
+            { trig = 'FRMAT',      snippetType = 'autosnippet' },
         },
         fmt(
             [[
@@ -154,22 +154,21 @@ local snippets = {
 
     ms(
         {
-          {
-      trig = 'memset', snippetType = 'snippet',
-    }
+            {
+                trig = 'memset',
+                snippetType = 'snippet',
+            },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         memset({}, {}, {});
         ]],
-        {
-          i(1, 'target'),
-          i(2, '0'),
-          i( 3, 'length_to_write'),
-          
-          
-        }
-      )
+            {
+                i(1, 'target'),
+                i(2, '0'),
+                i(3, 'length_to_write'),
+            }
+        )
     ),
 
     s(
@@ -234,28 +233,30 @@ local snippets = {
 
     ms(
         {
-          {
-      trig = 'strtol', snippetType = 'snippet',
-    }
+            {
+                trig = 'strtol',
+                snippetType = 'snippet',
+            },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         {} {} = ({})strtol({}, NULL, {});
         ]],
-        {
-          i(1, 'int'),
-          i(2, 'hex_string_to_int'),
-          rep(1),
-          i(3, 'hex_string'),
-          c(4,
-          {
-            t('16'),
-            t('8'),
-            t('2'),
-            t('0 - magic mode - will interpret non-zero leading number as decimal, leading 0 as octal, leading 0X as hex'),
-          }),
-        }
-      )
+            {
+                i(1, 'int'),
+                i(2, 'hex_string_to_int'),
+                rep(1),
+                i(3, 'hex_string'),
+                c(4, {
+                    t('16'),
+                    t('8'),
+                    t('2'),
+                    t(
+                        '0 - magic mode - will interpret non-zero leading number as decimal, leading 0 as octal, leading 0X as hex'
+                    ),
+                }),
+            }
+        )
     ),
 
     s(
@@ -469,7 +470,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'IF', snippetType = 'autosnippet' },
+            { trig = 'IF',       snippetType = 'autosnippet' },
             { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
         },
         fmt(
@@ -785,8 +786,11 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'SWITCH',
+    ms(
+        {
+            { trig = 'switch', snippetType = 'snippet' },
+            { trig = 'SWITCH', snippetType = 'autosnippet' },
+        },
         fmt(
             [[
         switch({})

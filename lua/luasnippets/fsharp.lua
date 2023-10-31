@@ -29,9 +29,14 @@ local snippets = {
             let X = [1..100]
             let Y = X |> Seq.map(fun value -> value * value * value)
 
+            // Can plot a xy tuple by using named parameter: xy
             Chart.Point(X, Y)
+            |> Chart.withTemplate ChartTemplates.dark
+            |> Chart.withTitle ("My graph")
+            |> Chart.withXAxisStyle ("Time")
+            |> Chart.withYAxisStyle ("Units")
+            |> Chart.withSize (1400.0, 800.0)
             |> Chart.show
-            |> Chart.saveJPG ("test", Width = 600, Height = 600)
          ]],
             {}
         )
@@ -253,21 +258,29 @@ local snippets = {
         let mqttFactory = new MqttFactory()
         let mqttClient = mqttFactory.CreateMqttClient()
 
-        let mqttConnectResult = mqttClient.ConnectAsync(mqttOptions)
+        let result =
+            async {{
+                try
+                    let! mqttConnectResultTask = Async.AwaitTask(mqttClient.ConnectAsync(mqttOptions))
+                    let mqttConnectResult = mqttConnectResultTask
+                    Console.WriteLine()
+                    printfn "Connected to mqtt broker"
+
+                    let topic = "bellel/imei/+"
+                    let! subTask = Async.AwaitTask(mqttClient.SubscribeAsync(topic, MqttQualityOfServiceLevel.AtLeastOnce))
+                    printfn "Subscribed to topic: %s" topic
+
+                    return Ok()
+                with ex ->
+                    printfn "Failed to connect to the MQTT broker: %A" ex.Message
+                    return Error ex
+            }}
+            |> Async.RunSynchronously
 
         // MQTT Message Received Handler
         mqttClient.add_ApplicationMessageReceivedAsync (fun args ->
-
             try
-                let payload = args.ApplicationMessage.PayloadSegment.ToArray()
-                printfn "Received MQTT message: %s" (byteArrayToHexString payload)
-                let stream = client.GetStream()
-
-                if stream.CanWrite then
-                    stream.Write(payload, 0, payload.Length)
-                else
-                    eprintfn "Error writing to tcp connection"
-
+                let topic = args.ApplicationMessage.Topic
                 Task.FromResult("Bye-bye")
             with :? IOException as ex ->
                 // Handle socket closure or write errors

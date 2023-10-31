@@ -503,8 +503,11 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'SECOND',
+    ms(
+        {
+            { trig = 'SECOND', snippetType = 'autosnippet' },
+            { trig = 'set',    snippetType = 'snippet' },
+        },
         fmt(
             [[
         set({} {})
@@ -512,6 +515,34 @@ local autosnippets = {
             {
                 i(1, 'Variable'),
                 i(2, 'Value'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'string', snippetType = 'snippet', },
+            { trig = 'THIRD', snippetType = 'autosnippet', },
+        },
+        fmt(
+            [[
+        # String commands, some take multiple arguments
+        string({} {})
+        ]],
+            {
+                c(1, {
+                    t('CONCAT'),
+                    t('LENGTH'),
+                    t('SUBSTRING'),
+                    t('STRIP'),
+                    t('FIND'),
+                    t('REPLACE'),
+                    t('TOLOWER'),
+                    t('TOUPPER'),
+                    t('REPEAT'),
+                    t('GENEX_STRIP'),
+                }),
+                i(2, 'inputString'),
             }
         )
     ),

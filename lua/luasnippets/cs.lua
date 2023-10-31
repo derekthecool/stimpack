@@ -368,13 +368,32 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            {
+                trig = 'range',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        Enumerable.Range({}, {}){}
+        ]],
+            {
+                i(1, '0'),
+                i(2, '10'),
+                i(3),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine($"{}");]], {
