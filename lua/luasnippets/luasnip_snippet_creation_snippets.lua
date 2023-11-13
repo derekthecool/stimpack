@@ -276,7 +276,7 @@ local autosnippets = {
             [=[
       ms(
           {{
-            {}
+              {}{}
           }},
         fmt(
           [[
@@ -293,11 +293,7 @@ local autosnippets = {
                     sn(
                         1,
                         fmt(
-                            [[
-              {{
-                trig = '{}', snippetType = '{}',
-              }}
-              ]],
+                            [[{{ trig = '{}', snippetType = '{}', }},]],
                             {
                                 r(1, 'snippet_trigger'),
                                 c(2, {
@@ -315,9 +311,10 @@ local autosnippets = {
                         })
                     ),
                 }),
-                r(2, 'snippet_format'),
-                r(3, 'snippet_nodes'),
-                c(4, {
+                i(2),
+                r(3, 'snippet_format'),
+                r(4, 'snippet_nodes'),
+                c(5, {
                     t(''),
                     sn(
                         nil,
@@ -353,8 +350,8 @@ local autosnippets = {
         {
             stored = {
                 ['snippet_trigger'] = i(1, 'trigger'),
-                ['snippet_format'] = i(2),
-                ['snippet_nodes'] = i(3),
+                ['snippet_format'] = i(3),
+                ['snippet_nodes'] = i(4),
             },
         }
     ),

@@ -245,8 +245,23 @@ local snippets = {
 
     ms(
         {
-            { trig = 'read line', snippetType = 'snippet', },
-            { trig = 'io.read()', snippetType = 'snippet', },
+            { trig = ':gsub', snippetType = 'autosnippet', wordTrig = false },
+        },
+        fmt(
+            [[
+        :gsub('{}', '{}')
+        ]],
+            {
+                i(1, '%w+'),
+                i(2, ''),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'read line', snippetType = 'snippet' },
+            { trig = 'io.read()', snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -259,24 +274,20 @@ local snippets = {
                     if args[1] and args[1][1] and args[1][1] ~= '1' then
                         return 's'
                     end
-                end, {1}),
+                end, { 1 }),
                 c(2, {
                     t('string'),
                     t('number'),
                 }),
-                 d(3, function(args, snip)
-                     local nodes = {}
+                d(3, function(args, snip)
+                    local nodes = {}
 
-                     -- Add nodes for snippet
-                     table.insert(nodes, t('Add this node'))
-                     
+                    -- Add nodes for snippet
+                    table.insert(nodes, t('Add this node'))
 
-                   return sn(nil, nodes)
-                  end,
-                   { 1 }
-                  ),
+                    return sn(nil, nodes)
+                end, { 1 }),
             }
-
         )
     ),
 }

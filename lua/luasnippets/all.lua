@@ -4,18 +4,12 @@ local snippets = {}
 local autosnippets = {
     s(
         'TODO',
-        fmt(
-            [[
-        TODO: {}, {}
-        ]],
-            {
-                f(function(args, snip)
-                    return os.date('%c')
-                end, {}),
-
-                i(1, 'Do something here later'),
-            }
-        )
+        fmt([[TODO: (Derek Lomax) {}, {}]], {
+            f(function(args, snip)
+                return os.date('%c')
+            end, {}),
+            i(1, 'Do something here later'),
+        })
     ),
 
     ms(
@@ -44,10 +38,10 @@ local autosnippets = {
 
     ms(
         {
-            { trig = '\\e',        snippetType = 'snippet' },
-            { trig = '\\033',      snippetType = 'snippet' },
+            { trig = '\\e', snippetType = 'snippet' },
+            { trig = '\\033', snippetType = 'snippet' },
             { trig = 'ansi color', snippetType = 'snippet' },
-            { trig = 'color',      snippetType = 'snippet' },
+            { trig = 'color', snippetType = 'snippet' },
         },
         fmt(
             [[

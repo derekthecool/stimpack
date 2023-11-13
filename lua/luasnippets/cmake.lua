@@ -1,6 +1,23 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
+    ms(
+        {
+            {
+                trig = 'add_test',
+                snippetType = 'snippet',
+            },
+        },
+        fmt(
+            [[
+        add_test({} {})
+        ]],
+            {
+                i(1, 'TestName'),
+                i(2, 'commands...'),
+            }
+        )
+    ),
 
     ms(
         {
@@ -521,8 +538,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'string', snippetType = 'snippet', },
-            { trig = 'THIRD', snippetType = 'autosnippet', },
+            { trig = 'string', snippetType = 'snippet' },
+            { trig = 'THIRD',  snippetType = 'autosnippet' },
         },
         fmt(
             [[

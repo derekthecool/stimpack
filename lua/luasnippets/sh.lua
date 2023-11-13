@@ -8,6 +8,7 @@ local snippets = {
         {
             { trig = 'starter', snippetType = 'snippet' },
             { trig = 'shebang', snippetType = 'snippet' },
+            { trig = 'SECOND', snippetType = 'autosnippet' },
         },
         fmt(
             [[

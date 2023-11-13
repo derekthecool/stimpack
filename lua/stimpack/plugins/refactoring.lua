@@ -7,22 +7,22 @@ return {
     config = function()
         require('refactoring').setup({
             prompt_func_return_type = {
-                go = false,
-                java = false,
-                cpp = false,
-                c = false,
-                h = false,
-                hpp = false,
-                cxx = false,
+                go = true,
+                java = true,
+                cpp = true,
+                c = true,
+                h = true,
+                hpp = true,
+                cxx = true,
             },
             prompt_func_param_type = {
-                go = false,
-                java = false,
-                cpp = false,
-                c = false,
-                h = false,
-                hpp = false,
-                cxx = false,
+                go = true,
+                java = true,
+                cpp = true,
+                c = true,
+                h = true,
+                hpp = true,
+                cxx = true,
             },
             printf_statements = {},
             print_var_statements = {},
@@ -56,5 +56,15 @@ return {
         vim.keymap.set('n', '<leader>rB', function()
             require('refactoring').refactor('Extract Block To File')
         end, { desc = 'Extract Block To File' })
+
+        -- You can also use below = true here to to change the position of the printf
+        -- statement (or set two remaps for either one). This remap must be made in normal mode.
+        vim.keymap.set('n', '<leader>rp', function()
+            require('refactoring').debug.printf({ below = false })
+        end, { desc = 'Refactor Debug Print Above' })
+
+        vim.keymap.set('n', '<leader>rP', function()
+            require('refactoring').debug.printf({ below = true })
+        end, { desc = 'Refactor Debug Print Above' })
     end,
 }

@@ -81,15 +81,19 @@ return {
             g = {
                 d = {
                     function()
-                        local buffer_list =
-                            require('stimpack/my-treesitter-functions').all.get_all_buffers('diffview://.*', false)
+                        -- Set the initial value for the global or keep the existing state
+                        if DiffViewToggleState == nil then
+                            DiffViewToggleState = true
+                        end
 
-                        -- Toggle diffview based on if there are open buffers from diffview
-                        if #buffer_list == 0 then
+                        if DiffViewToggleState then
                             require('diffview').open()
                         else
                             require('diffview').close()
                         end
+
+                        -- Toggle the state
+                        DiffViewToggleState = not DiffViewToggleState
                     end,
                     'DiffViewToggle',
                 },
