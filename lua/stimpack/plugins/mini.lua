@@ -35,8 +35,6 @@ return {
         then
             -- MiniMisc.setup_auto_root({ 'Makefile', '.git', '.nvim.lua', '.gitignore', 'projector.json' })
             MiniMisc.setup_auto_root()
-        else
-            V(string.format('not setting directory_root: %s', directory_root))
         end
         MiniMisc.setup_restore_cursor()
 
