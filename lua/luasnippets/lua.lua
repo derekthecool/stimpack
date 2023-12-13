@@ -570,6 +570,15 @@ local autosnippets = {
         )
     ),
 
+    ms(
+        {
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+        },
+        fmt([[io.stderr:write({})]], {
+            i(1),
+        })
+    ),
+
     s(
         { trig = 'DESCRIBE', descr = 'Plenary test group' },
         fmt(

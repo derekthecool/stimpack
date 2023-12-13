@@ -387,13 +387,31 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'public override',   snippetType = 'snippet' },
+            { trig = 'tostring override', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        public override string ToString()
+        {{
+            return $"{}";
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine($"{}");]], {

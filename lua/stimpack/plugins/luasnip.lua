@@ -1,6 +1,7 @@
 return {
     'L3MON4D3/LuaSnip',
     event = 'CursorMoved',
+    -- enabled = false,
     config = function()
         -- Load my treesitter helper functions now
         require('stimpack.my-treesitter-functions')

@@ -60,19 +60,10 @@ local snippets = {
 
     s(
         'regex match',
-        fmt(
-            [[
-        if(Regex.IsMatch({}, @"{}"))
-        {{
-            {}
-        }}
-        ]],
-            {
-                i(1, '"source"'),
-                i(2, '.*'),
-                i(3),
-            }
-        ),
+        fmt([[Regex.Match({}, @"{}")]], {
+            i(1, '"source"'),
+            i(2, '.*'),
+        }),
         {
             callbacks = {
                 [-1] = {
@@ -84,6 +75,21 @@ local snippets = {
                 },
             },
         }
+    ),
+
+    ms(
+        {
+            { trig = 'aggregate', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        Aggregate({}, (acc, x) => {})
+        ]],
+            {
+                i(1, 'initial_value'),
+                i(2, 'calculation'),
+            }
+        )
     ),
 }
 

@@ -242,12 +242,13 @@ local snippets = {
 
     ms(
         {
-          {
-      trig = 'mqtt', snippetType = 'snippet',
-    }
+            {
+                trig = 'mqtt',
+                snippetType = 'snippet',
+            },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         // Mqtt starter using https://github.com/dotnet/MQTTnet
         // MQTT Configuration
         let mqttOptions =
@@ -287,10 +288,43 @@ local snippets = {
                 printfn "Socket error occurred while writing to TCP client: %s" ex.Message
                 Task.FromResult("Bye-bye"))
         ]],
+            {}
+        )
+    ),
+
+    ms(
         {
-          
-        }
-      )
+            { trig = 'raise', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        raise (System.Exception($"{}"))
+        ]],
+            {
+                i(1, 'Error with something'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'TRY', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        try
+            {}
+        with
+        | :? System.DivideByZeroException as ex ->
+            printfn "Caught DivideByZeroException: %s" ex.Message
+        | ex ->
+            printfn "Caught an unexpected exception: %s" ex.Message
+            raise ex // Rethrow the exception if it's not a DivideByZeroException
+        ]],
+            {
+                i(1),
+            }
+        )
     ),
 }
 
@@ -374,6 +408,59 @@ local autosnippets = {
             {
                 i(1),
                 i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'TEST', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        [<Fact>]
+        let ``{}`` () =
+            {}
+        ]],
+            {
+                i(1, 'Test name'),
+                i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ASSERT', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        Assert.{}({})
+        ]],
+            {
+                c(1, {
+                    t('Equal'),
+                    t('True'),
+                }),
+                i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'FOR', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        for {} in {} .. {} do
+            {}
+        ]],
+            {
+                i(1, 'i'),
+                i(2, '1'),
+                i(3, '10'),
+                i(4),
             }
         )
     ),

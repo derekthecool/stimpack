@@ -29,11 +29,16 @@ local snippets = {
         'data grid',
         fmt(
             [[
-        <DataGrid Name="{}" Items="{{Binding {}}}" AutoGenerateColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True"/>
+        <DataGrid Name="{}" {}="{{Binding {}}}" AutoGenerateColumns="True" CanUserReorderColumns="True" CanUserResizeColumns="True" CanUserSortColumns="True"/>
         ]],
             {
                 i(1, 'MyDataGrid'),
-                i(2, 'ListSource'),
+                c(2, {
+                    t('ItemsSource'),
+                    t('Items'),
+                }),
+
+                i(3, 'ListSource'),
             }
         )
     ),
@@ -276,8 +281,12 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'package reference',
+    ms(
+
+        {
+            { trig = 'package reference', snippetType = 'snippet' },
+            { trig = 'INCLUDE',           snippetType = 'autosnippet' },
+        },
         fmt(
             [[
       {}
@@ -314,6 +323,10 @@ local autosnippets = {
                     t('<PackageReference Include="Serilog.Sinks.Async" Version="1.5.0" />'),
                     t('<PackageReference Include="Serilog.Sinks.Console" Version="4.1.1-dev-00896" />'),
                     t('<PackageReference Include="Serilog.Sinks.MicrosoftTeams" Version="0.2.1" />'),
+
+                    -- Avalonia
+
+                    t('<PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />'),
                 }),
             }
         )

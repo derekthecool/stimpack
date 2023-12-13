@@ -1,3 +1,60 @@
+-- Define the patterns to match
+local patterns_to_match = {
+    'MTpub',
+    'tcpreceive',
+    'MTrecv',
+    'MQTT',
+    'FA:',
+    'F1:',
+}
+
+-- Function to determine if a line should be folded
+function mcn_fold_lines()
+    local total_lines = vim.api.nvim_buf_line_count(0)
+
+    local matching_lines = {}
+
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+    for index, line in ipairs(lines) do
+        -- local fold = true
+
+        for _, pattern in ipairs(patterns_to_match) do
+            if string.find(line, pattern) then
+                table.insert(matching_lines, index + 1)
+            end
+        end
+    end
+
+    local fold_start = 0
+    fold_points = {}
+    for i = 1, #matching_lines do
+        -- fold_end = matching_lines[i] - 2
+        -- vim.cmd(string.format("%d,%d fold", fold_start, fold_end))
+        -- fold_start = fold_end + 1
+        local fold_end = matching_lines[i] - 1
+        if math.abs(fold_start - fold_end) >= 5 then
+            table.insert(fold_points, { fold_start, fold_end })
+
+            vim.cmd(string.format('%d,%d fold', fold_start, fold_end))
+        end
+        fold_start = matching_lines[i]
+    end
+
+    vim.print(matching_lines)
+    vim.print(fold_points)
+end
+
+-- -- Execute fold_lines when the buffer is loaded
+-- vim.api.nvim_exec(
+--     [[
+--     augroup fold_lines
+--         autocmd!
+--         autocmd BufReadPost * lua fold_lines()
+--     augroup END
+-- ]],
+--     false
+-- )
+
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
     pattern = { 'BelleLTE_DataLog*.txt', 'debug-logs-*.log', 'debug-logs-*.txt' },
     callback = function()

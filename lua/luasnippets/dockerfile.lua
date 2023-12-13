@@ -94,7 +94,20 @@ ENTRYPOINT ["dotnet", "BelleLTE_DeviceId_Provisioner.dll"]
 
 local autosnippets = {
     -- Simple set of snippets to get uppercase
-    s('from', t('FROM ')),
+    -- s('from', t('FROM ')),
+    ms(
+        {
+            { trig = 'from', snippetType = 'autosnippet' },
+        },
+        fmt([[FROM {}]], {
+            c(1, {
+                t('mcr.microsoft.com/dotnet/aspnet:8.0'),
+                t('mcr.microsoft.com/dotnet/sdk:8.0'),
+                t('mcr.microsoft.com/dotnet/runtime:8.0'),
+                i(1, 'ubuntu:latest'),
+            }),
+        })
+    ),
     s('work dir', t('WORKDIR ')),
     s('copy', t('COPY ')),
     s('run', t('RUN ')),

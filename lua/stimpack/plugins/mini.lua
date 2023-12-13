@@ -28,8 +28,15 @@ return {
         require('mini.misc').setup({ make_global = { 'put' } })
 
         local directory_root = MiniMisc.find_root()
-        if directory_root ~= nil and directory_root:match('Exercism') == nil then
+        -- V(string.format('directory_root: %s', directory_root))
+        if
+            directory_root ~= nil
+            and (directory_root:match('Exercism') == nil or directory_root:match('FreeusAdapter') == nil)
+        then
+            -- MiniMisc.setup_auto_root({ 'Makefile', '.git', '.nvim.lua', '.gitignore', 'projector.json' })
             MiniMisc.setup_auto_root()
+        else
+            V(string.format('not setting directory_root: %s', directory_root))
         end
         MiniMisc.setup_restore_cursor()
 

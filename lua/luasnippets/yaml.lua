@@ -49,6 +49,35 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'profiles', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        profiles: ["{}"]
+        ]],
+            {
+                i(1, 'debug'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'environment', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        environment:
+          - {}
+        ]],
+            {
+                i(1, 'DEBUG=1'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {

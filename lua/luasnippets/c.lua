@@ -8,6 +8,23 @@ local string_processor = require('luasnippets.functions.string_processor')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+    ms(
+        {
+            { trig = 'ENUM', snippetType = 'autosnippet', },
+            { trig = 'enum', snippetType = 'snippet', },
+        },
+      fmt(
+        [[
+        typedef enum {{
+            {}
+        }} {}_t;
+        ]],
+        {
+                i(2),
+                i(1, 'my_enum'),
+        }
+      )
+    ),
 
     ms(
         {
@@ -56,7 +73,7 @@ local snippets = {
         ]],
             {
                 i(2),
-                i(1, 'my_struct_t'),
+                i(1, 'my_struct'),
             }
         )
     ),
