@@ -260,34 +260,73 @@ local snippets = {
 
     ms(
         {
-            { trig = 'read line', snippetType = 'snippet' },
+            { trig = 'read line', snippetType = 'autosnippet' },
             { trig = 'io.read()', snippetType = 'snippet' },
+        },
+        fmt([[{}]], {
+            c(1, {
+                t([[io.read()]]),
+                t([[io.read('n')]]),
+                t([[io.read('a')]]),
+                t([[io.read('l')]]),
+                t([[io.lines()]]),
+            }),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'load', snippetType = 'snippet' },
         },
         fmt(
             [[
-        -- Read: {} line{} of input, as data type: {}
         {}
         ]],
             {
-                i(1, '1'),
-                f(function(args, snip)
-                    if args[1] and args[1][1] and args[1][1] ~= '1' then
-                        return 's'
-                    end
-                end, { 1 }),
-                c(2, {
-                    t('string'),
-                    t('number'),
+                c(1, {
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+            -- Load and execute the expression
+            local ok, result = pcall(load("return " .. {}))
+
+            -- Check for errors during the load and execution process
+            if ok then
+                print(result)
+            else
+                print("Error: ", result)
+            end
+              ]],
+                            {
+                                i(1, 'string_to_load'),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt([[print(load("return "..{})())]], {
+                            i(1, 'string_to_load'),
+                        })
+                    ),
                 }),
-                d(3, function(args, snip)
-                    local nodes = {}
-
-                    -- Add nodes for snippet
-                    table.insert(nodes, t('Add this node'))
-
-                    return sn(nil, nodes)
-                end, { 1 }),
             }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'round', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+function round(number, decimal_places)
+    local multiplier = 10 ^ (decimal_places or 0)
+    return math.floor(number * multiplier + 0.5) / multiplier
+end
+        ]],
+            {}
         )
     ),
 }
@@ -628,7 +667,7 @@ local autosnippets = {
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 

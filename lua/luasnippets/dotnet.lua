@@ -58,9 +58,56 @@ local snippets = {
         }
     ),
 
-    s(
-        'regex match',
-        fmt([[Regex.Match({}, @"{}")]], {
+    ms(
+        {
+            { trig = 'regex match', snippetType = 'snippet' },
+            { trig = 'REGMATCH',    snippetType = 'autosnippet' },
+        },
+        fmt([[Regex.Match({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
+            i(1, '"source"'),
+            i(2, '.*'),
+        }),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        V('test')
+                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
+                    end,
+                },
+            },
+        }
+    ),
+
+    ms(
+        {
+            { trig = 'regex matches', snippetType = 'snippet' },
+            { trig = 'ALLREGMATCH',   snippetType = 'autosnippet' },
+        },
+        fmt([[Regex.Matches({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
+            i(1, '"source"'),
+            i(2, '.*'),
+        }),
+        {
+            callbacks = {
+                [-1] = {
+                    -- Write needed using directives before expanding snippet so positions are not messed up
+                    [events.pre_expand] = function()
+                        V('test')
+                        auxiliary.insert_include_if_needed('System.Text.RegularExpressions')
+                    end,
+                },
+            },
+        }
+    ),
+
+    ms(
+        {
+            { trig = 'regex replace', snippetType = 'snippet' },
+            { trig = 'REGREPLACE',    snippetType = 'autosnippet' },
+        },
+        fmt([[Regex.Replace({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
             i(2, '.*'),
         }),
@@ -164,7 +211,7 @@ Documenting code is recommended for many reasons. What follows are some best pra
                    <summary>{}</summary>
                    ]],
                         {
-                            i(1, 'Test test test'),
+                            i(1, 'Summary text'),
                         }
                     )
                 ),

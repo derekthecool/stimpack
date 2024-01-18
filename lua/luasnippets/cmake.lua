@@ -496,6 +496,63 @@ variable_watch({})
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'option', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        option({} "{}" {})
+        ]],
+            {
+                i(1, 'DEFINE_ITEM_NAME'),
+                i(2, 'Prompt: should this feature be included?'),
+                c(3, {
+                    t('OFF'),
+                    t('ON'),
+                    i(1, 'custom_value'),
+                }),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'FREACH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        foreach({} ${{{}}})
+            message("Current item: ${{{}}}")
+            {}
+        endforeach()
+        ]],
+            {
+                i(1, 'item'),
+                i(2, 'source_list'),
+                rep(1),
+                i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'list', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+    list({})
+        ]],
+            {
+
+                c(1, {
+                    t('GET listVariable 1 outputIndexedVariable'),
+                }),
+            }
+        )
+    ),
 }
 
 local autosnippets = {

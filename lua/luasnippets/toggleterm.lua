@@ -6,7 +6,7 @@ local snippets = {
         },
         fmt(
             [[
-          test test test
+             I want snippets in toggle term
          ]],
             {}
         )

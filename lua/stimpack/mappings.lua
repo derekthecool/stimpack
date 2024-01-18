@@ -125,3 +125,7 @@ local function ReloadConfig()
 end
 
 map('n', '<leader>ac', ReloadConfig)
+
+-- https://unix.stackexchange.com/questions/585019/horizontal-equivalent-of-zz-in-vim
+-- vim.keymap.set('n', 'z.', '<C-u>normal! zszH<CR>', { silent = true, desc = 'Center cursor horizontally' })
+vim.cmd[[nnoremap <silent> z. :<C-u>normal! zszH<CR>]]

@@ -63,6 +63,12 @@ vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
         -- Disable animations
         vim.b.minianimate_disable = true
 
+        -- Easily start searching for any of these items
+        vim.keymap.set('n', '<leader>nm', function()
+            local search_string = table.concat(patterns_to_match, '|')
+            vim.cmd(string.format('\v%s', search_string))
+        end, { silent = true, desc = 'mcn search' })
+
         -- TODO: move this to a stimpack booster with custom options to make it easy to scan any file
 
         vim.keymap.set('n', '<leader>lL', function()

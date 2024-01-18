@@ -1,6 +1,7 @@
 -- Vimwiki is a great personal wiki and diary
 return {
     'vimwiki/vimwiki',
+    enabled = false,
     ft = { 'markdown', 'vimwiki' },
     -- Startup is different when using lazy loading. The links are not concealed.
     init = function()

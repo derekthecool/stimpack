@@ -10,20 +10,20 @@ local string_processor = require('luasnippets.functions.string_processor')
 local snippets = {
     ms(
         {
-            { trig = 'ENUM', snippetType = 'autosnippet', },
-            { trig = 'enum', snippetType = 'snippet', },
+            { trig = 'ENUM', snippetType = 'autosnippet' },
+            { trig = 'enum', snippetType = 'snippet' },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         typedef enum {{
             {}
         }} {}_t;
         ]],
-        {
+            {
                 i(2),
                 i(1, 'my_enum'),
-        }
-      )
+            }
+        )
     ),
 
     ms(
@@ -367,6 +367,18 @@ local snippets = {
         fmt([[strcpy({}, {});]], {
             i(1, 'destination'),
             i(2, 'item_to_copy_from'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'string safe copy', snippetType = 'autosnippet' },
+            'strncpy',
+        },
+        fmt([[strncpy({}, {}, {});]], {
+            i(1, 'destination'),
+            i(2, 'item_to_copy_from'),
+            i(3, 'length'),
         })
     ),
 

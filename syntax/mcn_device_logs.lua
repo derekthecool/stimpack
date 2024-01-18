@@ -58,3 +58,29 @@ set_match_and_color('LogType_VER', '\\[VER]', { fg = '#dddddd' })
 set_match_and_color('LogType_WAR', '\\[WAR]', { fg = '#ffff00' })
 set_match_and_color('LogType_ERR', '\\[ERR]', { fg = '#ff8888', bg = '#333333' })
 set_match_and_color('LogType_FTL', '\\[FTL]', { fg = '#ff0000', bg = '#333333' })
+
+-- Define the patterns to match
+local patterns_to_match = {
+    'MTpub',
+    'tcpreceive',
+    'MTrecv',
+    'MQTT',
+    'FA:',
+    'F1:',
+    'writeid',
+}
+
+-- Easily start searching for any of these items
+vim.keymap.set('n', '<leader>nm', function()
+    local function startSearch(text)
+        -- Escape any special characters in the search text
+        -- local escapedText = vim.fn.escape(text, '/')
+        -- Construct the search command
+        local searchCommand = '/\\v' .. text .. '\n'
+        -- Send the search command
+        vim.fn.feedkeys(searchCommand, 'n')
+    end
+    local search_string = table.concat(patterns_to_match, '|')
+    -- vim.cmd(string.format('\\v(%s)', search_string))
+    startSearch(search_string)
+end, { silent = true, desc = 'mcn search' })

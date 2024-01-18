@@ -3,5 +3,4 @@ return {
     dependencies = {
         'kristijanhusak/vim-dadbod-ui',
     },
-    lazy = true,
 }

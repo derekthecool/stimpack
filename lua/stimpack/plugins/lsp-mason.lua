@@ -71,8 +71,8 @@ return {
                 -- Lua programming
                 'lua_ls',
 
-                -- C# programming
-                'csharp_ls',
+                -- -- C# programming
+                -- 'csharp_ls',
 
                 -- Json
                 'jsonls',
