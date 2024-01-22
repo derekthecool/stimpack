@@ -85,21 +85,21 @@ vim.filetype.add({ extension = { h = 'c' }, priority = 100 })
 vim.filetype.add({ extension = { fsproj = 'xml' }, priority = 1 })
 -- vim.filetype.add({ pattern = { ['*.fsproj'] = 'xml', priority = 5 } })
 
-vim.filetype.add({
-    pattern = {
-        ['.*'] = {
-            priority = math.huge,
-            function(_, bufnr)
-                V('test test test')
-                local lines = vim.fn.getbufline(bufnr, 1, 10) -- Get the first 10 lines of the buffer
-                local searchText = 'T:(11:35:20)'
-
-                for _, line in ipairs(lines) do
-                    if string.find(line, searchText) then
-                        return 'mcn_device_logs'
-                    end
-                end
-            end,
-        },
-    },
-})
+-- vim.filetype.add({
+--     pattern = {
+--         ['.*'] = {
+--             priority = math.huge,
+--             function(_, bufnr)
+--                 V('test test test')
+--                 local lines = vim.fn.getbufline(bufnr, 1, 10) -- Get the first 10 lines of the buffer
+--                 local searchText = 'T:(11:35:20)'
+--
+--                 for _, line in ipairs(lines) do
+--                     if string.find(line, searchText) then
+--                         return 'mcn_device_logs'
+--                     end
+--                 end
+--             end,
+--         },
+--     },
+-- })
