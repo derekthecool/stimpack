@@ -1,5 +1,15 @@
 local M = {}
 
+-- For some reason this test framework always runs into many breaking problems overtime
+-- Toggle this bool for extra logging
+M.logging = true
+
+M.log = function(...)
+    if M.logging then
+        V(...)
+    end
+end
+
 local function check_for_open_test_files()
     local test_files_found = 0
     for _, open_buffers in pairs(vim.fn.getbufinfo({ buflisted = true })) do
@@ -7,6 +17,8 @@ local function check_for_open_test_files()
             test_files_found = test_files_found + 1
         end
     end
+
+    M.log(string.format('Test files found: %d', test_files_found))
 
     if test_files_found > 0 then
         return true
@@ -16,6 +28,8 @@ local function check_for_open_test_files()
 end
 
 M.neovim_test = function()
+    M.log('Extra debug logging enabled')
+
     if not check_for_open_test_files() then
         return
     end
