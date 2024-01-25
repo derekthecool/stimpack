@@ -329,6 +329,67 @@ end
             {}
         )
     ),
+
+    ms(
+        {
+            { trig = 'REGMATCH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        local {} = {}:match('{}')
+        ]],
+            {
+                i(1, 'match'),
+                i(2, 'source_string'),
+                i(3, 'pattern'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        for {} in {}:gmatch('{}') do
+            {}
+        end
+        ]],
+            {
+                i(1, 'word'),
+                i(2, 'source_string'),
+                i(3, 'pattern'),
+                i(4),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        local {} = {}:gsub('{}', {})
+        ]],
+            {
+                i(1, 'replaced_string'),
+                i(2, 'source_string'),
+                i(3, 'pattern'),
+                d(4, function(args, snip)
+                    local nodes = {}
+
+                    -- Add nodes for snippet
+                    table.insert(nodes, i('replacement_string'))
+                    table.insert(nodes, i('key_value_pair_table_for_replacements'))
+                    table.insert(nodes, i('{"a"="b"}'))
+
+                    return sn(nil, c(nodes))
+                end, { 1 }),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
@@ -667,7 +728,7 @@ local autosnippets = {
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
