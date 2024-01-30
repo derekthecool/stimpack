@@ -18,9 +18,8 @@ local function check_for_open_test_files()
         end
     end
 
-    M.log(string.format('Test files found: %d', test_files_found))
-
     if test_files_found > 0 then
+        M.log(string.format('Test files found: %d', test_files_found))
         return true
     else
         return false
@@ -28,11 +27,11 @@ local function check_for_open_test_files()
 end
 
 M.neovim_test = function()
-    M.log('Extra debug logging enabled')
-
     if not check_for_open_test_files() then
         return
     end
+
+    M.log('Extra debug logging enabled')
 
     local namespace_id = vim.api.nvim_create_namespace('neovim plenary lua test runner')
 
