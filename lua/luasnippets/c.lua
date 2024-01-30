@@ -838,6 +838,23 @@ local autosnippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'case', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        case {}:
+            {}
+            break;
+        ]],
+            {
+                i(1, 'item'),
+                i(2),
+            }
+        )
+    ),
 }
 
 return snippets, autosnippets

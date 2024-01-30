@@ -1,5 +1,9 @@
 ---@diagnostic disable: undefined-global
-local snippets = {}
+local snippets = {
+    ms({
+        { trig = 'pi', snippetType = 'snippet' },
+    }, fmt([[3.141592653589793238462643383279502884197169399375105820974944592307816406286]], {})),
+}
 
 local autosnippets = {
     s(
@@ -32,6 +36,15 @@ local autosnippets = {
             },
         },
         fmt([["{}"]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = '<<<<', snippetType = 'autosnippet' },
+        },
+        fmt([[<{}>]], {
             i(1),
         })
     ),

@@ -72,16 +72,17 @@ return {
         -- function zoom() replaces https://github.com/szw/vim-maximizer which I used to use for vimspector
         require('mini.misc').setup({ make_global = { 'put' } })
 
-        local directory_root = MiniMisc.find_root()
+        -- local directory_root = MiniMisc.find_root()
         -- V(string.format('directory_root: %s', directory_root))
-        if
-            directory_root ~= nil
-            and (directory_root:match('Exercism') == nil or directory_root:match('FreeusAdapter') == nil)
-        then
-            -- MiniMisc.setup_auto_root({ 'Makefile', '.git', '.nvim.lua', '.gitignore', 'projector.json' })
-            MiniMisc.setup_auto_root()
-        end
-        MiniMisc.setup_restore_cursor()
+        -- if
+        --     directory_root ~= nil
+        --     and (directory_root:match('Exercism') == nil or directory_root:match('FreeusAdapter') == nil)
+        -- then
+        -- MiniMisc.setup_auto_root()
+        -- end
+
+        -- MiniMisc.setup_auto_root({ '.exercism', 'Makefile', '.git', '.nvim.lua', '.gitignore', 'projector.json' })
+        -- MiniMisc.setup_restore_cursor()
 
         -- Very magic plugin that shows indentscope with a nice animation. This will be wonderful for fsharp.
         require('mini.indentscope').setup()

@@ -73,6 +73,36 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'REGMATCH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        re.match(r'{}', {})
+        ]],
+            {
+                i(1, '.*'),
+                i(2, 'input'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        re.findall(r'{}', {})
+        ]],
+            {
+                i(1, '.*'),
+                i(2, 'input'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
@@ -99,6 +129,23 @@ local autosnippets = {
         ]],
             {
                 i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'FOR', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        for {} in range({}):
+            {}
+        ]],
+            {
+                i(1, 'i'),
+                i(2, 'source'),
+                i(3),
             }
         )
     ),

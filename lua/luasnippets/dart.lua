@@ -27,6 +27,29 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'FUNCTION', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        {} {}({}) {{
+            {}
+        }}
+        ]],
+            {
+                c(1, {
+                    t('void'),
+                    t('int'),
+                    i(1, 'string'),
+                }),
+                i(2, 'functionName'),
+                i(3, 'args'),
+                i(4),
+            }
+        )
+    ),
 }
 
 local autosnippets = {}
