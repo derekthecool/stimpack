@@ -236,6 +236,9 @@ return {
         -- Add microcontroller specific code snippets (all in C of course)
         require('luasnip').filetype_extend('c', { 'mcu_ESP32' })
 
+        -- Create group for flutter
+        require('luasnip').filetype_extend('dart', { 'flutter' })
+
         -- Function for status line to show how many snippets available for current filetype
         function GetLuasnipAvailableSnippetCountForCurrentFile()
             local available_snippets = require('luasnip').available()

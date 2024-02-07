@@ -134,7 +134,7 @@ local snippets = {
     ms(
         {
             { trig = 'front_matter', snippetType = 'snippet' },
-            { trig = '---', snippetType = 'autosnippet' },
+            { trig = '---',          snippetType = 'autosnippet' },
         },
         fmt(
             [[
@@ -405,22 +405,23 @@ local autosnippets = {
     s(
         'FIRST',
         fmt(
-            [[
-        # {} Notes
+            [==[
+---
+tags: ["daily_work_notes"]
+---
 
-        ## Work Objectives
+# {}
 
-        ### Planned
+## Objectives
 
-        - [ ] {}
+- [ ] {}
 
-        ## Rock Progress
+## Notes
 
-        - [FloatingTodoList](FloatingTodoList)
-        - [Rocks](../rocks/Rocks.md)
+## Task Progress
 
-        ## Notes
-        ]],
+![[dataview_diary_query.md]]
+        ]==],
             {
                 f(function(args, snip)
                     return os.date('%Y-%m-%d')

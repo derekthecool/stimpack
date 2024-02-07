@@ -1,5 +1,91 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    -- Dart
+    ms(
+        {
+            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        {}.replaceAll(RegExp(r'{}'),{});
+        ]],
+            {
+                i(1, 'source'),
+                i(2, '.*'),
+                i(3, [['']]),
+            }
+        )
+    ),
+
+    ms({
+        { trig = 'read line', snippetType = 'autosnippet' },
+    }, fmt([[stdin.readLineSync()]], {})),
+    ms(
+        {
+            { trig = 'IF', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+            if ({}) {{
+                {}
+            }}
+        ]],
+            { i(1), i(2) }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+         else if ({}) {{
+             {}
+         }}
+        ]],
+            {
+                i(1),
+                i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ELSE', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        else {{
+            {}
+        }}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'FOR', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        for (int {} = 1; {} < {}; {}++) {{
+            {}
+        }}
+        ]],
+            {
+                i(1, 'i'),
+                rep(1),
+                i(2, '10'),
+                rep(1),
+                i(3),
+            }
+        )
+    ),
     ms(
         {
             { trig = 'PRINT', snippetType = 'autosnippet' },

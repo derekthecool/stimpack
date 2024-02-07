@@ -15,6 +15,7 @@
   "diffview.nvim": { "branch": "main", "commit": "3dc498c9777fe79156f3d32dddd483b8b3dbd95f" },
   "dressing.nvim": { "branch": "master", "commit": "42d767b04c50a6966c9633e3968bc65c0c2f2bfc" },
   "dvp.nvim": { "branch": "master", "commit": "dc4cbf6721c2cafd1a99447c0a3508b18e7619f5" },
+  "flutter-tools.nvim": { "branch": "main", "commit": "271eec9edb0f1a2bf30ad449ec3b4eeb2c88af05" },
   "fwatch.nvim": { "branch": "main", "commit": "a691f7349dc66285cd75a1a698dd28bca45f2bf8" },
   "gitsigns.nvim": { "branch": "main", "commit": "0a2a93f687ec051292943a4d139366332ac93688" },
   "lazy.nvim": { "branch": "main", "commit": "aedcd79811d491b60d0a6577a9c1701063c2a609" },
@@ -58,10 +59,7 @@
   "toggleterm.nvim": { "branch": "main", "commit": "b49df5cdce67a8964d1b027dae94bde212092b51" },
   "vim-dadbod": { "branch": "master", "commit": "738cfc2ea6a1510fe23cba9006fef9291be70f7b" },
   "vim-dadbod-ui": { "branch": "master", "commit": "165699c573469e6a95b48d35052f848c340c5911" },
-  "vim-flutter": { "branch": "master", "commit": "422ff301a4fe7b989b79b83adf95add0c71ffda5" },
   "vim-fugitive": { "branch": "master", "commit": "854a8df0d06b8d3fcb30fa7f2b08c62b553eee3b" },
-  "vim-lsc": { "branch": "master", "commit": "14203f07add90e273020f626e6d1a79b9fd694c4" },
-  "vim-lsc-dart": { "branch": "master", "commit": "fac8f100fad5153aae8c932a033ea3a92cf140f2" },
   "vim-tmux-navigator": { "branch": "master", "commit": "38b1d0402c4600543281dc85b3f51884205674b6" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }
