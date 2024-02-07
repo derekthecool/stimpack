@@ -1,4 +1,42 @@
 ---@diagnostic disable: undefined-global, missing-parameter
+
+local width = function(index)
+    return sn(
+        index,
+        fmt([[width: {},]], {
+            i(1),
+        })
+    )
+end
+
+local height = function(index)
+    return sn(
+        index,
+        fmt([[height: {},]], {
+            i(1),
+        })
+    )
+end
+
+local alignment = function(index)
+    return sn(
+        index,
+        fmt([[alignment: alignment.{},]], {
+            c(1, {
+                t('topRight'),
+                t('topLeft'),
+                t('center'),
+                t('topCenter'),
+                t('centerLeft'),
+                t('bottomLeft'),
+                t('centerRight'),
+                t('bottomRight'),
+                t('bottomCenter'),
+            }),
+        })
+    )
+end
+
 local snippets = {
 
     ms(
@@ -150,13 +188,79 @@ local snippets = {
         fmt(
             [[
         Stack(
+          fit: StackFit.{},
+          alignment: Alignment.{},
           children: <Widget>[
             {}
           ],
         ),
         ]],
             {
-                i(1),
+                c(1, {
+                    t('loose'),
+                    t('expand'),
+                    t('passthrough'),
+                }),
+                alignment(2),
+                i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'alignment', snippetType = 'snippet' },
+            { trig = 'alignment alignment', snippetType = 'autosnippet' },
+        },
+        fmt([[{}]], {
+            alignment(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'width', snippetType = 'snippet' },
+            { trig = 'width width', snippetType = 'autosnippet' },
+        },
+        fmt([[{}]], {
+            width(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'height', snippetType = 'snippet' },
+            { trig = 'height height', snippetType = 'autosnippet' },
+        },
+        fmt([[{}]], {
+            height(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'container', snippetType = 'snippet' },
+            { trig = 'container container', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+          Container(
+            {}
+            {}
+            decoration: BoxDecoration(
+              shape: BoxShape.{},
+              color: Colors.{},
+            ),
+          ),
+        ]],
+            {
+                width(1),
+                height(2),
+                c(3, {
+                    t('circle'),
+                    t('square'),
+                }),
+                i(4),
             }
         )
     ),

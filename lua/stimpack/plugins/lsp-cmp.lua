@@ -1,9 +1,9 @@
 return {
     'hrsh7th/nvim-cmp',
     dependencies = {
-        'hrsh7th/cmp-buffer', -- buffer completions
-        'hrsh7th/cmp-path', -- path completions
-        'hrsh7th/cmp-cmdline', -- cmdline completions
+        'hrsh7th/cmp-buffer',                  -- buffer completions
+        'hrsh7th/cmp-path',                    -- path completions
+        'hrsh7th/cmp-cmdline',                 -- cmdline completions
         'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
         'hrsh7th/cmp-nvim-lsp',
         'hrsh7th/cmp-nvim-lua',
@@ -97,7 +97,7 @@ return {
                 { name = 'nvim_lsp_signature_help' },
                 { name = 'emoji' },
                 { name = 'calc' },
-                { name = 'buffer', keyword_length = 5 },
+                { name = 'buffer',                 keyword_length = 3 },
             },
             confirm_opts = {
                 behavior = cmp.ConfirmBehavior.Replace,
@@ -174,9 +174,9 @@ return {
         -- mappings and settings
         local signs = {
             { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-            { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-            { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-            { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+            { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+            { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+            { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
         }
 
         for _, sign in ipairs(signs) do
@@ -220,6 +220,7 @@ return {
         vim.api.nvim_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
         vim.api.nvim_set_keymap('n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
         vim.api.nvim_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+        vim.api.nvim_set_keymap('i', '…', '<cmd>lua vim.lsp.buf.completion()<CR>', opts)
         vim.api.nvim_set_keymap('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
         vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
         vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
