@@ -1,6 +1,15 @@
 ---@diagnostic disable: undefined-global, missing-parameter
 local snippets = {
 
+    ms(
+        {
+            { trig = 'rep rep', snippetType = 'autosnippet' },
+        },
+        fmt([[rep({}),]], {
+            i(1, '1'),
+        })
+    ),
+
     s(
         {
             trig = 'snippet file',
@@ -10,6 +19,9 @@ local snippets = {
         fmt(
             [[
       ---@diagnostic disable: undefined-global, missing-parameter
+
+      local shareable = require('luasnippets.functions.shareable_snippets')
+
       local snippets = {{
           {}
       }}
@@ -292,16 +304,13 @@ local autosnippets = {
                 c(1, {
                     sn(
                         1,
-                        fmt(
-                            [[{{ trig = '{}', snippetType = '{}', }},]],
-                            {
-                                r(1, 'snippet_trigger'),
-                                c(2, {
-                                    t('snippet'),
-                                    t('autosnippet'),
-                                }),
-                            }
-                        )
+                        fmt([[{{ trig = '{}', snippetType = '{}', }},]], {
+                            r(1, 'snippet_trigger'),
+                            c(2, {
+                                t('snippet'),
+                                t('autosnippet'),
+                            }),
+                        })
                     ),
 
                     sn(

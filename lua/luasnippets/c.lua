@@ -4,6 +4,8 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
 local string_processor = require('luasnippets.functions.string_processor')
 
+local shareable = require('luasnippets.functions.shareable_snippets')
+
 -- This document is used as a basic style/convention guide
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
@@ -476,67 +478,11 @@ local snippets = {
 
 local autosnippets = {
 
-    s(
-        'FOR',
-        fmt(
-            [[
-        for(int i = {}; i < {}; i{})
-        {{
-            {}
-        }}
-        ]],
-            {
-                i(1, '0'),
-                i(2, '10'),
-                c(3, {
-                    t('++'),
-                    t('--'),
-                }),
-                i(4),
-            }
-        )
-    ),
-
-    ms(
-        {
-            { trig = 'IF',       snippetType = 'autosnippet' },
-            { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
-        {}if({})
-        {{
-            {}
-        }}{}
-        ]],
-            {
-                f(function(args, snip)
-                    if snip.trigger == 'ELS_EI_F' then
-                        return 'else '
-                    end
-                end, {}),
-                i(1),
-                i(2),
-                i(0),
-            }
-        )
-    ),
-
-    s(
-        'ELSE',
-        fmt(
-            [[
-        else
-        {{
-            {}
-        }}{}
-        ]],
-            {
-                i(1),
-                i(0),
-            }
-        )
-    ),
+    shareable.for_loop_c_style,
+    shareable.if_statement_c_style,
+    shareable.else_statement_c_style,
+    shareable.while_loop_c_style,
+    shareable.function_c_style,
 
     s(
         'var var',
@@ -546,27 +492,9 @@ local autosnippets = {
       ]],
             {
                 f(function()
-                    local variable = my_treesitter_functions.cs.get_recent_var()
+                    local variable = my_treesitter_functions.c.get_recent_var()
                     return variable
                 end, {}),
-            }
-        )
-    ),
-
-    s(
-        'FUNCTION',
-        fmt(
-            [[
-            {} {}({})
-            {{
-                {}
-            }}
-            ]],
-            {
-                i(1, 'int'),
-                i(2, 'MyFunction'),
-                i(3),
-                i(4),
             }
         )
     ),
@@ -645,22 +573,6 @@ local autosnippets = {
                 i(1, 'int'),
                 i(2, 'MyFunction'),
                 i(3, 'int a, int b'),
-            }
-        )
-    ),
-
-    s(
-        'WHILE',
-        fmt(
-            [[
-        while({})
-        {{
-            {}
-        }}
-        ]],
-            {
-                i(1, 'true'),
-                i(2),
             }
         )
     ),

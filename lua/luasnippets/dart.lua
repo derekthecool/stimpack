@@ -1,4 +1,7 @@
 ---@diagnostic disable: undefined-global
+
+local shareable = require('luasnippets.functions.shareable_snippets')
+
 local snippets = {
     -- Dart
     ms(
@@ -17,6 +20,12 @@ local snippets = {
         )
     ),
 
+    shareable.for_loop_c_style,
+    shareable.if_statement_c_style,
+    shareable.else_statement_c_style,
+    shareable.while_loop_c_style,
+    shareable.function_c_style,
+
     ms({
         { trig = 'read line', snippetType = 'autosnippet' },
     }, fmt([[stdin.readLineSync()]], {})),
@@ -34,58 +43,6 @@ local snippets = {
         )
     ),
 
-    ms(
-        {
-            { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
-         else if ({}) {{
-             {}
-         }}
-        ]],
-            {
-                i(1),
-                i(2),
-            }
-        )
-    ),
-
-    ms(
-        {
-            { trig = 'ELSE', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
-        else {{
-            {}
-        }}
-        ]],
-            {
-                i(1),
-            }
-        )
-    ),
-
-    ms(
-        {
-            { trig = 'FOR', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
-        for (int {} = 1; {} < {}; {}++) {{
-            {}
-        }}
-        ]],
-            {
-                i(1, 'i'),
-                rep(1),
-                i(2, '10'),
-                rep(1),
-                i(3),
-            }
-        )
-    ),
     ms(
         {
             { trig = 'PRINT', snippetType = 'autosnippet' },
@@ -116,25 +73,11 @@ local snippets = {
 
     ms(
         {
-            { trig = 'FUNCTION', snippetType = 'autosnippet' },
+            { trig = '.map', snippetType = 'autosnippet' },
         },
-        fmt(
-            [[
-        {} {}({}) {{
-            {}
-        }}
-        ]],
-            {
-                c(1, {
-                    t('void'),
-                    t('int'),
-                    i(1, 'string'),
-                }),
-                i(2, 'functionName'),
-                i(3, 'args'),
-                i(4),
-            }
-        )
+        fmt([[.map({})]], {
+            shareable.lambda(1),
+        })
     ),
 }
 

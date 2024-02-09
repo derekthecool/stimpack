@@ -1,5 +1,74 @@
 ---@diagnostic disable: undefined-global, missing-parameter
 
+local shareable = require('luasnippets.functions.shareable_snippets')
+
+local color = function(index)
+    return d(index, function(args, snip)
+        local nodes = {
+            sn(
+                nil,
+                fmt([[Color.fromARGB(0x{}, 0x{}, 0x{}, 0x{})]], {
+                    i(1, 'FF'),
+                    i(2, 'FF'),
+                    i(3, 'FF'),
+                    i(4, 'FF'),
+                })
+            ),
+
+            sn(
+                nil,
+                fmt([[Color.fromARGB({},{},{},{})]], {
+                    i(1, '255'),
+                    i(2, '255'),
+                    i(3, '255'),
+                    i(4, '255'),
+                })
+            ),
+
+            sn(
+                nil,
+                fmt([[Color.fromRGBO({},{},{},{})]], {
+                    i(1, '255'),
+                    i(2, '255'),
+                    i(3, '255'),
+                    i(4, '0.80'),
+                })
+            ),
+
+            sn(
+                nil,
+                fmt([[Color()]], {
+                    i(1, '0xAARRGGBB'),
+                })
+            ),
+        }
+
+        -- -- Add nodes for snippet
+        -- table.insert(nodes, t('Add this node'))
+
+        local choices = c(1, nodes)
+
+        return sn(index, { choices })
+    end, {})
+end
+
+-- local lambda = function(index)
+--     return sn(
+--         index,
+--         fmt(
+--             [[
+--          ({}) {{
+--              {}
+--          }}
+--          ]],
+--             {
+--                 i(1),
+--                 i(2),
+--             }
+--         )
+--     )
+-- end
+
 local width = function(index)
     return sn(
         index,
@@ -21,7 +90,7 @@ end
 local alignment = function(index)
     return sn(
         index,
-        fmt([[alignment: alignment.{},]], {
+        fmt([[alignment: Alignment.{},]], {
             c(1, {
                 t('topRight'),
                 t('topLeft'),
@@ -41,7 +110,8 @@ local snippets = {
 
     ms(
         {
-            { trig = 'CLASS', snippetType = 'autosnippet' },
+            { trig = 'widget', snippetType = 'snippet' },
+            { trig = 'widget widget', snippetType = 'autosnippet' },
         },
         fmt(
             [[{}
@@ -110,6 +180,23 @@ local snippets = {
 
                     return sn(nil, { c(1, nodes) })
                 end, {}),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'widgetted', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        {}(
+          {}
+        ),
+        ]],
+            {
+                i(1, 'ListTile'),
+                i(2),
             }
         )
     ),
@@ -263,6 +350,161 @@ local snippets = {
                 i(4),
             }
         )
+    ),
+
+    ms(
+        {
+            { trig = 'set state', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        setState(() {{
+            {};
+        }});
+        ]],
+            {
+                i(1, 'counter++'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'LAMBDA', snippetType = 'autosnippet' },
+        },
+        fmt([[{}]], {
+            shareable.lambda(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'on pressed', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        onPressed: {},
+        ]],
+            { shareable.lambda(1) }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'CLASS', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        class {} {{
+          const {}({{required this.{}}});
+
+          final {} {};
+        }}
+        ]],
+            {
+                i(1, 'ClassName'),
+                rep(1),
+                i(2, 'ClassPropertyName'),
+                i(3, 'String'),
+                rep(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'main', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        import 'package:flutter/material.dart';
+
+        void main() {
+          runApp(const <>());
+        }
+
+        class <> extends StatelessWidget {
+          const <>({super.key});
+
+          @override
+          Widget build(BuildContext context) {
+            return MaterialApp(
+              title: '<>',
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                colorSchemeSeed: Colors.<>,
+                useMaterial3: true,
+              ),
+              theme: ThemeData(
+                colorSchemeSeed: Colors.<>,
+                useMaterial3: true,
+              ),
+              themeMode: ThemeMode.system,
+              home: const <>,
+            );
+          }
+        }
+        ]],
+            {
+                i(1, 'MyApp'),
+                rep(1),
+                rep(1),
+                i(2, 'Title'),
+                i(3, 'deepPurple'),
+                rep(3),
+                i(4, 'MyWidgetsHere'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'scaffold', snippetType = 'snippet' },
+            { trig = 'scaffold scaffold', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        Scaffold(
+          appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+            title: Text(<>),
+          ),
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <<Widget>>[
+                <>
+              ],
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: <>,
+            tooltip: 'Increment',
+            child: const Icon(Icons.add),
+          ),
+        );
+        ]],
+            {
+                i(1, 'Title'),
+                i(2),
+                shareable.lambda(3),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'color color', snippetType = 'autosnippet' },
+        },
+        fmt([[color: {}]], {
+            color(1),
+        })
     ),
 }
 
