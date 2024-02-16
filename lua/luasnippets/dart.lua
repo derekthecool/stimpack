@@ -25,23 +25,12 @@ local snippets = {
     shareable.else_statement_c_style,
     shareable.while_loop_c_style,
     shareable.function_c_style,
+    shareable.shell_variable_reference,
+    shareable.shell_variable_brackets,
 
     ms({
         { trig = 'read line', snippetType = 'autosnippet' },
     }, fmt([[stdin.readLineSync()]], {})),
-    ms(
-        {
-            { trig = 'IF', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
-            if ({}) {{
-                {}
-            }}
-        ]],
-            { i(1), i(2) }
-        )
-    ),
 
     ms(
         {
@@ -77,6 +66,16 @@ local snippets = {
         },
         fmt([[.map({})]], {
             shareable.lambda(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = '.fold', snippetType = 'autosnippet' },
+        },
+        fmt([[.fold({}, {})]], {
+            i(1, 'initial_value'),
+            shareable.lambda(2),
         })
     ),
 }

@@ -94,7 +94,7 @@ shareable.for_loop_c_style = ms(
 
 shareable.if_statement_c_style = ms(
     {
-        { trig = 'IF',       snippetType = 'autosnippet' },
+        { trig = 'IF', snippetType = 'autosnippet' },
         { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
     },
     fmt(
@@ -151,25 +151,24 @@ shareable.while_loop_c_style = ms(
     )
 )
 
-shareable.function_c_style =
-    ms(
-        {
-            { trig = 'FUNCTION', snippetType = 'autosnippet' },
-        },
-        fmt(
-            [[
+shareable.function_c_style = ms(
+    {
+        { trig = 'FUNCTION', snippetType = 'autosnippet' },
+    },
+    fmt(
+        [[
             {} {}({})
             {{
                 {}
             }}
             ]],
-            {
-                i(1, 'int'),
-                i(2, 'MyFunction'),
-                i(3),
-                i(4),
-            }
-        )
+        {
+            i(1, 'int'),
+            i(2, 'MyFunction'),
+            i(3),
+            i(4),
+        }
     )
+)
 
 return shareable

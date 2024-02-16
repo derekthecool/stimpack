@@ -1,5 +1,30 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+
+    ms(
+        {
+            { trig = '$$', snippetType = 'autosnippet' },
+            -- Left
+            { trig = '¥', snippetType = 'autosnippet' },
+            { trig = '$$', snippetType = 'snippet' },
+        },
+        fmt([[${}]], {
+            i(1, 'variable'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = '{{', snippetType = 'autosnippet' },
+            -- Right
+            { trig = '€', snippetType = 'autosnippet' },
+            { trig = '${', snippetType = 'snippet' },
+        },
+        fmt([[${{{}}}]], {
+            i(1, 'variable'),
+        })
+    ),
+
     ms({
         { trig = 'pi', snippetType = 'snippet' },
     }, fmt([[3.141592653589793238462643383279502884197169399375105820974944592307816406286]], {})),

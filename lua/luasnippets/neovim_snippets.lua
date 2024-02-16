@@ -213,16 +213,14 @@ end, delay_ms)
 
                     return sn(nil, c(1, dirs))
                 end, {}),
-                c(5,
-                {
-                  t('tab'),
-                  t('vertical'),
-                  t('horizontal'),
-                  t('float'),
+                c(5, {
+                    t('tab'),
+                    t('vertical'),
+                    t('horizontal'),
+                    t('float'),
                 }),
 
                 i(6, 'ls -la'),
-
             },
             {
                 delimiters = '<>',
@@ -308,6 +306,28 @@ end, delay_ms)
                 i(2, 'opts table'),
                 i(3, 'config function'),
                 i(4, 'init function'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'vim REGMATCH', snippetType = 'snippet' },
+        },
+        fmt(
+            [[
+        local {} = vim.fn.matchlist({}, '\\v{}')
+
+        if next({}) then
+            {}
+        end
+        ]],
+            {
+                i(1, 'match_table'),
+                i(2, 'input_string'),
+                i(3, '^(.*)'),
+                rep(1),
+                i(4),
             }
         )
     ),
