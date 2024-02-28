@@ -390,21 +390,34 @@ end
             }
         )
     ),
-}
 
-local autosnippets = {
+    ms(
+        {
+            { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+            it('{}', function()
+                {}
+            end)
+            ]],
+            {
+                i(1),
+                i(2),
+            }
+        )
+    ),
 
-    s(
-        'INCLUDE',
+    ms(
+        {
+            { trig = 'INCLUDE', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         require('{}')
         ]],
             {
                 i(1),
-            },
-            {
-                condition = conds_expand.line_begin,
             }
         )
     ),
@@ -413,8 +426,10 @@ local autosnippets = {
     -- Enhancement would be to use a dynamic creation of a node that would optionally
     -- put a choice option defaulting to 'local' for variables inside a function
     -- When inside a table, the node choice would not exist
-    s(
-        'FIRST',
+    ms(
+        {
+            { trig = 'FIRST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt([[ = {}{}]], {
             i(1, 'true'),
             f(function(args, snip)
@@ -431,8 +446,10 @@ local autosnippets = {
         }
     ),
 
-    s(
-        'TABLE',
+    ms(
+        {
+            { trig = 'TABLE', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         {{
@@ -448,8 +465,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'KEY',
+    ms(
+        {
+            { trig = 'KEY', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         {} = {},
@@ -464,8 +483,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'IF',
+    ms(
+        {
+            { trig = 'IF', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
             if {} then
@@ -483,8 +504,16 @@ local autosnippets = {
         )
     ),
 
-    s(
-        { trig = shiftwidth_match_string .. 'ELS_EI_F', regTrig = true, wordTrig = false },
+    ms(
+        {
+            {
+                trig = shiftwidth_match_string .. 'ELS_EI_F',
+                regTrig = true,
+                wordTrig = false,
+                snippetType = 'autosnippet',
+                condition = conds.line_begin,
+            },
+        },
         fmt(
             [[
         elseif {} then
@@ -500,8 +529,16 @@ local autosnippets = {
         )
     ),
 
-    s(
-        { trig = shiftwidth_match_string .. 'ELSE', regTrig = true, wordTrig = false },
+    ms(
+        {
+            {
+                trig = shiftwidth_match_string .. 'ELSE',
+                regTrig = true,
+                wordTrig = false,
+                snippetType = 'autosnippet',
+                condition = conds.line_begin,
+            },
+        },
         fmt(
             [[
         else
@@ -516,8 +553,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'FUNCTION',
+    ms(
+        {
+            { trig = 'FUNCTION', snippetType = 'autosnippet', condition = nil },
+        },
         fmt(
             [[
         function({})
@@ -534,8 +573,10 @@ local autosnippets = {
     ),
 
     -- TODO: Call different function than pairs if two arguments are used
-    s(
-        { trig = '(%w+),? (%w+) FOR', regTrig = true },
+    ms(
+        {
+            { trig = '(%w+),? (%w+) FOR', regTrig = true, snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         for {} do
@@ -572,8 +613,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'FREACH',
+    ms(
+        {
+            { trig = 'FREACH', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         for {}, {} in {}({}) do
@@ -596,8 +639,10 @@ local autosnippets = {
         }
     ),
 
-    s(
-        'FOR',
+    ms(
+        {
+            { trig = 'FOR', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         for {}={}, {} do
@@ -617,8 +662,10 @@ local autosnippets = {
         }
     ),
 
-    s(
-        'WHILE',
+    ms(
+        {
+            { trig = 'WHILE', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         while {} do
@@ -638,8 +685,10 @@ local autosnippets = {
         }
     ),
 
-    s(
-        'FRMAT',
+    ms(
+        {
+            { trig = 'FRMAT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
       string.format('{}',{})
@@ -656,8 +705,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'PRINT',
+    ms(
+        {
+            { trig = 'PRINT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
       print({})
@@ -679,8 +730,14 @@ local autosnippets = {
         })
     ),
 
-    s(
-        { trig = 'DESCRIBE', descr = 'Plenary test group' },
+    ms(
+        {
+            {
+                trig = { trig = 'DESCRIBE', descr = 'Plenary test group' },
+                snippetType = 'autosnippet',
+                condition = conds.line_begin,
+            },
+        },
         fmt(
             [[
         describe('{} --', function()
@@ -740,8 +797,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'nvimcommand',
+    ms(
+        {
+            { trig = 'nvimcommand', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
             vim.api.nvim_cmd({{ cmd = '{}', args = {{ '{}' }} }}, {{}})
@@ -753,26 +812,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'TEST',
-        fmt(
-            [[
-            it('{}', function()
-                {}
-            end)
-            ]],
-            {
-                i(1),
-                i(2),
-            },
-            {
-                condition = conds_expand.line_begin,
-            }
-        )
-    ),
-
-    s(
-        'ASSERT',
+    ms(
+        {
+            { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         assert.{}({})
@@ -802,8 +845,10 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'var var',
+    ms(
+        {
+            { trig = 'var var', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
       {}
@@ -816,5 +861,7 @@ local autosnippets = {
         )
     ),
 }
+
+local autosnippets = {}
 
 return snippets, autosnippets

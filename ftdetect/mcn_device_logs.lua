@@ -93,21 +93,17 @@ function mcn_fold_lines()
     vim.print(fold_points)
 end
 
--- -- Execute fold_lines when the buffer is loaded
--- vim.api.nvim_exec(
---     [[
---     augroup fold_lines
---         autocmd!
---         autocmd BufReadPost * lua fold_lines()
---     augroup END
--- ]],
---     false
--- )
-
-vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+vim.api.nvim_create_autocmd({ 'BufRead' }, {
     pattern = { 'BelleLTE_DataLog*.txt', 'debug-logs-*.log', 'debug-logs-*.txt' },
     callback = function()
         vim.opt.filetype = 'mcn_device_logs'
+
+        if vim.b.did_run then
+            -- Exit early if command has already run
+            return
+        end
+
+        vim.b.did_run = 1
 
         -- Disable animations
         vim.b.minianimate_disable = true

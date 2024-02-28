@@ -6,6 +6,84 @@ local snippets = {
 
     ms(
         {
+            { trig = 'CHANGELOG.md CHANGELOG.md', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ## {Version} {Date}
+
+        ### Added
+
+        - {Added}
+
+        ### Fixed
+
+        - {Fixed}
+        ]],
+            {
+                Version = i(1, '2.1.0'),
+                Date = f(function(args, snip)
+                    return os.date('%Y-%m-%d')
+                end, {}),
+                Added = i(2),
+                Fixed = i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'Fixed',            snippetType = 'snippet' },
+            { trig = 'CHANGELOG.md fix', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ### Fixed
+
+        - {}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'Changed',             snippetType = 'snippet' },
+            { trig = 'CHANGELOG.md change', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ### Changed
+
+        - {}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'Removed',             snippetType = 'snippet' },
+            { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ### Removed
+
+        - {}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'dataview', snippetType = 'snippet' },
         },
         fmt(

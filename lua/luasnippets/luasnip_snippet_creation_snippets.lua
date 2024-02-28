@@ -1,4 +1,31 @@
 ---@diagnostic disable: undefined-global, missing-parameter
+
+local function ConditionsHelper(index)
+    return c(index, {
+        t('conds.line_begin'),
+        t('conds.line_end'),
+        t('conds.line_begin + conds.line_end'),
+        t('nil'),
+        sn(
+            nil,
+            fmt(
+                [[
+                      function(line_to_cursor)
+                          -- Check for empty line
+                          -- return line_to_cursor == ''
+
+                          -- Check that custom text was not found
+                          return line_to_cursor:match('{SearchText}') == nil
+                      end,
+                      ]],
+                {
+                    SearchText = i(1),
+                }
+            )
+        ),
+    })
+end
+
 local snippets = {
 
     ms(
@@ -13,7 +40,8 @@ local snippets = {
     s(
         {
             trig = 'snippet file',
-            descr = 'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
+            descr =
+            'Basic start for a snippet file named [ft].lua and located in the snippets directory of my neovim config',
         },
 
         fmt(
@@ -304,12 +332,13 @@ local autosnippets = {
                 c(1, {
                     sn(
                         1,
-                        fmt([[{{ trig = '{}', snippetType = '{}', }},]], {
+                        fmt([[{{ trig = '{}', snippetType = '{}', condition = {Conditions}}},]], {
                             r(1, 'snippet_trigger'),
                             c(2, {
                                 t('snippet'),
                                 t('autosnippet'),
                             }),
+                            Conditions = ConditionsHelper(3),
                         })
                     ),
 
@@ -371,14 +400,15 @@ local autosnippets = {
         },
         fmt(
             [[
-        {{ trig = '{}', snippetType = '{}', }},
+        {{ trig = '{Trigger}', snippetType = '{Type}', condition = {Condition},}},
         ]],
             {
-                i(1, 'trigger'),
-                c(2, {
+                Trigger = i(1, 'trigger'),
+                Type = c(2, {
                     t('snippet'),
                     t('autosnippet'),
                 }),
+                Condition = ConditionsHelper(3),
             }
         )
     ),
@@ -495,7 +525,7 @@ local autosnippets = {
     ),
 
     s(
-        -- This node is not a real node. It is just easier to remember by calling it this.
+    -- This node is not a real node. It is just easier to remember by calling it this.
         'format node',
         fmta(
             [[
