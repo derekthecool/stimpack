@@ -553,6 +553,43 @@ variable_watch({})
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'FUNCTION', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        function({FunctionName} {Parameters})
+            {}
+        endfunction()
+        ]],
+            {
+                FunctionName = i(1, 'FunctionName'),
+                Parameters = i(2, 'params...'),
+                i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'target_include_directories', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        target_include_directories(
+            ${{{LibraryOrProgram}}}
+            PRIVATE
+            "${{CMAKE_CURRENT_BINARY_DIR}}/{Files}"
+        )
+        ]],
+            {
+                LibraryOrProgram = i(1, 'ProgramName'),
+                Files = i(2, 'Files'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {

@@ -332,7 +332,7 @@ end
 
     ms(
         {
-            { trig = 'REGMATCH', snippetType = 'autosnippet' },
+            { trig = 'REGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -348,7 +348,7 @@ end
 
     ms(
         {
-            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -367,7 +367,7 @@ end
 
     ms(
         {
-            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
+            { trig = 'REGREPLACE', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -785,7 +785,7 @@ end
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 

@@ -753,7 +753,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'case', snippetType = 'snippet' },
+            { trig = 'case',      snippetType = 'snippet' },
+            { trig = 'case case', snippetType = 'autosnippet' },
         },
         fmt(
             [[

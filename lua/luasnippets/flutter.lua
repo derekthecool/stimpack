@@ -2,6 +2,47 @@
 
 local shareable = require('luasnippets.functions.shareable_snippets')
 
+local test = function(index)
+    return sn(
+        index,
+        fmt(
+            [[
+                  test('<TestDescription>', () async {
+                    // arrange
+                    <Arrange>
+
+                    // act
+                    <Act>
+
+                    // assert
+                    <Expect>
+                  });
+                ]],
+            {
+                TestDescription = i(1, 'Test the the feature .... and expect ....'),
+                Arrange = i(2),
+                Act = i(3),
+                Expect = sn(
+                    4,
+                    fmt(
+                        [[
+                expect({}, {});
+                ]],
+                        {
+                            i(1, 'expected'),
+                            i(2, 'input'),
+                        }
+                    )
+                ),
+            },
+
+            {
+                delimiters = '<>',
+            }
+        )
+    )
+end
+
 local color = function(index)
     return d(index, function(args, snip)
         local nodes = {
@@ -488,14 +529,40 @@ local snippets = {
     -- Testing
     ms(
         {
-            { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
+            import 'package:dartz/dartz.dart';
+            import 'package:flutter_test/flutter_test.dart';
+            import 'package:mockito/mockito.dart';
 
+            void main() {
+              // Code to be run before every test
+              setUp(() {
+                  <SetupCode>
+              });
+
+              <Test>
+            }
         ]],
-            {}
+            {
+                SetupCode = i(1),
+                Test = test(2),
+            },
+            {
+                delimiters = '<>',
+            }
         )
+    ),
+
+    ms(
+        {
+            { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt([[{}]], {
+            test(1),
+        })
     ),
 }
 

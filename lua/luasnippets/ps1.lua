@@ -173,6 +173,23 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        [System.Text.RegularExpressions.Regex]::Matches({Source}, '{Pattern}') | ForEach-Object {{ $_.{DoSomething} }}
+        ]],
+            {
+                Source = i(1, '$input'),
+
+                Pattern = i(2, '.*'),
+                DoSomething = i(3, 'Value'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {
@@ -321,7 +338,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH',        snippetType = 'autosnippet' },
+            { trig = 'FREACH',         snippetType = 'autosnippet' },
             { trig = 'ForEach-Object', snippetType = 'snippet' },
         },
         fmt([[ForEach-Object {{ {} }}]], {
