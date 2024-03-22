@@ -1,7 +1,7 @@
 ;; Keywords
 (("case"       @keyword)   (#set!   conceal   "💼"))
 (("const"      @keyword)   (#set!   conceal   "⚪"))
-(("default"    @keyword)   (#set!   conceal   "❓"))
+("default"    @keyword)   (#set!   conceal   "❓"))
 (("do"         @keyword)   (#set!   conceal   "⚒"))
 (("else"       @keyword)   (#set!   conceal   "!"))
 (("enum"       @keyword)   (#set!   conceal   "🔢"))
