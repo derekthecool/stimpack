@@ -1,11 +1,21 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    ms(
+        {
+            { trig = 'ad_unit', snippetType = 'snippet' },
+        },
+        fmt([[{}]], {
+            c(1, {
+                t('ca-app-pub-3940256099942544/9214589741'),
+            }),
+        })
+    ),
 
     ms(
         {
             { trig = '$$', snippetType = 'autosnippet' },
             -- Left
-            { trig = '¥', snippetType = 'autosnippet' },
+            { trig = '¥',  snippetType = 'autosnippet' },
             { trig = '$$', snippetType = 'snippet' },
         },
         fmt([[${}]], {
@@ -76,10 +86,10 @@ local autosnippets = {
 
     ms(
         {
-            { trig = '\\e', snippetType = 'snippet' },
-            { trig = '\\033', snippetType = 'snippet' },
+            { trig = '\\e',        snippetType = 'snippet' },
+            { trig = '\\033',      snippetType = 'snippet' },
             { trig = 'ansi color', snippetType = 'snippet' },
-            { trig = 'color', snippetType = 'snippet' },
+            { trig = 'color',      snippetType = 'snippet' },
         },
         fmt(
             [[

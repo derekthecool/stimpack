@@ -232,38 +232,30 @@ local snippets = {
         fmt(
             [[
       ---
-      title: "{}"
-      date: {}
-      categories: {}
-      draft: {}
+      title: "{Title}"
+      date: {Date}
+      image: {Image}
+      categories:
+        - {Categories}
+      draft: {Draft}
       ---
 
-      # {}
-
-      {}
+      {OptionalHeader}
       ]],
             {
 
-                f(function()
+                Title = f(function()
                     return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
                 end),
-                t(os.date('%Y-%m-%dT%H:%M:%S')),
-                sn(
-                    1,
-                    fmt('[\'{}\']', {
-                        i(1, 'stenography'),
-                    })
-                ),
-
-                c(2, {
-                    t('true'),
+                Date = t(os.date('%Y-%m-%dT%H:%M:%S')),
+                Image = i(1),
+                Categories = i(2, 'C'),
+                Draft = c(3, {
                     t('false'),
+                    t('true'),
                 }),
 
-                f(function()
-                    return (vim.fn.expand('%:t'):gsub('-', ' '):gsub('.md', ''))
-                end),
-                i(0),
+                OptionalHeader = i(4),
             }
         )
     ),

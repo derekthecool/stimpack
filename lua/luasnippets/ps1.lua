@@ -180,7 +180,7 @@ local snippets = {
         },
         fmt(
             [[
-        [System.Text.RegularExpressions.Regex]::Matches({Source}, '{Pattern}') | ForEach-Object {{ $_.{DoSomething} }}
+        [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
         ]],
             {
                 Source = i(1, '$input'),
@@ -216,7 +216,7 @@ local autosnippets = {
         'ELS_EI_F',
         fmt(
             [[
-        else if({})
+        elseif({})
         {{
             {}
         }}
@@ -260,10 +260,10 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host',   snippetType = 'snippet' },
-            { trig = 'PRINT',        snippetType = 'autosnippet' },
-            { trig = 'Write-Host',   snippetType = 'snippet' },
-            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt(
@@ -338,7 +338,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH',         snippetType = 'autosnippet' },
+            { trig = 'FREACH', snippetType = 'autosnippet' },
             { trig = 'ForEach-Object', snippetType = 'snippet' },
         },
         fmt([[ForEach-Object {{ {} }}]], {
@@ -364,20 +364,6 @@ local autosnippets = {
                 i(1),
                 i(2),
                 i(0),
-            }
-        )
-    ),
-
-    s(
-        { trig = '?', regTrig = false, wordTrig = false },
-        fmt(
-            [[
-        | Where-Object {{
-            $_{}
-        }}
-        ]],
-            {
-                i(1),
             }
         )
     ),

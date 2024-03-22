@@ -2,25 +2,27 @@
 -- Wireshark plugin snippets
 
 -- Wireshark lua plugin helpers
-local wireshark_plugin_details = sn(
-    1,
-    fmt(
-        [[
+local wireshark_plugin_details = function(index)
+    return sn(
+        index,
+        fmt(
+            [[
 set_plugin_info({{
-    version = '{}',
-    author = '{}',
-    description = '{}',
-    repository = '{}',
+    version = '{Version}',
+    author = '{Author}',
+    description = '{Description}',
+    repository = '{Repository}',
 }})
 ]],
-        {
-            i(1, '1.0.0'),
-            i(2, 'Derek Lomax'),
-            i(3, 'This is my awesome wireshark plugin that does something great'),
-            i(4, 'repo source'),
-        }
+            {
+                Version = i(1, '1.0.0'),
+                Author = i(2, 'Derek Lomax'),
+                Description = i(3, 'This is my awesome wireshark plugin that does something great'),
+                Repository = i(4, 'repo source'),
+            }
+        )
     )
-)
+end
 
 local snippets = {
     s(
@@ -32,31 +34,31 @@ local snippets = {
 -- https://wiki.wireshark.org/uploads/6f35ec7531e1557df3f2964c81d80510/EASYPOST.lua
 
 -- Step 1 - Set plugin plugin information
-{}
+{PluginDetails}
 
 --- Step 2 - create a protocol to attach new fields to
 ---@type Proto
-local {} = Proto.new('{}', '{}')
+local {RepeatedProtocolName} = Proto.new('{ProtocolName}', '{ProtocolDescription}')
 
 -- Step 3 - add some field(s) to Step 2 protocol
-local pf = {{ payload = ProtoField.string('{}', '{}') }}
+local pf = {{ payload = ProtoField.string('{FieldName}', '{FieldDescription}') }}
 
-{}.fields = pf
+{RepeatedProtocolName2}.fields = pf
 
 -- Step 4 - create a Field extractor to copy packet field data.
 -- add items that could be used as a wireshark filter like frame.protocols or mqtt.msg
-{}_payload_f = Field.new('frame.protocols')
+{RepeatedProtocolName3}_payload_f = Field.new('frame.protocols')
 
 -- Step 5 - create the postdissector function that will run on each frame/packet
-function {}.dissector(tvb, pinfo, tree)
+function {RepeatedProtocolName4}.dissector(tvb, pinfo, tree)
     local subtree = nil
 
     -- copy existing field(s) into table for processing
-    finfo = {{ {}_payload_f() }}
+    finfo = {{ {RepeatedProtocolName5}_payload_f() }}
 
     if #finfo > 0 then
         if not subtree then
-            subtree = tree:add({})
+            subtree = tree:add({RepeatedProtocolName6})
         end
         for k, v in pairs(finfo) do
             -- process data and add results to the tree
@@ -67,21 +69,21 @@ function {}.dissector(tvb, pinfo, tree)
 end
 
 -- Step 6 - register the new protocol as a postdissector
-register_postdissector({})
+register_postdissector({RepeatedProtocolName7})
         ]],
             {
-                wireshark_plugin_details,
-                rep(2),
-                i(2, 'protocol_name'),
-                i(3, 'Protocol description'),
-                i(4, 'field_name'),
-                i(5, 'Field description'),
-                rep(2),
-                rep(2),
-                rep(2),
-                rep(2),
-                rep(2),
-                rep(2),
+                PluginDetails = wireshark_plugin_details(1),
+                RepeatedProtocolName = rep(2),
+                ProtocolName = i(2, 'protocol_name'),
+                ProtocolDescription = i(3, 'Protocol description'),
+                FieldName = i(4, 'field_name'),
+                FieldDescription = i(5, 'Field description'),
+                RepeatedProtocolName2 = rep(2),
+                RepeatedProtocolName3 = rep(2),
+                RepeatedProtocolName4 = rep(2),
+                RepeatedProtocolName5 = rep(2),
+                RepeatedProtocolName6 = rep(2),
+                RepeatedProtocolName7 = rep(2),
             }
         )
     ),
@@ -120,7 +122,7 @@ register_postdissector({})
                 -- i(2, 'Derek Lomax'),
                 -- i(3, 'This is my awesome wireshark plugin that does something great'),
                 -- i(4, 'repo source'),
-                wireshark_plugin_details,
+                wireshark_plugin_details(1),
                 i(2, 'http_tap'),
                 i(3, 'http'),
                 rep(3),
@@ -130,8 +132,10 @@ register_postdissector({})
         )
     ),
 
-    s(
-        'wireshark tap with GUI',
+    ms(
+        {
+            { trig = 'wireshark tap with GUI', snippetType = 'snippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         -- https://wiki.wireshark.org/Lua/Taps
@@ -189,45 +193,45 @@ register_postdissector({})
         )
     ),
 
-    s(
-        'wireshark register additional protocols on other ports',
-        fmt(
-            [[
-        -- https://wiki.wireshark.org/Lua/Examples#using-lua-to-register-protocols-to-more-ports
-        {}
-
-        -- Get the list of dissectors currently available for the given port
-        local {} = DissectorTable.get('{}')
-
-        -- Get the desired dissector from a known port
-        -- For example:
-        -- http: 80
-        -- mqtt: 1883
-        local {} = {}:get_dissector({})
-
-        -- For each port listed add the desired new protocol
-        for i, port in ipairs({{ {} }}) do
-            {}:add(port, {})
-        end
-
-        -- Port ranges work as well
-        -- {}:add("8000-8005", {})
-        ]],
-            {
-                wireshark_plugin_details,
-                i(2, 'tcp_port_table'),
-                i(3, 'tcp.port'),
-                i(4, 'mqtt_dissector'),
-                rep(2),
-                i(5, '1883'),
-                i(6, '8000, 8001, 8002'),
-                rep(2),
-                rep(4),
-                rep(2),
-                rep(4),
-            }
-        )
-    ),
+    -- s(
+    --     'wireshark register additional protocols on other ports',
+    --     fmt(
+    --         [[
+    --     -- https://wiki.wireshark.org/Lua/Examples#using-lua-to-register-protocols-to-more-ports
+    --     {}
+    --
+    --     -- Get the list of dissectors currently available for the given port
+    --     local {} = DissectorTable.get('{}')
+    --
+    --     -- Get the desired dissector from a known port
+    --     -- For example:
+    --     -- http: 80
+    --     -- mqtt: 1883
+    --     local {} = {}:get_dissector({})
+    --
+    --     -- For each port listed add the desired new protocol
+    --     for i, port in ipairs({{ {} }}) do
+    --         {}:add(port, {})
+    --     end
+    --
+    --     -- Port ranges work as well
+    --     -- {}:add("8000-8005", {})
+    --     ]],
+    --         {
+    --             wireshark_plugin_details(1),
+    --             i(2, 'tcp_port_table'),
+    --             i(3, 'tcp.port'),
+    --             i(4, 'mqtt_dissector'),
+    --             rep(2),
+    --             i(5, '1883'),
+    --             i(6, '8000, 8001, 8002'),
+    --             rep(2),
+    --             rep(4),
+    --             rep(2),
+    --             rep(4),
+    --         }
+    --     )
+    -- ),
 }
 
 local autosnippets = {}
