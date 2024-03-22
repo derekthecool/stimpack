@@ -9,7 +9,8 @@ local patterns_to_match = {
     { pattern = 'F1:',                                    level = vim.diagnostic.severity.INFO },
     { pattern = 'writeid',                                level = vim.diagnostic.severity.INFO },
     { pattern = 'CME Error',                              level = vim.diagnostic.severity.ERROR },
-    { pattern = 'PA30V01.01B%d%d %d%d%d%d',               level = vim.diagnostic.severity.INFO },
+    { pattern = 'PA30B?V01[._]01B%d%d %d%d%d%d',          level = vim.diagnostic.severity.INFO },
+    { pattern = 'AT start.*AT#MQ',                        level = vim.diagnostic.severity.INFO },
 
     -- Fota
     { pattern = 'enter rsfota',                           level = vim.diagnostic.severity.INFO },
