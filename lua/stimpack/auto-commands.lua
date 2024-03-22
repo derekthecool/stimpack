@@ -2,7 +2,8 @@
 -- 2022-09-19: is a special day because I finally understand vim/neovim autocommands!
 local generalSettingsGroup = vim.api.nvim_create_augroup('General settings', { clear = true })
 
-vim.api.nvim_create_autocmd('TextYankPost * ', {
+vim.api.nvim_create_autocmd('TextYankPost', {
+    pattern = '*',
     callback = function()
         require('vim.highlight').on_yank({ higroup = 'Visual', timeout = 500 })
     end,
