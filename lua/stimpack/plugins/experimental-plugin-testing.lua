@@ -9,7 +9,10 @@ return {
     -- https://github.com/derekthecool/dvp.nvim
     {
         'derekthecool/dvp.nvim',
-        event = 'CursorMoved',
+        keys = {
+            { '<leader>nn', desc = 'Comma count' },
+            { '<leader>nb', desc = 'Bit flip' },
+        },
         config = function()
             vim.keymap.set('n', '<leader>nn', require('dvp').comma_count, { desc = 'Comma count' })
             vim.keymap.set('n', '<leader>nb', require('dvp').bit_flip, { desc = 'Bit flip' })
