@@ -56,9 +56,6 @@ map('v', '/', '/\\v')
 -- Lazy commands
 map('n', '<leader>aa', ':Lazy<CR>')
 
--- Treesitter commands
-map('n', '<leader>ab', '<cmd>TSPlaygroundToggle<CR>')
-
 -- Run plenary tests on current buffer
 map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
