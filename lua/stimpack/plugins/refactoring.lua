@@ -4,6 +4,11 @@ return {
         'nvim-lua/plenary.nvim',
         'nvim-treesitter/nvim-treesitter',
     },
+    keys = {
+        { '<leader>re', desc = 'Refactoring' },
+        { '<leader>rf', desc = 'Refactoring' },
+        { '<leader>rv', desc = 'Refactoring' },
+    },
     config = function()
         require('refactoring').setup({
             prompt_func_return_type = {
