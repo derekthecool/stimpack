@@ -6,7 +6,6 @@ vim.g['fsharp#fsautocomplete_command'] = {
 return {
     'ionide/Ionide-vim',
     ft = { 'fsharp', 'fs', 'fsx' },
-    -- event = 'CursorMoved',
     config = function()
         -- https://github.com/ionide/Ionide-vim
         -- NOTE: this is not from the mason lsp source like most other languages
