@@ -8,6 +8,13 @@ return {
             -- Minimum level to show
             level = 'info',
 
+            fps = 15,
+
+            time_formats = {
+                notification = '%T',
+                notification_history = '%FT%T',
+            },
+
             -- Animation style (see below for details)
             stages = 'fade_in_slide_out',
 
