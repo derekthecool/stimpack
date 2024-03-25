@@ -85,6 +85,11 @@ map('n', '<F11>', function()
     end
 end)
 
+vim.keymap.set({ 'n', 'i' }, '<C-h>', '<C-w>h', {noremap = true, silent = true})
+vim.keymap.set({ 'n', 'i' }, '<C-j>', '<C-w>j', {noremap = true, silent = true})
+vim.keymap.set({ 'n', 'i' }, '<C-k>', '<C-w>k', {noremap = true, silent = true})
+vim.keymap.set({ 'n', 'i' }, '<C-l>', '<C-w>l', {noremap = true, silent = true})
+
 -- TODO: make this work in LUA. As of 2021-07-21 it starts the folds then exits
 -- Awesome search filtering "https://vim.fandom.com/wiki/Folding_with_Regular_Expression
 -- 1. Search using /
@@ -128,4 +133,4 @@ map('n', '<leader>ac', ReloadConfig)
 
 -- https://unix.stackexchange.com/questions/585019/horizontal-equivalent-of-zz-in-vim
 -- vim.keymap.set('n', 'z.', '<C-u>normal! zszH<CR>', { silent = true, desc = 'Center cursor horizontally' })
-vim.cmd[[nnoremap <silent> z. :<C-u>normal! zszH<CR>]]
+vim.cmd([[nnoremap <silent> z. :<C-u>normal! zszH<CR>]])
