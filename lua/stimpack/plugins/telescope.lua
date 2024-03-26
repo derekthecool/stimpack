@@ -2,11 +2,9 @@ return {
     'nvim-telescope/telescope.nvim',
     dependencies = {
         'nvim-telescope/telescope-file-browser.nvim',
-        -- Telescope extensions
-        'xiyaowong/telescope-emoji.nvim',
-        'nvim-telescope/telescope-ui-select.nvim',
     },
-    event = 'UIEnter',
+    -- Trigger upon my most used commands
+    keys = { '<c-f>', { '<leader>fh', desc = 'Telescope help' } },
     config = function()
         local default_layout_strategy = 'flex'
 
@@ -72,8 +70,6 @@ return {
         })
 
         -- Extensions to load
-        require('telescope').load_extension('emoji')
-        -- require('telescope').load_extension('ui-select') -- TODO: decide if dressing.nvim meets my needs
         require('telescope').load_extension('file_browser')
 
         local function gitfiles_or_findfiles()
