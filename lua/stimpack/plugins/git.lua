@@ -113,7 +113,8 @@ return {
 
     {
         'lewis6991/gitsigns.nvim',
-        event = 'VeryLazy',
+        event = 'CursorMoved',
+        keys = { '<leader>gj', '<leader>gk' },
         config = function()
             local which_key_mapper = require('stimpack.which-key-mapping')
             which_key_mapper({
