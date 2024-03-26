@@ -1,3 +1,4 @@
+-- Disabling these plugins can be done by lazy.nvim instead. This file will not be sourced.
 -- This should help reduce start up time
 -- https://dev.to/voyeg3r/my-ever-growing-neovim-init-lua-h0p
 -- disable builtins plugins

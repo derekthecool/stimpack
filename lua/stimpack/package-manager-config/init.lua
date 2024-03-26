@@ -33,19 +33,29 @@ require('lazy').setup('stimpack.plugins', {
         },
         reset_packpath = true, -- reset the package path to improve startup time
         rtp = {
-            reset = true,      -- reset the runtime path to $VIMRUNTIME and your config directory
+            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
             ---@type string[]
-            paths = {},        -- add any custom paths here that you want to includes in the rtp
+            paths = {}, -- add any custom paths here that you want to includes in the rtp
             ---@type string[] list any plugins you want to disable here
             disabled_plugins = {
-                'gzip',
-                'matchit',
-                'matchparen',
+                'netrw',
                 'netrwPlugin',
-                'tarPlugin',
-                'tohtml',
-                -- "tutor",
+                'netrwSettings',
+                'netrwFileHandlers',
+                'gzip',
+                'zip',
                 'zipPlugin',
+                'tar',
+                'tarPlugin',
+                'getscript',
+                'getscriptPlugin',
+                'vimball',
+                'vimballPlugin',
+                '2html_plugin',
+                'logipat',
+                'rrhelper',
+                'spellfile_plugin',
+                'matchit',
             },
         },
     },

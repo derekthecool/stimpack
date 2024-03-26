@@ -12,9 +12,6 @@ require('stimpack.global-helpers')
 -- Load lazy.nvim
 require('stimpack.package-manager-config')
 
--- Disable unneeded vim built-ins
-require('stimpack.disable-vim-builtins')
-
 -- Load my configuration later
 vim.api.nvim_create_autocmd('User', {
     pattern = { 'VeryLazy' },
