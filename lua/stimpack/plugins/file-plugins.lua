@@ -15,7 +15,11 @@ return {
             'nvim-telescope/telescope-file-browser.nvim',
         },
         -- Trigger upon my most used commands
-        keys = { '<c-f>', { '<leader>fh', desc = 'Telescope help' } },
+        keys = {
+            '<c-f>',
+            { '<leader>fh', desc = 'Telescope help' },
+            { '<leader>fS', desc = 'Search git changed files' },
+        },
         config = function()
             local default_layout_strategy = 'flex'
 
