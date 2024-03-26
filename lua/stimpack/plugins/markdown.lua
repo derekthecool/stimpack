@@ -1,8 +1,10 @@
 return {
     {
         'iamcco/markdown-preview.nvim',
-        enabled = false,
         cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+        -- 2024-03-26, trying to make this plugin lazy does not always work. I've had success using the keys and cmd to load this plugin.
+        -- It says "not an editor command". So, just load on filetype instead.
+        ft = { 'markdown', 'vimwiki' },
         build = function()
             vim.fn['mkdp#util#install']()
         end,
