@@ -732,11 +732,8 @@ end
 
     ms(
         {
-            {
-                trig = { trig = 'DESCRIBE', descr = 'Plenary test group' },
-                snippetType = 'autosnippet',
-                condition = conds.line_begin,
-            },
+            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -785,7 +782,7 @@ end
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
