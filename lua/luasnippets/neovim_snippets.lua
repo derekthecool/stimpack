@@ -5,6 +5,33 @@ local scan = require('plenary.scandir')
 
 local snippets = {
 
+    ms(
+        {
+            { trig = 'nvim_virtual_text_above', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        local bufnr = vim.api.nvim_get_current_buf()
+
+        -- Clear namespace once before updating virtual texts
+        local namespace = vim.api.nvim_create_namespace('log-timestamp-visualizer')
+        vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
+
+        vim.api.nvim_buf_set_extmark(bufnr, namespace, index - 2, 0, {
+            virt_lines_above = true,
+            virt_lines = { { { '<Text>', '<HighlightGroup>' } } },
+        })
+        ]],
+            {
+                Text = i(1, 'Text to insert'),
+                HighlightGroup = i(2, 'Comment'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
+
     s(
         'VIM.NOTIFY',
         fmt([[vim.notify('{}', {}, {{ title = '{}' }})]], {
