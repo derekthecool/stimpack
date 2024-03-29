@@ -99,30 +99,30 @@ M.neovim_test = function()
             local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
 
             -- -- Uncomment for easy debugging
-            -- vim.notify(vim.inspect(test_names))
-            -- vim.notify(vim.inspect(output_list))
+            -- M.log(test_names)
+            -- M.log(output_list)
 
             local error_diagnostic_list = {}
 
             for _, test_result in pairs(output_list) do
                 if test_result ~= nil and test_result.test_name ~= nil and test_names[test_result.test_name] ~= nil then
                     test_result['treesitter_details'] = test_names[test_result.test_name]
-                else
-                    result_check = type(test_result)
-                    name_check = type(test_result.test_name) == nil
-                    testname_check = type(test_names[test_result.test_name])
-                    vim.notify(
-                        string.format(
-                            'Error with neovim plenary test: %s, cannot link the treesitter_details. result_check = %s, name_check = %s, testname_check = %s',
-                            test_result.test_name,
-                            result_check,
-                            name_check,
-                            testname_check
-                        ),
-                        vim.log.levels.ERROR,
-                        { title = 'Stimpack Notification' }
-                    )
-                    return
+                    -- else
+                    -- result_check = type(test_result)
+                    -- name_check = type(test_result.test_name) == nil
+                    -- testname_check = type(test_names[test_result.test_name])
+                    -- vim.notify(
+                    --     string.format(
+                    --         'Error with neovim plenary test: %s, cannot link the treesitter_details. result_check = %s, name_check = %s, testname_check = %s',
+                    --         test_result.test_name,
+                    --         result_check,
+                    --         name_check,
+                    --         testname_check
+                    --     ),
+                    --     vim.log.levels.ERROR,
+                    --     { title = 'Stimpack Notification' }
+                    -- )
+                    -- return
                 end
 
                 -- Make sure table is not empty first

@@ -22,6 +22,7 @@ return {
     -- Path spec to recursively search for files - used in my luasnippets
     {
         'nvim-lua/plenary.nvim',
+        cmd = 'PlenaryBustedDirectory',
         lazy = true,
     },
 
