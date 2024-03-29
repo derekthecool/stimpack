@@ -1,5 +1,6 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
+  "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
   "Ionide-vim": { "branch": "master", "commit": "d94dd8f0e34fe230bd84d930f63732619163ab6e" },
   "LuaSnip": { "branch": "master", "commit": "a7a4b4682c4b3e2ba82b82a4e6e5f5a0e79dec32" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
@@ -28,6 +29,9 @@
   "mini.nvim": { "branch": "main", "commit": "3fbc18cd225ee04fb712ed03ff835c4495f3494b" },
   "neodev.nvim": { "branch": "main", "commit": "6a533ed9d3435dcaa456380d833ea04da37ea2ed" },
   "neogit": { "branch": "master", "commit": "20ab5a688c2de6fa371865528c737ae901989aa5" },
+  "neotest": { "branch": "master", "commit": "e07fe8241112274aae9947b98d255763738a1d52" },
+  "neotest-dart": { "branch": "main", "commit": "33b9335cd8c2be4dcf9dd8f196b24325e7c2e8e7" },
+  "neotest-dotnet": { "branch": "main", "commit": "15943dd05e2d4d9393531b647ad661e60820c608" },
   "null-ls.nvim": { "branch": "main", "commit": "0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7" },
   "nvim-base16": { "branch": "master", "commit": "b3e9ec6a82c05b562cd71f40fe8964438a9ba64a" },
   "nvim-cmp": { "branch": "main", "commit": "97dc716fc914c46577a4f254035ebef1aa72558a" },
@@ -39,6 +43,7 @@
   "nvim-lightbulb": { "branch": "master", "commit": "8f00b89dd1b1dbde16872bee5fbcee2e58c9b8e9" },
   "nvim-lspconfig": { "branch": "master", "commit": "6e5c78ebc9936ca74add66bda22c566f951b6ee5" },
   "nvim-luapad": { "branch": "master", "commit": "a5b3d6aa1fe5fe75e6124927392a9d3a60a0ecce" },
+  "nvim-nio": { "branch": "master", "commit": "33c62b3eadd8154169e42144de16ba4db6784bec" },
   "nvim-notify": { "branch": "master", "commit": "5371f4bfc1f6d3adf4fe9d62cd3a9d44356bfd15" },
   "nvim-transparent": { "branch": "main", "commit": "fd35a46f4b7c1b244249266bdcb2da3814f01724" },
   "nvim-tree.lua": { "branch": "master", "commit": "e508bdc4184c33c6d9705c503cf7f0e029601788" },
@@ -57,6 +62,7 @@
   "vim-dadbod-ui": { "branch": "master", "commit": "165699c573469e6a95b48d35052f848c340c5911" },
   "vim-fugitive": { "branch": "master", "commit": "2377e16e6641418565b934990cf49068855987c6" },
   "vim-startuptime": { "branch": "master", "commit": "ac2cccb5be617672add1f4f3c0a55ce99ba34e01" },
+  "vim-test": { "branch": "master", "commit": "a49c9cade75e97cace5e3ba545ce82d02f689feb" },
   "vimwiki": { "branch": "dev", "commit": "69318e74c88ef7677e2496fd0a836446ceac61e8" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" }
 }
