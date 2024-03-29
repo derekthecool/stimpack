@@ -1,20 +1,28 @@
-describe('log-timestamp-visualizer --', function()
-    -- before_each(function()
-    --     -- Run time path is not getting loaded automatically, so modify it before each test
-    --     print('Attempting to add to neovim runtime path with current plugin location')
-    --     local path_to_plugin = debug.getinfo(1).source:match('@(.*[/\\]lua[/\\])'):gsub('"', '')
-    --     print(
-    --         string.format(
-    --             'Attempting to add: %s to neovim runtimepath because plenary tests fail without this',
-    --             path_to_plugin
-    --         )
-    --     )
-    --     vim.cmd('set runtimepath+=' .. path_to_plugin)
-    -- end)
+local ltv = require('stimpack.boosters.log-timestamp-visualizer')
 
+describe('log-timestamp-visualizer --', function()
     it('Require the file', function()
         assert.has_no_errors(function()
             require('stimpack.boosters.log-timestamp-visualizer')
         end)
+    end)
+
+    it('Parse a Serilog date time string', function()
+        local output = ltv.parse_time_string('2024-03-28 10:14:35.814 -06:00')
+        assert.truthy(output)
+    end)
+
+    it('Same time stamps should return 0 seconds', function()
+        local first = ltv.parse_time_string('2024-03-28 10:14:35.814 -06:00')
+        local second = ltv.parse_time_string('2024-03-28 10:14:35.814 -06:00')
+        local difference = ltv.dateTimeDifferenceSeconds(first, second)
+        assert.are.same(0, difference)
+    end)
+
+    it('One day apart should return 86400', function()
+        local first = ltv.parse_time_string('2024-03-28 10:14:35.814 -06:00')
+        local second = ltv.parse_time_string('2024-03-29 10:14:35.814 -06:00')
+        local difference = ltv.dateTimeDifferenceSeconds(first, second)
+        assert.are.same(86400, difference)
     end)
 end)
