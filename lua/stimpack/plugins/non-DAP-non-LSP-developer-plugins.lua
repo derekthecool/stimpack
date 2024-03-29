@@ -176,14 +176,22 @@ return {
 
     {
         'nvim-neotest/neotest',
-        enabled = false,
-        -- Basic plugin settings
-        -- enabled = true,
-        -- cond = function()
-        --    return true
-        -- end,
+        enabled = true,
+        -- stylua: ignore start
+        keys = {
+            { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run File" },
+            { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end,                            desc = "Run All Test Files" },
+            { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run Nearest" },
+            { "<leader>tl", function() require("neotest").run.run_last() end,                                   desc = "Run Last" },
+            { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle Summary" },
+            { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
+            { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle Output Panel" },
+            { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop" },
+            -- stylua: ignore end
+        },
         dependencies = {
             -- Plugin requirements
+            'nvim-neotest/nvim-nio',
             'nvim-lua/plenary.nvim',
             'nvim-treesitter/nvim-treesitter',
             'antoinemadec/FixCursorHold.nvim',
@@ -197,7 +205,10 @@ return {
             -- 'nvim-neotest/neotest-vim-test',
             'vim-test/vim-test',
             'Issafalcon/neotest-dotnet',
+            'sidlatau/neotest-dart',
         },
+
+        log_level = vim.log.levels.TRACE,
         -- Plugin version settings
         -- branch = 'branch name',
         -- tag = 'tag name',
@@ -219,11 +230,19 @@ return {
                 adapters = {
                     require('neotest-plenary'),
                     require('neotest-dotnet'),
-                    require('neotest-vim-test')({
-                        ignore_file_types = { 'python', 'vim', 'lua' },
+                    require('neotest-dart')({
+                        command = 'flutter',
+                        use_lsp = true,
                     }),
+                    -- require('neotest-vim-test')({
+                    --     ignore_file_types = { 'python', 'vim', 'lua' },
+                    -- }),
                 },
             })
+
+            vim.keymap.set('n', '<leader>tt', function()
+                require('neotest').run.run()
+            end, { silent = true, desc = 'Run neotest' })
         end,
         -- Plugin development
         -- dir = 'plugin local path',
