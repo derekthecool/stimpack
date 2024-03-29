@@ -189,8 +189,12 @@ return {
             'antoinemadec/FixCursorHold.nvim',
 
             -- Test runners
-            'nvim-neotest/neotest-plenary',
-            'nvim-neotest/neotest-vim-test',
+            {
+                'nvim-neotest/neotest-plenary',
+                -- Working on solving an issue with this plugin right now. It does not work on windows.
+                dev = true,
+            },
+            -- 'nvim-neotest/neotest-vim-test',
             'vim-test/vim-test',
             'Issafalcon/neotest-dotnet',
         },

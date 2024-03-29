@@ -23,6 +23,11 @@ require('lazy').setup('stimpack.plugins', {
         notify = false,
         frequency = 3600 * 5, -- In seconds
     },
+    dev = {
+        path = string.format('%s/nvim-plugin-development', OS.home),
+        patterns = {},   -- For example {"folke"}
+        fallback = true, -- Fallback to git when local plugin doesn't exist
+    },
     install = {
         missing = true,
         colorscheme = { 'base16-atelier-sulphurpool', 'habamax' },
@@ -33,9 +38,9 @@ require('lazy').setup('stimpack.plugins', {
         },
         reset_packpath = true, -- reset the package path to improve startup time
         rtp = {
-            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            reset = true,      -- reset the runtime path to $VIMRUNTIME and your config directory
             ---@type string[]
-            paths = {}, -- add any custom paths here that you want to includes in the rtp
+            paths = {},        -- add any custom paths here that you want to includes in the rtp
             ---@type string[] list any plugins you want to disable here
             disabled_plugins = {
                 'netrw',
