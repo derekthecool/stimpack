@@ -3,6 +3,15 @@
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'read_all_stdin', snippetType = 'snippet' },
+        },
+        fmt(
+            [[sys.stdin.read().splitlines()]],
+            {}
+        )
+    ),
     s(
         'Plover dictionary',
         fmt(

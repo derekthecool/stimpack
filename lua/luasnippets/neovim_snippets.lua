@@ -7,6 +7,76 @@ local snippets = {
 
     ms(
         {
+            { trig = 'treesitter_basic_query', snippetType = 'snippet', condition = conds.line_begin},
+        },
+      fmt(
+        [=[
+local ts_query = require("vim.treesitter.query")
+local parsers = require("vim.treesitter")
+
+local lang = "c"
+local bufnr = vim.api.nvim_get_current_buf()
+local parser = parsers.get_parser(bufnr, lang)
+local solutionFunctionsQuery = ts_query.parse(
+	lang,
+	[[
+(function_definition
+  declarator: (pointer_declarator
+    declarator: (function_declarator
+      declarator: (identifier) @function.name (#match? @function.name "solution\\d+")
+    )
+  )
+) @function.definition
+]]
+)
+
+for _, tree in ipairs(parser:parse()) do
+	local function_names = {{}}
+	for id, node in solutionFunctionsQuery:iter_captures(tree:root(), bufnr, 0, -1) do
+		local name = solutionFunctionsQuery.captures[id] -- This gets the capture name
+		if name == "function.name" then -- We only care about the function name captures
+			local text = vim.treesitter.get_node_text(node, bufnr)
+			print("Matched function: " .. text)
+			table.insert(function_names, text)
+		end
+	end
+end
+        ]=],
+        {
+          
+        }
+      )
+    ),
+
+    ms(
+        {
+            { trig = 'setreg', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'vim%.fn%.setreg', snippetType = 'snippet', condition = conds.line_begin },
+
+        },
+        fmt(
+            [[
+        vim.fn.setreg('{}', {})
+        ]],
+            {
+                i(1, 'register name .... a'),
+                i(2, '"register contents"'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'feedkeys', snippetType = 'snippet', condition = nil },
+            { trig = 'nvim_feedkeys', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[vim.api.nvim_feedkeys('{}', "n", nil)]], {
+            i(1, 'yiw'),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'nvim_virtual_text_above', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
