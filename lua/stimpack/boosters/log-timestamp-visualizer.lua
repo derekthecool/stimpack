@@ -78,8 +78,18 @@ M.parseFileAndLoadVirtualText = function()
     end
 end
 
+M.clearVirtualText = function()
+    -- Clear namespace
+    local namespace = vim.api.nvim_create_namespace('log-timestamp-visualizer')
+    vim.api.nvim_buf_clear_namespace(0, namespace, 0, -1)
+end
+
 vim.keymap.set('n', '<leader>nl', function()
     M.parseFileAndLoadVirtualText()
 end, { silent = true, desc = 'parseFileAndLoadVirtualText' })
+
+vim.keymap.set('n', '<leader>nr', function()
+    M.clearVirtualText()
+end, { silent = true, desc = 'clearVirtualText' })
 
 return M
