@@ -52,7 +52,7 @@ M.dateTimeDifferenceSeconds = function(dateTimeString1, dateTimeString2)
 end
 
 -- Parses all datetime strings in the file and loads virtual text
-M.parseFileAndLoadVirtualText = function()
+M.parseFileAndLoadVirtualText = function(differenceThresholdMinimum)
     local bufnr = vim.api.nvim_get_current_buf()
     local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
     local previousLine = nil
@@ -68,10 +68,12 @@ M.parseFileAndLoadVirtualText = function()
             if parsedLine and parsedPreviousLine then
                 local difference = M.dateTimeDifferenceSeconds(parsedPreviousLine, parsedLine)
 
-                vim.api.nvim_buf_set_extmark(bufnr, namespace, index - 2, 0, {
-                    virt_lines_above = true,
-                    virt_lines = { { { string.format('TD: %f seconds', difference), 'DevIconPy' } } },
-                })
+                if difference > differenceThresholdMinimum then
+                    vim.api.nvim_buf_set_extmark(bufnr, namespace, index - 1, 0, {
+                        virt_lines_above = true,
+                        virt_lines = { { { string.format('TD: %f seconds', difference), 'DevIconPy' } } },
+                    })
+                end
             end
         end
         previousLine = line
@@ -85,7 +87,8 @@ M.clearVirtualText = function()
 end
 
 vim.keymap.set('n', '<leader>nl', function()
-    M.parseFileAndLoadVirtualText()
+    -- TODO: (Derek Lomax) 4/5/2024 8:12:38 PM, Make is filter configurable
+    M.parseFileAndLoadVirtualText(1.2)
 end, { silent = true, desc = 'parseFileAndLoadVirtualText' })
 
 vim.keymap.set('n', '<leader>nr', function()
