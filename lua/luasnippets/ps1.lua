@@ -37,7 +37,108 @@ local powershell_background_highlights = {
     t('White'),
 }
 
+local function PesterTest(index)
+    return sn(
+        index,
+        fmt(
+            [[
+    Describe {{
+        It '{TestDescription}' {{
+            {Assertion}
+        }}
+    }}
+    ]],
+            {
+                TestDescription = i(1, 'This test does ....'),
+                Assertion = i(2, '$(Get-ChildItem).Count | Should -Be 42'),
+            }
+        )
+    )
+end
+
 local snippets = {
+
+    ms(
+        {
+            { trig = 'ENUM', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+enum {Name} {{
+    {Items}
+}}
+        ]],
+            {
+                Name = i(1, 'MyEnum'),
+                Items = i(2, 'Item1'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'CLASS', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+class {ClassName} {{
+    [{PropertyType}]${PropertyName}
+
+    {RepeatClassName}([{RepeatPropertyType}]${RepeatPropertyName}) {{
+        $this.{RepeatPropertyName} = ${RepeatPropertyName}
+    }}
+}}
+        ]],
+            {
+
+                ClassName = i(1, 'MyClass'),
+                PropertyType = i(2, 'string'),
+                PropertyName = i(3, 'PropertyName'),
+                RepeatClassName = rep(1),
+                RepeatPropertyType = rep(2),
+                RepeatPropertyName = rep(3),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'pester_mock', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        # Mock git to intercept and inspect the call
+        Mock git {{}}
+
+        # Command to run
+        dot 'git' 'status'
+
+        # Assert that git was called with 'status' only
+        Assert-MockCalled git -Exactly 1 -Scope It -ParameterFilter {{ $Args -contains 'status' -and $Args.Contains('git') -eq $false }}
+        ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        BeforeAll {{
+            . $PSScriptRoot/{Filename}
+        }}
+
+        {Test}
+        ]],
+            {
+                Filename = i(1, './Script.ps1'),
+                Test = PesterTest(1),
+            }
+        )
+    ),
+
     s(
         'list',
         fmt('${} = New-Object System.Collections.Generic.List[string]', {
@@ -128,39 +229,57 @@ local snippets = {
         )
     ),
 
-    s(
-        'param',
+    ms(
+        {
+            { trig = 'param', snippetType = 'snippet', condition = conds.line_begin },
+        },
         fmt(
             [[
-    {}[Parameter(
-        Mandatory=${},
-        ValueFromPipeline=$true,
-        ValueFromPipelineByPropertyName=$true,
-        ValueFromRemainingArguments=$false,
-        Position=0,
-        ParameterSetName='Parameter Set 1')]
-    [{}]${}
+        param (
+            [Parameter()]
+            [{Type}]${Name}
+        )
         ]],
             {
-                c(1, {
-                    t(''),
-                    t(','),
-                }),
-
-                c(2, {
-                    t('true'),
-                    t('false'),
-                }),
-                c(3, {
-                    t('switch'),
-                    i(1, 'WriteYourOwnType'),
-                    t('string'),
-                    t('int32'),
-                }),
-                i(4, 'VariableName'),
+                Type = i(1, 'string'),
+                Name = i(2, 'MyParam'),
             }
         )
     ),
+
+    -- s(
+    --     'param',
+    --     fmt(
+    --         [[
+    -- {}[Parameter(
+    --     Mandatory=${},
+    --     ValueFromPipeline=$true,
+    --     ValueFromPipelineByPropertyName=$true,
+    --     ValueFromRemainingArguments=$false,
+    --     Position=0,
+    --     ParameterSetName='Parameter Set 1')]
+    -- [{}]${}
+    --     ]],
+    --         {
+    --             c(1, {
+    --                 t(''),
+    --                 t(','),
+    --             }),
+    --
+    --             c(2, {
+    --                 t('true'),
+    --                 t('false'),
+    --             }),
+    --             c(3, {
+    --                 t('switch'),
+    --                 i(1, 'WriteYourOwnType'),
+    --                 t('string'),
+    --                 t('int32'),
+    --             }),
+    --             i(4, 'VariableName'),
+    --         }
+    --     )
+    -- ),
 
     s(
         'get-date',
@@ -243,16 +362,18 @@ local autosnippets = {
         )
     ),
 
-    s(
-        'FUNCTION',
+    ms(
+        {
+            { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
-        function {} {{
+        function {Name} {{
             {}
         }}
         ]],
             {
-                i(1),
+                Name = i(1, 'MyFunction'),
                 i(2),
             }
         )
@@ -265,6 +386,49 @@ local autosnippets = {
             { trig = 'Write-Host', snippetType = 'snippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
+        },
+        fmt([[{}]], {
+            d(1, function(args, snip)
+                local nodes = {}
+
+                local printFunctionToUse = ''
+
+                if snip.trigger == 'ERRORPRINT' or snip.trigger == 'Write-Error' then
+                    printFunctionToUse = 'Error'
+                elseif snip.trigger == 'PRINT' or snip.trigger == 'Write-Host' then
+                    printFunctionToUse = 'Host'
+                else
+                    printFunctionToUse = 'Output'
+                end
+
+                table.insert(
+                    nodes,
+                    sn(
+                        1,
+                        fmt(
+                            [[
+                    Write-{FunctionToUse} "{Text}"
+                    ]],
+                            {
+                                FunctionToUse = t(printFunctionToUse),
+                                Text = i(1),
+                            }
+                        )
+                    )
+                )
+
+                return sn(nil, nodes)
+            end, {}),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            -- { trig = 'PRINT', snippetType = 'autosnippet' },
+            -- { trig = 'Write-Host', snippetType = 'snippet' },
+            -- { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            -- { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt(
             [[
