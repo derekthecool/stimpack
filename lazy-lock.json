@@ -17,6 +17,7 @@
   "dvp.nvim": { "branch": "master", "commit": "dc4cbf6721c2cafd1a99447c0a3508b18e7619f5" },
   "flutter-tools.nvim": { "branch": "main", "commit": "01d72d9c1bdf2d454a60c5ba450f83e5ea783f6a" },
   "fwatch.nvim": { "branch": "main", "commit": "a691f7349dc66285cd75a1a698dd28bca45f2bf8" },
+  "gen.nvim": { "branch": "main", "commit": "b68997c2fb9f5c15285556b27fce823514297dee" },
   "gitsigns.nvim": { "branch": "main", "commit": "078041e9d060a386b0c9d3a8c7a7b019a35d3fb0" },
   "lazy.nvim": { "branch": "main", "commit": "68941b7b13861ca44ad5d4caf7296d9160b4732f" },
   "leap.nvim": { "branch": "main", "commit": "25753d8a16b69fbbce5d392702c21dbc79d86bd1" },
