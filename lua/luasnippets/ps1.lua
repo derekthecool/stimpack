@@ -122,6 +122,23 @@ class {ClassName} {{
 
     ms(
         {
+            { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+    It '{TestDescription}' {{
+        {}
+    }}
+        ]],
+            {
+                TestDescription = i(1, 'This test should do ....'),
+                i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
