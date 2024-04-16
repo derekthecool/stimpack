@@ -12,7 +12,13 @@ return {
     },
     config = function()
         require('toggleterm').setup({
-            size = 20,
+            size = function(term)
+                if term.direction == 'horizontal' then
+                    return 15
+                elseif term.direction == 'vertical' then
+                    return vim.o.columns * 0.4
+                end
+            end,
             open_mapping = '⏫',
             hide_numbers = true,
             shade_filetypes = {},
@@ -111,9 +117,9 @@ return {
             -- function to run on opening the terminal
             on_open = function(term)
                 vim.cmd('startinsert!')
-                    -- For some reason these need to be out of order, newline first
-                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'i', true)
-                    vim.api.nvim_feedkeys('git status --short', 'i', false)
+                -- For some reason these need to be out of order, newline first
+                vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, false, true), 'i', true)
+                vim.api.nvim_feedkeys('git status --short', 'i', false)
             end,
             -- function to run on closing the terminal
             on_close = function(term)
