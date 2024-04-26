@@ -7,10 +7,10 @@ local snippets = {
 
     ms(
         {
-            { trig = 'treesitter_basic_query', snippetType = 'snippet', condition = conds.line_begin},
+            { trig = 'treesitter_basic_query', snippetType = 'snippet', condition = conds.line_begin },
         },
-      fmt(
-        [=[
+        fmt(
+            [=[
 local ts_query = require("vim.treesitter.query")
 local parsers = require("vim.treesitter")
 
@@ -42,17 +42,14 @@ for _, tree in ipairs(parser:parse()) do
 	end
 end
         ]=],
-        {
-          
-        }
-      )
+            {}
+        )
     ),
 
     ms(
         {
             { trig = 'setreg', snippetType = 'snippet', condition = conds.line_begin },
             { trig = 'vim%.fn%.setreg', snippetType = 'snippet', condition = conds.line_begin },
-
         },
         fmt(
             [[

@@ -42,21 +42,72 @@ local function PesterTest(index)
         index,
         fmt(
             [[
-    Describe {{
+    Describe '{TestGroupName}' {{
         It '{TestDescription}' {{
             {Assertion}
         }}
     }}
     ]],
             {
-                TestDescription = i(1, 'This test does ....'),
-                Assertion = i(2, '$(Get-ChildItem).Count | Should -Be 42'),
+                TestGroupName = i(1, 'Test group'),
+                TestDescription = i(2, 'This test does ....'),
+                Assertion = i(3, '$(Get-ChildItem).Count | Should -Be 42'),
             }
         )
     )
 end
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'pipelineInput', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory = $true, ValueFromPipeline = $true)]
+    [string]$pipelineInput
+)
+
+Begin {
+    <BeginWork>
+}
+
+Process {
+    <ProcessWork>
+}
+
+End {
+    <EndWork>
+}
+        ]],
+            {
+                BeginWork = i(1, 'echo start processing'),
+                ProcessWork = i(2, 'ForEach-Object { $_ }'),
+                EndWork = i(3, 'echo end processing'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'Update-TypeData', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        Update-TypeData -TypeName {TypeName} -DefaultDisplayPropertySet {ListOfPropertiesToShow} CreatedBy -ErrorAction SilentlyContinue
+        ]],
+            {
+                TypeName = i(1, 'MyClass'),
+                ListOfPropertiesToShow = i(2, 'Id, Count, Sum'),
+            }
+        )
+    ),
 
     ms(
         {
@@ -144,16 +195,181 @@ class {ClassName} {{
         fmt(
             [[
         BeforeAll {{
-            . $PSScriptRoot/{Filename}
+            . {Filename}
         }}
 
         {Test}
         ]],
             {
-                Filename = i(1, './Script.ps1'),
-                Test = PesterTest(1),
+                Filename = d(1, function(args, snip)
+                    local nodes = {}
+
+                    -- Add nodes for snippet
+                    local scandir = require('plenary.scandir')
+                    local files = scandir.scan_dir(
+                        string.format('%s/..', vim.fn.expand('%:h')),
+                        { respect_gitignore = true, search_pattern = '%.ps1' }
+                    )
+
+                    for _, value in ipairs(files) do
+                        table.insert(nodes, t(value))
+                    end
+
+                    -- local choices = c(1, nodes)
+
+                    return sn(nil, {
+                        c(1, nodes),
+                    })
+                end, {}),
+                Test = PesterTest(2),
             }
         )
+    ),
+
+    ms(
+        {
+            { trig = 'const', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        Set-Variable {Name} -Option Constant -Value {Value}
+        ]],
+            {
+                Name = i(1, 'MyConstVariable'),
+                Value = i(2, '"Value"'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ValidateSet', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt([=[[ValidateSet({Items})]]=], {
+            Items = i(1, 'One, Two, Three'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'ValidatePattern', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [=[
+        [ValidatePattern('{Pattern}')]
+        ]=],
+            {
+                Pattern = i(1, '.*'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'ValidateCount', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt('[ValidateCount(int {minLength}, int {maxLength})]', {
+            minLength = i(1, '0'),
+            maxLength = i(2, '100'),
+        })
+    ),
+    ms(
+        {
+            { trig = 'ValidateLength', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt('[ValidateLength(int {minLength}, int {maxLength})]', {
+            minLength = i(1, '20'),
+            maxLength = i(2, '100'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = '###', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt([[{}]], {
+            c(1, {
+
+                -- Short version
+
+                sn(
+                    nil,
+                    fmt(
+                        [[
+    <#
+        .SYNOPSIS
+        {Synopsis}
+
+        .DESCRIPTION
+        {Description}
+
+        .PARAMETER Name
+        {Parameter}
+
+        .EXAMPLE
+        {Example}
+    #>
+                  ]],
+                        {
+                            Synopsis = i(1, 'Adds a file name extension to a supplied name.'),
+                            Description = i(
+                                2,
+                                'Adds a file name extension to a supplied name. Takes any strings for the file name or extension.'
+                            ),
+                            Parameter = i(3, 'Specifies the file name.'),
+                            Example = i(4, 'PS> Add-Extension -name "File"'),
+                        }
+                    )
+                ),
+
+                -- Full version
+                sn(
+                    nil,
+                    fmt(
+                        [[
+    <#
+        .SYNOPSIS
+        Adds a file name extension to a supplied name.
+
+        .DESCRIPTION
+        Adds a file name extension to a supplied name.
+        Takes any strings for the file name or extension.
+
+        .PARAMETER Name
+        Specifies the file name.
+
+        .PARAMETER Extension
+        Specifies the extension. "Txt" is the default.
+
+        .INPUTS
+        None. You can't pipe objects to Add-Extension.
+
+        .OUTPUTS
+        System.String. Add-Extension returns a string with the extension or file name.
+
+        .EXAMPLE
+        PS> Add-Extension -name "File"
+        File.txt
+
+        .EXAMPLE
+        PS> Add-Extension -name "File" -extension "doc"
+        File.doc
+
+        .EXAMPLE
+        PS> Add-Extension "File" "doc"
+        File.doc
+
+        .LINK
+        Online version: http://www.fabrikam.com/add-extension.html
+
+        .LINK
+        Set-Item
+    #>
+                  ]],
+                        {}
+                    )
+                ),
+            }),
+        })
     ),
 
     s(

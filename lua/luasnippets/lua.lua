@@ -857,6 +857,82 @@ end
             }
         )
     ),
+
+    -- Start luafun snippets, https://luafun.github.io/index.html
+
+    ms(
+        {
+            { trig = ':filter', snippetType = 'autosnippet' },
+        },
+        fmt([[:filter(function({Inputs}) return {Condition} end)]], {
+            Inputs = i(1, 'I'),
+            Condition = i(2, 'I % 2 == 0'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = ':map', snippetType = 'autosnippet' },
+        },
+        fmt([[:map(function({Inputs}) return {Mapping} end)]], {
+            Inputs = i(1, 'I'),
+            Mapping = i(2, 'I * I'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = ':iter', snippetType = 'autosnippet' },
+        },
+        fmt([[:iter(function({Inputs}) {Iteration} end)]], {
+            Inputs = i(1, 'I'),
+            Iteration = i(1, 'print I'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = ':each', snippetType = 'autosnippet' },
+        },
+        fmt([[:each({Function})]], {
+            Function = i(1, 'print'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = ':fold', snippetType = 'autosnippet' },
+        },
+        fmt([[:foldl({Function}, {InitialValue})]], {
+            Function = c(1, {
+                t('operator.add'),
+                t('operator.div'),
+                t('operator.truediv'),
+                t('operator.floordiv'),
+                t('operator.intdiv'),
+                t('operator.mod'),
+
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                function({Accumulator}, {Variable})
+                    return {Calculation}
+                end
+                ]],
+                        {
+                            Accumulator = i(1, 'accumulator'),
+                            Variable = i(2, 'x'),
+                            Calculation = i(3, 'accumulator + x'),
+                        }
+                    )
+                ),
+            }),
+            InitialValue = i(2, '0'),
+        })
+    ),
+
+    -- End luafun snippets, https://luafun.github.io/index.html
 }
 
 local autosnippets = {}
