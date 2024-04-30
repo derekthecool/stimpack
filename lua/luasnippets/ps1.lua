@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
 
+local shareable = require('luasnippets.functions.shareable_snippets')
+
 local powershell_foreground_highlights = {
     t('Gray'),
     t('Green'),
@@ -542,6 +544,88 @@ class {ClassName} {{
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'FOR', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        for(${Variable} = {InitialValue}; ${RepeatVariable} {Condition}; ${RepeatVariable}{Operation}){{
+            {Code}
+        }}
+        ]],
+            {
+                Variable = i(1, 'i'),
+                InitialValue = i(2, '0'),
+                RepeatVariable = rep(1),
+                Condition = i(3, '-lt 10'),
+                Operation = i(4, '++'),
+                Code = i(5),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = '\\\\', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[{}]], {
+            c(1, {
+                -- https://learn.microsoft.com/en-us/dotnet/standard/base-types/character-classes-in-regular-expressions
+                t('(?# Letter, Uppercase)\\p{Lu}'),
+                t('(?# Letter, Lowercase)\\p{Ll}'),
+                t('(?# Letter, Titlecase)\\p{Lt}'),
+                t('(?# Letter, Modifier)\\p{Lm}'),
+                t('(?# Letter, Other)\\p{Lo}'),
+                t('(?# All letter characters. This includes the Lu, Ll, Lt, Lm, and Lo characters.)\\p{L}'),
+                t('(?# Mark, Nonspacing)\\p{Mn}'),
+                t('(?# Mark, Spacing Combining)\\p{Mc}'),
+                t('(?# Mark, Enclosing)\\p{Me}'),
+                t('(?# All combining marks. This includes the Mn, Mc, and Me categories.)\\p{M}'),
+                t('(?# Number, Decimal Digit)\\p{Nd}'),
+                t('(?# Number, Letter)\\p{Nl}'),
+                t('(?# Number, Other)\\p{No}'),
+                t('(?# All numbers. This includes the Nd, Nl, and No categories.)\\p{N}'),
+                t('(?# Punctuation, Connector)\\p{Pc}'),
+                t('(?# Punctuation, Dash)\\p{Pd}'),
+                t('(?# Punctuation, Open)\\p{Ps}'),
+                t('(?# Punctuation, Close)\\p{Pe}'),
+                t('(?# Punctuation, Initial quote (may behave like Ps or Pe depending on usage))\\p{Pi}'),
+                t('(?# Punctuation, Final quote (may behave like Ps or Pe depending on usage))\\p{Pf}'),
+                t('(?# Punctuation, Other)\\p{Po}'),
+                t(
+                    '(?# All punctuation characters. This includes the Pc, Pd, Ps, Pe, Pi, Pf, and Po categories.)\\p{P}'
+                ),
+                t('(?# Symbol, Math)\\p{Sm}'),
+                t('(?# Symbol, Currency)\\p{Sc}'),
+                t('(?# Symbol, Modifier)\\p{Sk}'),
+                t('(?# Symbol, Other)\\p{So}'),
+                t('(?# All symbols. This includes the Sm, Sc, Sk, and So categories.)\\p{S}'),
+                t('(?# Separator, Space)\\p{Zs}'),
+                t('(?# Separator, Line)\\p{Zl}'),
+                t('(?# Separator, Paragraph)\\p{Zp}'),
+                t('(?# All separator characters. This includes the Zs, Zl, and Zp categories.)\\p{Z}'),
+                t('(?# Other, Control A.K.A. non printables)\\p{Cc}'),
+                t('(?# Other, Format)\\p{Cf}'),
+                t('(?# Other, Surrogate)\\p{Cs}'),
+                t('(?# Other, Private Use)\\p{Co}'),
+                t('(?# Other, Not Assigned or Noncharacter)\\p{Cn}'),
+                t('(?# All other characters. This includes the Cc, Cf, Cs, Co, and Cn categories.)\\p{C}'),
+                t('\\d'),
+                t('\\d+'),
+                t('\\d*'),
+                t('\\w'),
+                t('\\w+'),
+                t('\\w*'),
+                t('\\s'),
+                t('\\s+'),
+                t('\\s*'),
+                -- My awesome regexes with descriptions
+                t('?# Non vowels, uses range subtraction)[a-zA-Z-[aeiouAEIOU]]'),
+            }),
+        })
+    ),
 }
 
 local autosnippets = {
@@ -737,9 +821,42 @@ local autosnippets = {
         {
             { trig = 'FREACH', snippetType = 'autosnippet' },
             { trig = 'ForEach-Object', snippetType = 'snippet' },
+            { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
-        fmt([[ForEach-Object {{ {} }}]], {
-            i(1),
+        fmt([[{}]], {
+            c(1, {
+                sn(
+                    nil,
+                    fmt([[ForEach-Object {{ {} }}]], {
+                        i(1),
+                    })
+                ),
+
+                -- Full foreach-object
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                ForEach-Object -Begin {
+                     <Begin>
+                 } -Process {
+                     <Process>
+                } -End {
+                     <End>
+                }
+                ]],
+                        {
+                            Begin = i(1, '$sum = 0'),
+                            Process = i(2, '$sum += $_'),
+                            End = i(3, '$sum'),
+                        },
+
+                        {
+                            delimiters = '<>',
+                        }
+                    )
+                ),
+            }),
         })
     ),
 
