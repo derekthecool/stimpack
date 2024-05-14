@@ -10,6 +10,52 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'string compare', snippetType = 'autosnippet', condition = nil },
+            { trig = 'strcmp', snippetType = 'autosnippet', condition = nil },
+            { trig = 'strncmp', snippetType = 'autosnippet', condition = nil },
+            { trig = 'strcmp', snippetType = 'snippet', condition = nil },
+            { trig = 'strncmp', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Choices}]], {
+            Choices = c(1, {
+
+                -- Short version
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                strcmp({Source}, "{Value}") == {ReturnValue}
+                ]],
+                        {
+                            Source = i(1, 'MyString'),
+                            Value = i(2, 'Check for this'),
+                            ReturnValue = i(3, '0'),
+                        }
+                    )
+                ),
+
+                -- Length check version
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                    strcmp({Source}, "{Value}", {MaximumLength}) == {ReturnValue}
+                ]],
+                        {
+                            Source = i(1, 'MyString'),
+                            Value = i(2, 'Check for this'),
+                            MaximumLength = i(3, '10'),
+                            ReturnValue = i(4, '0'),
+                        }
+                    )
+                ),
+            }),
+        })
+    ),
+
     ms(
         {
             { trig = 'ENUM', snippetType = 'autosnippet' },

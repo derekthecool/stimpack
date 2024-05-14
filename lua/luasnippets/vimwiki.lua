@@ -314,6 +314,16 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'weight weight', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt([[| {Date}              | {Weight}           |]], {
+            Date = i(1, '2024-04-30'),
+            Weight = i(2, '214.5'),
+        })
+    ),
 }
 
 local autosnippets = {
@@ -329,11 +339,12 @@ local autosnippets = {
             {
                 c(1, {
                     t('yaml'),
-                    t('sh'),
                     t('powershell'),
+                    t('sh'),
                     t('fsharp'),
                     t('csharp'),
                     t('c'),
+                    t('sql'),
                     i(1),
                 }),
                 auxiliary.wrap_selected_text(2),

@@ -59,6 +59,116 @@ local function PesterTest(index)
     )
 end
 
+local function ApprovedVerb(index)
+    return sn(
+        index,
+        fmt([[{}]], {
+            c(1, {
+                t('Add'),
+                t('Clear'),
+                t('Close'),
+                t('Copy'),
+                t('Enter'),
+                t('Exit'),
+                t('Find'),
+                t('Format'),
+                t('Get'),
+                t('Hide'),
+                t('Join'),
+                t('Lock'),
+                t('Move'),
+                t('New'),
+                t('Open'),
+                t('Optimize'),
+                t('Push'),
+                t('Pop'),
+                t('Redo'),
+                t('Remove'),
+                t('Rename'),
+                t('Reset'),
+                t('Resize'),
+                t('Search'),
+                t('Select'),
+                t('Set'),
+                t('Show'),
+                t('Skip'),
+                t('Split'),
+                t('Step'),
+                t('Switch'),
+                t('Undo'),
+                t('Unlock'),
+                t('Watch'),
+                t('Connect'),
+                t('Disconnect'),
+                t('Read'),
+                t('Receive'),
+                t('Send'),
+                t('Write'),
+                t('Backup'),
+                t('Checkpoint'),
+                t('Compare'),
+                t('Compress'),
+                t('Convert'),
+                t('ConvertFrom'),
+                t('ConvertTo'),
+                t('Dismount'),
+                t('Edit'),
+                t('Expand'),
+                t('Export'),
+                t('Group'),
+                t('Import'),
+                t('Initialize'),
+                t('Limit'),
+                t('Merge'),
+                t('Mount'),
+                t('Out'),
+                t('Publish'),
+                t('Restore'),
+                t('Save'),
+                t('Sync'),
+                t('Unpublish'),
+                t('Update'),
+                t('Debug'),
+                t('Measure'),
+                t('Ping'),
+                t('Repair'),
+                t('Resolve'),
+                t('Test'),
+                t('Trace'),
+                t('Approve'),
+                t('Assert'),
+                t('Build'),
+                t('Complete'),
+                t('Confirm'),
+                t('Deny'),
+                t('Deploy'),
+                t('Disable'),
+                t('Enable'),
+                t('Install'),
+                t('Invoke'),
+                t('Register'),
+                t('Request'),
+                t('Restart'),
+                t('Resume'),
+                t('Start'),
+                t('Stop'),
+                t('Submit'),
+                t('Suspend'),
+                t('Uninstall'),
+                t('Unregister'),
+                t('Wait'),
+                t('Use'),
+                t('Block'),
+                t('Grant'),
+                t('Protect'),
+                t('Revoke'),
+                t('Unblock'),
+                t('Unprotect'),
+            }),
+        })
+    )
+end
+
 local snippets = {
 
     ms(
@@ -530,6 +640,25 @@ class {ClassName} {{
 
     ms(
         {
+            { trig = 'REGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+    if({String} -cmatch '{Pattern}')
+    {{
+        {Code}
+    }}
+        ]],
+            {
+                String = i(1, 'string to match'),
+                Pattern = i(2, '.*'),
+                Code = i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
@@ -681,17 +810,46 @@ local autosnippets = {
 
     ms(
         {
+            { trig = 'SWITCH', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        switch {Options} ({Expression}) {{
+            {MatchValue} {{ {Code} }}
+            default {{ {DefaultCode} }}
+        }}
+        ]],
+            {
+                Options = c(1, {
+                    t('-Regex'),
+                    t(''),
+                    t('-Wildcard'),
+                    t('-Exact'),
+                    t('-CaseSensitive'),
+                    t('-File'),
+                }),
+                Expression = i(2, 'Variable'),
+                MatchValue = i(3, '"Match this value"'),
+                Code = i(4, 'echo run this code'),
+                DefaultCode = i(5, 'Write-Error "This code fails"'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
-        function {Name} {{
+        function {Verb}-{Noun} {{
             {}
         }}
         ]],
             {
-                Name = i(1, 'MyFunction'),
-                i(2),
+                Verb = ApprovedVerb(1),
+                Noun = i(2, 'Noun'),
+                i(3),
             }
         )
     ),

@@ -22,7 +22,8 @@ return {
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
             enable_autosnippets = true, -- I NEED autosnippets to live, default is false
-            store_selection_keys = '<Tab>',
+            -- store_selection_keys = '<Tab>',
+            store_selection_keys = '```',
             -- Add awesome highlights to help show where you are at in a snippet
             -- Think of them as a road map of where you're going
             ext_opts = {

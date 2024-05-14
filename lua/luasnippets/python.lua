@@ -5,13 +5,26 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
     ms(
         {
-            { trig = 'read_all_stdin', snippetType = 'snippet' },
+            { trig = 'mqtt', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
-            [[sys.stdin.read().splitlines()]],
+            [[
+import paho.mqtt.client as mqtt
+import time
+
+client = mqtt.Client()
+client.connect("192.168.100.35", 1883, 60)
+for i in range(500):
+    client.publish("TMAE94/sub", bytes.fromhex("220708dd0110107801"))
+    time.sleep(35)
+client.disconnect()
+        ]],
             {}
         )
     ),
+    ms({
+        { trig = 'read_all_stdin', snippetType = 'snippet' },
+    }, fmt([[sys.stdin.read().splitlines()]], {})),
     s(
         'Plover dictionary',
         fmt(
@@ -81,6 +94,24 @@ local snippets = {
                 rep(1),
             }
         )
+    ),
+
+    ms(
+        {
+            { trig = 'PRINT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt([[print({})]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'string format', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[f'{}']], {
+            i(1),
+        })
     ),
 
     ms(
