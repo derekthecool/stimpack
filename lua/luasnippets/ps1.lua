@@ -59,6 +59,22 @@ local function PesterTest(index)
     )
 end
 
+local function CustomObject(index)
+    return sn(
+        index,
+        fmt(
+            [[
+     [PSCustomObject]@{{
+         {Items}
+     }}
+     ]],
+            {
+                Items = i(1, 'Name = "Derek"'),
+            }
+        )
+    )
+end
+
 local function ApprovedVerb(index)
     return sn(
         index,
@@ -170,6 +186,30 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'custom object', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Custom}]], {
+            Custom = CustomObject(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        {Input} | Should -Be {Output}
+        ]],
+            {
+                Input = i(1, '$InputObject'),
+                Output = i(2, '$ExpectedValue'),
+            }
+        )
+    ),
 
     ms(
         {
