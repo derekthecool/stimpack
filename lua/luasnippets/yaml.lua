@@ -1,25 +1,102 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
-    s(
-        'mysql database',
+
+    ms(
+        {
+            { trig = 'mariadb', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'mysql',   snippetType = 'snippet', condition = conds.line_begin },
+        },
         fmt(
             [[
-  mysql:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    ports:
-      # Open this port to access using local mysql client
-      - {}:3306
+  {Type}:
+    image: {rep_type}:latest
+    restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: {root_password}
+      MYSQL_DATABASE: {database}
+      MYSQL_USER: {user}
+      MYSQL_PASSWORD: {password}
+    ports:
+      - "{local_port}:3306"
     volumes:
-      # Initialize database with .sql, and .sh files in this directory
-      - ./{}:/docker-entrypoint-initdb.d
+      - {volume}:/var/lib/mysql
+
+volumes:
+    {volume_rep}:
         ]],
             {
-                i(1, 'Local port for sql access'),
-                i(2, 'LocalDirectoryForSqlDatabaseInit'),
+                Type = c(1, {
+                    t('mariadb'),
+                    t('mysql'),
+                }),
+                rep_type = rep(1),
+                root_password = i(2, 'Password1234'),
+                database = i(3, 'Awesome'),
+                user = i(4, 'me'),
+                password = i(5, 'MyPassword1234'),
+                local_port = i(6, '3306'),
+                volume = i(7, 'persistantVolumeName'),
+                volume_rep = rep(7),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'posgresql', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: {database}
+      POSTGRES_USER: {user}
+      POSTGRES_PASSWORD: {password}
+    ports:
+      - "{localPort}:5432"
+    volumes:
+      - {volume}:/var/lib/postgresql/data
+
+   volumes:
+     {rep_volume}:
+        ]],
+            {
+                database = i(1, 'MyDatabase'),
+                user = i(2, 'user'),
+                password = i(3, 'password'),
+                localPort = i(4, '5432'),
+                volume = i(5, 'posgresql_volume'),
+                rep_volume = rep(5),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'sql server', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'sqlserver',  snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "{Password}"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "{localPort}:1433"
+    volumes:
+      - {volume}:/var/opt/mssql
+
+  volumes:
+    {volume_rep}:
+        ]],
+            {
+                Password = i(1, 'Password123'),
+                localPort = i(2, '1433'),
+                volume = i(3, 'sqlserver_data'),
+                volume_rep = rep(3),
             }
         )
     ),

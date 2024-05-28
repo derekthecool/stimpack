@@ -186,6 +186,32 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = '$\\(\\)', regTrig = false, snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[$({})]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'error',        snippetType = 'snippet',     condition = nil },
+            { trig = 'error action', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[-ErrorAction {Options}]], {
+            Options = c(1, {
+                t('SilentlyContinue'),
+                t('Stop'),
+                t('Break'),
+                t('Ignore'),
+                t('Inquire'),
+                t('Suspend'),
+                t('Continue'),
+            }),
+        })
+    ),
 
     ms(
         {
@@ -896,10 +922,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host', snippetType = 'snippet' },
-            { trig = 'PRINT', snippetType = 'autosnippet' },
-            { trig = 'Write-Host', snippetType = 'snippet' },
-            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'PRINT',        snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -910,8 +935,8 @@ local autosnippets = {
 
                 if snip.trigger == 'ERRORPRINT' or snip.trigger == 'Write-Error' then
                     printFunctionToUse = 'Error'
-                elseif snip.trigger == 'PRINT' or snip.trigger == 'Write-Host' then
-                    printFunctionToUse = 'Host'
+                elseif snip.trigger == 'PRINT' or snip.trigger == 'Write-Information' then
+                    printFunctionToUse = 'Information'
                 else
                     printFunctionToUse = 'Output'
                 end
@@ -1017,8 +1042,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH', snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object', snippetType = 'snippet' },
+            { trig = 'FREACH',              snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object',      snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {
