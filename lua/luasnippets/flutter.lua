@@ -531,11 +531,12 @@ local snippets = {
         {
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
         },
+
+        -- // import 'package:dartz/dartz.dart';
+        -- // import 'package:mockito/mockito.dart';
         fmt(
             [[
-            import 'package:dartz/dartz.dart';
             import 'package:flutter_test/flutter_test.dart';
-            import 'package:mockito/mockito.dart';
 
             void main() {
               // Code to be run before every test

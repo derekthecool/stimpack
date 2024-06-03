@@ -197,7 +197,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'error',        snippetType = 'snippet',     condition = nil },
+            { trig = 'error', snippetType = 'snippet', condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -220,21 +220,6 @@ local snippets = {
         fmt([[{Custom}]], {
             Custom = CustomObject(1),
         })
-    ),
-
-    ms(
-        {
-            { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
-        },
-        fmt(
-            [[
-        {Input} | Should -Be {Output}
-        ]],
-            {
-                Input = i(1, '$InputObject'),
-                Output = i(2, '$ExpectedValue'),
-            }
-        )
     ),
 
     ms(
@@ -362,6 +347,29 @@ class {ClassName} {{
             {
                 TestDescription = i(1, 'This test should do ....'),
                 i(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        {Input} | Should -{Option}
+        ]],
+            {
+                Input = i(1, 'VariableOrCommand'),
+                Option = c(2, {
+                    t('Be'),
+                    t('Throw'),
+                    t('BeOfType'),
+                    t('BeTrue'),
+                    t('BeFalse'),
+                    t('HaveCount'),
+                    i(1),
+                }),
             }
         )
     ),
@@ -725,17 +733,15 @@ class {ClassName} {{
 
     ms(
         {
-            { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-            [[
-        [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-        ]],
+            -- Old method
+            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+            -- New method uses PSScriptTools function ConvertFrom-Text
+            [[ConvertFrom-Text '{Pattern}']],
             {
-                Source = i(1, '$input'),
-
-                Pattern = i(2, '.*'),
-                DoSomething = i(3, 'Value'),
+                Pattern = i(1, '.*'),
             }
         )
     ),
@@ -767,6 +773,14 @@ class {ClassName} {{
         },
         fmt([[{}]], {
             c(1, {
+                -- t('(?<{NamedCaptureGroup})}'),
+                sn(
+                    nil,
+                    fmt([[(?<{NamedCaptureGroup}>{Pattern})]], {
+                        NamedCaptureGroup = i(1, 'NamedCaptureGroup'),
+                        Pattern = i(2, '.*'),
+                    })
+                ),
                 -- https://learn.microsoft.com/en-us/dotnet/standard/base-types/character-classes-in-regular-expressions
                 t('(?# Letter, Uppercase)\\p{Lu}'),
                 t('(?# Letter, Lowercase)\\p{Ll}'),
@@ -922,9 +936,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host',   snippetType = 'snippet' },
-            { trig = 'PRINT',        snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1042,8 +1056,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH',              snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object',      snippetType = 'snippet' },
+            { trig = 'FREACH', snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object', snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {

@@ -2,6 +2,7 @@
 
 local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
+local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
 
@@ -390,7 +391,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'public override',   snippetType = 'snippet' },
+            { trig = 'public override', snippetType = 'snippet' },
             { trig = 'tostring override', snippetType = 'snippet' },
         },
         fmt(
@@ -405,13 +406,15 @@ local snippets = {
             }
         )
     ),
+
+    shareable.for_loop_c_style,
 }
 
 local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine($"{}");]], {
@@ -602,16 +605,16 @@ local autosnippets = {
             [[
             try
             {{
-                {}
+                {WrappedText}
             }}
             catch (Exception ex)
             {{
-                {}
+                {HandleException}
             }}
             ]],
             {
-                i(1),
-                i(2),
+                WrappedText = auxiliary.wrap_selected_text(1),
+                HandleException = i(2, 'Console.Error.WriteLine(ex.Message);'),
             }
         )
     ),

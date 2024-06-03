@@ -5,6 +5,19 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
+            { trig = 'INCLUDE', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        import '{package}';
+        ]],
+            {
+                package = i(1),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'CLASS', snippetType = 'autosnippet' },
         },
         fmt(
@@ -93,7 +106,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',       snippetType = 'autosnippet' },
             { trig = 'print_print', snippetType = 'snippet' },
         },
         fmt(
