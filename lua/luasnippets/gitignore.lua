@@ -16,6 +16,39 @@ local snippets = {
 
     ms(
         {
+            { trig = 'editor', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+# Editor files
+# Ignore Vim swap files
+*.swp
+.nvim.lua
+# Ignore Emacs files
+*~
+\#*\#
+.#*
+# Ignore Visual Studio Code directory and files
+.vscode/
+# Ignore JetBrains IDEs (IntelliJ, Rider, PyCharm, etc.)
+.idea/
+# Ignore Eclipse project files
+.project
+.classpath
+.settings/
+# Ignore NetBeans project files
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+    ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
             { trig = 'FIRST', snippetType = 'autosnippet' },
         },
         fmt([[ {} ]], {

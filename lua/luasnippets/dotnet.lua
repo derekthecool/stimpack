@@ -13,6 +13,25 @@ end, {})
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'region', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    #region {Name}
+
+    {CapturedText}
+
+    #endregion
+    ]],
+            {
+                Name = i(1, 'Name'),
+                CapturedText = auxiliary.wrap_selected_text(2),
+            }
+        )
+    ),
+
     s(
         'environment variable get',
         fmt(

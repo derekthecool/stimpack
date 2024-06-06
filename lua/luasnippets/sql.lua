@@ -1,7 +1,9 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
-    s(
-        'init',
+    ms(
+        {
+            { trig = 'FIRST', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         create database test;

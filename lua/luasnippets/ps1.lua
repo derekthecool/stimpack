@@ -80,6 +80,7 @@ local function ApprovedVerb(index)
         index,
         fmt([[{}]], {
             c(1, {
+                t('Get'),
                 t('Add'),
                 t('Clear'),
                 t('Close'),
@@ -88,7 +89,6 @@ local function ApprovedVerb(index)
                 t('Exit'),
                 t('Find'),
                 t('Format'),
-                t('Get'),
                 t('Hide'),
                 t('Join'),
                 t('Lock'),

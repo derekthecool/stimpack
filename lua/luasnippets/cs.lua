@@ -4,7 +4,108 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
 local shareable = require('luasnippets.functions.shareable_snippets')
 
+function ImmutableRecordProperty(index)
+    return sn(
+        index,
+        fmt([[public {Type} {Name} {{ get; init; }}]], {
+            Type = i(1, 'int'),
+            Name = i(2, 'MyProperty'),
+        })
+    )
+end
+
+function Namespace(index)
+    return sn(
+        index,
+        fmt([[namespace {NamespaceFinder};]], {
+            NamespaceFinder = c(1, {
+                f(function(args, snip)
+                    -- Get csharp namespace
+                    local cwd = vim.fs.normalize(vim.fn.getcwd())
+                    local full_file = vim.fs.normalize(vim.fn.expand('%:p'))
+                    local just_file_name = vim.fs.normalize(vim.fn.expand('%:t'))
+                    local namespace = full_file
+                        :gsub(cwd .. OS.separator, '')
+                        :gsub(OS.separator .. just_file_name, '')
+                        :gsub(OS.separator, '.')
+                    return namespace
+                end, {}),
+
+                i(1, 'CustomNamespace'),
+            }),
+        })
+    )
+end
+
 local snippets = {
+    ms(
+        {
+            { trig = 'json_settings', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'asp_json',      snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        // https://www.meziantou.net/configuring-json-options-in-asp-net-core.htm
+        // Set the JSON serializer options
+        builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+        {
+            options.SerializerOptions.PropertyNameCaseInsensitive = false;
+            options.SerializerOptions.PropertyNamingPolicy = null;
+            options.SerializerOptions.WriteIndented = true;
+        });
+        ]],
+            {},
+            { delimiters = '[]' }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'API API',          snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'map_api_endpoint', snippetType = 'snippet',     condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        app.<APIVerb>(
+        "<APIPath>",
+        async (<APIInput>) =>>
+        {
+            try
+            {
+                return Results.Ok(<OKAPIReturn>);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = $"Error with API function {MethodBase.GetCurrentMethod()}";
+                app.Logger.LogError(ex, errorMessage);
+                return Results.Problem(errorMessage);
+            }
+        }
+    )
+    .WithOpenApi()
+    .WithTags("<OpenApiTags>")
+    .WithSummary("<OpenApiSummary>")
+    .WithDescription("<OpenApiDescription>");
+        ]],
+            {
+                APIVerb = c(1, {
+                    t('MapGet'),
+                    t('MapPost'),
+                    t('MapPut'),
+                    t('MapDelete'),
+                }),
+                APIPath = i(2, '/api/path/{id}'),
+                APIInput = i(3, '[FromBody]string text'),
+                OKAPIReturn = i(4, 'true'),
+                OpenApiTags = i(5, 'CreateNewItems'),
+                OpenApiSummary = i(6, 'Summary of API features'),
+                OpenApiDescription = i(7, 'This API endpoint does....'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
 
     s(
         'lua NLua starter',
@@ -391,7 +492,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'public override', snippetType = 'snippet' },
+            { trig = 'public override',   snippetType = 'snippet' },
             { trig = 'tostring override', snippetType = 'snippet' },
         },
         fmt(
@@ -414,7 +515,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine($"{}");]], {
@@ -520,45 +621,99 @@ local autosnippets = {
         )
     ),
 
+    ms(
+        {
+            { trig = 'record property', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        {Property}
+        ]],
+            {
+                Property = c(1, {
+                    ImmutableRecordProperty(1),
+                    sn(
+                        1,
+                        fmt(
+                            [=[
+            [JsonPropertyName("{JsonField}")]
+            {RecordProperty}
+            ]=],
+                            {
+                                JsonField = i(1, 'Name'),
+                                RecordProperty = ImmutableRecordProperty(2),
+                            }
+                        )
+                    ),
+                }),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'json property', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt('[JsonPropertyName("{}")]', {
+            i(1, 'Name'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'record',        snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = 'record record', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        public record {Name}
+        {{
+            {ImmutableRecordPropertyValue}
+            {More}
+        }}
+        ]],
+            {
+                Name = i(1, 'MyRecord'),
+                ImmutableRecordPropertyValue = ImmutableRecordProperty(2),
+                More = i(3),
+            }
+        )
+    ),
+
     s(
         'CLASS',
         fmt(
             [[
-        namespace {};
+        {NamespaceItem}
 
-        {}{} class {}
+        {}{} {ClassOrRecord} {}
         {{
             {}
         }}
         ]],
             {
-                f(function(args, snip)
-                    -- Get csharp namespace
-                    local cwd = vim.fn.getcwd()
-                    local full_file = vim.fn.expand('%:p')
-                    local just_file_name = vim.fn.expand('%:t')
-                    local namespace = full_file
-                        :gsub(cwd .. OS.separator, '')
-                        :gsub(OS.separator .. just_file_name, '')
-                        :gsub(OS.separator, '.')
-                    return namespace
-                end, {}),
+                NamespaceItem = Namespace(1),
 
-                c(1, {
+                c(2, {
                     t('public'),
                     t('private'),
                 }),
 
-                c(2, {
+                c(3, {
                     t(''),
                     t(' static'),
+                }),
+
+                ClassOrRecord = c(4, {
+                    t('class'),
+                    t('record'),
                 }),
 
                 f(function(args, snip)
                     return vim.fn.expand('%:p:t:r')
                 end, { 3 }),
 
-                i(3),
+                i(5),
             }
         )
     ),

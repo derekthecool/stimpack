@@ -20,6 +20,7 @@ local snippets = {
       - "{local_port}:3306"
     volumes:
       - {volume}:/var/lib/mysql
+      - ./DatabaseInitScripts/:/docker-entrypoint-initdb.d/
 
 volumes:
     {volume_rep}:
