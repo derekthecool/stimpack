@@ -19,6 +19,7 @@
   "fwatch.nvim": { "branch": "main", "commit": "a691f7349dc66285cd75a1a698dd28bca45f2bf8" },
   "gen.nvim": { "branch": "main", "commit": "bd19cf584b5b82123de977b44105e855e61e5f39" },
   "gitsigns.nvim": { "branch": "main", "commit": "805610a9393fa231f2c2b49cb521bfa413fadb3d" },
+  "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "lazy.nvim": { "branch": "main", "commit": "d3974346b6cef2116c8e7b08423256a834cb7cbc" },
   "leap.nvim": { "branch": "main", "commit": "f1f19fc268b406b00b50091f51f16d9634fbe449" },
   "lsp_lines.nvim": { "branch": "main", "commit": "dbfd8e96ec2696e1ceedcd23fd70e842256e3dea" },
