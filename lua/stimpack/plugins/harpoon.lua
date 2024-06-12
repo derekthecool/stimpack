@@ -63,5 +63,9 @@ return {
         vim.keymap.set('n', '<leader>hp', function()
             toggle_telescope(harpoon:list())
         end, { desc = 'Pick harpoon item' })
+
+        vim.keymap.set('n', '<leader>hP', function()
+            harpoon.ui:toggle_quick_menu(harpoon:list())
+        end, { desc = 'View editable harpoon window (use this to delete items)' })
     end,
 }
