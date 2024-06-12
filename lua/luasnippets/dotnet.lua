@@ -15,6 +15,23 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
     ms(
         {
+            { trig = 'asp log', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt([[app.Logger.{LogLevel}($"{LogText}");]], {
+            LogLevel = c(1, {
+                t('LogInformation'),
+                t('LogError'),
+                t('LogCritical'),
+                t('LogTrace'),
+                t('LogWarning'),
+                t('LogDebug'),
+            }),
+            LogText = i(2),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'region', snippetType = 'snippet', condition = nil },
         },
         fmt(

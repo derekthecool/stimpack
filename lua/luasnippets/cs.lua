@@ -61,6 +61,69 @@ local snippets = {
 
     ms(
         {
+            { trig = 'asp_task_runner', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+// In Program.cs
+// Register the hosted service
+builder.Services.AddHostedService<FotaProcessor>();
+namespace DatabaseWebApi.FotaProcessor;
+
+// In class file
+public class FotaProcessor : IHostedService, IDisposable
+{
+    private readonly ILogger<FotaProcessor> _logger;
+    private readonly ISqlDataAccess _db;
+    private Timer? _timer;
+    private int _updateIntervalMinutes;
+
+    public FotaProcessor(ILogger<FotaProcessor> logger, ISqlDataAccess db)
+    {
+        _logger = logger;
+        _db = db;
+        _updateIntervalMinutes = 5;
+    }
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation(
+            $"Fota processor task timer initialized, will run every {_updateIntervalMinutes} minutes"
+        );
+
+        _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromMinutes(1));
+
+        return Task.CompletedTask;
+    }
+
+    private void DoWork(object? state)
+    {
+        _logger.LogInformation("Scheduled Task is running.");
+        // Add your scheduled task logic here
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        _logger.LogInformation("Scheduled Task Service is stopping.");
+
+        _timer?.Change(Timeout.Infinite, 0);
+
+        return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}
+        ]],
+            {},
+            { delimiters = '[]' }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'API API',          snippetType = 'autosnippet', condition = conds.line_begin },
             { trig = 'map_api_endpoint', snippetType = 'snippet',     condition = conds.line_begin },
         },
