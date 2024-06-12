@@ -1,0 +1,13 @@
+-- -- Function to set foldmethod to manual
+-- local function set_manual_foldmethod()
+--     vim.opt.foldmethod = 'manual'
+--     vim.opt.foldexpr = ''
+--     vim.api.nvim_feedkeys('zR', 'n', nil)
+--     V('Setting fold method to manual')
+-- end
+--
+-- -- Create an autocmd to enforce the foldmethod
+-- vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+--     pattern = 'dbout',
+--     callback = set_manual_foldmethod,
+-- })
