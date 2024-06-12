@@ -357,19 +357,21 @@ return {
     },
 
     {
-        'jose-elias-alvarez/null-ls.nvim',
+        -- Repository archived
+        -- 'jose-elias-alvarez/null-ls.nvim',
+        -- Use none-ls instead, drop in replacement
+        'nvimtools/none-ls.nvim',
         event = 'VeryLazy',
         opts = function()
             local null_ls = require('null-ls')
 
             -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-            local formatting = null_ls.builtins.formatting
-
+            -- local formatting = null_ls.builtins.formatting
             -- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-            local diagnostics = null_ls.builtins.diagnostics
-            local code_actions = null_ls.builtins.code_actions
-            local hover = null_ls.builtins.hover
-            local completion = null_ls.builtins.completion
+            -- local diagnostics = null_ls.builtins.diagnostics
+            -- local code_actions = null_ls.builtins.code_actions
+            -- local hover = null_ls.builtins.hover
+            -- local completion = null_ls.builtins.completion
 
             return {
                 debug = false,
@@ -382,23 +384,33 @@ return {
                     'README.md'
                 ),
                 sources = {
-                    formatting.csharpier,
-                    formatting.prettier.with({ extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' } }),
-                    formatting.black.with({ extra_args = { '--fast' } }),
-                    formatting.stylua,
-                    formatting.gersemi,
-                    formatting.prettier.with({
+                    null_ls.builtins.formatting.csharpier,
+                    null_ls.builtins.formatting.csharpier,
+                    null_ls.builtins.formatting.prettier.with({
+                        extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
+                    }),
+                    null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }),
+                    null_ls.builtins.formatting.stylua,
+                    null_ls.builtins.formatting.gersemi,
+                    null_ls.builtins.formatting.prettier.with({
                         filetypes = { 'markdown', 'vimwiki' },
                         extra_args = { '--embedded-language-formatting=off' },
                     }),
-
-                    diagnostics.protolint,
-                    hover.dictionary.with({ filetypes = { 'markdown', 'text', 'vimwiki' } }),
+                    null_ls.builtins.diagnostics.protolint,
+                    null_ls.builtins.hover.dictionary.with({ filetypes = { 'markdown', 'text', 'vimwiki' } }),
                     -- Shell scripting
                     -- args = { "-i 2", "-filename", "$FILENAME"}, -- You can't use extra args with this as all args must be before filename
-                    formatting.shfmt,
-                    diagnostics.shellcheck, -- https://github.com/koalaman/shellcheck#installing Needs version 0.8.0 at least
-                    code_actions.shellcheck,
+                    null_ls.builtins.formatting.shfmt,
+                    -- null_ls.builtins.diagnostics.shellcheck, -- https://github.com/koalaman/shellcheck#installing Needs version 0.8.0 at least
+                    -- null_ls.builtins.code_actions.shellcheck,
+
+                    -- Sql
+                    null_ls.builtins.diagnostics.sqlfluff.with({
+                        extra_args = { '--dialect', 'mysql' }, -- change to your dialect
+                    }),
+                    null_ls.builtins.formatting.sqlfluff.with({
+                        extra_args = { '--dialect', 'mysql' }, -- change to your dialect
+                    }),
                 },
             }
         end,
