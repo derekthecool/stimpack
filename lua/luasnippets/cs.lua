@@ -40,6 +40,115 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'new record', snippetType = 'autosnippet' },
+        },
+        fmt([[new {RecordName} {{{Details}}};]], {
+            RecordName = i(1, 'MyRecord'),
+            Details = i(2),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'LAMBDA', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[{variable}  => {repVariable}]], {
+            variable = i(1, 'x'),
+            repVariable = rep(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'TEST', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        {xUnitTestType}
+        public void {TestName}({Arguments})
+        {{
+            {Code}
+        }}
+        ]],
+            {
+                xUnitTestType = c(1, {
+                    t('[Fact]'),
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                            [Theory]
+                            [InlineData({InputTestData})]
+                            ]],
+                            {
+                                InputTestData = i(1, '"Text"'),
+                            }
+                        )
+                    ),
+                }),
+
+                TestName = i(2, 'MyTest_ShouldPassWhen'),
+                Arguments = i(3),
+                Code = i(4),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'list list', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[List<{Type}>]], {
+            Type = i(1, 'int'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = '"""', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        $"""
+        {Content}
+        """;
+        ]],
+            {
+                Content = i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'task task', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[Task<{Type}>]], {
+            Type = i(1, 'string'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'asp_serilog_setup', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .CreateLogger();
+
+// Clear default log providers
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+        ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
             { trig = 'json_settings', snippetType = 'snippet', condition = conds.line_begin },
             { trig = 'asp_json',      snippetType = 'snippet', condition = conds.line_begin },
         },

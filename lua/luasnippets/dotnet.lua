@@ -15,6 +15,15 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
     ms(
         {
+            { trig = 'string join', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[String.Join('{Delim}', {Collection})]], {
+            Delim = i(1, ','),
+            Collection = i(2, 'MyItems'),
+        })
+    ),
+    ms(
+        {
             { trig = 'asp log', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt([[app.Logger.{LogLevel}($"{LogText}");]], {
