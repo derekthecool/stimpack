@@ -1,5 +1,5 @@
 -- Autotest runners
-local dotnet_test = require('stimpack.code-auto-run.dotnet-test').dotnet_test
+-- local dotnet_test = require('stimpack.code-auto-run.dotnet-test').dotnet_test
 local neovim_test = require('stimpack.code-auto-run.plenary-neovim-test').neovim_test
 
 -- At the moment I need plenary neovim tests to have the describe function name to have a ' --' at the end
@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('BufRead', {
 })
 
 local autocommand_group = vim.api.nvim_create_augroup('code-auto-run', { clear = true })
-vim.api.nvim_create_autocmd('BufWritePost', { pattern = { '*.cs' }, callback = dotnet_test, group = autocommand_group })
+-- vim.api.nvim_create_autocmd('BufWritePost', { pattern = { '*.cs' }, callback = dotnet_test, group = autocommand_group })
 
 vim.api.nvim_create_autocmd(
     'BufWritePost',
@@ -25,6 +25,6 @@ vim.api.nvim_create_autocmd(
 require('stimpack.code-auto-run.window-manager-config-check')
 
 return {
-    dotnet_test = dotnet_test,
+    -- dotnet_test = dotnet_test,
     neovim_test = neovim_test,
 }

@@ -96,11 +96,9 @@ return {
                         -- I'll need to make my own queries to enhance this: https://www.reddit.com/r/neovim/comments/tlkieq/swapping_objects_with_nvimtreesittertextobjects/
                         swap_next = {
                             ['<leader>hn'] = '@parameter.inner',
-                            ['<leader>t011'] = '@conditional.outer',
                         },
                         swap_previous = {
                             ['<leader>hN'] = '@parameter.inner',
-                            ['<leader>t311'] = '@conditional.outer',
                         },
                     },
                     move = {
@@ -109,27 +107,15 @@ return {
                         goto_next_start = {
                             -- TODO: what is the difference between inner and outer?
                             ['<leader>tnfs'] = '@function.outer',
-                            -- ['<leader>t201'] = '@function.outer',
-                            -- ['<leader>t211'] = '@conditional.outer',
-                            -- ['<leader>t221'] = '@class.outer',
                         },
                         goto_next_end = {
                             ['<leader>tnfe'] = '@function.outer',
-                            -- ['<leader>t202'] = '@function.outer',
-                            -- ['<leader>t212'] = '@conditional.outer',
-                            -- ['<leader>t222'] = '@class.outer',
                         },
                         goto_previous_start = {
                             ['<leader>tpfs'] = '@function.outer',
-                            -- ['<leader>t101'] = '@function.outer',
-                            -- ['<leader>t111'] = '@conditional.outer',
-                            -- ['<leader>t121'] = '@class.outer',
                         },
                         goto_previous_end = {
                             ['<leader>tpfe'] = '@function.outer',
-                            -- ['<leader>t102'] = '@function.outer',
-                            -- ['<leader>t112'] = '@conditional.outer',
-                            -- ['<leader>t122'] = '@class.outer',
                         },
                     },
                 },

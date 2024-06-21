@@ -33,6 +33,10 @@ return {
                         flex = { width = 0.99, height = 0.99 },
                         bottom_pane = { width = 0.99, height = 0.99 },
                     },
+                    path_display = {
+                        -- 'smart',
+                        'shorten',
+                    },
                     mappings = {
                         i = {
                             ['<esc>'] = require('telescope.actions').close,
@@ -130,7 +134,7 @@ return {
             local builtins = require('telescope.builtin')
             which_key_mapper({
                 f = {
-                    name = 'file', -- optional group name
+                    name = 'file',                                                  -- optional group name
                     -- Undocumented command that replaces the vim command Telescope... I looked through the telescope source code to find this
                     f = { require('telescope.command').load_command, 'Telescope' }, -- create a binding with label
                     -- f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
