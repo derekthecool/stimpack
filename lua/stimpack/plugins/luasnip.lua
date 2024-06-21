@@ -3,6 +3,8 @@ return {
     event = 'CursorMoved',
     -- enabled = false,
     config = function()
+        local luasnip = require('luasnip')
+
         -- Load my treesitter helper functions now
         require('stimpack.my-treesitter-functions')
 
@@ -16,12 +18,12 @@ return {
         -- require('luasnip.loaders.from_vscode').lazy_load()
 
         -- Set my config options
-        require('luasnip').config.set_config({
+        luasnip.config.set_config({
             history = true,
             update_events = { 'TextChanged', 'TextChangedI' },
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
-            enable_autosnippets = true, -- I NEED autosnippets to live, default is false
+            enable_autosnippets = true,                                           -- I NEED autosnippets to live, default is false
             -- store_selection_keys = '<Tab>',
             store_selection_keys = '```',
             -- Add awesome highlights to help show where you are at in a snippet
@@ -98,24 +100,24 @@ return {
         -- })
 
         -- vim.keymap.set({ 'i', 's' }, '👉👉', function()
-        --     require('luasnip').jump(1)
+        --     luasnip.jump(1)
         -- end, { silent = true, desc = 'Snippet next' })
         -- vim.keymap.set({ 'i', 's' }, '👈👈', function()
-        --     require('luasnip').jump(-1)
+        --     luasnip.jump(-1)
         -- end, { silent = true, desc = 'Snippet previous' })
 
         vim.keymap.set({ 'i', 's' }, '<c-j>', function()
-            require('luasnip').jump(1)
+            luasnip.jump(1)
         end, { silent = true, desc = 'Snippet next' })
         vim.keymap.set({ 'i', 's' }, '<c-k>', function()
-            require('luasnip').jump(-1)
+            luasnip.jump(-1)
         end, { silent = true, desc = 'Snippet previous' })
 
         vim.keymap.set({ 'i', 's' }, '§', function()
-            require('luasnip').jump(1)
+            luasnip.jump(1)
         end, { silent = true, desc = 'Snippet next' })
         vim.keymap.set({ 'i', 's' }, '∏', function()
-            require('luasnip').jump(-1)
+            luasnip.jump(-1)
         end, { silent = true, desc = 'Snippet previous' })
 
         vim.keymap.set({ 'i', 's' }, '∄', function()
@@ -164,7 +166,7 @@ return {
             if FileExists(luasnip_snippet_path) == false then
                 vim.notify(
                     'Snippet file does not exist for this filetype - expected name should be: '
-                        .. expected_snippet_filename,
+                    .. expected_snippet_filename,
                     vim.log.levels.INFO,
                     { title = 'Stimpack Notification' }
                 )
@@ -221,28 +223,34 @@ return {
         -- Snippet extensions, AKA get snippets of one filetype to use another as well
         -- This enables the new filetypes to appear in the snippet edit menu
         -- Dotnet
-        require('luasnip').filetype_extend('fsharp', { 'dotnet' })
-        require('luasnip').filetype_extend('csharp', { 'dotnet' })
-        require('luasnip').filetype_extend('cs', { 'dotnet' })
-        require('luasnip').filetype_extend('toggleterm', { 'ps1' })
+        luasnip.filetype_extend('fsharp', { 'dotnet' })
+        luasnip.filetype_extend('csharp', { 'dotnet' })
+        luasnip.filetype_extend('cs', { 'dotnet' })
+        luasnip.filetype_extend('toggleterm', { 'ps1' })
 
         -- Lua
-        require('luasnip').filetype_extend(
-            'lua',
-            { 'neovim_snippets', 'wireshark_snippets', 'luasnip_snippet_creation_snippets' }
-        )
+        luasnip.filetype_extend('lua', { 'neovim_snippets', 'wireshark_snippets', 'luasnip_snippet_creation_snippets' })
 
         -- C
-        require('luasnip').filetype_set('h', { 'c' })
+        luasnip.filetype_set('h', { 'c' })
         -- Add microcontroller specific code snippets (all in C of course)
-        require('luasnip').filetype_extend('c', { 'mcu_ESP32' })
+        luasnip.filetype_extend('c', { 'mcu_ESP32' })
 
         -- Create group for flutter
-        require('luasnip').filetype_extend('dart', { 'flutter' })
+        luasnip.filetype_extend('dart', { 'flutter' })
+
+        -- SQL
+        -- I want every type to be able to use every type
+        -- SQL is a mess but I want database specific snippets separated and general sql together
+        local sql_types_wanted = { 'sql', 'mysql', 'sqlserver', 'postgresql', 'sqlite' }
+        for _, sql in pairs(sql_types_wanted) do
+            luasnip.filetype_set(sql, sql_types_wanted)
+            luasnip.filetype_extend(sql, sql_types_wanted)
+        end
 
         -- Function for status line to show how many snippets available for current filetype
         function GetLuasnipAvailableSnippetCountForCurrentFile()
-            local available_snippets = require('luasnip').available()
+            local available_snippets = luasnip.available()
 
             -- I don't want anything from the 'all' snippets type to be counted
             available_snippets.all = nil
