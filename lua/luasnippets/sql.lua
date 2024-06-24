@@ -2,6 +2,22 @@
 local snippets = {
     ms(
         {
+            { trig = 'wherein', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        where {Something} in (
+            {Stuff}
+        )
+        ]],
+            {
+                Something = i(1, 'Item'),
+                Stuff = i(2),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'FIRST', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
