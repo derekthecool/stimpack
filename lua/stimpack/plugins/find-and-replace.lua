@@ -1,15 +1,23 @@
 return {
     'chrisgrieser/nvim-rip-substitute',
-    -- keys = {
-    --     {
-    --         '<leader>fr',
-    --         function()
-    --             require('rip-substitute').sub()
-    --         end,
-    --         mode = { 'n', 'x' },
-    --         desc = ' rip substitute',
-    --     },
-    -- },
+    keys = {
+        {
+            '<leader>fr',
+            function()
+                require('rip-substitute').sub()
+            end,
+            mode = { 'n', 'x' },
+            desc = ' rip substitute',
+        },
+        {
+            '%',
+            function()
+                require('rip-substitute').sub()
+            end,
+            mode = { 'n', 'x' },
+            desc = ' rip substitute',
+        },
+    },
 
     -- default settings
     config = function()
@@ -31,7 +39,7 @@ return {
                 abort = 'q',
                 prevSubst = '<Up>',
                 nextSubst = '<Down>',
-                insertModeConfirm = '<C-CR>', -- (except this one, obviously)
+                insertModeConfirm = '<C-s>', -- (except this one, obviously)
             },
             incrementalPreview = {
                 hlGroups = {
