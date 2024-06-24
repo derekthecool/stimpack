@@ -36,7 +36,7 @@ if vim.fn.has('nvim-0.10') == 1 then
     vim.api.nvim_create_autocmd('LspAttach', {
         pattern = { '*' },
         callback = function()
-            vim.lsp.inlay_hint(0, true)
+            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
         end,
         group = generalSettingsGroup,
     })
