@@ -239,6 +239,9 @@ return {
         -- Create group for flutter
         luasnip.filetype_extend('dart', { 'flutter' })
 
+        -- yaml files for specific configs
+        luasnip.filetype_extend('yaml', { 'yaml_docker_compose' })
+
         -- SQL
         -- I want every type to be able to use every type
         -- SQL is a mess but I want database specific snippets separated and general sql together

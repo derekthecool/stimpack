@@ -71,7 +71,7 @@ ENTRYPOINT ["dotnet", "BelleLTE_DeviceId_Provisioner.dll"]
                     end
 
                     return sn(nil, c(1, dlls))
-                end, { 1 }),
+                end, {}),
             }
         )
     ),

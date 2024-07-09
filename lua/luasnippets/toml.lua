@@ -47,13 +47,31 @@ local snippets = {
             }
         )
     ),
-}
 
-local autosnippets = {
+    ms(
+        {
+            { trig = 'FIRST', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = '[', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        [{Header}]
+        {key} = {value}
+        ]],
+            {
+                Header = i(1, 'directory'),
+                key = i(2, 'key'),
+                value = i(3, 'value'),
+            }
+        )
+    ),
+
     -- Filetypes like this only need a single snippet
     -- The basic template starter point
-    s(
-        'FIRST',
+    ms(
+        {
+            { trig = 'SECOND', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
         fmt(
             [[
         column_width = 120
@@ -67,5 +85,7 @@ local autosnippets = {
         )
     ),
 }
+
+local autosnippets = {}
 
 return snippets, autosnippets

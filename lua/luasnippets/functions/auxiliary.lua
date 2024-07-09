@@ -240,4 +240,44 @@ M.insert_include_if_needed = function(include_items)
     end
 end
 
+---@param index number
+---@param lua_search_pattern string
+---@param format_function function|nil
+---@param starting_directory string|nil
+---@param use_gitignore boolean|nil
+M.scan_files = function(index, lua_search_pattern, format_function, starting_directory, use_gitignore)
+    if not format_function or type(format_function) ~= 'function' then
+        format_function = function(file)
+            return string.format('%s', file)
+        end
+    end
+
+    return sn(
+        index,
+        fmt([[{Files}]], {
+            Files = d(1, function(args, snip)
+                local nodes = {}
+
+                local scandir = require('plenary.scandir')
+                local files = scandir.scan_dir(
+                    (starting_directory or './'),
+                    { respect_gitignore = (use_gitignore or true), search_pattern = lua_search_pattern }
+                )
+
+                for _, file in pairs(files) do
+                    local formatted_item = t(format_function(vim.fs.normalize(file)))
+                    table.insert(nodes, formatted_item)
+                end
+
+                -- Always add a default node for custom insert at the end
+                table.insert(nodes, i(1))
+
+                local choices = c(1, nodes)
+
+                return sn(nil, choices)
+            end, {}),
+        })
+    )
+end
+
 return M

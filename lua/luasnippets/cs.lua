@@ -38,6 +38,17 @@ function Namespace(index)
 end
 
 local snippets = {
+
+    ms({ { trig = 'read line', snippetType = 'autosnippet' } }, fmt([[Console.ReadLine()]], {}), {
+        callbacks = {
+            [-1] = {
+                -- Write needed using directives before expanding snippet so positions are not messed up
+                [events.pre_expand] = function()
+                    auxiliary.insert_include_if_needed('System')
+                end,
+            },
+        },
+    }),
     ms(
         {
             { trig = 'new record', snippetType = 'autosnippet' },
@@ -483,26 +494,6 @@ public class FotaProcessor : IHostedService, IDisposable
     ),
 
     s(
-        'read line',
-        fmt(
-            [[
-        var line = Console.ReadLine();
-        ]],
-            {}
-        ),
-        {
-            callbacks = {
-                [-1] = {
-                    -- Write needed using directives before expanding snippet so positions are not messed up
-                    [events.pre_expand] = function()
-                        auxiliary.insert_include_if_needed('System')
-                    end,
-                },
-            },
-        }
-    ),
-
-    s(
         'read lines',
         fmt(
             [[
@@ -690,14 +681,22 @@ local autosnippets = {
             { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
-        fmt([[Console{}.WriteLine($"{}");]], {
+        fmt([[Console{}.WriteLine({});]], {
 
             f(function(args, snip)
                 if snip.trigger == 'ERRORPRINT' or snip.trigger == 'Console.Error.WriteLine' then
                     return '.Error'
                 end
             end, {}),
-            i(1),
+            c(1, {
+                sn(
+                    1,
+                    fmt([[$"{Text}"]], {
+                        Text = i(1),
+                    })
+                ),
+                i(1),
+            }),
         })
     ),
 
