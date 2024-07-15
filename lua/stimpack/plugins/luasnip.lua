@@ -236,11 +236,13 @@ return {
         -- Add microcontroller specific code snippets (all in C of course)
         luasnip.filetype_extend('c', { 'mcu_ESP32' })
 
+        luasnip.filetype_extend('cpp', { 'c' })
+
         -- Create group for flutter
         luasnip.filetype_extend('dart', { 'flutter' })
 
         -- yaml files for specific configs
-        luasnip.filetype_extend('yaml', { 'yaml_docker_compose' })
+        luasnip.filetype_extend('yaml', { 'yaml_docker_compose', 'github_actions', 'azure_pipelines' })
 
         -- SQL
         -- I want every type to be able to use every type
