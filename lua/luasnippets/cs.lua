@@ -107,6 +107,20 @@ local snippets = {
 
     ms(
         {
+            { trig = 'inline', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        [InlineData({Items})]
+        ]],
+            {
+                Items = i(1, 'inline data'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'list list', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[List<{Type}>]], {

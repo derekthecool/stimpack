@@ -57,6 +57,15 @@ local snippets = {
 
     ms(
         {
+            { trig = 'type type', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[type({Item})]], {
+            Item = i(1, 'variable'),
+        })
+    ),
+
+    ms(
+        {
             'format',
             {
                 trig = 'string format',
@@ -732,7 +741,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -782,7 +791,7 @@ end
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 

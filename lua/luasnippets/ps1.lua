@@ -188,6 +188,21 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'hash table', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        @{{
+            {Items}
+        }}
+        ]],
+            {
+                Items = i(1),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = '$\\(\\)', regTrig = false, snippetType = 'autosnippet', condition = nil },
         },
         fmt([[$({})]], {
@@ -197,7 +212,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'error', snippetType = 'snippet', condition = nil },
+            { trig = 'error',        snippetType = 'snippet',     condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -339,14 +354,38 @@ class {ClassName} {{
             { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
-            [[
-    It '{TestDescription}' {{
-        {}
-    }}
+            [[It '<TestDescription>'
+            <Multiple>
+            {
+                <Code>
+            }
         ]],
             {
                 TestDescription = i(1, 'This test should do ....'),
-                i(2),
+                Multiple = c(2, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt(
+                            [[-TestCases @(
+                                @{ <Variable> = <Value> }
+                            )
+                            ]],
+                            {
+                                Variable = i(1, 'Variable'),
+                                Value = i(2, 'Value'),
+                            },
+                            {
+                                delimiters = '<>',
+                            }
+                        )
+                    ),
+                }),
+
+                Code = i(3),
+            },
+            {
+                delimiters = '<>',
             }
         )
     ),
@@ -736,9 +775,9 @@ class {ClassName} {{
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-            -- Old method
-            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-            -- New method uses PSScriptTools function ConvertFrom-Text
+        -- Old method
+        -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+        -- New method uses PSScriptTools function ConvertFrom-Text
             [[ConvertFrom-Text '{Pattern}']],
             {
                 Pattern = i(1, '.*'),
@@ -936,9 +975,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host', snippetType = 'snippet' },
-            { trig = 'PRINT', snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'PRINT',        snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1056,8 +1095,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH', snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object', snippetType = 'snippet' },
+            { trig = 'FREACH',              snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object',      snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {
