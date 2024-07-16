@@ -3,6 +3,11 @@
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    postfix({ trig = '_int', match_pattern = '[%w%.%_%-()]+$' }, {
+        f(function(_, parent)
+            return string.format('int(%s)', parent.snippet.env.POSTFIX_MATCH)
+        end, {}),
+    }),
     ms(
         {
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
