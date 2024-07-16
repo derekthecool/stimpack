@@ -34,6 +34,7 @@
   "neotest": { "branch": "master", "commit": "5caac5cc235d495a2382bc2980630ef36ac87032" },
   "neotest-dart": { "branch": "main", "commit": "33b9335cd8c2be4dcf9dd8f196b24325e7c2e8e7" },
   "neotest-dotnet": { "branch": "main", "commit": "3844d16706d7655f4c84387bdb68eb8fb0155ef2" },
+  "neotest-python": { "branch": "master", "commit": "2e83d2bc00acbcc1fd529dbf0a0e677cabfe6b50" },
   "none-ls.nvim": { "branch": "main", "commit": "8691504118b252d64fc5023a104aedd100ab754a" },
   "nvim-base16": { "branch": "master", "commit": "eec6882101dd189117f79c5d18d389d20cfc0415" },
   "nvim-cmp": { "branch": "main", "commit": "cd2cf0c124d3de577fb5449746568ee8e601afc8" },

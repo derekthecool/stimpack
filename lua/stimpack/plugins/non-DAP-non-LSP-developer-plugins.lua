@@ -202,7 +202,7 @@ return {
                 -- Working on solving an issue with this plugin right now. It does not work on windows.
                 dev = true,
             },
-            -- 'nvim-neotest/neotest-vim-test',
+            'nvim-neotest/neotest-python',
             'vim-test/vim-test',
             'Issafalcon/neotest-dotnet',
             'sidlatau/neotest-dart',
@@ -230,6 +230,7 @@ return {
                 adapters = {
                     require('neotest-plenary'),
                     require('neotest-dotnet'),
+                    require('neotest-python'),
                     require('neotest-dart')({
                         command = 'flutter',
                         use_lsp = true,

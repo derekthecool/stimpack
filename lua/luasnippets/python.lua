@@ -5,6 +5,21 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
     ms(
         {
+            { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        def {FunctionName}():
+            {Code}
+        ]],
+            {
+                FunctionName = i(1, 'MyFunction'),
+                Code = i(2),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'mqtt', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
