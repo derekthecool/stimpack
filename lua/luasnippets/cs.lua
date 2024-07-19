@@ -71,6 +71,44 @@ local snippets = {
 
     ms(
         {
+            { trig = 'ASSERT', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[{}]], {
+            d(1, function(args, snip)
+                local nodes = {}
+
+                -- Assert.Equal(expected: "", actual: command.Runcommand.RcUpdateFileURL);
+                -- Assert.Matches(expectedRegex: new Regex(@$"^AT\+STRTO.*{UpdatePath}"), actualString: command.Runcommand.CallTransferNumber);
+                -- Assert.EndsWith(expectedEndString: $"{commandId:X4}$", actualString: command.Runcommand.CallTransferNumber);
+                local twoArgAssertTypes = {
+                    { Name = 'Equal',    Param1Name = 'expected',          Param2Name = 'actual' },
+                    { Name = 'Matches',  Param1Name = 'expectedRegex',     Param2Name = 'actualString' },
+                    { Name = 'EndsWith', Param1Name = 'expectedEndString', Param2Name = 'actualString' },
+                    { Name = 'StartsWith', Param1Name = 'expectedStartString', Param2Name = 'actualString' },
+                }
+
+                for _, value in pairs(twoArgAssertTypes) do
+                    local snippet = sn(
+                        nil,
+                        fmt([[Assert.{AssertType}({ExpectedArgName}: {Arg1}, {ActualArgName}: {Arg2}]], {
+                            AssertType = t(value.Name),
+                            ExpectedArgName = t(value.Param1Name),
+                            Arg1 = i(1),
+
+                            ActualArgName = t(value.Param1Name),
+                            Arg2 = i(2),
+                        })
+                    )
+                    table.insert(nodes, snippet)
+                end
+
+                return sn(nil, c(1, nodes))
+            end, {}),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'TEST', snippetType = 'autosnippet', condition = nil },
         },
         fmt(

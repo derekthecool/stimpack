@@ -3,6 +3,19 @@
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'LAMBDA', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[lambda {variables} : {mapping}]], {
+            variables = i(1, 'x'),
+            mapping = i(2, 'x * x'),
+        })
+    ),
+
+    ms({
+        { trig = 'input input', snippetType = 'autosnippet', condition = nil },
+    }, fmt([[input()]], {})),
     postfix({ trig = '_int', match_pattern = '[%w%.%_%-()]+$' }, {
         f(function(_, parent)
             return string.format('int(%s)', parent.snippet.env.POSTFIX_MATCH)

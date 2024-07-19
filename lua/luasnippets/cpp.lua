@@ -1,5 +1,33 @@
 ---@diagnostic disable: undefined-global
+
+local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
+
 local snippets = {
+
+    treesitter_postfix({
+        trig = '.mv',
+        matchTSNode = {
+
+            query = [[
+                [
+                  (call_expression)
+                  (identifier)
+                  (template_function)
+                  (subscript_expression)
+                  (field_expression)
+                  (user_defined_literal)
+                ] @prefix
+            ]],
+            query_lang = 'cpp',
+        },
+    }, {
+        f(function(_, parent)
+            local node_content = table.concat(parent.snippet.env.LS_TSMATCH, '\n')
+            local replaced_content = ('std::move(%s)'):format(node_content)
+            return vim.split(ret_str, '\n', { trimempty = false })
+        end),
+    }),
+
     ms(
         {
             { trig = 'REGMATCH', snippetType = 'autosnippet', condition = nil },
