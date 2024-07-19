@@ -4,6 +4,29 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
 
+    ms(
+        {
+            { trig = 'GitHub_alert', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        > [!{AlertType}]
+        > {Text}
+        ]],
+            {
+                AlertType = c(1, {
+                    t('NOTE'),
+                    t('TIP'),
+                    t('IMPORTANT'),
+                    t('WARNING'),
+                    t('CAUTION'),
+                    i(1, 'custom'),
+                }),
+                Text = i(2, 'Alert text'),
+            }
+        )
+    ),
+
     s(
         'footnote',
         fmt([[{}{}{}]], {
