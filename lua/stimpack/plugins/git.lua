@@ -116,155 +116,143 @@ return {
         event = 'CursorMoved',
         keys = { '<leader>gj', '<leader>gk' },
         config = function()
-            local which_key_mapper = require('stimpack.which-key-mapping')
-            which_key_mapper({
-                g = {
-                    name = 'git', -- optional group name
-                    G = {
-                        '<cmd>Gitsigns toggle_deleted<cr>',
-                        'Gitsigns toggle display of deleted lines',
-                    },
-                    B = {
-                        '<cmd>Gitsigns toggle_current_line_blame<cr>',
-                        'Gitsigns toggle display of deleted lines',
-                    },
-                    j = {
-                        function()
-                            require('gitsigns').next_hunk()
-                        end,
-                        'Next Hunk',
-                    },
-                    k = {
-                        function()
-                            require('gitsigns').prev_hunk()
-                        end,
-                        'Prev Hunk',
-                    },
-                    l = {
-                        function()
-                            require('gitsigns').blame_line()
-                        end,
-                        'Blame',
-                    },
-                    q = {
-                        function()
-                            require('gitsigns').preview_hunk()
-                        end,
-                        'Preview Hunk',
-                    },
-                    r = {
-                        function()
-                            require('gitsigns').reset_hunk()
-                        end,
-                        'Reset Hunk',
-                    },
-                    R = {
-                        function()
-                            require('gitsigns').reset_buffer()
-                        end,
-                        'Reset Buffer',
-                    },
-                    S = {
-                        function()
-                            require('gitsigns').stage_buffer()
-                        end,
-                        'Stage Buffer',
-                    },
-                    s = {
-                        function()
-                            require('gitsigns').stage_hunk()
-                        end,
-                        'Stage Hunk',
-                    },
-                    u = {
-                        function()
-                            require('gitsigns').undo_stage_hunk()
-                        end,
-                        'Undo Stage Hunk',
-                    },
-                    t = {
-                        '<cmd>Gitsigns diffthis HEAD<cr>',
-                        'Diff',
-                    },
-                    -- telescope
-                    o = {
-                        '<cmd>Telescope git_status<cr>',
-                        'Telescope: Open changed file',
-                    },
-                    b = {
-                        '<cmd>Telescope git_branches<cr>',
-                        'Telescope: Checkout branch',
-                    },
-                    c = {
-                        '<cmd>Telescope git_commits<cr>',
-                        'Telescope: Checkout commit',
-                    },
+            require('which-key').add({
+                { '<leader>hhh', 'pwd', desc = 'test action' },
+            })
+
+            require('which-key').add({
+                { '<leader>g', group = 'git' },
+                {
+                    '<leader>gG',
+                    '<cmd>Gitsigns toggle_current_line_blame<cr>',
+                    desc = 'Gitsigns toggle display of deleted lines',
+                },
+                {
+                    '<leader>gB',
+                    '<cmd>Telescope find_files<CR>',
+                    desc = 'Gitsigns toggle display of deleted lines',
+                },
+                {
+                    '<leader>gj',
+                    function()
+                        require('gitsigns').next_hunk()
+                    end,
+                    desc = 'Next Hunk',
+                },
+                {
+                    '<leader>gk',
+                    function()
+                        require('gitsigns').prev_hunk()
+                    end,
+                    desc = 'Prev Hunk',
+                },
+                {
+                    '<leader>gl',
+                    function()
+                        require('gitsigns').blame_line()
+                    end,
+                    desc = 'Blame',
+                },
+                {
+                    '<leader>gq',
+                    function()
+                        require('gitsigns').preview_hunk()
+                    end,
+                    desc = 'Preview Hunk',
+                },
+                {
+                    '<leader>gr',
+                    function()
+                        require('gitsigns').reset_hunk()
+                    end,
+                    desc = 'Reset Hunk',
+                },
+                {
+                    '<leader>gR',
+                    function()
+                        require('gitsigns').reset_buffer()
+                    end,
+                    desc = 'Reset Buffer',
+                },
+                {
+                    '<leader>gS',
+                    function()
+                        require('gitsigns').stage_buffer()
+                    end,
+                    desc = 'Stage Buffer',
+                },
+                {
+                    '<leader>gs',
+                    function()
+                        require('gitsigns').stage_hunk()
+                    end,
+                    desc = 'Stage Hunk',
+                },
+                {
+                    '<leader>gu',
+                    function()
+                        require('gitsigns').undo_stage_hunk()
+                    end,
+                    desc = 'Undo Stage Hunk',
+                },
+                { '<leader>gt', '<cmd>Gitsigns diffthis HEAD<cr>', desc = 'Diff' },
+                {
+                    '<leader>go',
+                    '<cmd>Telescope git_status<cr>',
+                    desc = 'Telescope: Open changed file',
+                },
+                {
+                    '<leader>gb',
+                    '<cmd>Telescope git_branches<cr>',
+                    desc = 'Telescope: Checkout branch',
+                },
+                {
+                    '<leader>gc',
+                    '<cmd>Telescope git_commits<cr>',
+                    desc = 'Telescope: Checkout commit',
                 },
             })
 
             require('gitsigns').setup({
                 signs = {
-                    add = {
-                        hl = 'DevIconCsv',
-                        text = Icons.git.gutterbar,
-                        numhl = 'GitSignsAddNr',
-                        linehl = 'GitSignsAddLn',
-                    },
-                    change = {
-                        hl = 'DevIconAi',
-                        text = Icons.git.gutterbar,
-                        numhl = 'GitSignsChangeNr',
-                        linehl = 'GitSignsChangeLn',
-                    },
-                    delete = {
-                        hl = 'DevIconJava',
-                        text = Icons.git.gutterbar,
-                        numhl = 'GitSignsDeleteNr',
-                        linehl = 'GitSignsDeleteLn',
-                    },
-                    topdelete = {
-                        hl = 'DevIconPackageLockJson',
-                        text = Icons.ui.arrowclosed4,
-                        numhl = 'GitSignsDeleteNr',
-                        linehl = 'GitSignsDeleteLn',
-                    },
-                    changedelete = {
-                        hl = 'DevIconCs',
-                        text = Icons.git.gutterbar,
-                        numhl = 'GitSignsChangeNr',
-                        linehl = 'GitSignsChangeLn',
-                    },
-                    untracked = {
-                        hl = 'DevIconToml',
-                        text = Icons.git.gutterbar_dashed,
-                        numhl = 'GitSignsChangeNr',
-                        linehl = 'GitSignsChangeLn',
-                    },
+                    add = { text = Icons.git.gutterbar },
+                    change = { text = Icons.git.gutterbar },
+                    delete = { text = Icons.git.gutterbar },
+                    topdelete = { text = Icons.ui.arrowclosed4 },
+                    changedelete = { text = Icons.git.gutterbar },
+                    untracked = { text = Icons.git.gutterbar_dashed },
                 },
+                signs_staged = {
+                    add = { text = Icons.git.gutterbar },
+                    change = { text = Icons.git.gutterbar },
+                    delete = { text = Icons.git.gutterbar },
+                    topdelete = { text = Icons.git.arrowclosed4 },
+                    changedelete = { text = Icons.git.gutterbar },
+                    untracked = { text = Icons.git.gutterbar_dashed },
+                },
+                signs_staged_enable = true,
                 signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
                 numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
                 linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
                 word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
                 watch_gitdir = {
-                    interval = 1000,
                     follow_files = true,
                 },
+                auto_attach = true,
                 attach_to_untracked = true,
-                current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+                current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
                 current_line_blame_opts = {
                     virt_text = true,
-                    virt_text_pos = 'eol', -- 'overlay':replaces your text... rude! | 'right_align': right align is so far over I can't read it
-                    delay = 10000,
-                    ignore_whitespace = true,
+                    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                    delay = 1000,
+                    ignore_whitespace = false,
+                    virt_text_priority = 100,
                 },
-                current_line_blame_formatter_opts = {
-                    relative_time = true,
-                },
+                current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
                 sign_priority = 6,
                 update_debounce = 100,
                 status_formatter = nil, -- Use default
-                max_file_length = 40000,
-                show_deleted = false,
+                max_file_length = 40000, -- Disable if file is longer than this (in lines)
                 preview_config = {
                     -- Options passed to nvim_open_win
                     border = 'single',
@@ -273,12 +261,14 @@ return {
                     row = 0,
                     col = 1,
                 },
-                yadm = {
-                    enable = false,
-                },
             })
 
+            -- TODO: (Derek Lomax) 7/20/2024 9:06:40 PM, Tweak the highlights so
+            -- that only the gutter has color and the rest is transparent
             vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#553355' })
+            vim.api.nvim_set_hl(0, 'GitSignsChange', { fg = DevIconAi })
+            vim.api.nvim_set_hl(0, 'GitSignsChangeLine', { fg = DevIconAi })
+            vim.api.nvim_set_hl(0, 'GitSignsChangeLineNr', { fg = DevIconAi })
         end,
     },
 
