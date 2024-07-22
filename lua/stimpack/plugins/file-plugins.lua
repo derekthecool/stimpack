@@ -130,37 +130,33 @@ return {
                 require('telescope.builtin').live_grep({ cwd = OS.plover, prompt_title = 'Plover config: grep files' })
             end, { desc = 'Plover config grep files' })
 
-            local which_key_mapper = require('stimpack.which-key-mapping')
             local builtins = require('telescope.builtin')
-            which_key_mapper({
-                f = {
-                    name = 'file',                                                  -- optional group name
-                    -- Undocumented command that replaces the vim command Telescope... I looked through the telescope source code to find this
-                    f = { require('telescope.command').load_command, 'Telescope' }, -- create a binding with label
-                    -- f = { "<cmd>Telescope<cr>", "Telescope" }, -- create a binding with label
-                    F = { builtins.find_files, 'Find Files' },
-                    G = { builtins.git_files, 'Git Files' },
-                    E = { '<cmd>Telescope emoji<CR>', 'Telescope extension: emoji' },
-                    b = { builtins.buffers, 'Local buffers' },
-                    g = { builtins.live_grep, 'Live grep' }, -- search locally with live grep (uses ripgrep in the background)
-                    s = { builtins.grep_string, 'Grep string under cursor' },
-                    h = { builtins.help_tags, 'Help Search' },
-                    H = { builtins.highlights, 'Highlights' },
-                    c = { builtins.command_history, 'Command history' },
-                    z = { builtins.current_buffer_fuzzy_find, 'Current buffer fuzzy find' },
-                    S = { builtins.git_status, 'Search git changed files' },
-                    t = {
-                        function()
-                            require('telescope').extensions.file_browser.file_browser({ hidden = true })
-                        end,
-                        'Telescope file browser',
-                    },
-                    m = { builtins.keymaps, 'List key maps' }, -- list keymaps
+            require('which-key').add({
+                { '<leader>f', group = 'file' },
+                -- Undocumented command that replaces the vim command Telescope... I looked through the telescope source code to find this
+                -- I like this more than :Telescope<CR>
+                { '<leader>ff', require('telescope.command').load_command, desc = 'Telescope' },
+                { '<leader>fF', builtins.find_files, desc = 'Find Files' },
+                { '<leader>fG', builtins.git_files, desc = 'Git Files' },
+                { '<leader>fb', builtins.buffers, desc = 'Local Buffers' },
+                { '<leader>fg', builtins.live_grep, desc = 'Live grep' }, -- requires ripgrep
+                { '<leader>fs', builtins.grep_string, desc = 'Grep string under cursor' },
+                { '<leader>fh', builtins.help_tags, desc = 'Search Help' },
+                { '<leader>fH', builtins.highlights, desc = 'Highlights' },
+                { '<leader>fc', builtins.command_history, desc = 'Command history' },
+                { '<leader>fz', builtins.current_buffer_fuzzy_find, desc = 'Current buffer fuzzy find' },
+                { '<leader>fS', builtins.git_status, desc = 'Search git changed files' },
+                {
+                    '<leader>ft',
+                    function()
+                        require('telescope').extensions.file_browser.file_browser({ hidden = true })
+                    end,
+                    desc = 'Telescope file browser',
                 },
-                l = {
-                    name = 'LSP',
-                    -- A = { builtins.code_actions{}, "Telescope: code action" },
-                },
+                { '<leader>fm', builtins.keymaps, desc = 'List key maps' },
+
+                -- TODO: (Derek Lomax) 7/22/2024 2:53:45 PM, Fix this
+                -- { '<leader>lA', builtins.code_actions({}), desc = 'Telescope: code action' },
             })
         end,
     },
