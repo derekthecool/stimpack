@@ -1,4 +1,4 @@
--- Ｄｅｒｅｋ'ｓ ｉｎｉｔ.ｌｕａ
+-- Derek's stimpack configuration
 
 -- Map leader to comma instead of space since switching to stenography.
 -- Spacing is done after each word so comma is better for me now.
