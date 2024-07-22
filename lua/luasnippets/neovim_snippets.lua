@@ -5,6 +5,37 @@ local scan = require('plenary.scandir')
 
 local snippets = {
 
+    -- which-key snippet
+    ms(
+        {
+            { trig = 'whichkey', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        {{ '{Key}{Letter}', {Mapping}, desc = '{Description}' }},
+        ]],
+            {
+                Key = i(1, '<leader>'),
+                Letter = i(2, 'ff'),
+                Mapping = c(3, {
+                    sn(
+                        nil,
+                        fmt([[function() {Code} end]], {
+                            Code = i(1),
+                        })
+                    ),
+                    sn(
+                        nil,
+                        fmt([['{Text}']], {
+                            Text = '<cmd>Telescope find_files<CR>',
+                        })
+                    ),
+                }),
+                Description = i(4, 'This mapping does ....'),
+            }
+        )
+    ),
+
     ms(
         {
             { trig = 'treesitter_basic_query', snippetType = 'snippet', condition = conds.line_begin },
