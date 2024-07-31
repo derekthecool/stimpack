@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - lua
+  workflow_dispatch:
 
 jobs:
   test:
