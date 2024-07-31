@@ -1,0 +1,35 @@
+name: Test my Stimpack neovim configuration
+
+# Only run workflow stimpack lua files are changed
+on:
+  push:
+    paths:
+      - lua
+
+jobs:
+  test:
+    name: Test my Stimpack neovim configuration ${{ matrix.container }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        container:
+          - archlinux:latest
+    container:
+      image: ${{ matrix.container }}
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+
+      - name: Install neovim
+        run: |
+          case ${{ matrix.container }} in
+            archlinux*)
+              pacman -Sy --noconfirm neovim
+              ;;
+          esac
+
+      - name: Test Stimpack neovim configuration
+        run: |
+          nvim --headless -u ./init.lua -c "PlenaryBustedDirectory ."
