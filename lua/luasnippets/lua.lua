@@ -57,6 +57,16 @@ local snippets = {
 
     ms(
         {
+            { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt([[require('{Module}')]], {
+            Module = i(1),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'type type', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[type({Item})]], {
@@ -741,7 +751,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -791,7 +801,7 @@ end
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 

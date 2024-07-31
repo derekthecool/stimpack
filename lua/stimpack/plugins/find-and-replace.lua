@@ -9,14 +9,15 @@ return {
             mode = { 'n', 'x' },
             desc = ' rip substitute',
         },
-        {
-            '%',
-            function()
-                require('rip-substitute').sub()
-            end,
-            mode = { 'n', 'x' },
-            desc = ' rip substitute',
-        },
+        -- This clashes with my beloved vim default mapping to jump to matching paren, or bracket
+        -- {
+        --     '%',
+        --     function()
+        --         require('rip-substitute').sub()
+        --     end,
+        --     mode = { 'n', 'x' },
+        --     desc = ' rip substitute',
+        -- },
     },
 
     -- default settings

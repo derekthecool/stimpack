@@ -16,31 +16,29 @@ return {
 
             require('telescope').load_extension('dap')
 
-            local which_key_mapper = require('stimpack.which-key-mapping')
-            which_key_mapper({
-                d = {
-                    name = 'Debug',
-                    o = { '<cmd>lua require(\'dap\').step_over()<CR>', 'Step over (≤)' },
-                    e = { '<cmd>lua require(\'dapui\').eval()<CR>', 'Eval variable under cursor' },
-                    t = { '<cmd>lua require(\'dapui\').toggle()<CR>', 'Toggle dapui' },
-                    -- E = { '<cmd>lua require(\'dapui\').float_element()<CR>', 'Open an item in a floating view' },
-                    d = { [[:lua require"osv".launch({port = 8086})<CR>]], 'Start neovim lua debugging' },
-                    i = { '<cmd>lua require(\'dap\').step_into()<CR>', 'Step into (≥)' },
-                    O = { '<cmd>lua require(\'dap\').step_out()<CR>', 'Step out (µ)' },
-                    b = { '<cmd>lua require(\'dap\').toggle_breakpoint()<CR>', 'Toggle breakpoint (__)' },
-                    B = {
-                        '<cmd>lua require(\'dap\').set_breakpoint(vim.fn.input(\'Breakpoint condition: \'))<CR>',
-                        'Conditional breakpoint (___)',
-                    },
-                    m = {
-                        '<cmd>lua require(\'dap\').set_breakpoint(nil , nil , vim.fn.input(\'Log point message: \'))<CR>',
-                        'Logging breakpoint (____)',
-                    },
-                    r = { '<cmd>lua require(\'dap\').repl.open()<CR>', 'Open repl' },
-                    R = { '<cmd>lua require(\'dap\').run_last()<CR>', 'Run last' },
-                    q = { '<cmd>lua require(\'dap\').terminate()<CR>', 'Exit debugging' },
-                    l = { '<cmd>sp ~/.cache/nvim/dap.log<CR>', 'Open dap log' },
+            require('which-key').add({
+                { '<leader>d', group = 'Debug' },
+                { '<leader>do', '<cmd>lua require(\'dap\').step_over()<CR>', desc = 'Step over (≤)' },
+                { '<leader>de', '<cmd>lua require(\'dapui\').eval()<CR>', desc = 'Eval variable under cursor' },
+                { '<leader>dt', '<cmd>lua require(\'dapui\').toggle()<CR>', desc = 'Toggle dapui' },
+                { '<leader>dd', [[:lua require"osv".launch({port = 8086})<CR>]], desc = 'Start neovim lua debugging' },
+                { '<leader>di', '<cmd>lua require(\'dap\').step_into()<CR>', desc = 'Step into (≥)' },
+                { '<leader>dO', '<cmd>lua require(\'dap\').step_out()<CR>', desc = 'Step out (µ)' },
+                { '<leader>db', '<cmd>lua require(\'dap\').toggle_breakpoint()<CR>', desc = 'Toggle breakpoint (__)' },
+                {
+                    '<leader>dB',
+                    '<cmd>lua require(\'dap\').set_breakpoint(vim.fn.input(\'Breakpoint condition: \'))<CR>',
+                    desc = 'Conditional breakpoint (___)',
                 },
+                {
+                    '<leader>dm',
+                    '<cmd>lua require(\'dap\').set_breakpoint(nil , nil , vim.fn.input(\'Log point message: \'))<CR>',
+                    desc = 'Logging breakpoint (____)',
+                },
+                { '<leader>dr', '<cmd>lua require(\'dap\').repl.open()<CR>', desc = 'Open repl' },
+                { '<leader>dR', '<cmd>lua require(\'dap\').run_last()<CR>', desc = 'Run last' },
+                { '<leader>dq', '<cmd>lua require(\'dap\').terminate()<CR>', desc = 'Exit debugging' },
+                { '<leader>dl', '<cmd>sp ~/.cache/nvim/dap.log<CR>', desc = 'Open dap log' },
             })
 
             map('n', '≤', '<cmd>lua require(\'dap\').step_over()<CR>')

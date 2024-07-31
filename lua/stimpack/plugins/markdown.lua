@@ -68,54 +68,52 @@ return {
             -- Allow automatic syntax check for code blocks
             vim.g.automatic_nested_syntaxes = 1
 
-            local which_key_mapper = require('stimpack.which-key-mapping')
-            which_key_mapper({
-                f = {
-                    name = 'file', -- optional group name
-                    W = {
-                        '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\', cwd=\'~/.mywiki\', prompt_title=\'Live grep through .mywiki\'})<CR>',
-                        'Live grep my wiki',
-                    },
-                    w = {
-                        '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/.mywiki\', prompt_title=\'Search .mywiki\'})<CR>',
-                        'Search my wiki',
-                    },
+            require('which-key').add({
+                { '<leader>g', group = 'Git' },
+                {
+                    '<leader>gW',
+                    '<cmd>lua require (\'telescope.builtin\').live_grep({layout_strategy=\'vertical\', cwd=\'~/.mywiki\', prompt_title=\'Live grep through .mywiki\'})<CR>',
+                    desc = 'Live grep my wiki',
                 },
-                v = {
-                    name = 'vimwiki',
-                    D = {
-                        '<cmd>VimwikiDiaryNextDay<cr>',
-                        'Diary next day',
-                    },
-                    d = { '<cmd>VimwikiDiaryPrevDay<cr>', 'Diary previous day' },
-                    h = { '<cmd>VimwikiSplitLink<cr>', 'Follow Link Horizontal' },
-                    l = {
-                        -- Vimwiki function VimwikiToggleListItem is limiting
-                        -- These series of commands make it easier for me to use
-                        function()
-                            local currentLine = vim.api.nvim_get_current_line()
-                            local match = currentLine:match('- %[.%]')
-                            if not match or match == '' then
-                                vim.cmd('/- \\[.\\]')
-                                vim.cmd('nohlsearch')
-                            end
+                {
+                    '<leader>gw',
+                    '<cmd>lua require (\'telescope.builtin\').find_files({cwd=\'~/.mywiki\', prompt_title=\'Search .mywiki\'})<CR>',
+                    desc = 'Search my wiki',
+                },
+            })
 
-                            vim.cmd('VimwikiToggleListItem')
-                            local cursor = vim.api.nvim_win_get_cursor(0)
-                            cursor[1] = cursor[1] + 1
-                            vim.api.nvim_win_set_cursor(0, cursor)
-                        end,
-                        'Toggle list item',
-                    },
-                    ['/'] = { '<cmd>VimwikiSearch<cr>', 'Vimwiki Search' },
-                    j = { '<cmd>lnext<cr>', 'Next search result' },
-                    k = { '<cmd>lprevious<cr>', 'Previous search result' },
-                    o = { '<cmd>lopen<cr>', 'Open list of all search results' },
-                    v = { '<cmd>VimwikiVSplitLink<cr>', 'Follow Link Verical' },
-                    u = { '<cmd>VimwikiNextTask<cr>', 'Find Next Unfinished Task' },
-                    T = { '<cmd>VimwikiTable<cr>', 'Vimwiki Table Insert' },
-                    t = { ':Tabularize /', 'Tabularize formatting' },
+            require('which-key').add({
+                { '<leader>v',  group = 'vimwiki' },
+                { '<leader>vD', '<cmd>VimwikiDiaryNextDay<cr>', desc = 'Diary next day' },
+                { '<leader>vd', '<cmd>VimwikiDiaryPrevDay<cr>', desc = 'Diary previous day' },
+                { '<leader>vh', '<cmd>VimwikiSplitLink<cr>',    desc = 'Follow Link Horizontal' },
+                {
+                    '<leader>vl',
+                    -- Vimwiki function VimwikiToggleListItem is limiting
+                    -- These series of commands make it easier for me to use
+                    function()
+                        local currentLine = vim.api.nvim_get_current_line()
+                        local match = currentLine:match('- %[.%]')
+                        if not match or match == '' then
+                            vim.cmd('/- \\[.\\]')
+                            vim.cmd('nohlsearch')
+                        end
+
+                        vim.cmd('VimwikiToggleListItem')
+                        local cursor = vim.api.nvim_win_get_cursor(0)
+                        cursor[1] = cursor[1] + 1
+                        vim.api.nvim_win_set_cursor(0, cursor)
+                    end,
+                    desc = 'Toggle list item',
                 },
+                { '<leader>v/', '<cmd>VimwikiSearch<cr>',     desc = 'Vimwiki Search' },
+                { '<leader>vj', '<cmd>lnext<cr>',             desc = 'Next search result' },
+                { '<leader>vk', '<cmd>lprevious<cr>',         desc = 'Previous search result' },
+                { '<leader>vo', '<cmd>lopen<cr>',             desc = 'Open list of all search results' },
+                { '<leader>vv', '<cmd>VimwikiVSplitLink<cr>', desc = 'Follow Link Verical' },
+                { '<leader>vu', '<cmd>VimwikiNextTask<cr>',   desc = 'Find Next Unfinished Task' },
+                { '<leader>vT', '<cmd>VimwikiTable<cr>',      desc = 'Vimwiki Table Insert' },
+                { '<leader>vt', ':Tabularize /',              desc = 'Tabularize formatting' },
             })
 
             local path = OS.join_path(OS.nvim, 'lua', 'stimpack', 'markdown-textobjects-codeblock.vim')

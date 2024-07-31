@@ -39,76 +39,30 @@ return {
     {
         'sindrets/diffview.nvim',
         keys = {
-            '<leader>gd',
+            {
+                '<leader>gd',
+                function()
+                    -- Set the initial value for the global or keep the existing state
+                    if DiffViewToggleState == nil then
+                        DiffViewToggleState = true
+                    end
+
+                    if DiffViewToggleState then
+                        require('diffview').open()
+                    else
+                        require('diffview').close()
+                    end
+
+                    -- Toggle the state
+                    DiffViewToggleState = not DiffViewToggleState
+                end,
+                'DiffViewToggle',
+            },
         },
         cmd = {
             'DiffviewOpen',
             'DiffviewFileHistory',
         },
-        config = function()
-            require('diffview').setup({
-                diff_binaries = false, -- Show diffs for binaries
-                use_icons = true, -- Requires nvim-web-devicons
-                icons = {
-                    -- Only applies when use_icons is true.
-                    folder_closed = Icons.documents.closeddirectory1,
-                    folder_open = Icons.documents.opendirectory1,
-                },
-                signs = {
-                    fold_closed = Icons.ui.arrowclosed1,
-                    fold_open = Icons.ui.arrowopen1,
-                },
-                file_panel = {
-                    listing_style = 'tree', -- One of 'list' or 'tree'
-                    tree_options = {
-                        -- Only applies when listing_style is 'tree'
-                        flatten_dirs = true, -- Flatten dirs that only contain one single dir
-                        folder_statuses = 'only_folded', -- One of 'never', 'only_folded' or 'always'.
-                    },
-                },
-                file_history_panel = {
-                    log_options = {
-                        -- See ':h diffview-config-log_options'
-                        git = {
-                            single_file = {
-                                diff_merges = 'combined',
-                            },
-                            multi_file = {
-                                diff_merges = 'first-parent',
-                            },
-                        },
-                    },
-                },
-                default_args = {
-                    -- Default args prepended to the arg-list for the listed commands
-                    DiffviewOpen = {},
-                    DiffviewFileHistory = {},
-                },
-            })
-
-            require('stimpack.which-key-mapping')({
-                g = {
-                    d = {
-                        function()
-                            -- Set the initial value for the global or keep the existing state
-                            if DiffViewToggleState == nil then
-                                DiffViewToggleState = true
-                            end
-
-                            if DiffViewToggleState then
-                                require('diffview').open()
-                            else
-                                require('diffview').close()
-                            end
-
-                            -- Toggle the state
-                            DiffViewToggleState = not DiffViewToggleState
-                        end,
-                        'DiffViewToggle',
-                    },
-                },
-            })
-        end,
     },
 
     {
@@ -117,11 +71,7 @@ return {
         keys = { '<leader>gj', '<leader>gk' },
         config = function()
             require('which-key').add({
-                { '<leader>hhh', 'pwd', desc = 'test action' },
-            })
-
-            require('which-key').add({
-                { '<leader>g', group = 'git' },
+                { '<leader>g',  group = 'git' },
                 {
                     '<leader>gG',
                     '<cmd>Gitsigns toggle_current_line_blame<cr>',
@@ -232,8 +182,8 @@ return {
                 },
                 signs_staged_enable = true,
                 signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-                numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-                linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+                numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
+                linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
                 word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
                 watch_gitdir = {
                     follow_files = true,
@@ -251,7 +201,7 @@ return {
                 current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
                 sign_priority = 6,
                 update_debounce = 100,
-                status_formatter = nil, -- Use default
+                status_formatter = nil,  -- Use default
                 max_file_length = 40000, -- Disable if file is longer than this (in lines)
                 preview_config = {
                     -- Options passed to nvim_open_win
