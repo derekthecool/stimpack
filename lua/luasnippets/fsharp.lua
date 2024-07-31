@@ -206,8 +206,8 @@ local snippets = {
 
     ms(
         {
-            { trig = 'webapi starter',      snippetType = 'snippet' },
-            { trig = 'api starter',         snippetType = 'snippet' },
+            { trig = 'webapi starter', snippetType = 'snippet' },
+            { trig = 'api starter', snippetType = 'snippet' },
             { trig = 'Program api starter', snippetType = 'snippet' },
         },
         fmt(
@@ -331,12 +331,12 @@ local snippets = {
 local autosnippets = {
     ms(
         {
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
-            { trig = 'printfn',    snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'printfn', snippetType = 'snippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'eprintfn',   snippetType = 'snippet' },
-            { trig = 'FRMAT',      snippetType = 'autosnippet' },
-            { trig = 'sprintf',    snippetType = 'snippet' },
+            { trig = 'eprintfn', snippetType = 'snippet' },
+            { trig = 'FRMAT', snippetType = 'autosnippet' },
+            { trig = 'sprintf', snippetType = 'snippet' },
         },
         fmt([[{}printf{} "{}"{}]], {
             f(function(args, snip)

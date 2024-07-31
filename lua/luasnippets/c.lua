@@ -131,9 +131,9 @@ local snippets = {
             'printf',
             'fprintf',
             'sprintf',
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'FRMAT',      snippetType = 'autosnippet' },
+            { trig = 'FRMAT', snippetType = 'autosnippet' },
         },
         fmt(
             [[
@@ -799,7 +799,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'case',      snippetType = 'snippet' },
+            { trig = 'case', snippetType = 'snippet' },
             { trig = 'case case', snippetType = 'autosnippet' },
         },
         fmt(

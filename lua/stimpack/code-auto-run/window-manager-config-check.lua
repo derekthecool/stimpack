@@ -21,7 +21,11 @@ vim.api.nvim_create_autocmd('BufWritePost', {
         else
             local output = Execute('luac -p rc.lua')
             if output.ret ~= nil and output.ret == 0 then
-                vim.notify('Using just luac, the script is OK', vim.log.levels.INFO, { title = 'Stimpack Notification' })
+                vim.notify(
+                    'Using just luac, the script is OK',
+                    vim.log.levels.INFO,
+                    { title = 'Stimpack Notification' }
+                )
             else
                 vim.notify(
                     'Awesome WM config failure, DO NOT RESTART AWESOME (luac check only)',

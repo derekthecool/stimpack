@@ -1,8 +1,6 @@
 local log_diagnostic_reaper = {}
 
-log_diagnostic_reaper.setup = function(opts)
-
-end
+log_diagnostic_reaper.setup = function(opts) end
 
 log_diagnostic_reaper.reap = function()
     -- Create namespace and clear it so old errors go away

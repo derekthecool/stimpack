@@ -306,7 +306,7 @@ fun.each(print, fun.take(15, fun.cycle(fun.chain(fun.enumerate({ 'a', 'b', 'c' }
 -- Operators
 -- https://luafun.github.io/operators.html
 -- There are many of these, just use fun.operator LSP help to check them
-print(fun.reduce(fun.operator.concat, '', {'these','strings','should','concat'}))
+print(fun.reduce(fun.operator.concat, '', { 'these', 'strings', 'should', 'concat' }))
 
 --[[
 -- Step size can't be 0

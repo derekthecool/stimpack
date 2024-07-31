@@ -18,7 +18,7 @@ local snippets = {
     ms(
         {
             { trig = 'full template', snippetType = 'snippet' },
-            { trig = 'FIRST',         snippetType = 'autosnippet' },
+            { trig = 'FIRST', snippetType = 'autosnippet' },
         },
         fmt(
             [[

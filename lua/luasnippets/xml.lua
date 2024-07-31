@@ -285,7 +285,7 @@ local autosnippets = {
 
         {
             { trig = 'package reference', snippetType = 'snippet' },
-            { trig = 'INCLUDE',           snippetType = 'autosnippet' },
+            { trig = 'INCLUDE', snippetType = 'autosnippet' },
         },
         fmt(
             [[

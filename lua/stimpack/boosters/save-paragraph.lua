@@ -10,8 +10,6 @@ M.save_paragraph = function()
     -- g/\(\d atd\d\+\|MTpub\|MTrecv\|SOCKET_\|-#CALL\|CONNECTED\)/y A
     -- g/\(+RESP:ST...\|\d atd\d\+\|MTpub\|MTrecv\|SOCKET_\|-#CALL\|CONNECTED\)/y A
 
-
-
     V(vim.fn.getreg('+'))
 end
 

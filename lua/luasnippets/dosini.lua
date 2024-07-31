@@ -1,13 +1,11 @@
 ---@diagnostic disable: undefined-global
-local snippets = {
-
-}
+local snippets = {}
 
 local autosnippets = {
-     s(
-       'FIRST',
-       fmt(
-         [[
+    s(
+        'FIRST',
+        fmt(
+            [[
          [project-build]
 
          # shell command, use quotation for filenames containing spaces
@@ -35,11 +33,9 @@ local autosnippets = {
          # output mode: run in a terminal
          output=terminal
          ]],
-         {
-           
-         }
-       )
-     ),
+            {}
+        )
+    ),
 }
 
 return snippets, autosnippets

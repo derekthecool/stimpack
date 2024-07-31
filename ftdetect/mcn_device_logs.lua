@@ -1,23 +1,23 @@
 -- Define the patterns to match
 -- local log_level = vim.diagnostic.severity.ERROR
 local patterns_to_match = {
-    { pattern = 'MTpub',                                  level = vim.diagnostic.severity.INFO },
-    { pattern = 'tcpreceive',                             level = vim.diagnostic.severity.INFO },
-    { pattern = 'MTrecv',                                 level = vim.diagnostic.severity.INFO },
-    { pattern = 'MQTT',                                   level = vim.diagnostic.severity.INFO },
-    { pattern = 'FA:',                                    level = vim.diagnostic.severity.INFO },
-    { pattern = 'F1:',                                    level = vim.diagnostic.severity.INFO },
-    { pattern = 'writeid',                                level = vim.diagnostic.severity.INFO },
-    { pattern = 'CME Error',                              level = vim.diagnostic.severity.ERROR },
-    { pattern = 'PA30B?V01[._]01B%d%d %d%d%d%d',          level = vim.diagnostic.severity.INFO },
-    { pattern = 'AT start.*AT#MQ',                        level = vim.diagnostic.severity.INFO },
+    { pattern = 'MTpub', level = vim.diagnostic.severity.INFO },
+    { pattern = 'tcpreceive', level = vim.diagnostic.severity.INFO },
+    { pattern = 'MTrecv', level = vim.diagnostic.severity.INFO },
+    { pattern = 'MQTT', level = vim.diagnostic.severity.INFO },
+    { pattern = 'FA:', level = vim.diagnostic.severity.INFO },
+    { pattern = 'F1:', level = vim.diagnostic.severity.INFO },
+    { pattern = 'writeid', level = vim.diagnostic.severity.INFO },
+    { pattern = 'CME Error', level = vim.diagnostic.severity.ERROR },
+    { pattern = 'PA30B?V01[._]01B%d%d %d%d%d%d', level = vim.diagnostic.severity.INFO },
+    { pattern = 'AT start.*AT#MQ', level = vim.diagnostic.severity.INFO },
 
     -- Fota
-    { pattern = 'enter rsfota',                           level = vim.diagnostic.severity.INFO },
-    { pattern = 'AT%+STRTO=PA30,8',                       level = vim.diagnostic.severity.INFO },
-    { pattern = '%+ACK:STRTO.*FOTA',                      level = vim.diagnostic.severity.INFO },
-    { pattern = 'Content-Range: bytes',                   level = vim.diagnostic.severity.INFO },
-    { pattern = 'TrackerPa23ReportSTHFS:',                level = vim.diagnostic.severity.INFO },
+    { pattern = 'enter rsfota', level = vim.diagnostic.severity.INFO },
+    { pattern = 'AT%+STRTO=PA30,8', level = vim.diagnostic.severity.INFO },
+    { pattern = '%+ACK:STRTO.*FOTA', level = vim.diagnostic.severity.INFO },
+    { pattern = 'Content-Range: bytes', level = vim.diagnostic.severity.INFO },
+    { pattern = 'TrackerPa23ReportSTHFS:', level = vim.diagnostic.severity.INFO },
     { pattern = 'send %(fota.redstone.net.cn%) complete', level = vim.diagnostic.severity.INFO },
 }
 

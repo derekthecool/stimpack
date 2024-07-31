@@ -48,7 +48,7 @@ return {
                 playground = {
                     enable = true,
                     disable = {},
-                    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+                    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
                     persist_queries = false, -- Whether the query persists across vim sessions
                     keybindings = {
                         toggle_query_editor = 'o',
@@ -125,13 +125,13 @@ return {
             parser_config.powershell = {
                 install_info = {
                     url = string.format('%s/nvim-plugin-development/tree-sitter-PowerShell', OS['home']), -- local path or git repo
-                    files = { 'src/scanner.c', 'src/parser.c' },                                          -- note that some parsers also require src/scanner.c or src/scanner.cc
+                    files = { 'src/scanner.c', 'src/parser.c' }, -- note that some parsers also require src/scanner.c or src/scanner.cc
                     -- optional entries:
-                    branch = 'master',                                                                    -- default branch in case of git repo if different from master
-                    generate_requires_npm = false,                                                        -- if stand-alone parser without npm dependencies
-                    requires_generate_from_grammar = false,                                               -- if folder contains pre-generated src/parser.c
+                    branch = 'master', -- default branch in case of git repo if different from master
+                    generate_requires_npm = false, -- if stand-alone parser without npm dependencies
+                    requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
                 },
-                filetype = 'ps1',                                                                  -- if filetype does not match the parser name
+                filetype = 'ps1', -- if filetype does not match the parser name
             }
         end,
     },

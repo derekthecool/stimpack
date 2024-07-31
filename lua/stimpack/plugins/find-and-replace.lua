@@ -30,7 +30,7 @@ return {
                 hideSearchReplaceLabels = false,
             },
             prefill = {
-                normal = 'cursorWord',         -- "cursorWord"|false
+                normal = 'cursorWord', -- "cursorWord"|false
                 visual = 'selectionFirstLine', -- "selectionFirstLine"|false
                 startInReplaceLineIfPrefill = false,
             },

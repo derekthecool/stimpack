@@ -617,7 +617,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'SECOND', snippetType = 'autosnippet' },
-            { trig = 'set',    snippetType = 'snippet' },
+            { trig = 'set', snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -633,7 +633,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'string', snippetType = 'snippet' },
-            { trig = 'THIRD',  snippetType = 'autosnippet' },
+            { trig = 'THIRD', snippetType = 'autosnippet' },
         },
         fmt(
             [[

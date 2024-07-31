@@ -106,7 +106,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'PRINT',       snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'print_print', snippetType = 'snippet' },
         },
         fmt(

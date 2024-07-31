@@ -8,4 +8,3 @@ end
 
 print(vim.v.oldfiles)
 print(output)
-

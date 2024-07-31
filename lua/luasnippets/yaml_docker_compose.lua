@@ -119,7 +119,7 @@ local snippets = {
     ms(
         {
             { trig = 'mariadb', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'mysql',   snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'mysql', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -191,7 +191,7 @@ volumes:
     ms(
         {
             { trig = 'sql server', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'sqlserver',  snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'sqlserver', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[

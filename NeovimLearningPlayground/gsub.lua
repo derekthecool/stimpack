@@ -25,5 +25,5 @@ local replacement_table = {
     monkey = 'harpy eagle',
 }
 
-local original_text = "the dog met a cow who had been attacked by a monkey"
-print(original_text:gsub('%w+',replacement_table))
+local original_text = 'the dog met a cow who had been attacked by a monkey'
+print(original_text:gsub('%w+', replacement_table))

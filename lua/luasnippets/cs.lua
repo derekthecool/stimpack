@@ -81,8 +81,8 @@ local snippets = {
                 -- Assert.Matches(expectedRegex: new Regex(@$"^AT\+STRTO.*{UpdatePath}"), actualString: command.Runcommand.CallTransferNumber);
                 -- Assert.EndsWith(expectedEndString: $"{commandId:X4}$", actualString: command.Runcommand.CallTransferNumber);
                 local twoArgAssertTypes = {
-                    { Name = 'Equal',    Param1Name = 'expected',          Param2Name = 'actual' },
-                    { Name = 'Matches',  Param1Name = 'expectedRegex',     Param2Name = 'actualString' },
+                    { Name = 'Equal', Param1Name = 'expected', Param2Name = 'actual' },
+                    { Name = 'Matches', Param1Name = 'expectedRegex', Param2Name = 'actualString' },
                     { Name = 'EndsWith', Param1Name = 'expectedEndString', Param2Name = 'actualString' },
                     { Name = 'StartsWith', Param1Name = 'expectedStartString', Param2Name = 'actualString' },
                 }
@@ -213,7 +213,7 @@ builder.Logging.AddSerilog(logger);
     ms(
         {
             { trig = 'json_settings', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'asp_json',      snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'asp_json', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -296,8 +296,8 @@ public class FotaProcessor : IHostedService, IDisposable
 
     ms(
         {
-            { trig = 'API API',          snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'map_api_endpoint', snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = 'API API', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'map_api_endpoint', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -707,7 +707,7 @@ public class FotaProcessor : IHostedService, IDisposable
 
     ms(
         {
-            { trig = 'public override',   snippetType = 'snippet' },
+            { trig = 'public override', snippetType = 'snippet' },
             { trig = 'tostring override', snippetType = 'snippet' },
         },
         fmt(
@@ -730,7 +730,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine({});]], {
@@ -884,7 +884,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'record',        snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = 'record', snippetType = 'snippet', condition = conds.line_begin },
             { trig = 'record record', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(

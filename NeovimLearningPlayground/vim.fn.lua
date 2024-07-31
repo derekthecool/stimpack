@@ -14,7 +14,8 @@ print(vim.fn.expand('%:e'))
 local cwd = vim.fn.getcwd()
 local full_file = vim.fn.expand('%:p')
 local just_file_name = vim.fn.expand('%:t')
-local namespace = full_file:gsub(cwd .. OS.separator, ''):gsub(OS.separator .. just_file_name, ''):gsub(OS.separator,'.')
+local namespace =
+    full_file:gsub(cwd .. OS.separator, ''):gsub(OS.separator .. just_file_name, ''):gsub(OS.separator, '.')
 print(namespace)
 
 -- :h col()

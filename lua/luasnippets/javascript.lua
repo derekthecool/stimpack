@@ -2,10 +2,10 @@
 local snippets = {
     ms(
         {
-            { trig = 'console.log',   snippetType = 'snippet' },
-            { trig = 'PRINT',         snippetType = 'autosnippet' },
+            { trig = 'console.log', snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
             { trig = 'console.error', snippetType = 'snippet' },
-            { trig = 'ERRORPRINT',    snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[console.{}({})]], {
             f(function(args, snip)

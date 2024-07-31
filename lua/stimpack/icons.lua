@@ -5,7 +5,6 @@
 -- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
-
 Icons = {
 
     coding = {
@@ -64,7 +63,6 @@ Icons = {
         cut2 = '✂️',
         cut3 = '✂',
         cut4 = '✄',
-
     },
 
     git = {

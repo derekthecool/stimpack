@@ -63,8 +63,12 @@ local complicated_table = {
 --table.sort(complicated_table)
 print(complicated_table)
 
-table.sort(complicated_table, function(a,b) return a.a > b.a end)
+table.sort(complicated_table, function(a, b)
+    return a.a > b.a
+end)
 print(complicated_table)
 
-table.sort(complicated_table, function(a,b) return #b.name > #a.name end)
+table.sort(complicated_table, function(a, b)
+    return #b.name > #a.name
+end)
 print(complicated_table)

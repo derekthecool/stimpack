@@ -151,7 +151,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'widget',        snippetType = 'snippet' },
+            { trig = 'widget', snippetType = 'snippet' },
             { trig = 'widget widget', snippetType = 'autosnippet' },
         },
         fmt(
@@ -244,7 +244,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'column',        snippetType = 'snippet' },
+            { trig = 'column', snippetType = 'snippet' },
             { trig = 'column column', snippetType = 'autosnippet' },
         },
         fmt(
@@ -276,7 +276,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'text',      snippetType = 'snippet' },
+            { trig = 'text', snippetType = 'snippet' },
             { trig = 'text text', snippetType = 'autosnippet' },
         },
         fmt(
@@ -291,7 +291,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'row',     snippetType = 'snippet' },
+            { trig = 'row', snippetType = 'snippet' },
             { trig = 'row row', snippetType = 'autosnippet' },
         },
         fmt(
@@ -310,7 +310,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'stack',       snippetType = 'snippet' },
+            { trig = 'stack', snippetType = 'snippet' },
             { trig = 'stack stack', snippetType = 'autosnippet' },
         },
         fmt(
@@ -337,7 +337,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'alignment',           snippetType = 'snippet' },
+            { trig = 'alignment', snippetType = 'snippet' },
             { trig = 'alignment alignment', snippetType = 'autosnippet' },
         },
         fmt([[{}]], {
@@ -347,7 +347,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'width',       snippetType = 'snippet' },
+            { trig = 'width', snippetType = 'snippet' },
             { trig = 'width width', snippetType = 'autosnippet' },
         },
         fmt([[{}]], {
@@ -357,7 +357,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'height',        snippetType = 'snippet' },
+            { trig = 'height', snippetType = 'snippet' },
             { trig = 'height height', snippetType = 'autosnippet' },
         },
         fmt([[{}]], {
@@ -367,7 +367,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'container',           snippetType = 'snippet' },
+            { trig = 'container', snippetType = 'snippet' },
             { trig = 'container container', snippetType = 'autosnippet' },
         },
         fmt(
@@ -481,7 +481,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'scaffold',          snippetType = 'snippet' },
+            { trig = 'scaffold', snippetType = 'snippet' },
             { trig = 'scaffold scaffold', snippetType = 'autosnippet' },
         },
         fmt(

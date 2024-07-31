@@ -15,7 +15,7 @@ local snippets = {
         {
             { trig = '$$', snippetType = 'autosnippet' },
             -- Left
-            { trig = '¥',  snippetType = 'autosnippet' },
+            { trig = '¥', snippetType = 'autosnippet' },
             { trig = '$$', snippetType = 'snippet' },
         },
         fmt([[${}]], {
@@ -86,10 +86,10 @@ local autosnippets = {
 
     ms(
         {
-            { trig = '\\e',        snippetType = 'snippet' },
-            { trig = '\\033',      snippetType = 'snippet' },
+            { trig = '\\e', snippetType = 'snippet' },
+            { trig = '\\033', snippetType = 'snippet' },
             { trig = 'ansi color', snippetType = 'snippet' },
-            { trig = 'color',      snippetType = 'snippet' },
+            { trig = 'color', snippetType = 'snippet' },
         },
         fmt(
             [[
