@@ -1,5 +1,8 @@
 # StimPack Speed Inducing Stenography Neovim Configuration
 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 Derek's Neovim config setup. The name stim pack comes from the StarCraft
 Terran upgrade that allows your troops to shoot faster. But of course unlike the
 game, there is no self harm from using this repo. Also stim sounds like vim.
