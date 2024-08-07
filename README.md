@@ -147,3 +147,4 @@ seconds.
 
 I believe switching to the awesome lua plugin manager,
 [Lazy.nvim](https://github.com/folke/lazy.nvim) will help a lot.
+test

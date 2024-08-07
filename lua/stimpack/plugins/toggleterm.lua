@@ -29,7 +29,8 @@ return {
             persist_size = true,
             direction = 'horizontal',
             close_on_exit = true,
-            shell = vim.o.shell,
+            -- Default to pwsh
+            shell = 'pwsh',
             float_opts = {
                 border = 'double',
                 winblend = 0,
