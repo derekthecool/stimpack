@@ -234,7 +234,6 @@ local snippets = {
         )
     ),
 
-
     ms(
         {
             { trig = 'Removed', snippetType = 'snippet' },
