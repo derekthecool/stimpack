@@ -9,6 +9,7 @@ return {
         { '<leader>gz', desc = 'Open lazygit to dotfiles bare repo ~/.cfg' },
         { '<leader>gx', desc = 'Open plain terminal to be used for git in a new tab' },
         { '∵', desc = 'Open plain terminal to be used for git in a new tab' },
+        { '<CR>', desc = 'Custom toggleterm command with prompt (uses global variable SAVED_COMMAND)' },
     },
     config = function()
         require('toggleterm').setup({
@@ -66,6 +67,16 @@ return {
         vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]])
         vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]])
         vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]])
+        vim.keymap.set('n', '<CR>', function()
+            if not SAVED_COMMAND then
+                -- vim.ui.input({ prompt = 'Enter command for toggleterm:' }, function(input)
+                --     SAVED_COMMAND = 'input'
+                -- end)
+                SAVED_COMMAND = vim.fn.input('Enter command for toggleterm: ')
+            end
+
+            vim.cmd(string.format('TermExec cmd="%s"', SAVED_COMMAND))
+        end)
 
         local Terminal = require('toggleterm.terminal').Terminal
         local lazygit = Terminal:new({
