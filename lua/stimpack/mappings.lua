@@ -1,72 +1,70 @@
-local map = require('stimpack.mapping-function')
-
 -- Ｎｏｒｍａｌ ｍａｐｓ
 -- These are really only possible with Plover steno so don't feel crazy if you
 -- can't type this with your keyboard
 -- Quick fix maps
-map({ 'n', 'i' }, '→', function()
+vim.keymap.set({ 'n', 'i' }, '→', function()
     vim.api.nvim_cmd({ cmd = 'cnext' }, {})
 end)
-map({ 'n', 'i' }, '→→', function()
+vim.keymap.set({ 'n', 'i' }, '→→', function()
     vim.api.nvim_cmd({ cmd = 'clast' }, {})
 end)
-map({ 'n', 'i' }, '→→→', function()
+vim.keymap.set({ 'n', 'i' }, '→→→', function()
     vim.api.nvim_cmd({ cmd = 'cnfile' }, {})
 end)
-map({ 'n', 'i' }, '←', function()
+vim.keymap.set({ 'n', 'i' }, '←', function()
     vim.api.nvim_cmd({ cmd = 'cprev' }, {})
 end)
-map({ 'n', 'i' }, '←←', function()
+vim.keymap.set({ 'n', 'i' }, '←←', function()
     vim.api.nvim_cmd({ cmd = 'cfirst' }, {})
 end)
-map({ 'n', 'i' }, '←←←', function()
+vim.keymap.set({ 'n', 'i' }, '←←←', function()
     vim.api.nvim_cmd({ cmd = 'cNfile' }, {})
 end)
-map({ 'n', 'i' }, '↓', function()
+vim.keymap.set({ 'n', 'i' }, '↓', function()
     vim.api.nvim_cmd({ cmd = 'cclose' }, {})
 end)
-map({ 'n', 'i' }, '↑', function()
+vim.keymap.set({ 'n', 'i' }, '↑', function()
     vim.api.nvim_cmd({ cmd = 'copen' }, {})
 end)
 
 -- Buffer maps
-map('', '⊃', ':bnext<cr>') -- Use right mod
-map('', '⊂', ':bprevious<cr>') -- Use left mod
-map('', 'π', ':bdelete<cr>') -- Use down mod
+vim.keymap.set('', '⊃', ':bnext<cr>') -- Use right mod
+vim.keymap.set('', '⊂', ':bprevious<cr>') -- Use left mod
+vim.keymap.set('', 'π', ':bdelete<cr>') -- Use down mod
 
 -- Ｉｎｓｅｒｔ ｍａｐｓ
 -- Control + j/k to select from popup menu
-map('i', '<c-j>', '<C-n>')
-map('i', '<c-k>', '<C-p>')
+vim.keymap.set('i', '<c-j>', '<C-n>')
+vim.keymap.set('i', '<c-k>', '<C-p>')
 
 -- Ｖｉｓｕａｌ ｍｏｄｅ
 -- Better command to shift text in visual mode, text it reselected
-map('v', '<', '<gv')
-map('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('v', '>', '>gv')
 
 -- Eazy saving with zzzz
 -- Press zzz
-map('n', 'zzz', ':update<CR>', { silent = true })
-map('i', 'zzz', '<C-o>:update<CR><ESC>^', { silent = true })
+vim.keymap.set('n', 'zzz', ':update<CR>', { silent = true })
+vim.keymap.set('i', 'zzz', '<C-o>:update<CR><ESC>^', { silent = true })
 
 -- -- Permanent Very Magic Mode - Helps To Get PCRE Type Regex
-map('n', '/', '/\\v')
-map('v', '/', '/\\v')
+vim.keymap.set('n', '/', '/\\v')
+vim.keymap.set('v', '/', '/\\v')
 
 -- Lazy commands
-map('n', '<leader>aa', ':Lazy<CR>')
+vim.keymap.set('n', '<leader>aa', ':Lazy<CR>')
 
 -- Run plenary tests on current buffer
-map('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
+vim.keymap.set('n', '<leader>dP', '<Plug>PlenaryTestFile<CR>')
 
 -- Show recent notifications
-map('n', '<leader>ad', function()
+vim.keymap.set('n', '<leader>ad', function()
     require('notify')._print_history()
 end)
 
 -- Conceal level mappings from ziontee113
 
-map('n', '<F10>', function()
+vim.keymap.set('n', '<F10>', function()
     if vim.o.conceallevel > 0 then
         vim.o.conceallevel = 0
     else
@@ -74,7 +72,7 @@ map('n', '<F10>', function()
     end
 end)
 
-map('n', '<F11>', function()
+vim.keymap.set('n', '<F11>', function()
     if vim.o.concealcursor == 'n' then
         vim.o.concealcursor = ''
     else
@@ -126,7 +124,7 @@ local function ReloadConfig()
     dofile(OS.init_lua)
 end
 
-map('n', '<leader>ac', ReloadConfig)
+vim.keymap.set('n', '<leader>ac', ReloadConfig)
 
 -- https://unix.stackexchange.com/questions/585019/horizontal-equivalent-of-zz-in-vim
 -- vim.keymap.set('n', 'z.', '<C-u>normal! zszH<CR>', { silent = true, desc = 'Center cursor horizontally' })
