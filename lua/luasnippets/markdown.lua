@@ -219,6 +219,24 @@ local snippets = {
 
     ms(
         {
+            { trig = 'Added', snippetType = 'snippet' },
+            { trig = 'CHANGELOG.md add', snippetType = 'autosnippet' },
+        },
+        fmt(
+            [[
+        ### Added
+
+        - {}
+        ]],
+            {
+                i(1),
+            }
+        )
+    ),
+
+
+    ms(
+        {
             { trig = 'Removed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
         },

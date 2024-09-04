@@ -188,6 +188,104 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'readonly', snippetType = 'snippet', condition = nil },
+            { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    Set-Variable -Name {Name} -Value {Value} -Option ReadOnly
+    ]],
+            {
+                Name = i(1, 'MyVariable'),
+                Value = i(2, '1234'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'argument_completer_native', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+            $scriptblock = {
+                param(
+                    $wordToComplete,
+                    $commandAst,
+                    $cursorPosition
+                )
+
+            dotnet complete --position $cursorPosition $commandAst.ToString() | ForEach-Object {
+                    [System.Management.Automation.CompletionResult]::new(
+                        $_,               # completionText
+                        $_,               # listItemText
+                        'ParameterValue', # resultType
+                        $_                # toolTip
+                    )
+                }
+            }
+
+            Register-ArgumentCompleter -Native -CommandName dotnet -ScriptBlock $scriptblock
+        ]],
+            {},
+            { delimiters = '<>' }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'argument_completer_powershell', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+                    $s = {
+                        param(
+                            $commandName,
+                            $parameterName,
+                            $wordToComplete,
+                            $commandAst,
+                            $fakeBoundParameters
+                        )
+
+                    $services = Get-Service | Where-Object {
+                            $_.Status -eq 'Running' -and $_.Name -like "$wordToComplete*"
+                        }
+
+                    $services | ForEach-Object {
+                            New-Object -Type System.Management.Automation.CompletionResult -ArgumentList @(
+                                $_.Name          # completionText
+                                $_.Name          # listItemText
+                                'ParameterValue' # resultType
+                                $_.Name          # toolTip
+                            )
+                        }
+                    }
+
+                    Register-ArgumentCompleter -CommandName Stop-Service -ParameterName Name -ScriptBlock $s
+        ]],
+            {},
+            { delimiters = '<>' }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'override tostring', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+
+    [string]ToString()
+    {{
+        $fileName = ($this.Path -split '[/\\]' | Select-Object -Last 1)
+        return "$($this.Enabled) : $fileName"
+    }}
+        ]],
+            {}
+        )
+    ),
+    ms(
+        {
             { trig = 'FTP', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
