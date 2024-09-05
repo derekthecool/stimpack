@@ -33,8 +33,10 @@ return {
     {
         'numToStr/Comment.nvim',
         keys = {
-            { 'gc', mode = { 'n', 's', 'v' } },
-            { 'gb', mode = { 'n', 's', 'v' } },
+            { 'gc',  mode = { 'n', 's', 'v' } },
+            { 'gb',  mode = { 'n', 's', 'v' } },
+            { 'gcc', mode = { 'n', 's', 'v' } },
+            { 'gbc', mode = { 'n', 's', 'v' } },
         },
         opts = {
             ---Add a space b/w comment and the line
@@ -95,6 +97,10 @@ return {
             ---Post-hook, called after commenting is done
             ---@type fun(ctx: Ctx)
             post_hook = nil,
+            config = function()
+                local ft = require('Comment.ft')
+                ft.cpp = { '//%s', '/*%s*/' }
+            end,
         },
     },
 
