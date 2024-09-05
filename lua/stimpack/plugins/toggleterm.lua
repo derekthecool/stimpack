@@ -74,7 +74,7 @@ return {
                 -- end)
                 SAVED_COMMAND = vim.fn.input('Enter command for toggleterm: ')
             end
-
+            vim.cmd('update')
             vim.cmd(string.format('TermExec cmd="%s"', SAVED_COMMAND))
         end)
 
