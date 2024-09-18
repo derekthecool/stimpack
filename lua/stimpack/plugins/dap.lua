@@ -34,9 +34,9 @@ return {
                     desc = 'Logging breakpoint (____)',
                 },
                 { '<leader>dr', '<cmd>lua require(\'dap\').repl.open()<CR>', desc = 'Open repl' },
-                { '<leader>dR', '<cmd>lua require(\'dap\').run_last()<CR>',  desc = 'Run last' },
+                { '<leader>dR', '<cmd>lua require(\'dap\').run_last()<CR>', desc = 'Run last' },
                 { '<leader>dq', '<cmd>lua require(\'dap\').terminate()<CR>', desc = 'Exit debugging' },
-                { '<leader>dl', '<cmd>sp ~/.cache/nvim/dap.log<CR>',         desc = 'Open dap log' },
+                { '<leader>dl', '<cmd>sp ~/.cache/nvim/dap.log<CR>', desc = 'Open dap log' },
             })
 
             vim.keymap.set('n', '≤', '<cmd>lua require(\'dap\').step_over()<CR>')
@@ -86,18 +86,18 @@ return {
         'theHamsta/nvim-dap-virtual-text',
         lazy = true,
         opts = {
-            enabled = true,                     -- enable this plugin (the default)
-            enabled_commands = true,            -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
+            enabled = true, -- enable this plugin (the default)
+            enabled_commands = true, -- create commands DapVirtualTextEnable, DapVirtualTextDisable, DapVirtualTextToggle, (DapVirtualTextForceRefresh for refreshing when debug adapter did not notify its termination)
             highlight_changed_variables = true, -- highlight changed values with NvimDapVirtualTextChanged, else always NvimDapVirtualText
-            highlight_new_as_changed = true,    -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
-            show_stop_reason = true,            -- show stop reason when stopped for exceptions
-            commented = true,                   -- prefix virtual text with comment string
+            highlight_new_as_changed = true, -- highlight new variables in the same way as changed variables (if highlight_changed_variables)
+            show_stop_reason = true, -- show stop reason when stopped for exceptions
+            commented = true, -- prefix virtual text with comment string
             -- experimental features:
-            virt_text_pos = 'eol',              -- position of virtual text, see `:h nvim_buf_set_extmark()`
-            all_frames = true,                  -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
+            virt_text_pos = 'eol', -- position of virtual text, see `:h nvim_buf_set_extmark()`
+            all_frames = true, -- show virtual text for all stack frames not only current. Only works for debugpy on my machine.
 
             -- 2022-04-16 virtual lines did not work for me with can clangd
-            virt_lines = false,      -- show virtual lines instead of virtual text (will flicker!)
+            virt_lines = false, -- show virtual lines instead of virtual text (will flicker!)
             virt_text_win_col = nil, -- position the virtual text at a fixed window column (starting from the first text column) ,
             -- e.g. 80 to position at column 80, see `:h nvim_buf_set_extmark()`
         },
@@ -147,8 +147,8 @@ return {
                     },
                 },
                 floating = {
-                    max_height = nil,  -- These can be integers or a float between 0 and 1.
-                    max_width = nil,   -- Floats will be treated as percentage of your screen.
+                    max_height = nil, -- These can be integers or a float between 0 and 1.
+                    max_width = nil, -- Floats will be treated as percentage of your screen.
                     border = 'single', -- Border style. Can be "single", "double" or "rounded"
                     mappings = {
                         close = { 'q', '<Esc>' },

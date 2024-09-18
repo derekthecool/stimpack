@@ -45,7 +45,7 @@ local snippets = {
         {
             { trig = '$$', snippetType = 'autosnippet' },
             -- Left
-            { trig = '¥',  snippetType = 'autosnippet' },
+            { trig = '¥', snippetType = 'autosnippet' },
             { trig = '$$', snippetType = 'snippet' },
         },
         fmt([[${}]], {
@@ -123,7 +123,7 @@ local autosnippets = {
             BG_Green = i(2, '0-255 BG Green'),
             BG_Blue = i(3, '0-255 BG Blue'),
             TextMode = c(4, {
-                t(''),   -- Normal
+                t(''), -- Normal
                 t(';1'), -- Bold
                 t(';2'), -- Dim
                 t(';3'), -- Italic
@@ -146,7 +146,7 @@ local autosnippets = {
             FG_Green = i(2, '0-255 FG Green'),
             FG_Blue = i(3, '0-255 FG Blue'),
             TextMode = c(4, {
-                t(''),   -- Normal
+                t(''), -- Normal
                 t(';1'), -- Bold
                 t(';2'), -- Dim
                 t(';3'), -- Italic
@@ -162,10 +162,10 @@ local autosnippets = {
 
     ms(
         {
-            { trig = '\\e',        snippetType = 'snippet' },
-            { trig = '\\033',      snippetType = 'snippet' },
+            { trig = '\\e', snippetType = 'snippet' },
+            { trig = '\\033', snippetType = 'snippet' },
             { trig = 'ansi_color', snippetType = 'snippet' },
-            { trig = 'color',      snippetType = 'snippet' },
+            { trig = 'color', snippetType = 'snippet' },
         },
         fmt([[\033[38;2;{FG_Red};{FG_Green};{FG_Blue};48;2;{BG_Red};{BG_Green};{BG_Blue}{TextMode}m{Text}\033[0m]], {
             FG_Red = i(1, '0-255 FG Red'),
@@ -175,7 +175,7 @@ local autosnippets = {
             BG_Green = i(5, '0-255 BG Green'),
             BG_Blue = i(6, '0-255 BG Blue'),
             TextMode = c(7, {
-                t(''),   -- Reset
+                t(''), -- Reset
                 t(';1'), -- Bold
                 t(';2'), -- Dim
                 t(';3'), -- Italic
