@@ -47,8 +47,7 @@ return {
             require('leap').leap({ target_windows = { vim.fn.win_getid() } })
         end
 
-        local map = require('stimpack.mapping-function')
-        map('n', '\\', leap_all_windows)
-        map('n', '√', leap_bidirectional)
+        vim.keymap.set('n', '\\', leap_all_windows)
+        vim.keymap.set('n', '√', leap_bidirectional)
     end,
 }
