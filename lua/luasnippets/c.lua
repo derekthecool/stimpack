@@ -13,6 +13,23 @@ local snippets = {
 
     ms(
         {
+            { trig = 'shell_command', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+    char shell_command[] = "{Command}";
+    FILE *shell_command_file_pointer = popen(shell_command, "r");
+    char shell_command_read_buffer[9000];
+    memset(shell_command_read_buffer, 0, sizeof(shell_command_read_buffer));
+    size_t commandSize = fread(buffer, 1, sizeof buffer, otaCommandScriptFilePointer);
+    puts(shell_command_read_buffer);
+        ]],
+            { Command = i(1, 'protoc --help') }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'string compare', snippetType = 'autosnippet', condition = nil },
             { trig = 'strcmp', snippetType = 'autosnippet', condition = nil },
             { trig = 'strncmp', snippetType = 'autosnippet', condition = nil },

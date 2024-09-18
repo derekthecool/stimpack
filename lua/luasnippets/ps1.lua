@@ -188,6 +188,31 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'ShouldProcess', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        [CmdletBinding(SupportsShouldProcess)]
+
+        if ($PSCmdlet.ShouldProcess("{Message}"))
+        {{
+            {Actual}
+        }}
+        else
+        {{
+            # WhatIf code, should not perform any actions
+            {WhatIf}
+        }}
+        ]],
+            {
+                Message = i(1, 'Message about the impact of this command'),
+                Actual = i(2),
+                WhatIf = i(3),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'readonly', snippetType = 'snippet', condition = nil },
             { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
         },

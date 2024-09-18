@@ -68,6 +68,23 @@ local snippets = {
             }
         )
     ),
+
+    ms(
+        {
+            { trig = 'FREACH', snippetType = 'autosnippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        for (const auto &{item} : {source}) {{
+            cout << command << endl;
+        }}
+        ]],
+            {
+                item = i(1, 'item'),
+                source = i(2, 'source_vector'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {}
