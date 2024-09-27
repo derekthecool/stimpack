@@ -5,6 +5,42 @@ local scan = require('plenary.scandir')
 
 local snippets = {
 
+    ms(
+        {
+            { trig = 'asp.net', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'asp', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'dotnet_asp_net_api', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        # https://hub.docker.com/_/microsoft-dotnet
+        # Slight modification for project with solution and project file in same directory
+        FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+        WORKDIR /source
+
+        # copy csproj and restore as distinct layers
+        COPY *.sln .
+        COPY*.csproj .
+        RUN dotnet restore
+
+        # copy everything else and build app
+        COPY . .
+        WORKDIR /source
+        RUN dotnet publish -c release -o /app --no-restore
+
+        # final stage/image
+        FROM mcr.microsoft.com/dotnet/aspnet:8.0
+        WORKDIR /app
+        COPY --from=build /app ./
+        ENTRYPOINT ["dotnet", "{MyDLL}.dll"]
+        ]],
+            {
+                MyDLL = i(1, 'NameOfMyProjectsDLL'),
+
+            }
+        )
+    ),
+
     --[[
      this version seems better
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env

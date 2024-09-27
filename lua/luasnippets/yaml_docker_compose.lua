@@ -99,6 +99,32 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'ngrok', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+  ngrok:
+    image: ngrok/ngrok:latest
+    command:
+      # Use http for a web api
+      - 'http'
+        # Send logs to stdout to make viewable via docker/podman logs command
+        # By default there is no logging to files or stdout
+      - '--log=stdout'
+      - 'http://twilio_voip_api:8080'
+    # Put api key NGROK_AUTHTOKEN in .env file
+    env_file: .env
+    ports:
+      # Access to a nice web portal which has 2 nice features
+      # 1. You can get your random public URL here, also available in logs
+      # 2. It also somes with a nice request viewer
+      - 4040:4040
+        ]],
+            {}
+        )
+    ),
+    ms(
+        {
             { trig = 'Dockerfile', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[dockerfile: {Path}]], {
@@ -119,7 +145,7 @@ local snippets = {
     ms(
         {
             { trig = 'mariadb', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'mysql', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'mysql',   snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -191,7 +217,7 @@ volumes:
     ms(
         {
             { trig = 'sql server', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'sqlserver', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'sqlserver',  snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -275,6 +301,7 @@ volumes:
     ms(
         {
             { trig = 'environment environment', snippetType = 'autosnippet', condition = nil },
+            { trig = 'environment_examples', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[

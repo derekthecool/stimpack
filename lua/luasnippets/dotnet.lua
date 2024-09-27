@@ -13,6 +13,15 @@ end, {})
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    ms({
+        { trig = 'from body', snippetType = 'autosnippet', condition = nil },
+        { trig = 'FromBody',  snippetType = 'snippet',     condition = nil },
+    }, fmt('[FromBody]', {})),
+    ms({
+        { trig = 'from uri', snippetType = 'autosnippet', condition = nil },
+        { trig = 'FromUri',  snippetType = 'snippet',     condition = nil },
+    }, fmt('[FromUri]', {})),
+
     ms(
         {
             { trig = 'string join', snippetType = 'autosnippet', condition = nil },
@@ -106,7 +115,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex match', snippetType = 'snippet' },
-            { trig = 'REGMATCH', snippetType = 'autosnippet' },
+            { trig = 'REGMATCH',    snippetType = 'autosnippet' },
         },
         fmt([[Regex.Match({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -128,7 +137,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex matches', snippetType = 'snippet' },
-            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
+            { trig = 'ALLREGMATCH',   snippetType = 'autosnippet' },
         },
         fmt([[Regex.Matches({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -150,7 +159,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex replace', snippetType = 'snippet' },
-            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
+            { trig = 'REGREPLACE',    snippetType = 'autosnippet' },
         },
         fmt([[Regex.Replace({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),

@@ -39,6 +39,89 @@ end
 
 local snippets = {
 
+    ms(
+        {
+            { trig = 'mqtt',                          snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'MQTTNet_example',               snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'nuget_library_example_mqttnet', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+    // MQTTNet example setup https://www.nuget.org/packages/MQTTnet/5.0.0.1214-RC
+    var mqttFactory = new MqttFactory();
+    using var mqttClient = mqttFactory.CreateMqttClient();
+    var mqttClientOptions = new MqttClientOptionsBuilder().WithTcpServer("{MqttBroker}", 1883).Build();
+
+    // Setup message handling before connecting so that queued messages
+    // are also handled properly. When there is no event handler attached all
+    // received messages get lost.
+    mqttClient.ApplicationMessageReceivedAsync += e =>
+    {{
+        Console.WriteLine($"Received mqtt message with length: {{e.ApplicationMessage.Payload.Length}}, on topic: {{e.ApplicationMessage.Topic}}");
+        return Task.CompletedTask;
+    }};
+
+    await mqttClient.ConnectAsync(mqttClientOptions, CancellationToken.None);
+
+    var mqttSubscribeOptions = mqttFactory
+        .CreateSubscribeOptionsBuilder()
+        .WithTopicFilter(
+            topic: "{Topic}",
+            qualityOfServiceLevel: MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce
+        )
+        .Build();
+
+    await mqttClient.SubscribeAsync(mqttSubscribeOptions, CancellationToken.None);
+    Console.WriteLine("MQTT client subscribed to topic.");
+        ]],
+            {
+                MqttBroker = i(1, '192.168.1.1'),
+                Topic = i(2, 'mqtt topic'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'asp_verbose_request_middleware', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+// Middleware to log request details
+app.Use(
+    async (context, next) =>
+    {
+        context.Request.EnableBuffering(); // Allow multiple reads of the request body
+
+        // Read the request body
+        string bodyContent;
+        using (
+            var reader = new StreamReader(
+                context.Request.Body,
+                System.Text.Encoding.UTF8,
+                leaveOpen: true
+            )
+        )
+        {
+            bodyContent = await reader.ReadToEndAsync();
+            context.Request.Body.Position = 0; // Reset the request body stream position
+        }
+
+        // Log the full request details
+        var logger = context.RequestServices.GetService<ILogger<Program>>();
+        logger?.LogInformation("Request URI: {Uri}", context.Request.GetDisplayUrl());
+        logger?.LogInformation("Request Headers: {Headers}", context.Request.Headers);
+        logger?.LogInformation("Request Body: {Body}", bodyContent);
+
+        await next.Invoke(); // Call the next middleware
+    }
+);
+        ]],
+            {},
+            { delimiters = '[]' }
+        )
+    ),
+
     ms({ { trig = 'read line', snippetType = 'autosnippet' } }, fmt([[Console.ReadLine()]], {}), {
         callbacks = {
             [-1] = {
@@ -81,9 +164,9 @@ local snippets = {
                 -- Assert.Matches(expectedRegex: new Regex(@$"^AT\+STRTO.*{UpdatePath}"), actualString: command.Runcommand.CallTransferNumber);
                 -- Assert.EndsWith(expectedEndString: $"{commandId:X4}$", actualString: command.Runcommand.CallTransferNumber);
                 local twoArgAssertTypes = {
-                    { Name = 'Equal', Param1Name = 'expected', Param2Name = 'actual' },
-                    { Name = 'Matches', Param1Name = 'expectedRegex', Param2Name = 'actualString' },
-                    { Name = 'EndsWith', Param1Name = 'expectedEndString', Param2Name = 'actualString' },
+                    { Name = 'Equal',      Param1Name = 'expected',            Param2Name = 'actual' },
+                    { Name = 'Matches',    Param1Name = 'expectedRegex',       Param2Name = 'actualString' },
+                    { Name = 'EndsWith',   Param1Name = 'expectedEndString',   Param2Name = 'actualString' },
                     { Name = 'StartsWith', Param1Name = 'expectedStartString', Param2Name = 'actualString' },
                 }
 
@@ -213,7 +296,7 @@ builder.Logging.AddSerilog(logger);
     ms(
         {
             { trig = 'json_settings', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'asp_json', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'asp_json',      snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -296,8 +379,8 @@ public class FotaProcessor : IHostedService, IDisposable
 
     ms(
         {
-            { trig = 'API API', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'map_api_endpoint', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'API API',          snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'map_api_endpoint', snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt(
             [[
@@ -707,7 +790,7 @@ public class FotaProcessor : IHostedService, IDisposable
 
     ms(
         {
-            { trig = 'public override', snippetType = 'snippet' },
+            { trig = 'public override',   snippetType = 'snippet' },
             { trig = 'tostring override', snippetType = 'snippet' },
         },
         fmt(
@@ -730,7 +813,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[Console{}.WriteLine({});]], {
@@ -884,7 +967,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'record', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'record',        snippetType = 'snippet',     condition = conds.line_begin },
             { trig = 'record record', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
