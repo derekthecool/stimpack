@@ -311,7 +311,7 @@ return {
                     'omnisharp',
 
                     -- yaml
-                    'yaml-language-server',
+                    'yamlls',
 
                     -- Json
                     'jsonls',
