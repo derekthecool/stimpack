@@ -36,7 +36,6 @@ local snippets = {
         ]],
             {
                 MyDLL = i(1, 'NameOfMyProjectsDLL'),
-
             }
         )
     ),
