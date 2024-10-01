@@ -73,14 +73,48 @@ return {
                 return
             end
 
-            if not TOGGLE_TERM_SAVED_COMMAND then
+            if not TOGGLE_TERM_SAVED_COMMAND or TOGGLE_TERM_SAVED_COMMAND == '' then
                 TOGGLE_TERM_SAVED_COMMAND = vim.fn.input('Enter command for toggleterm: ')
             end
 
             vim.cmd('update')
-            V(string.format('Running command: %s', TOGGLE_TERM_SAVED_COMMAND))
+            V(string.format('Running command (TOGGLE_TERM_SAVED_COMMAND): %s', TOGGLE_TERM_SAVED_COMMAND))
             vim.cmd(string.format('TermExec cmd="%s"', TOGGLE_TERM_SAVED_COMMAND))
         end)
+
+        function jump_to_terminal_and_send(key)
+            -- Get the current window ID
+            local current_win = vim.api.nvim_get_current_win()
+
+            -- Find the terminal window
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+                local buf = vim.api.nvim_win_get_buf(win)
+                if vim.api.nvim_buf_get_option(buf, 'buftype') == 'terminal' then
+                    -- Focus the terminal window
+                    vim.api.nvim_set_current_win(win)
+
+                    -- Run the command here
+                    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, false, true), 'n', true)
+
+                    -- Use a delay to allow focus to settle before sending keys
+                    vim.defer_fn(function()
+                        -- Scroll up the terminal
+                        -- Restore the original window
+                        vim.api.nvim_set_current_win(current_win)
+                        -- Adjust the delay (in milliseconds) if needed
+                    end, 200)
+
+                    return
+                end
+            end
+        end
+
+        vim.keymap.set('n', '<leader>Tu', function()
+            jump_to_terminal_and_send('<C-u>')
+        end, { desc = 'Scroll terminal up' })
+        vim.keymap.set('n', '<leader>Td', function()
+            jump_to_terminal_and_send('<C-d>')
+        end, { desc = 'Scroll terminal down' })
 
         local Terminal = require('toggleterm.terminal').Terminal
         local lazygit = Terminal:new({
