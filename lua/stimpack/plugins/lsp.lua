@@ -394,6 +394,8 @@ return {
                     }),
                     null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }),
                     null_ls.builtins.formatting.stylua,
+
+                    -- Requires pip install gersemi
                     null_ls.builtins.formatting.gersemi,
                     null_ls.builtins.formatting.prettier.with({
                         filetypes = { 'markdown', 'vimwiki' },
