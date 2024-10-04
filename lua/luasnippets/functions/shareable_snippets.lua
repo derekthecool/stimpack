@@ -94,7 +94,7 @@ shareable.for_loop_c_style = ms(
 
 shareable.if_statement_c_style = ms(
     {
-        { trig = 'IF',       snippetType = 'autosnippet' },
+        { trig = 'IF', snippetType = 'autosnippet' },
         { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
     },
     fmt(

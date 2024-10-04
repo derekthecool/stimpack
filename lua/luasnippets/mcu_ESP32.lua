@@ -10,7 +10,7 @@ local snippets = {
     ms(
         {
             { trig = 'console_function', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'ESP32_cli',        snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'ESP32_cli', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -256,7 +256,7 @@ void button_task(void *arg) {{
 
     ms(
         {
-            { trig = 'uxQueueMessagesWaiting',          snippetType = 'snippet' },
+            { trig = 'uxQueueMessagesWaiting', snippetType = 'snippet' },
             { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
         },
         fmt(
