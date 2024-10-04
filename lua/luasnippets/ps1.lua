@@ -188,6 +188,17 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'mkdir', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        New-Item -ItemType Directory -ErrorAction SilentlyContinue
+        ]],
+            {}
+        )
+    ),
+    ms(
+        {
             { trig = 'ShouldProcess', snippetType = 'snippet', condition = nil },
         },
         fmt(

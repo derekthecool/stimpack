@@ -94,7 +94,7 @@ shareable.for_loop_c_style = ms(
 
 shareable.if_statement_c_style = ms(
     {
-        { trig = 'IF', snippetType = 'autosnippet' },
+        { trig = 'IF',       snippetType = 'autosnippet' },
         { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
     },
     fmt(
@@ -170,5 +170,29 @@ shareable.function_c_style = ms(
         }
     )
 )
+
+shareable.clang_brief_function_documentation = function(index)
+    return sn(
+        index,
+        fmt(
+            [[
+        /*
+        @brief {Details}
+
+        @param {ParamName} {ParamNotes}
+
+        @returns <{ReturnType}> {ReturnNotes}
+        */
+        ]],
+            {
+                Details = i(1, 'this function does ....'),
+                ParamName = i(2, 'param1'),
+                ParamNotes = i(3, 'param 1 does this ....'),
+                ReturnType = i(4, 'int'),
+                ReturnNotes = i(5, 'Details about return type ....'),
+            }
+        )
+    )
+end
 
 return shareable

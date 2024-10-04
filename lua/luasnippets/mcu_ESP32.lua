@@ -3,8 +3,54 @@
 -- This whole snippet file is for ESP32 microcontroller code
 
 local auxiliary = require('luasnippets.functions.auxiliary')
+local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'console_function', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'ESP32_cli',        snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+        // ***START***************** <FunctionNameRep> command ********************************
+        static esp_err_t do_<FunctionName>_cmd(int argc, char** argv)
+        {
+            // Function to expose to ESP32 console
+            <ExposedCommand>
+
+            // Print result of command
+            <PrintOutput>
+
+            // Return value
+            return ESP_OK;
+        }
+
+        static void register_<FunctionNameRep>(void)
+        {
+            const esp_console_cmd_t <FunctionNameRep>_args = {
+                .command = "<FunctionNameRep>",
+                .help = "<HelpText>",
+                .hint = NULL,
+                .func = &do_<FunctionNameRep>_cmd
+            };
+            ESP_ERROR_CHECK(esp_console_cmd_register(&<FunctionNameRep>_args));
+        }
+        // ***END******************* <FunctionNameRep> command ********************************
+        ]],
+            {
+                FunctionName = i(1, 'console_command_name'),
+                FunctionNameRep = rep(1),
+                ExposedCommand = i(2, 'command_to_expose_here()'),
+                PrintOutput = i(3, 'printf("Print some output here");'),
+                HelpText = i(4, 'This function does something great to use it ....'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
 
     s(
         'ESP32interrupt',
@@ -210,7 +256,7 @@ void button_task(void *arg) {{
 
     ms(
         {
-            { trig = 'uxQueueMessagesWaiting', snippetType = 'snippet' },
+            { trig = 'uxQueueMessagesWaiting',          snippetType = 'snippet' },
             { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
         },
         fmt(

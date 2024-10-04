@@ -12,6 +12,12 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
 
     ms({
+        { trig = 'brief',       snippetType = 'snippet',     condition = conds.line_begin },
+        { trig = 'brief brief', snippetType = 'autosnippet', condition = conds.line_begin },
+        { trig = '///',         snippetType = 'autosnippet', condition = conds.line_begin },
+    }, shareable.clang_brief_function_documentation(1)),
+
+    ms({
         { trig = '__function', snippetType = 'autosnippet', condition = nil },
     }, fmt([[__FUNCTION__]], {})),
 
@@ -35,10 +41,10 @@ local snippets = {
     ms(
         {
             { trig = 'string compare', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strncmp', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp', snippetType = 'snippet', condition = nil },
-            { trig = 'strncmp', snippetType = 'snippet', condition = nil },
+            { trig = 'strcmp',         snippetType = 'autosnippet', condition = nil },
+            { trig = 'strncmp',        snippetType = 'autosnippet', condition = nil },
+            { trig = 'strcmp',         snippetType = 'snippet',     condition = nil },
+            { trig = 'strncmp',        snippetType = 'snippet',     condition = nil },
         },
         fmt([[{Choices}]], {
             Choices = c(1, {
@@ -152,9 +158,9 @@ local snippets = {
             'printf',
             'fprintf',
             'sprintf',
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'FRMAT', snippetType = 'autosnippet' },
+            { trig = 'FRMAT',      snippetType = 'autosnippet' },
         },
         fmt(
             [[
@@ -820,7 +826,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'case', snippetType = 'snippet' },
+            { trig = 'case',      snippetType = 'snippet' },
             { trig = 'case case', snippetType = 'autosnippet' },
         },
         fmt(
