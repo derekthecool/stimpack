@@ -106,20 +106,26 @@ return {
         --     luasnip.jump(-1)
         -- end, { silent = true, desc = 'Snippet previous' })
 
+        -- NORMIE keyboard support
         vim.keymap.set({ 'i', 's' }, '<c-j>', function()
             luasnip.jump(1)
         end, { silent = true, desc = 'Snippet next' })
         vim.keymap.set({ 'i', 's' }, '<c-k>', function()
             luasnip.jump(-1)
         end, { silent = true, desc = 'Snippet previous' })
+        vim.keymap.set({ 'i', 's' }, '<c-u>', function()
+            require('luasnip.extras.select_choice')()
+        end, { silent = true, desc = 'Open snippet choice' })
+        vim.keymap.set({ 'i', 's' }, '<c-h>', '<Plug>luasnip-next-choice', {})
+        vim.keymap.set({ 'i', 's' }, '<c-l>', '<Plug>luasnip-prev-choice', {})
 
+        -- Steno keyboard support
         vim.keymap.set({ 'i', 's' }, '§', function()
             luasnip.jump(1)
         end, { silent = true, desc = 'Snippet next' })
         vim.keymap.set({ 'i', 's' }, '∏', function()
             luasnip.jump(-1)
         end, { silent = true, desc = 'Snippet previous' })
-
         vim.keymap.set({ 'i', 's' }, '∄', function()
             require('luasnip.extras.select_choice')()
         end, { silent = true, desc = 'Open snippet choice' })
@@ -136,8 +142,6 @@ return {
             )
         end, { silent = true, desc = 'ToggleLuasnipAutoChoiceExpand' })
 
-        -- vim.keymap.set({ 'i', 's' }, '👉', '<Plug>luasnip-next-choice', {})
-        -- vim.keymap.set({ 'i', 's' }, '👈', '<Plug>luasnip-prev-choice', {})
         vim.keymap.set({ 'i', 's' }, '∃', '<Plug>luasnip-next-choice', {})
         vim.keymap.set({ 'i', 's' }, '∀', '<Plug>luasnip-prev-choice', {})
 
