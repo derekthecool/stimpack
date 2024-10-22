@@ -4,7 +4,11 @@ local snippets = {
     -- Flutter key-store creation step one
     ms(
         {
-            { trig = 'keystoreProperties-part1-above-android-block', snippetType = 'snippet', condition = conds.line_begin },
+            {
+                trig = 'keystoreProperties-part1-above-android-block',
+                snippetType = 'snippet',
+                condition = conds.line_begin,
+            },
         },
         fmt(
             [[

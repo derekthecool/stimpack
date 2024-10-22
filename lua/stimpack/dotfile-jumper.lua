@@ -3,6 +3,7 @@ local dotfile_paths = {
     OS['nvim'],
     OS['plover'],
     OS['wezterm'],
+    OS['CrossPlatformDotfiles'],
 }
 
 local dotfile_jump = function()

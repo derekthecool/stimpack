@@ -303,7 +303,7 @@ Write-FormatView `
     ),
     ms(
         {
-            { trig = 'readonly',     snippetType = 'snippet', condition = nil },
+            { trig = 'readonly', snippetType = 'snippet', condition = nil },
             { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -508,7 +508,7 @@ Write-Output $filelist
 
     ms(
         {
-            { trig = 'error',        snippetType = 'snippet',     condition = nil },
+            { trig = 'error', snippetType = 'snippet', condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -1071,9 +1071,9 @@ class {ClassName} {{
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-        -- Old method
-        -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-        -- New method uses PSScriptTools function ConvertFrom-Text
+            -- Old method
+            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+            -- New method uses PSScriptTools function ConvertFrom-Text
             [[ConvertFrom-Text '{Pattern}']],
             {
                 Pattern = i(1, '.*'),
@@ -1271,9 +1271,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host',   snippetType = 'snippet' },
-            { trig = 'PRINT',        snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1391,8 +1391,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH',              snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object',      snippetType = 'snippet' },
+            { trig = 'FREACH', snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object', snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {

@@ -8,7 +8,7 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
-            { trig = 'esp_err_to_name',  snippetType = 'snippet', condition = nil },
+            { trig = 'esp_err_to_name', snippetType = 'snippet', condition = nil },
             { trig = 'esp error string', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -22,7 +22,7 @@ local snippets = {
     ),
     ms({
         { trig = 'esp okay', snippetType = 'autosnippet', condition = nil },
-        { trig = 'ESP_OK',   snippetType = 'autosnippet', condition = nil },
+        { trig = 'ESP_OK', snippetType = 'autosnippet', condition = nil },
     }, fmt([[ESP_OK]], {})),
     ms({
         { trig = 'esp fail', snippetType = 'autosnippet', condition = nil },
@@ -66,7 +66,7 @@ local snippets = {
     ms(
         {
             { trig = 'console_function', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'ESP32_cli',        snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'ESP32_cli', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -312,7 +312,7 @@ void button_task(void *arg) {{
 
     ms(
         {
-            { trig = 'uxQueueMessagesWaiting',          snippetType = 'snippet' },
+            { trig = 'uxQueueMessagesWaiting', snippetType = 'snippet' },
             { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
         },
         fmt(

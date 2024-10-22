@@ -69,6 +69,7 @@ OS['my_plugins'] = OS.join_path(OS['home'], 'neovim_plugins')
 OS['snippets'] = OS.join_path(OS.nvim, 'lua', 'luasnippets')
 OS['stimpack'] = OS.join_path(OS.nvim, 'lua', 'stimpack')
 OS['vimwiki'] = OS.join_path(OS['home'], '.mywiki')
+OS['CrossPlatformDotfiles'] = OS.join_path(OS['home'], 'Scripts')
 OS['wezterm'] = OS.join_path(OS['home'], '.config', 'wezterm ')
 
 ---Function to return telescope.utils command runner
