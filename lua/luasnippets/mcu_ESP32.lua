@@ -6,11 +6,67 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'esp_err_to_name',  snippetType = 'snippet', condition = nil },
+            { trig = 'esp error string', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        esp_err_to_name({esp_err_t_value})
+        ]],
+            {
+                esp_err_t_value = i(1, 'esp_err_t_value'),
+            }
+        )
+    ),
+    ms({
+        { trig = 'esp okay', snippetType = 'autosnippet', condition = nil },
+        { trig = 'ESP_OK',   snippetType = 'autosnippet', condition = nil },
+    }, fmt([[ESP_OK]], {})),
+    ms({
+        { trig = 'esp fail', snippetType = 'autosnippet', condition = nil },
+        { trig = 'ESP_FAIL', snippetType = 'autosnippet', condition = nil },
+    }, fmt([[ESP_FAIL]], {})),
+
+    ms(
+        {
+            { trig = 'ESP32_cli_argtable_args', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    // Move some where more accessible
+    static struct
+    {
+        arg_str_t *<struct_item>;
+        arg_end_t *end;
+    } <struct_name>;
+
+    int nerrors = arg_parse(argc, argv, (void **)&<rep_struct_name>);
+    if (nerrors != 0)
+    {
+        arg_print_errors(stderr, <rep_struct_name>.end, argv[0]);
+        return 0;
+    }
+
+    // Move to setup function
+    <rep_struct_name>.<struct_item_rep> =
+        arg_str0("m", "message", "data type", "MQTT topics to subscribe to (up to 100 items)");
+        ]],
+            {
+                struct_name = i(1, 'my_struct'),
+                struct_item = i(2, 'string_arg'),
+                rep_struct_name = rep(1),
+                struct_item_rep = rep(2),
+            },
+            { delimiters = '<>' }
+        )
+    ),
 
     ms(
         {
             { trig = 'console_function', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'ESP32_cli', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'ESP32_cli',        snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -256,7 +312,7 @@ void button_task(void *arg) {{
 
     ms(
         {
-            { trig = 'uxQueueMessagesWaiting', snippetType = 'snippet' },
+            { trig = 'uxQueueMessagesWaiting',          snippetType = 'snippet' },
             { trig = 'FreeRTOS_queue_messages_waiting', snippetType = 'snippet' },
         },
         fmt(

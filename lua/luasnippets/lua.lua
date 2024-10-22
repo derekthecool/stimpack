@@ -57,6 +57,15 @@ local snippets = {
 
     ms(
         {
+            { trig = ':match', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[:match('{Pattern}')]], {
+            Pattern = i(1, '.*'),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
             { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
         },

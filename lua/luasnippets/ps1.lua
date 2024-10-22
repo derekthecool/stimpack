@@ -188,6 +188,85 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'format string', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        "{FormatString}" -f {DynamicVariables}
+        ]],
+            {
+                FormatString = i(1, '{0}'),
+                DynamicVariables = d(2, function(args, snip)
+                    local nodes = {}
+
+                    -- Add nodes for snippet
+                    local input = (args[1] or {})[1]
+                    local _, variable_count = (input or ''):gsub('{[^}]+}', '')
+                    for variable = 1, variable_count do
+                        -- Insert comma before if not the first node
+                        if variable > 1 then
+                            table.insert(nodes, t(','))
+                        end
+                        table.insert(nodes, i(variable, string.format('Var%d', variable)))
+                    end
+
+                    return sn(nil, nodes)
+                end, { 1 }),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'Write-FormatView', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+# Uses EZOut to format as specified here
+# Generate by running ../Dots.EzFormat.ps1
+# Generated output located ../Dots.format.ps1xml
+Write-FormatView `
+    -TypeName 'System.Text.RegularExpressions.Match' `
+    -Name DotsRegexView `
+    -Property Value, Index, Success, Groups `
+    -StyleRow {
+    $_.Success ? 'Foreground.Green' : 'Foreground.Red'
+} `
+    -AutoSize
+        ]],
+            {},
+            { delimiters = '<>' }
+        )
+    ),
+    ms(
+        {
+            { trig = 'environment_variable_set', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        [environment]::SetEnvironmentVariable('{Name}', {Value}, '{Scope}')
+        ]],
+            {
+                Name = i(1, 'EnvironmentVariableName'),
+                Value = c(2, {
+                    i(1, 'Value'),
+                    sn(
+                        nil,
+                        fmt([['{Value}']], {
+                            Value = i(1, 'Value'),
+                        })
+                    ),
+                }),
+
+                Scope = c(3, {
+                    t('User'),
+                    t('Process'),
+                    t('Machine'),
+                }),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'mkdir', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -224,7 +303,7 @@ local snippets = {
     ),
     ms(
         {
-            { trig = 'readonly', snippetType = 'snippet', condition = nil },
+            { trig = 'readonly',     snippetType = 'snippet', condition = nil },
             { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -429,7 +508,7 @@ Write-Output $filelist
 
     ms(
         {
-            { trig = 'error', snippetType = 'snippet', condition = nil },
+            { trig = 'error',        snippetType = 'snippet',     condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -992,9 +1071,9 @@ class {ClassName} {{
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-            -- Old method
-            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-            -- New method uses PSScriptTools function ConvertFrom-Text
+        -- Old method
+        -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+        -- New method uses PSScriptTools function ConvertFrom-Text
             [[ConvertFrom-Text '{Pattern}']],
             {
                 Pattern = i(1, '.*'),
@@ -1192,9 +1271,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host', snippetType = 'snippet' },
-            { trig = 'PRINT', snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'PRINT',        snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1312,8 +1391,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH', snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object', snippetType = 'snippet' },
+            { trig = 'FREACH',              snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object',      snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {

@@ -60,19 +60,20 @@ local snippets = {
             trig = 'link',
             descr = 'Create markdown link [txt](url)',
         },
-        fmt(
-            [[
-            [{}]({})
-            {}
-            ]],
-            {
-                i(1),
-                f(function()
-                    return vim.fn.getreg('+')
-                end, {}),
-                i(0),
-            }
-        )
+        fmt([[{}]], {
+            d(1, function(args, snip)
+                local link_from_clipboard = vim.fn.getreg('+')
+                local last_part_of_link = link_from_clipboard:match('/([^/]+)$')
+                return sn(
+                    nil,
+                    fmt([[[{Description}]({Link})]], {
+
+                        Description = i(1, last_part_of_link),
+                        Link = t(link_from_clipboard),
+                    })
+                )
+            end, {}),
+        })
     ),
 
     s(
@@ -185,7 +186,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Fixed', snippetType = 'snippet' },
+            { trig = 'Fixed',            snippetType = 'snippet' },
             { trig = 'CHANGELOG.md fix', snippetType = 'autosnippet' },
         },
         fmt(
@@ -202,7 +203,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Changed', snippetType = 'snippet' },
+            { trig = 'Changed',             snippetType = 'snippet' },
             { trig = 'CHANGELOG.md change', snippetType = 'autosnippet' },
         },
         fmt(
@@ -219,7 +220,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Added', snippetType = 'snippet' },
+            { trig = 'Added',            snippetType = 'snippet' },
             { trig = 'CHANGELOG.md add', snippetType = 'autosnippet' },
         },
         fmt(
@@ -236,7 +237,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Removed', snippetType = 'snippet' },
+            { trig = 'Removed',             snippetType = 'snippet' },
             { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
         },
         fmt(
@@ -288,7 +289,7 @@ local snippets = {
     ms(
         {
             { trig = 'front_matter', snippetType = 'snippet' },
-            { trig = '---', snippetType = 'autosnippet' },
+            { trig = '---',          snippetType = 'autosnippet' },
         },
         fmt(
             [[
