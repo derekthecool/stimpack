@@ -1,6 +1,103 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'PRINT',           snippetType = 'autosnippet', condition = nil },
+            { trig = 'message',         snippetType = 'snippet',     condition = nil },
+            { trig = 'message message', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        message("{Message}")
+        ]],
+            {
+                Message = i(1, 'Print message here, will show up during cmake build'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'glob',      snippetType = 'snippet',     condition = nil },
+            { trig = 'glob glob', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        file({GlobType} {Variable} "{Pattern}")
+        ]],
+            {
+                GlobType = c(1, {
+                    t('GLOB_RECURSE'),
+                    t('GLOB'),
+                }),
+                Variable = i(2, 'SOURCES'),
+                Pattern = i(3, '*.c'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'cross_compile', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+# https://kubasejdak.com/how-to-cross-compile-for-embedded-with-cmake-like-a-champ
+set(CMAKE_SYSTEM_NAME               Generic)
+set(CMAKE_SYSTEM_PROCESSOR          arm)
+
+# Without that flag CMake is not able to pass test compilation check
+set(CMAKE_TRY_COMPILE_TARGET_TYPE   STATIC_LIBRARY)
+
+set(BAREMETAL_ARM_TOOLCHAIN_PATH "/usr/bin/")
+
+set(CMAKE_AR                        ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-ar${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_ASM_COMPILER              ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-gcc${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_C_COMPILER                ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-gcc${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_CXX_COMPILER              ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-g++${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_LINKER                    ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-ld${CMAKE_EXECUTABLE_SUFFIX})
+set(CMAKE_OBJCOPY                   ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-objcopy${CMAKE_EXECUTABLE_SUFFIX} CACHE INTERNAL "")
+set(CMAKE_RANLIB                    ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-ranlib${CMAKE_EXECUTABLE_SUFFIX} CACHE INTERNAL "")
+set(CMAKE_SIZE                      ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-size${CMAKE_EXECUTABLE_SUFFIX} CACHE INTERNAL "")
+set(CMAKE_STRIP                     ${BAREMETAL_ARM_TOOLCHAIN_PATH}arm-none-eabi-strip${CMAKE_EXECUTABLE_SUFFIX} CACHE INTERNAL "")
+
+set(CMAKE_C_FLAGS "-mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mcpu=cortex-a7 -mfloat-abi=hard -mfpu=neon")
+
+set(CMAKE_C_FLAGS_DEBUG             "-Os -g" CACHE INTERNAL "")
+set(CMAKE_C_FLAGS_RELEASE           "-Os -DNDEBUG" CACHE INTERNAL "")
+set(CMAKE_CXX_FLAGS_DEBUG           "${CMAKE_C_FLAGS_DEBUG}" CACHE INTERNAL "")
+set(CMAKE_CXX_FLAGS_RELEASE         "${CMAKE_C_FLAGS_RELEASE}" CACHE INTERNAL "")
+
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+
+
+# # arm-none-eabi-toolchain.cmake
+# set(CMAKE_SYSTEM_NAME Generic)
+# set(CMAKE_SYSTEM_PROCESSOR arm)
+#
+# # Specify the cross compiler
+# set(CMAKE_C_COMPILER arm-none-eabi-gcc)
+# set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+# set(CMAKE_ASM_COMPILER arm-none-eabi-as)
+#
+# # Specify the path to the ARM toolchain (optional)
+# set(CMAKE_FIND_ROOT_PATH /path/to/your/toolchain)
+#
+# # Search for programs in the build host directories
+# set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+#
+# # For libraries and headers in the cross-compilation
+# set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+        ]],
+            {},
+            { delimiters = '<>' }
+        )
+    ),
     ms(
         {
             {
@@ -331,18 +428,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     ),
 
     s(
-        'message',
-        fmt(
-            [[
-        message("{}")
-        ]],
-            {
-                i(1, 'Error here'),
-            }
-        )
-    ),
-
-    s(
         'variable_watch',
         fmt(
             [[
@@ -617,7 +702,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'SECOND', snippetType = 'autosnippet' },
-            { trig = 'set', snippetType = 'snippet' },
+            { trig = 'set',    snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -633,7 +718,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'string', snippetType = 'snippet' },
-            { trig = 'THIRD', snippetType = 'autosnippet' },
+            { trig = 'THIRD',  snippetType = 'autosnippet' },
         },
         fmt(
             [[

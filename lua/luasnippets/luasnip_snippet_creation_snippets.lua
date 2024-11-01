@@ -2,10 +2,10 @@
 
 local function ConditionsHelper(index)
     return c(index, {
+        t('nil'),
         t('conds.line_begin'),
         t('conds.line_end'),
         t('conds.line_begin + conds.line_end'),
-        t('nil'),
         sn(
             nil,
             fmt(

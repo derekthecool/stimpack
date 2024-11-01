@@ -10,11 +10,24 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+    ms(
+        {
+            { trig = 'to_int', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        atoi({String})
+        ]],
+            {
+                String = i(1, 'char_array_to_int'),
+            }
+        )
+    ),
 
     ms(
         {
             { trig = '#IF', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = '#if', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = '#if', snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt(
             [[
@@ -32,7 +45,7 @@ local snippets = {
     ms(
         {
             { trig = '#ELSE', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = '#else', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = '#else', snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt(
             [[
@@ -46,9 +59,9 @@ local snippets = {
     ),
 
     ms({
-        { trig = 'brief', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'brief',       snippetType = 'snippet',     condition = conds.line_begin },
         { trig = 'brief brief', snippetType = 'autosnippet', condition = conds.line_begin },
-        { trig = '///', snippetType = 'autosnippet', condition = conds.line_begin },
+        { trig = '///',         snippetType = 'autosnippet', condition = conds.line_begin },
     }, shareable.clang_brief_function_documentation(1)),
 
     ms({
@@ -75,10 +88,10 @@ local snippets = {
     ms(
         {
             { trig = 'string compare', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strncmp', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp', snippetType = 'snippet', condition = nil },
-            { trig = 'strncmp', snippetType = 'snippet', condition = nil },
+            { trig = 'strcmp',         snippetType = 'autosnippet', condition = nil },
+            { trig = 'strncmp',        snippetType = 'autosnippet', condition = nil },
+            { trig = 'strcmp',         snippetType = 'snippet',     condition = nil },
+            { trig = 'strncmp',        snippetType = 'snippet',     condition = nil },
         },
         fmt([[{Choices}]], {
             Choices = c(1, {
@@ -192,26 +205,39 @@ local snippets = {
             'printf',
             'fprintf',
             'sprintf',
-            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'PRINT',      snippetType = 'autosnippet' },
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'FRMAT', snippetType = 'autosnippet' },
+            { trig = 'FRMAT',      snippetType = 'autosnippet' },
         },
         fmt(
             [[
         {}"{}"{});
         ]],
             {
-                f(function(args, snip)
-                    if snip.trigger == 'ERRORPRINT' or snip.trigger == 'fprintf' then
-                        return 'fprintf(stderr, '
-                    elseif snip.trigger == 'FRMAT' or snip.trigger == 'sprintf' then
-                        return 'sprintf('
-                    else
-                        return 'printf('
-                    end
-                end, {}),
-                i(1),
-                auxiliary.printf_style_dynamic_formatter(2, 1),
+                --     if snip.trigger == 'ERRORPRINT' or snip.trigger == 'fprintf' then
+                --         -- table.sort(choices)
+                --         choices[1], choices[2] = choices[2], choices[1]
+                --     end
+                sn(
+                    1,
+                    fmt([[{}]], {
+                        c(1, {
+                            t('printf('),
+                            sn(
+                                print_index,
+                                fmt([[fprintf({FileHandle}, ]], {
+                                    FileHandle = c(1, {
+                                        t('stderr'),
+                                        t('stdout'),
+                                        i(1, 'CUSTOM_FILE_HANDLE'),
+                                    }),
+                                })
+                            ),
+                        }),
+                    })
+                ),
+                i(2),
+                auxiliary.printf_style_dynamic_formatter(3, 2),
             }
         )
     ),
@@ -297,26 +323,57 @@ local snippets = {
         )
     ),
 
-    s(
-        'malloc',
+    ms(
+        {
+            { trig = 'malloc',        snippetType = 'snippet',     condition = nil },
+            { trig = 'malloc malloc', snippetType = 'autosnippet', condition = nil },
+        },
         fmt(
             [[
-        {} {} = malloc(sizeof({}) * {});
-        if({} == NULL)
-        {{
-             printf("malloc for {} failed\n");
-             exit(1);
-        }}
+        {DataType} {VariableName} = malloc(sizeof({DataTypeRep}) * {Size});
+        {PointerCheck}
         ]],
             {
-                i(1, 'int'),
-                i(2, 'variableName'),
-                rep(1),
-                i(3, '50'),
+                DataType = i(1, 'int'),
+                VariableName = i(2, 'variableName'),
+                DataTypeRep = rep(1),
+                Size = i(3, '50'),
+                PointerCheck = sn(
+                    4,
+                    fmt([[{Choices}]], {
+                        Choices = c(1, {
+                            t(''),
+                            sn(
+                                nil,
+                                fmt(
+                                    [[
+                                    if(VariableName == NULL)
+                                    {{
+                                         printf("malloc failed\n");
+                                         exit(1);
+                                    }}
+                                    ]],
+                                    {}
+                                )
+                            ),
+                            sn(
+                                nil,
+                                fmt(
+                                    [[
+                            AUDIO_NULL_CHECK(TAG, _mallocd_memory_, return NULL);
+                            ]],
+                                    {}
+                                )
+                            ),
+                        }),
+
+                        -- ]],
+                    })
+                ),
                 -- A shortcut for functionNodes that only do very basic string manipulation.
                 -- l(lambda, argnodes):
-                l(l._1:gsub('[*]', ''), { 2 }),
-                rep(2),
+                -- l(l._1:gsub('[*]', ''), { 2 }),
+                -- rep(2),
             }
         )
     ),
@@ -577,6 +634,92 @@ local snippets = {
             [[
         char *p, *l = 0;
         getdelim(&p, &l, 0xFF, stdin);
+        ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'network_udp', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'udp',         snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+#include <arpa/inet.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#define BUFFER_SIZE 1024
+
+int main(int argc, char *argv[])
+{{
+    int sockfd;
+    struct sockaddr_in server_addr;
+    char buffer[BUFFER_SIZE];
+    const char *message = "Hello, UDP server!";
+
+    // Check for correct number of arguments
+    if (argc != 3)
+    {{
+        fprintf(stderr, "Usage: %s <SERVER_IP> <SERVER_PORT>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }}
+
+    const char *server_ip = argv[1];
+    int server_port = atoi(argv[2]);
+
+    // Create a socket
+    if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+    {{
+        perror("socket creation failed");
+        exit(EXIT_FAILURE);
+    }}
+
+    // Set up the server address struct
+    memset(&server_addr, 0, sizeof(server_addr));
+    server_addr.sin_family = AF_INET; // IPv4
+    server_addr.sin_port = htons(server_port);
+
+    // Convert IP address from text to binary form
+    if (inet_pton(AF_INET, server_ip, &server_addr.sin_addr) <= 0)
+    {{
+        perror("Invalid address or address not supported");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }}
+
+    // Send message to the server
+    ssize_t sent_bytes =
+        sendto(sockfd, message, strlen(message), 0, (const struct sockaddr *)&server_addr, sizeof(server_addr));
+    if (sent_bytes < 0)
+    {{
+        perror("sendto failed");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }}
+
+    printf("Message sent: %s\n", message);
+
+    // Receive response from the server
+    socklen_t addr_len = sizeof(server_addr);
+    ssize_t received_bytes = recvfrom(sockfd, buffer, BUFFER_SIZE, 0, (struct sockaddr *)&server_addr, &addr_len);
+    if (received_bytes < 0)
+    {{
+        perror("recvfrom failed");
+        close(sockfd);
+        exit(EXIT_FAILURE);
+    }}
+
+    buffer[received_bytes] = '\0'; // Null-terminate the received string
+    printf("Received from server: %s\n", buffer);
+
+    // Close the socket
+    close(sockfd);
+    return 0;
+}}
         ]],
             {}
         )
@@ -860,7 +1003,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'case', snippetType = 'snippet' },
+            { trig = 'case',      snippetType = 'snippet' },
             { trig = 'case case', snippetType = 'autosnippet' },
         },
         fmt(
