@@ -1049,4 +1049,164 @@ local autosnippets = {
     ),
 }
 
+-- Add snippets dynamically to the snippets table using just C library proto types
+local prototypes = {
+    -- <assert.h>
+    'void assert(int expression)',
+
+    -- <ctype.h>
+    'int isalpha(int c)',
+    'int isdigit(int c)',
+    'int isalnum(int c)',
+    'int ispunct(int c)',
+    'int isspace(int c)',
+    'int isupper(int c)',
+    'int islower(int c)',
+    'int toupper(int c)',
+    'int tolower(int c)',
+
+    -- <locale.h>
+    'char *setlocale(int category, const char *locale)',
+    'locale_t newlocale(int category, const char *locale, locale_t base)',
+    'void freelocale(locale_t locale)',
+    'locale_t duplocale(locale_t locale)',
+
+    -- <math.h>
+    'double fabs(double x)',
+    'double floor(double x)',
+    'double ceil(double x)',
+    'double sqrt(double x)',
+    'double pow(double x, double y)',
+    'double exp(double x)',
+    'double log(double x)',
+    'double log10(double x)',
+    'double sin(double x)',
+    'double cos(double x)',
+    'double tan(double x)',
+    'double sinh(double x)',
+    'double cosh(double x)',
+    'double tanh(double x)',
+    'double asin(double x)',
+    'double acos(double x)',
+    'double atan(double x)',
+    'double atan2(double y, double x)',
+
+    -- <setjmp.h>
+    'void longjmp(jmp_buf env, int val)',
+    'int setjmp(jmp_buf env)',
+
+    -- <signal.h>
+    'sig_atomic_t signal(int signum, void (*handler)(int))',
+    'int raise(int sig)',
+
+    -- <stdarg.h>
+    'void va_start(va_list ap, last_arg)',
+    'void va_end(va_list ap)',
+    'void va_copy(va_list dest, va_list src)',
+    'int vsprintf(char *str, const char *format, va_list ap)',
+
+    -- <stdio.h>
+    'void clearerr(FILE *stream)',
+    'int fclose(FILE *stream)',
+    'int fflush(FILE *stream)',
+    'int fgetc(FILE *stream)',
+    'char *fgets(char *str, int n, FILE *stream)',
+    'int fprintf(FILE *stream, const char *format, ...)',
+    'int fscanf(FILE *stream, const char *format, ...)',
+    'int fputc(int c, FILE *stream)',
+    'int fputs(const char *str, FILE *stream)',
+    'void perror(const char *s)',
+    'int printf(const char *format, ...)',
+    'int puts(const char *str)',
+    'int scanf(const char *format, ...)',
+    'int sprintf(char *str, const char *format, ...)',
+    'int sscanf(const char *str, const char *format, ...)',
+    'int vfprintf(FILE *stream, const char *format, va_list arg)',
+    'int vprintf(const char *format, va_list arg)',
+    'int vsprintf(char *str, const char *format, va_list arg)',
+
+    -- <stdlib.h>
+    'void *malloc(size_t size)',
+    'void *calloc(size_t num, size_t size)',
+    'void *realloc(void *ptr, size_t size)',
+    'void free(void *ptr)',
+    'int abs(int n)',
+    'long int labs(long int n)',
+    'double atof(const char *str)',
+    'int atoi(const char *str)',
+    'long int atol(const char *str)',
+    'float strtof(const char *str, char **endptr)',
+    'int rand(void)',
+    'void srand(unsigned int seed)',
+    'void exit(int status)',
+    'char *getenv(const char *name)',
+
+    -- <string.h>
+    'char *strcpy(char *dest, const char *src)',
+    'char *strncpy(char *dest, const char *src, size_t n)',
+    'char *strcat(char *dest, const char *src)',
+    'char *strncat(char *dest, const char *src, size_t n)',
+    'int strcmp(const char *str1, const char *str2)',
+    'int strncmp(const char *str1, const char *str2, size_t n)',
+    'int strcoll(const char *str1, const char *str2)',
+    'size_t strlen(const char *str)',
+    'char *strchr(const char *str, int c)',
+    'char *strrchr(const char *str, int c)',
+    'char *strstr(const char *haystack, const char *needle)',
+    'char *strtok(char *str, const char *delim)',
+    'void *memset(void *s, int c, size_t n)',
+    'void *memcpy(void *dest, const void *src, size_t n)',
+    'void *memmove(void *dest, const void *src, size_t n)',
+    'int memcmp(const void *ptr1, const void *ptr2, size_t num)',
+    'char *strdup(const char *str)',
+    'size_t strcspn(const char *str1, const char *str2)',
+    'size_t strspn(const char *str1, const char *str2)',
+
+    -- <time.h>
+    'time_t time(time_t *tloc)',
+    'struct tm *localtime(const time_t *timer)',
+    'struct tm *gmtime(const time_t *timer)',
+    'time_t mktime(struct tm *tm)',
+    'difftime(time_t end, time_t beginning)',
+    'char *asctime(const struct tm *tm)',
+    'char *ctime(const time_t *timer)',
+}
+
+for index, value in pairs(prototypes) do
+    local return_type, function_name = value:match('(%S+%s+%*?)(%w+)')
+    local args = value:match('%((.*)%)'):gmatch('([^,]+)')
+
+    local args_table = {}
+    local index = 1
+    for arg in args do
+        table.insert(args_table, i(index, arg))
+        index = index + 1
+        table.insert(args_table, t(','))
+    end
+    table.remove(args_table, #args_table)
+
+    table.insert(
+        snippets,
+        ms(
+            {
+                { trig = '_' .. function_name, snippetType = 'snippet', condition = nil },
+            },
+            fmt([[{ReturnValue}{FunctionName}({Args});]], {
+                ReturnValue = c(1, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt([[{ReturnType}{VariableName} = ]], {
+                            ReturnType = i(1, return_type),
+                            VariableName = i(2, string.format('%s_return', function_name)),
+                        })
+                    ),
+                }),
+                FunctionName = t(function_name),
+                Args = sn(2, args_table),
+            })
+        )
+    )
+end
+
 return snippets, autosnippets
