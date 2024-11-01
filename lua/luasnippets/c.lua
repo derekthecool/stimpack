@@ -1192,16 +1192,26 @@ for index, value in pairs(prototypes) do
                 { trig = '_' .. function_name, snippetType = 'snippet', condition = nil },
             },
             fmt([[{ReturnValue}{FunctionName}({Args});]], {
-                ReturnValue = c(1, {
-                    t(''),
-                    sn(
-                        nil,
-                        fmt([[{ReturnType}{VariableName} = ]], {
-                            ReturnType = i(1, return_type),
-                            VariableName = i(2, string.format('%s_return', function_name)),
-                        })
-                    ),
-                }),
+                ReturnValue = d(1, function(args, snip)
+                    if return_type == 'void' then
+                        return t('')
+                    else
+                        return sn(
+                            nil,
+                            c(1, {
+                                t(''),
+                                sn(
+                                    nil,
+                                    fmt([[{ReturnType}{VariableName} = ]], {
+                                        ReturnType = i(1, return_type),
+                                        VariableName = i(2, string.format('%s_return', function_name)),
+                                    })
+                                ),
+                            })
+                        )
+                    end
+                end, {}),
+                -- ReturnValue = ,
                 FunctionName = t(function_name),
                 Args = sn(2, args_table),
             })
