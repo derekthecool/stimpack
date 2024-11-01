@@ -202,40 +202,69 @@ local snippets = {
 
     ms(
         {
+            -- Normal printf
             'printf',
-            'fprintf',
-            'sprintf',
             { trig = 'PRINT',      snippetType = 'autosnippet' },
+
+            -- fprintf
+            'fprintf',
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
-            { trig = 'FRMAT',      snippetType = 'autosnippet' },
+
+            -- String format either sprintf or snprintf
+            'snprintf',
+            'sprintf',
+            { trig = 'FRMAT',         snippetType = 'autosnippet' },
+            { trig = 'string format', snippetType = 'autosnippet' },
         },
         fmt(
             [[
         {}"{}"{});
         ]],
             {
-                --     if snip.trigger == 'ERRORPRINT' or snip.trigger == 'fprintf' then
-                --         -- table.sort(choices)
-                --         choices[1], choices[2] = choices[2], choices[1]
-                --     end
-                sn(
-                    1,
-                    fmt([[{}]], {
-                        c(1, {
-                            t('printf('),
-                            sn(
-                                print_index,
-                                fmt([[fprintf({FileHandle}, ]], {
-                                    FileHandle = c(1, {
-                                        t('stderr'),
-                                        t('stdout'),
-                                        i(1, 'CUSTOM_FILE_HANDLE'),
-                                    }),
-                                })
-                            ),
-                        }),
-                    })
-                ),
+                d(1, function(args, snip)
+                    local choice_list = {
+                        ['printf'] = t('printf('),
+                        ['fprintf'] = sn(
+                            nil,
+                            fmt([[fprintf({FileHandle}, ]], {
+                                FileHandle = c(1, {
+                                    t('stderr'),
+                                    t('stdout'),
+                                    i(1, 'CUSTOM_FILE_HANDLE'),
+                                }),
+                            })
+                        ),
+                        ['snprintf'] = sn(
+                            nil,
+                            fmt([[snprintf({Variable}, {Length}, ]], {
+                                Variable = i(1, 'Variable'),
+                                Length = i(2, 'MAXIMUM_LENGTH'),
+                            })
+                        ),
+                        ['sprintf'] = t('sprintf'),
+                    }
+
+                    local normalized_trigger_name = snip.trigger
+                        :gsub('ERRORPRINT', 'fprintf')
+                        :gsub('PRINT', 'printf')
+                        :gsub('string format', 'snprintf')
+                        :gsub('FRMAT', 'snprintf')
+
+                    local choices = {}
+                    table.insert(choices, choice_list[normalized_trigger_name])
+                    choice_list[normalized_trigger_name] = nil
+                    for _, value in pairs(choice_list) do
+                        table.insert(choices, value)
+                    end
+
+                    return sn(
+                        1,
+                        fmt([[{}]], {
+                            c(1, choices),
+                        })
+                    )
+                end, {}),
+
                 i(2),
                 auxiliary.printf_style_dynamic_formatter(3, 2),
             }
