@@ -4,8 +4,8 @@ local snippets = {
 
     ms(
         {
-            { trig = 'PRINT',           snippetType = 'autosnippet', condition = nil },
-            { trig = 'message',         snippetType = 'snippet',     condition = nil },
+            { trig = 'PRINT', snippetType = 'autosnippet', condition = nil },
+            { trig = 'message', snippetType = 'snippet', condition = nil },
             { trig = 'message message', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -20,7 +20,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'glob',      snippetType = 'snippet',     condition = nil },
+            { trig = 'glob', snippetType = 'snippet', condition = nil },
             { trig = 'glob glob', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -702,7 +702,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'SECOND', snippetType = 'autosnippet' },
-            { trig = 'set',    snippetType = 'snippet' },
+            { trig = 'set', snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -718,7 +718,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'string', snippetType = 'snippet' },
-            { trig = 'THIRD',  snippetType = 'autosnippet' },
+            { trig = 'THIRD', snippetType = 'autosnippet' },
         },
         fmt(
             [[
