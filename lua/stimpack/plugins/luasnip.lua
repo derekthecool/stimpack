@@ -23,7 +23,7 @@ return {
             update_events = { 'TextChanged', 'TextChangedI' },
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
-            enable_autosnippets = true, -- I NEED autosnippets to live, default is false
+            enable_autosnippets = true,                                           -- I NEED autosnippets to live, default is false
             -- store_selection_keys = '<Tab>',
             store_selection_keys = '```',
             -- Add awesome highlights to help show where you are at in a snippet
@@ -170,7 +170,7 @@ return {
             if FileExists(luasnip_snippet_path) == false then
                 vim.notify(
                     'Snippet file does not exist for this filetype - expected name should be: '
-                        .. expected_snippet_filename,
+                    .. expected_snippet_filename,
                     vim.log.levels.INFO,
                     { title = 'Stimpack Notification' }
                 )
@@ -240,7 +240,7 @@ return {
         -- Add microcontroller specific code snippets (all in C of course)
         luasnip.filetype_extend('c', { 'mcu_ESP32' })
 
-        luasnip.filetype_extend('cpp', { 'c' })
+        luasnip.filetype_extend('cpp', { 'c', 'mcu_ESP32' })
 
         -- Create group for flutter
         luasnip.filetype_extend('dart', { 'flutter' })
@@ -259,21 +259,6 @@ return {
         for _, sql in pairs(sql_types_wanted) do
             luasnip.filetype_set(sql, sql_types_wanted)
             luasnip.filetype_extend(sql, sql_types_wanted)
-        end
-
-        -- Function for status line to show how many snippets available for current filetype
-        function GetLuasnipAvailableSnippetCountForCurrentFile()
-            local available_snippets = luasnip.available()
-
-            -- I don't want anything from the 'all' snippets type to be counted
-            available_snippets.all = nil
-
-            local snippet_count = 0
-            for _, value in pairs(available_snippets) do
-                snippet_count = snippet_count + #value
-            end
-
-            return Icons.documents.cut3 .. ' ' .. snippet_count
         end
     end,
 }

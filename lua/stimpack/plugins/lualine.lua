@@ -1,3 +1,24 @@
+-- Function for status line to show how many snippets available for current filetype
+local function GetLuasnipAvailableSnippetCountForCurrentFile()
+    local available_snippets = require('luasnip').available()
+    if not available_snippets then
+        return ''
+    end
+
+    -- I don't want anything from the 'all' snippets type to be counted
+    available_snippets.all = nil
+
+    local snippet_count = 0
+    for _, value in pairs(available_snippets) do
+        if value then
+            snippet_count = snippet_count + (#value or 0)
+        end
+    end
+
+    -- return Icons.documents.cut3 .. ' ' .. snippet_count
+    return string.format('%s %d', (Icons.documents.cut3 or ''), snippet_count)
+end
+
 return {
     'nvim-lualine/lualine.nvim',
     event = 'UIEnter',
@@ -17,11 +38,10 @@ return {
                 lualine_b = { 'branch', 'diff', 'diagnostics' },
                 lualine_c = { 'TapeyTape', 'StimpackTestSummary.success', 'StimpackTestSummary.failure' },
                 lualine_x = {
-                    -- TODO: 8/7/2023 3:32:28 PM, find a way to get this working again without nil references
-                    -- {
-                    --     GetLuasnipAvailableSnippetCountForCurrentFile or 0,
-                    --     color = { fg = '#1155ff', bg = 'Normal' },
-                    -- },
+                    {
+                        GetLuasnipAvailableSnippetCountForCurrentFile,
+                        color = { fg = '#1155ff', bg = 'Normal' },
+                    },
                     '%S',
                     'filesize',
                     'selectioncount',
