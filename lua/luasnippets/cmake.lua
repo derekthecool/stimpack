@@ -417,11 +417,15 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
     ),
     -- }}}
 
-    s(
-        'export compile',
+    ms(
+        {
+            { trig = 'compile_commands.json', snippetType = 'snippet', condition = nil },
+            { trig = 'export_compile_commands', snippetType = 'snippet', condition = nil },
+        },
         fmt(
             [[
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+    # Generate compile_commands.json for LSP autocomplete
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
     ]],
             {}
         )

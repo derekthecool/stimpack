@@ -75,19 +75,21 @@ shareable.for_loop_c_style = ms(
     },
     fmt(
         [[
-        for(int i = {}; i < {}; i{})
+        for(int {Variable} = {StartValue}; {VariableRep} < {EndValue}; {VariableRep}{IncrementValue})
         {{
-            {}
+            {Code}
         }}
         ]],
         {
-            i(1, '0'),
-            i(2, '10'),
-            c(3, {
+            Variable = i(1, 'i'),
+            StartValue = i(2, '0'),
+            VariableRep = rep(1),
+            EndValue = i(3, '10'),
+            IncrementValue = c(4, {
                 t('++'),
                 t('--'),
             }),
-            i(4),
+            Code = i(5),
         }
     )
 )
@@ -149,6 +151,18 @@ shareable.while_loop_c_style = ms(
             i(2),
         }
     )
+)
+
+shareable.ternary = ms(
+    {
+        { trig = 'TERNARY', snippetType = 'autosnippet', condition = nil },
+        { trig = 'ternary', snippetType = 'snippet', condition = nil },
+    },
+    fmt([[{Condition} ? {IfTrue} : {IfFalse}]], {
+        Condition = i(1, 'variable == 1'),
+        IfTrue = i(2, 'i++'),
+        IfFalse = i(3, 'i--'),
+    })
 )
 
 shareable.function_c_style = ms(

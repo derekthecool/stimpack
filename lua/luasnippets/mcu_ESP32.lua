@@ -168,8 +168,11 @@ void button_task(void *arg) {{
         )
     ),
 
-    s(
-        'ESP32log',
+    ms(
+        {
+            { trig = 'ESP32log', snippetType = 'snippet', condition = nil },
+            { trig = 'ESP32 ESP32', snippetType = 'autosnippet', condition = nil },
+        },
         fmt([[ESP_LOG{}({}, "{}"{});]], {
             c(1, {
                 t('I'),

@@ -10,6 +10,103 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+
+    postfix('.function', {
+        d(1, function(_, parent)
+            return sn(nil, { t('[' .. parent.env.POSTFIX_MATCH .. ']') })
+        end),
+    }),
+
+    ms(
+        {
+            { trig = 'vars', snippetType = 'autosnippet', condition = nil },
+            { trig = 'format_variable', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Variable}: {Type}, ]], {
+            Variable = i(1, 'VariableName'),
+            Type = i(2, '%s'),
+        })
+    ),
+    ms(
+        {
+            { trig = 'STDINT', snippetType = 'autosnippet', condition = nil },
+            { trig = 'stdint', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Types}]], {
+            Types = c(1, {
+                t('int8_t'),
+                t('uint8_t'),
+                t('int16_t'),
+                t('uint16_t'),
+                t('int32_t'),
+                t('uint32_t'),
+                t('int64_t'),
+                t('uint64_t'),
+                t('int8_t'),
+                t('uint_least8_t'),
+                t('int_least8_t'),
+                t('uint_least16_t'),
+                t('int_least16_t'),
+                t('uint_least32_t'),
+                t('int_least32_t'),
+                t('uint_least64_t'),
+                t('int_least64_t'),
+                t('uint_fast8_t'),
+                t('int_fast8_t'),
+                t('uint_fast16_t'),
+                t('int_fast16_t'),
+                t('uint_fast32_t'),
+                t('int_fast32_t'),
+                t('uint_fast64_t'),
+                t('int_fast64_t'),
+                t('intmax_t'),
+                t('uintmax_t'),
+            }),
+        })
+    ),
+    ms({
+        { trig = 'void void', snippetType = 'autosnippet', condition = nil },
+        { trig = 'noop', snippetType = 'autosnippet', condition = nil },
+        { trig = 'no op', snippetType = 'autosnippet', condition = nil },
+    }, fmt([[(void)0)]], {})),
+    ms(
+        {
+            { trig = 'readline', snippetType = 'snippet', condition = nil },
+            { trig = 'getline', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        char *line, length = 0;
+        getline(&line, &length, stdin);
+        fprintf(stderr, "input: %s, line: %d\n", line, length);
+        ]],
+            {}
+        )
+    ),
+    ms(
+        {
+            { trig = 'readline_delimited', snippetType = 'snippet', condition = nil },
+            { trig = 'getdelim', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        char *line, length = 0;
+        getdelim(&line, &length, {Delimiter}, stdin);
+        fprintf(stderr, "input: %s, line: %d\n", line, length);
+        ]],
+            { Delimiter = i(1, '0xFF') }
+        )
+    ),
+    ms(
+        {
+            { trig = 'function_pointer', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[typedef {Return} (*{Name})({Parameters});]], {
+            Return = i(1, 'ReturnValueType'),
+            Name = i(2, 'FunctionPointerName'),
+            Parameters = i(3, 'int param1'),
+        })
+    ),
     ms(
         {
             { trig = 'to_int', snippetType = 'snippet', condition = nil },
@@ -425,21 +522,20 @@ local snippets = {
     -- }}}
 
     -- {{{ easy strtok
-    s(
+    ms(
         {
-            trig = 'strtok_ez',
-            descr = 'Easily use strtok with a for loop',
+            { trig = 'strtok_ez', snippetType = 'snippet', condition = nil },
+            { trig = 'string split', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
             [[
-      char separator[] = "{}";
-      for (char *p = strtok({}, separator); p != NULL; p = strtok(NULL, separator))
+      char separator[] = "{Separator}";
+      for (char *p = strtok({SourceString}, separator); p != NULL; p = strtok(NULL, separator))
       {{
-        returnValue += atoi(p);
+        {Code}
       }}
-      {}
       ]],
-            { i(1, ','), i(2, 'InputStringToParse'), i(3) }
+            { Separator = i(1, ' '), SourceString = i(2, 'line'), Code = i(3, 'int number = atoi(p);') }
         )
     ),
 
@@ -753,15 +849,30 @@ int main(int argc, char *argv[])
             {}
         )
     ),
+
+    ms(
+        {
+            { trig = 'leapyear', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+int isLeapYear(int year)
+{{
+    return (year % 400 == 0 || (year % 4 == 0 && year % 100 != 0));
+}}
+        ]],
+            {}
+        )
+    ),
 }
 
 local autosnippets = {
-
     shareable.for_loop_c_style,
     shareable.if_statement_c_style,
     shareable.else_statement_c_style,
     shareable.while_loop_c_style,
     shareable.function_c_style,
+    shareable.ternary,
 
     s(
         'var var',
@@ -1124,6 +1235,35 @@ local prototypes = {
     'int vfprintf(FILE *stream, const char *format, va_list arg)',
     'int vprintf(const char *format, va_list arg)',
     'int vsprintf(char *str, const char *format, va_list arg)',
+    -- GNU libc stdio
+    'int fcloseall(void)',
+    'int fileno(FILE *stream)',
+    'char *fgetwc(FILE *stream)',
+    'int fgetws(wchar_t *ws, int n, FILE *stream)',
+    'int fputwc(wchar_t wc, FILE *stream)',
+    'int fputws(const wchar_t *ws, FILE *stream)',
+    'FILE *fopen(const char *filename, const char *mode)',
+    'FILE *freopen(const char *filename, const char *mode, FILE *stream)',
+    'int fscanf(FILE *stream, const char *format, ...)',
+    'int fseek(FILE *stream, long offset, int whence)',
+    'int fseeko(FILE *stream, off_t offset, int whence)',
+    'long ftell(FILE *stream)',
+    'off_t ftello(FILE *stream)',
+    'int fwrite(const void *ptr, size_t size, size_t count, FILE *stream)',
+    'char *getdelim(char **lineptr, size_t *n, int delimiter, FILE *stream)',
+    'char *getline(char **lineptr, size_t *n, FILE *stream)',
+    'int getchar(void)',
+    'char *gets(char *str)',
+    'int getc(FILE *stream)',
+    'int putc(int c, FILE *stream)',
+    'void setbuf(FILE *stream, char *buf)',
+    'int setvbuf(FILE *stream, char *buf, int mode, size_t size)',
+    'int ungetc(int c, FILE *stream)',
+    'int vprintf(const char *format, va_list arg)',
+    'int vfprintf(FILE *stream, const char *format, va_list arg)',
+    'int vsprintf(char *str, const char *format, va_list arg)',
+    'void rewind(FILE *stream)',
+    'void setvbuf(FILE *stream, char *buf, int mode, size_t size)',
 
     -- <stdlib.h>
     'void *malloc(size_t size)',
