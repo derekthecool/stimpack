@@ -1,11 +1,7 @@
 name: Test my Stimpack neovim configuration
 
-# Only run workflow stimpack lua files are changed
 on:
   push:
-    paths:
-      - lua
-  workflow_dispatch:
 
 jobs:
   test:
