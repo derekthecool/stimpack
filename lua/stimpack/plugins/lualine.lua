@@ -1,5 +1,10 @@
 -- Function for status line to show how many snippets available for current filetype
 local function GetLuasnipAvailableSnippetCountForCurrentFile()
+    local luasnip_loaded = package.loaded['luasnip']
+    if not luasnip_loaded then
+        return ''
+    end
+
     local available_snippets = require('luasnip').available()
     if not available_snippets then
         return ''

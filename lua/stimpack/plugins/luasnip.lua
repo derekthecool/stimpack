@@ -215,6 +215,7 @@ return {
                 -- If file does exist, open it normally with luasnip opener
 
                 if FileExists(luasnip_snippet_path) then
+                    V(string.format('Opening snippet file: %s'))
                     require('luasnip.loaders').edit_snippet_files({
                         edit = function(file)
                             vim.api.nvim_cmd({ cmd = 'tabnew', args = { file } }, {})
