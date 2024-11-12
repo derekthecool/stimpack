@@ -286,13 +286,14 @@ local snippets = {
         },
         fmt(
             [[
-        typedef struct {{
-            {}
-        }} {}_t;
+            typedef struct {NameRep} {{
+                {Inside}
+            }} {Name}_t;
         ]],
             {
-                i(2),
-                i(1, 'my_struct'),
+                NameRep = rep(1),
+                Name = i(1, 'my_struct_t'),
+                Inside = i(2),
             }
         )
     ),

@@ -4,6 +4,29 @@ local fun = require('luafun.fun')
 local scan = require('plenary.scandir')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'user', snippetType = 'snippet', condition = conds.line_begin },
+        },
+        fmt(
+            [[
+            # Create new user
+            RUN useradd -m -G wheel -s /bin/bash {User} \
+                && echo '{UserRep} ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/{UserRep} \
+                && chmod 0440 /etc/sudoers.d/{UserRep}
+
+            # Activate user
+            USER {UserRep}
+
+            # Set working directory to users home
+            WORKDIR /home/{UserRep}
+        ]],
+            {
+                User = i(1, 'username'),
+                UserRep = rep(1),
+            }
+        )
+    ),
 
     ms(
         {
