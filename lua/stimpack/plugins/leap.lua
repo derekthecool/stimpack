@@ -1,5 +1,6 @@
 return {
     'ggandor/leap.nvim',
+    enabled = false,
     keys = { '√', '\\' },
     config = function()
         require('leap').setup({
