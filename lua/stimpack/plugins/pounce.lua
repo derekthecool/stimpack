@@ -1,6 +1,6 @@
 return {
     'rlane/pounce.nvim',
-    keys = { '√', '\\', 's', },
+    keys = { '√', '\\', 's' },
     config = function()
         local map = vim.keymap.set
         map({ 'n', 'o', 'x' }, 's', function()

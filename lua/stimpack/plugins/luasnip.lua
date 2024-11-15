@@ -23,7 +23,7 @@ return {
             update_events = { 'TextChanged', 'TextChangedI' },
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
-            enable_autosnippets = true,                                           -- I NEED autosnippets to live, default is false
+            enable_autosnippets = true, -- I NEED autosnippets to live, default is false
             -- store_selection_keys = '<Tab>',
             store_selection_keys = '```',
             -- Add awesome highlights to help show where you are at in a snippet
@@ -170,7 +170,7 @@ return {
             if FileExists(luasnip_snippet_path) == false then
                 vim.notify(
                     'Snippet file does not exist for this filetype - expected name should be: '
-                    .. expected_snippet_filename,
+                        .. expected_snippet_filename,
                     vim.log.levels.INFO,
                     { title = 'Stimpack Notification' }
                 )

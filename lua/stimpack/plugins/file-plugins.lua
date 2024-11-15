@@ -132,20 +132,20 @@ return {
 
             local builtins = require('telescope.builtin')
             require('which-key').add({
-                { '<leader>f',  group = 'file' },
+                { '<leader>f', group = 'file' },
                 -- Undocumented command that replaces the vim command Telescope... I looked through the telescope source code to find this
                 -- I like this more than :Telescope<CR>
                 { '<leader>ff', require('telescope.command').load_command, desc = 'Telescope' },
-                { '<leader>fF', builtins.find_files,                       desc = 'Find Files' },
-                { '<leader>fG', builtins.git_files,                        desc = 'Git Files' },
-                { '<leader>fb', builtins.buffers,                          desc = 'Local Buffers' },
-                { '<leader>fg', builtins.live_grep,                        desc = 'Live grep' }, -- requires ripgrep
-                { '<leader>fs', builtins.grep_string,                      desc = 'Grep string under cursor' },
-                { '<leader>fh', builtins.help_tags,                        desc = 'Search Help' },
-                { '<leader>fH', builtins.highlights,                       desc = 'Highlights' },
-                { '<leader>fc', builtins.command_history,                  desc = 'Command history' },
-                { '<leader>fz', builtins.current_buffer_fuzzy_find,        desc = 'Current buffer fuzzy find' },
-                { '<leader>fS', builtins.git_status,                       desc = 'Search git changed files' },
+                { '<leader>fF', builtins.find_files, desc = 'Find Files' },
+                { '<leader>fG', builtins.git_files, desc = 'Git Files' },
+                { '<leader>fb', builtins.buffers, desc = 'Local Buffers' },
+                { '<leader>fg', builtins.live_grep, desc = 'Live grep' }, -- requires ripgrep
+                { '<leader>fs', builtins.grep_string, desc = 'Grep string under cursor' },
+                { '<leader>fh', builtins.help_tags, desc = 'Search Help' },
+                { '<leader>fH', builtins.highlights, desc = 'Highlights' },
+                { '<leader>fc', builtins.command_history, desc = 'Command history' },
+                { '<leader>fz', builtins.current_buffer_fuzzy_find, desc = 'Current buffer fuzzy find' },
+                { '<leader>fS', builtins.git_status, desc = 'Search git changed files' },
                 {
                     '<leader>ft',
                     function()
