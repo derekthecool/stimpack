@@ -27,10 +27,10 @@ end
 local snippets = {
     ms(
         {
-            { trig = 'x86-64_string_loop', snippetType = 'snippet', condition = nil},
+            { trig = 'x86-64_string_loop', snippetType = 'snippet', condition = nil },
         },
-      fmt(
-        [[
+        fmt(
+            [[
     // Assembly to increment each character in the string until null terminator
     asm volatile (
         "mov %0, %%rsi;"         // Move the address of the string into rsi (pointer to the string)
@@ -48,10 +48,8 @@ local snippets = {
         : "%memory", "%rsi", "%al"  // Clobber memory, rsi (pointer), and al (accumulator register)
     );
         ]],
-        {
-          
-        }
-      )
+            {}
+        )
     ),
     ms(
         {
