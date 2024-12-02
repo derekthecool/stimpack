@@ -33,8 +33,8 @@ return {
     {
         'numToStr/Comment.nvim',
         keys = {
-            { 'gc', mode = { 'n', 's', 'v' } },
-            { 'gb', mode = { 'n', 's', 'v' } },
+            { 'gc',  mode = { 'n', 's', 'v' } },
+            { 'gb',  mode = { 'n', 's', 'v' } },
             { 'gcc', mode = { 'n', 's', 'v' } },
             { 'gbc', mode = { 'n', 's', 'v' } },
         },
@@ -150,7 +150,7 @@ return {
             {
                 'nvim-neotest/neotest-plenary',
                 -- Working on solving an issue with this plugin right now. It does not work on windows.
-                dev = true,
+                -- dev = true,
             },
             'nvim-neotest/neotest-python',
             'vim-test/vim-test',
@@ -159,22 +159,6 @@ return {
         },
 
         log_level = vim.log.levels.TRACE,
-        -- Plugin version settings
-        -- branch = 'branch name',
-        -- tag = 'tag name',
-        -- commit = 'commit hash',
-        -- version = 'semver version string',
-        -- pin = true, -- if true, never update
-        -- submodules = true, -- if false git submodules will not be fetched
-        -- priority = 50, -- Only needed for start plugins, default 50
-
-        -- Lazy loading settings
-        -- lazy = true,
-        -- event = 'VeryLazy',
-        -- cmd = 'MyExCommandNameToLoadThisPlugin',
-        -- ft = { 'cs', 'help', 'lua' },
-        -- keys = { "<C-a>", { "<C-x>", mode = "i" } }, -- LazyKeys table
-
         config = function()
             require('neotest').setup({
                 adapters = {
@@ -185,9 +169,6 @@ return {
                         command = 'flutter',
                         use_lsp = true,
                     }),
-                    -- require('neotest-vim-test')({
-                    --     ignore_file_types = { 'python', 'vim', 'lua' },
-                    -- }),
                 },
             })
 
@@ -195,9 +176,6 @@ return {
                 require('neotest').run.run()
             end, { silent = true, desc = 'Run neotest' })
         end,
-        -- Plugin development
-        -- dir = 'plugin local path',
-        -- dev = true,
     },
 
     {
