@@ -23,6 +23,12 @@ game, there is no self harm from using this repo. Also stim sounds like vim.
   - F# tools
   - C# tools
 
+### Ubuntu
+
+```sh
+sudo apt -y install dotnet-sdk-8.0 unzip
+```
+
 ## Stenography Design
 
 This config is not your every day neovim config. Stimpack is designed for use
