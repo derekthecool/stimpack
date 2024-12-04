@@ -33,8 +33,8 @@ return {
     {
         'numToStr/Comment.nvim',
         keys = {
-            { 'gc',  mode = { 'n', 's', 'v' } },
-            { 'gb',  mode = { 'n', 's', 'v' } },
+            { 'gc', mode = { 'n', 's', 'v' } },
+            { 'gb', mode = { 'n', 's', 'v' } },
             { 'gcc', mode = { 'n', 's', 'v' } },
             { 'gbc', mode = { 'n', 's', 'v' } },
         },
