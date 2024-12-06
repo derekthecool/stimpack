@@ -54,7 +54,20 @@ local rec_ls = function()
 end
 
 local snippets = {
-
+    ms(
+        {
+            { trig = 'stylua_ignore', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[-- stylua: ignore {Choice}]],
+            {
+                Choice = c(1, {
+                    t('start'),
+                    t('end'),
+                }),
+            }
+        )
+    ),
     ms(
         {
             { trig = ':match', snippetType = 'autosnippet', condition = nil },
@@ -67,7 +80,7 @@ local snippets = {
     ms(
         {
             { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'require',         snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt([[require('{Module}')]], {
             Module = i(1),
@@ -760,7 +773,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -810,7 +823,7 @@ end
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
