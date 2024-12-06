@@ -56,17 +56,66 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'table.concat', snippetType = 'autosnippet', condition = nil },
+            { trig = 'table concat', snippetType = 'autosnippet', condition = nil },
+            { trig = 'table.concat', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[table.concat({Table}, {Separator}]], {
+            Table = i(1, 'table'),
+            Separator = i(2, ' '),
+        })
+    ),
+    ms(
+        {
+            { trig = 'table.insert', snippetType = 'autosnippet', condition = nil },
+            { trig = 'table insert', snippetType = 'autosnippet', condition = nil },
+            { trig = 'table insert', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Choice}]], {
+            Choice = c(1, {
+                sn(
+                    nil,
+                    fmt([[table.insert({Table}, {Value})]], {
+                        Table = r(1, 'table'),
+                        Value = r(2, 'value'),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt([[table.insert({Table}, {Position}, {Value})]], {
+                        Table = r(1, 'table'),
+                        Position = i(2, 'index'),
+                        Value = r(3, 'value'),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt([[{Table}[#{TableRep}+1] = {Value}]], {
+                        Table = r(1, 'table'),
+                        TableRep = rep(1),
+                        Value = r(2, 'value'),
+                    })
+                ),
+            }),
+        }),
+        -- TODO: (Derek Lomax) 12/6/2024 3:12:40 PM, these stored values are not working
+        {
+            stored = {
+                ['Table'] = i(1, 'table'),
+                ['Value'] = i(2, 'value'),
+            },
+        }
+    ),
+    ms(
+        {
             { trig = 'stylua_ignore', snippetType = 'snippet', condition = nil },
         },
-        fmt(
-            [[-- stylua: ignore {Choice}]],
-            {
-                Choice = c(1, {
-                    t('start'),
-                    t('end'),
-                }),
-            }
-        )
+        fmt([[-- stylua: ignore {Choice}]], {
+            Choice = c(1, {
+                t('start'),
+                t('end'),
+            }),
+        })
     ),
     ms(
         {
@@ -80,7 +129,7 @@ local snippets = {
     ms(
         {
             { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'require',         snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt([[require('{Module}')]], {
             Module = i(1),
@@ -773,7 +822,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -823,7 +872,7 @@ end
                             }),
                         }
 
-                    -- test_snippet
+                        -- test_snippet
                     )
                 end, { 1 }),
 
