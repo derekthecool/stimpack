@@ -58,7 +58,7 @@ local snippets = {
         {
             { trig = 'table.concat', snippetType = 'autosnippet', condition = nil },
             { trig = 'table concat', snippetType = 'autosnippet', condition = nil },
-            { trig = 'table.concat', snippetType = 'snippet', condition = nil },
+            { trig = 'table.concat', snippetType = 'snippet',     condition = nil },
         },
         fmt([[table.concat({Table}, {Separator}]], {
             Table = i(1, 'table'),
@@ -69,7 +69,7 @@ local snippets = {
         {
             { trig = 'table.insert', snippetType = 'autosnippet', condition = nil },
             { trig = 'table insert', snippetType = 'autosnippet', condition = nil },
-            { trig = 'table insert', snippetType = 'snippet', condition = nil },
+            { trig = 'table insert', snippetType = 'snippet',     condition = nil },
         },
         fmt([[{Choice}]], {
             Choice = c(1, {
@@ -129,7 +129,7 @@ local snippets = {
     ms(
         {
             { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'require',         snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt([[require('{Module}')]], {
             Module = i(1),
@@ -645,6 +645,27 @@ end
 
     ms(
         {
+            { trig = 'module function', snippetType = 'autosnippet', condition = nil },
+            { trig = 'module function', snippetType = 'snippet',     condition = nil },
+        },
+        fmt(
+            [[
+        M.{Name} = function({Args})
+          {Code}
+        end]],
+            {
+                Name = i(1, 'function_name'),
+                Args = i(2),
+                Code = i(3),
+            }
+        ),
+        {
+            condition = conds_expand.line_begin,
+        }
+    ),
+
+    ms(
+        {
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -822,7 +843,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -872,7 +893,7 @@ end
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
