@@ -21,12 +21,14 @@ vim.api.nvim_create_autocmd('User', {
         require('stimpack.auto-commands')
         require('stimpack.mappings')
         require('stimpack.visualsettings')
-        require('stimpack.code-auto-run')
         require('stimpack.file-watcher')
         require('stimpack.dotfile-jumper')
 
         -- Personal boosters e.g. mini plugins that are to narrow scoped to create into full plugins
         -- See ./lua/stimpack/boosters/init.lua for all the boosters
         require('stimpack.boosters')
+
+        -- I'm using neotest in favor of this now
+        -- require('stimpack.code-auto-run')
     end,
 })
