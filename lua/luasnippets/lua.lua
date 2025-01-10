@@ -439,6 +439,7 @@ end
     ms(
         {
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'gmatch', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -459,26 +460,24 @@ end
         {
             { trig = 'REGREPLACE', snippetType = 'autosnippet', condition = conds.line_begin },
         },
-        fmt(
-            [[
-        local {} = {}:gsub('{}', {})
-        ]],
-            {
-                i(1, 'replaced_string'),
-                i(2, 'source_string'),
-                i(3, 'pattern'),
-                d(4, function(args, snip)
-                    local nodes = {}
-
-                    -- Add nodes for snippet
-                    table.insert(nodes, i('replacement_string'))
-                    table.insert(nodes, i('key_value_pair_table_for_replacements'))
-                    table.insert(nodes, i('{"a"="b"}'))
-
-                    return sn(nil, c(nodes))
-                end, { 1 }),
-            }
-        )
+        fmt([[{Choices}]], {
+            Choices = c(1, {
+                sn(
+                    nil,
+                    fmt(
+                        [[
+        local {Variable} = {Source}:gsub('{Pattern}', {Replacement})
+                    ]],
+                        {
+                            Variable = i(1, 'output'),
+                            Source = i(2, 'source'),
+                            Pattern = i(3, '.*'),
+                            Replacement = i(4, 'replacement'),
+                        }
+                    )
+                ),
+            }),
+        })
     ),
 
     ms(
