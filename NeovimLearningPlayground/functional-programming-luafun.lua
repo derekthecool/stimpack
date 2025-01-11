@@ -1,6 +1,5 @@
 -- Check documentation here: https://luafun.github.io/
 -- I will write the documented functions as found on the website here
--- local fun = require('luafun.fun')
 local fun = require('luafun.fun')
 
 -- Basic functions

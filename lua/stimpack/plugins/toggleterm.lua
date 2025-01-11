@@ -2,6 +2,9 @@ local toggleterm_git_level = 2
 
 return {
     'akinsho/toggleterm.nvim', -- Awesome terminal helper in lua
+    cmd = {
+        'ToggleTerm',
+    },
     keys = {
         '⏫',
         -- Set as second git plugin use <leader>g2
