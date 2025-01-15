@@ -32,11 +32,21 @@ local snippets = {
 
     ms(
         {
-            { trig = 'ad_unit', snippetType = 'snippet' },
+            { trig = 'ad_unit_ad_mob', snippetType = 'snippet' },
         },
         fmt([[{}]], {
+
             c(1, {
-                t('ca-app-pub-3940256099942544/9214589741'),
+                sn(
+                    nil,
+                    fmt(
+                        [[
+            // test banner ad android
+            ca-app-pub-3940256099942544/9214589741
+            ]],
+                        {}
+                    )
+                ),
             }),
         })
     ),

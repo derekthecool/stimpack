@@ -32,7 +32,8 @@ return {
                     ['<C-j>'] = cmp.mapping.select_next_item(),
                     ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-1), { 'i', 'c' }),
                     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(1), { 'i', 'c' }),
-                    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+                    ['<C-h>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+
                     ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
                     ['<C-e>'] = cmp.mapping({
                         i = cmp.mapping.abort(),
@@ -218,7 +219,10 @@ return {
             vim.api.nvim_set_keymap('n', 'gR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
             vim.api.nvim_set_keymap('n', '<leader>lR', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
             vim.api.nvim_set_keymap('n', '<leader>lr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+
+            -- SKWHEUR
             vim.api.nvim_set_keymap('i', '…', '<cmd>lua vim.lsp.buf.completion()<CR>', opts)
+            -- vim.api.nvim_set_keymap('i', '…', '<cmd>lua vim.lsp.buf.completion()<CR>', opts)
             vim.api.nvim_set_keymap('n', '<leader>la', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
             vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
             vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)

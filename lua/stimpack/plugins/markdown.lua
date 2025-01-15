@@ -22,7 +22,18 @@ return {
     },
 
     {
+        'MeanderingProgrammer/render-markdown.nvim',
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        opts = {},
+    },
+
+    {
         'vimwiki/vimwiki',
+        enabled = false,
         ft = { 'markdown', 'vimwiki' },
         -- Startup is different when using lazy loading. The links are not concealed.
         init = function()
@@ -83,10 +94,10 @@ return {
             })
 
             require('which-key').add({
-                { '<leader>v', group = 'vimwiki' },
+                { '<leader>v',  group = 'vimwiki' },
                 { '<leader>vD', '<cmd>VimwikiDiaryNextDay<cr>', desc = 'Diary next day' },
                 { '<leader>vd', '<cmd>VimwikiDiaryPrevDay<cr>', desc = 'Diary previous day' },
-                { '<leader>vh', '<cmd>VimwikiSplitLink<cr>', desc = 'Follow Link Horizontal' },
+                { '<leader>vh', '<cmd>VimwikiSplitLink<cr>',    desc = 'Follow Link Horizontal' },
                 {
                     '<leader>vl',
                     -- Vimwiki function VimwikiToggleListItem is limiting
@@ -106,14 +117,14 @@ return {
                     end,
                     desc = 'Toggle list item',
                 },
-                { '<leader>v/', '<cmd>VimwikiSearch<cr>', desc = 'Vimwiki Search' },
-                { '<leader>vj', '<cmd>lnext<cr>', desc = 'Next search result' },
-                { '<leader>vk', '<cmd>lprevious<cr>', desc = 'Previous search result' },
-                { '<leader>vo', '<cmd>lopen<cr>', desc = 'Open list of all search results' },
+                { '<leader>v/', '<cmd>VimwikiSearch<cr>',     desc = 'Vimwiki Search' },
+                { '<leader>vj', '<cmd>lnext<cr>',             desc = 'Next search result' },
+                { '<leader>vk', '<cmd>lprevious<cr>',         desc = 'Previous search result' },
+                { '<leader>vo', '<cmd>lopen<cr>',             desc = 'Open list of all search results' },
                 { '<leader>vv', '<cmd>VimwikiVSplitLink<cr>', desc = 'Follow Link Verical' },
-                { '<leader>vu', '<cmd>VimwikiNextTask<cr>', desc = 'Find Next Unfinished Task' },
-                { '<leader>vT', '<cmd>VimwikiTable<cr>', desc = 'Vimwiki Table Insert' },
-                { '<leader>vt', ':Tabularize /', desc = 'Tabularize formatting' },
+                { '<leader>vu', '<cmd>VimwikiNextTask<cr>',   desc = 'Find Next Unfinished Task' },
+                { '<leader>vT', '<cmd>VimwikiTable<cr>',      desc = 'Vimwiki Table Insert' },
+                { '<leader>vt', ':Tabularize /',              desc = 'Tabularize formatting' },
             })
 
             local path = OS.join_path(OS.nvim, 'lua', 'stimpack', 'markdown-textobjects-codeblock.vim')
@@ -328,7 +339,7 @@ return {
         -- Optional, configure additional syntax highlighting / extmarks.
         -- This requires you have `conceallevel` set to 1 or 2. See `:help conceallevel` for more details.
         ui = {
-            enable = true, -- set to false to disable all additional syntax features
+            enable = true,         -- set to false to disable all additional syntax features
             update_debounce = 200, -- update delay after a text change (in milliseconds)
             -- Define how various check-boxes are displayed
             checkboxes = {

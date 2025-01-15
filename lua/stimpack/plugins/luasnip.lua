@@ -162,6 +162,9 @@ return {
             M.dynamic_node_external_update(2)
         end, { desc = 'Dynamic_node_external_update(2)' })
 
+        -- Open snippet files to create new snippets
+        -- A choice menu will popup if file has never been written
+        -- A selection for which specific filetype selection
         -- STWHEUFL
         vim.keymap.set({ 'n', 'i', 's' }, '👇', function()
             local current_filetype = vim.bo.filetype

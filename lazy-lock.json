@@ -61,6 +61,7 @@
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "pounce.nvim": { "branch": "master", "commit": "2e36399ac09b517770c459f1a123e6b4b4c1c171" },
   "refactoring.nvim": { "branch": "master", "commit": "2db6d378e873de31d18ade549c2edba64ff1c2e3" },
+  "render-markdown.nvim": { "branch": "main", "commit": "0022a579ac7355966be5ade77699b88c76b6a549" },
   "snacks.nvim": { "branch": "main", "commit": "974bccb126b6b5d7170c519c380207069d23f557" },
   "tabular": { "branch": "master", "commit": "12437cd1b53488e24936ec4b091c9324cafee311" },
   "telescope-dap.nvim": { "branch": "master", "commit": "783366bd6c1e7fa0a5c59c07db37f49c805a28df" },
