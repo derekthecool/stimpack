@@ -29,4 +29,5 @@ jobs:
 
       - name: Test Stimpack neovim configuration
         run: |
-          nvim --headless --cmd "set rtp+=$(pwd)" -u ./init.lua -c "PlenaryBustedDirectory ."
+          # nvim --headless --cmd "set rtp+=$(pwd)" -u ./init.lua -c "PlenaryBustedDirectory ."
+          nvim --headless -u init.vim -c "PlenaryBustedDirectory lua/stimpack"
