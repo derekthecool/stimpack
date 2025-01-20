@@ -124,5 +124,14 @@ return {
         })
 
         vim.api.nvim_set_hl(0, 'lualine_a_inactive', { link = 'Normal' })
+
+        -- Clear all background colors to enable transparent look
+        -- Can't use a total lualine wildcard because I like the background visible
+        require('transparent').clear_prefix('lualine_b')
+        require('transparent').clear_prefix('lualine_c')
+        require('transparent').clear_prefix('lualine_x')
+        require('transparent').clear_prefix('lualine_y')
+        require('transparent').clear_prefix('lualine_z')
+        require('transparent').clear_prefix('lualine_transitional')
     end,
 }

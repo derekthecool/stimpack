@@ -161,6 +161,10 @@ return {
                 'lualine_b_insert',
                 'lualine_c_normal',
                 'lualine_c_insert',
+
+                -- RenderMarkdown plugin highlights https://github.com/MeanderingProgrammer/render-markdown.nvim#colors
+                -- The colors do not seem to cooperate well with this plugin because they use some builtin colors like colorcolumn and clearing that messes up other stuff
+                -- TODO: (Derek Lomax) 1/20/2025 9:36:58 AM, but I could consider markdown buffer specific fixes for this later
             },
             exclude_groups = {
                 -- 'TelescopeBorder',
