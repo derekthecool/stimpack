@@ -3,6 +3,68 @@
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    -- http package functions
+    ms(
+        {
+            { trig = 'http_get', snippetType = 'snippet', condition = nil },
+            { trig = 'http get', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+          final {Result} = await http.get(Uri.parse('{Url}'));
+          print({ResultRep}.body);
+        ]],
+            {
+                Result = i(1, 'result'),
+                Url = i(2, 'http://....'),
+                ResultRep = rep(1),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'List.generate', snippetType = 'snippet', condition = nil },
+            { trig = 'List.generate', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        List.generate({Amount}, {Lambda})
+        ]],
+            {
+                Amount = i(1, '5'),
+                Lambda = shareable.lambda(2),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'Iterable.generate', snippetType = 'snippet', condition = nil },
+            { trig = 'Iterable.generate', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        Iterable.generate({Amount})
+        ]],
+            {
+                Amount = i(1, '5'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'comprehension', snippetType = 'snippet', condition = nil },
+        },
+        fmt('[for(int {Variable} = {Init}; {VariableRep} < {Limit}; {VariableRep}++) {Action}]', {
+            Variable = i(1, 'x'),
+            Init = i(2, '0'),
+            VariableRep = rep(1),
+            Limit = i(3, '10'),
+            Action = i(4, 'x'),
+        })
+    ),
+
     ms(
         {
             { trig = 'list list', snippetType = 'autosnippet', condition = conds.line_begin },

@@ -244,6 +244,24 @@ local snippets = {
 
     ms(
         {
+            { trig = 'initState', snippetType = 'snippet', condition = nil },
+            { trig = 'init state', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        @override
+        initState() {{
+            {Code}
+        }}
+        ]],
+            {
+                Code = i(1, 'print("Do some init code here");'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'widgetted', snippetType = 'autosnippet' },
         },
         fmt(
@@ -576,6 +594,128 @@ local snippets = {
         fmt([[{}]], {
             test(1),
         })
+    ),
+
+    ms(
+        {
+            { trig = 'banner_Google_mobile_ad', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+// Ready to use widget. Just update your ad unit id
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+class BannerAdWidget extends StatefulWidget {
+  @override
+  _BannerAdWidgetState createState() => _BannerAdWidgetState();
+}
+
+class _BannerAdWidgetState extends State<BannerAdWidget> {
+  late BannerAd _bannerAd;
+  bool _isAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Create and load a banner ad
+    _bannerAd = BannerAd(
+        // test banner ad
+      adUnitId: 'ca-app-pub-3940256099942544/9214589741', // Test ad unit ID
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          print('Ad failed to load: $error');
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _isAdLoaded
+        ? Container(
+            alignment: Alignment.center,
+            width: _bannerAd.size.width.toDouble(),
+            height: _bannerAd.size.height.toDouble(),
+            child: AdWidget(ad: _bannerAd),
+          )
+        : SizedBox.shrink(); // Placeholder while ad loads
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+}
+        ]],
+            {},
+            { delimiters = '[]' }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'interstitial_Google_mobile_ad', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+// This is NOT a widget. Calling the functions initState, loadAd, and showAd must be done somewhere else
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
+class InterstitialAdHelper  {
+  InterstitialAd? _interstitialAd;
+
+  final adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/1033173712' // Test ad unit ID
+      : 'ca-app-pub-3940256099942544/4411468910'; // Test ad unit ID
+
+  void initState() {
+    loadAd();
+  }
+
+  void loadAd() {
+    InterstitialAd.load(
+      adUnitId: adUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          debugPrint('$ad loaded.');
+          _interstitialAd = ad;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          debugPrint('InterstitialAd failed to load: $error');
+        },
+      ),
+    );
+  }
+
+  void showAd() {
+    if (_interstitialAd != null) {
+      _interstitialAd!.show();
+      _interstitialAd = null; // Dispose of the ad after showing it
+    } else {
+      debugPrint('InterstitialAd not ready to show.');
+    }
+  }
+}
+        ]],
+            {},
+            {
+                delimiters = '<>',
+            }
+        )
     ),
 }
 
