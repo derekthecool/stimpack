@@ -1,11 +1,10 @@
 ---@diagnostic disable: undefined-global
 
 local snippets = {
-
     ms(
         {
-            { trig = 'PRINT', snippetType = 'autosnippet', condition = nil },
-            { trig = 'message', snippetType = 'snippet', condition = nil },
+            { trig = 'PRINT',           snippetType = 'autosnippet', condition = nil },
+            { trig = 'message',         snippetType = 'snippet',     condition = nil },
             { trig = 'message message', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -20,7 +19,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'glob', snippetType = 'snippet', condition = nil },
+            { trig = 'glob',      snippetType = 'snippet',     condition = nil },
             { trig = 'glob glob', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -263,19 +262,22 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
     ),
 
     -- ESP32 stuff
-    s(
-        'idf_component_register',
+    ms(
+        {
+            { trig = 'idf_component_register', snippetType = 'snippet', condition = nil },
+        },
         fmt(
             [[
-        idf_component_register("{}"
-            {})
+        idf_component_register(SRCS {Sources}
+            REQUIRES {PublicRequires}
+            PRIV_REQUIRES {PrivateRequires}
+            INCLUDE_DIRS "."
+        )
         ]],
-            {
-                i(1, 'library_name'),
-                i(2, 'source.c'),
-            }
+            { Sources = i(1, 'main.c'), PublicRequires = i(2, 'efuse'), PrivateRequires = i(3, 'mqtt') }
         )
     ),
+    -- ESP32 stuff end
 
     -- {{{ Cmake C library and test app for test driven development (tdd) setup
     s(
@@ -419,7 +421,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
     ms(
         {
-            { trig = 'compile_commands.json', snippetType = 'snippet', condition = nil },
+            { trig = 'compile_commands.json',   snippetType = 'snippet', condition = nil },
             { trig = 'export_compile_commands', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -706,7 +708,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'SECOND', snippetType = 'autosnippet' },
-            { trig = 'set', snippetType = 'snippet' },
+            { trig = 'set',    snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -722,7 +724,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'string', snippetType = 'snippet' },
-            { trig = 'THIRD', snippetType = 'autosnippet' },
+            { trig = 'THIRD',  snippetType = 'autosnippet' },
         },
         fmt(
             [[
