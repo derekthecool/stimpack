@@ -1,11 +1,5 @@
 return {
     {
-        -- This feature is nearly replaced by the neovim builtin ':InspectTree'
-        -- But this plugin allows for testing query which is very helpful
-        'nvim-treesitter/playground',
-        keys = { '<leader>ab', '<cmd>TSPlaygroundToggle<CR>', desc = 'Toggle Treesitter Playground' },
-    },
-    {
         'nvim-treesitter/nvim-treesitter',
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
@@ -26,6 +20,7 @@ return {
                     'cpp',
                     'lua',
                     'markdown',
+                    'powershell',
                     'proto',
                     'python',
                     'regex',
@@ -120,19 +115,6 @@ return {
                     },
                 },
             })
-
-            -- local parser_config = require('nvim-treesitter.parsers').get_parser_configs()
-            -- parser_config.powershell = {
-            --     install_info = {
-            --         url = string.format('%s/nvim-plugin-development/tree-sitter-PowerShell', OS['home']), -- local path or git repo
-            --         files = { 'src/scanner.c', 'src/parser.c' }, -- note that some parsers also require src/scanner.c or src/scanner.cc
-            --         -- optional entries:
-            --         branch = 'master', -- default branch in case of git repo if different from master
-            --         generate_requires_npm = false, -- if stand-alone parser without npm dependencies
-            --         requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-            --     },
-            --     filetype = 'ps1', -- if filetype does not match the parser name
-            -- }
         end,
     },
 }
