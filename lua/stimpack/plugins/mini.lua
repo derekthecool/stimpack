@@ -205,10 +205,11 @@ return {
         )
 
         -- Amazing additional text objects
-        require('mini.ai').setup()
+        -- require('mini.ai').setup()
+
         -- Amazing commands with mappings starting with g
         -- additional operators for cool commands such as
-        --
+
         -- Evaluate text and replace with output.
         -- Exchange text regions.
         -- Multiply (duplicate) text.
