@@ -33,8 +33,8 @@ return {
     {
         'numToStr/Comment.nvim',
         keys = {
-            { 'gc', mode = { 'n', 's', 'v' } },
-            { 'gb', mode = { 'n', 's', 'v' } },
+            { 'gc',  mode = { 'n', 's', 'v' } },
+            { 'gb',  mode = { 'n', 's', 'v' } },
             { 'gcc', mode = { 'n', 's', 'v' } },
             { 'gbc', mode = { 'n', 's', 'v' } },
         },
@@ -44,6 +44,7 @@ return {
             })
             local ft = require('Comment.ft')
             ft.cpp = { '//%s', '/*%s*/' }
+            ft.ps1 = { '#%s', '<#\n%s\n#>' }
             ft.asm = ';%s'
         end,
     },
@@ -55,9 +56,9 @@ return {
             'nvim-treesitter/nvim-treesitter',
         },
         keys = {
-            { '<leader>re', desc = 'Refactoring' },
-            { '<leader>rf', desc = 'Refactoring' },
-            { '<leader>rv', desc = 'Refactoring' },
+            { '<leader>re', mode = { 'x', 'n' }, desc = 'Refactoring extract function' },
+            { '<leader>rf', mode = { 'x', 'n' }, desc = 'Refactoring extract function to file' },
+            { '<leader>rv', mode = { 'x', 'n' }, desc = 'Refactoring extract variable' },
         },
         config = function()
             require('refactoring').setup({
@@ -120,24 +121,74 @@ return {
 
             vim.keymap.set('n', '<leader>rP', function()
                 require('refactoring').debug.printf({ below = true })
-            end, { desc = 'Refactor Debug Print Above' })
+            end, { desc = 'Refactor Debug Print Below' })
+
+            vim.keymap.set({ 'n', 'x' }, '<leader>rr', function()
+                require('telescope').extensions.refactoring.refactors()
+            end, { desc = 'Telescope refactor menu' })
         end,
     },
 
     {
         'nvim-neotest/neotest',
         enabled = true,
-        -- stylua: ignore start
         keys = {
-            { "<leader>tt", function() require("neotest").run.run(vim.fn.expand("%")) end,                      desc = "Run File" },
-            { "<leader>tT", function() require("neotest").run.run(vim.uv.cwd()) end,                            desc = "Run All Test Files" },
-            { "<leader>tr", function() require("neotest").run.run() end,                                        desc = "Run Nearest" },
-            { "<leader>tl", function() require("neotest").run.run_last() end,                                   desc = "Run Last" },
-            { "<leader>ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle Summary" },
-            { "<leader>to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
-            { "<leader>tO", function() require("neotest").output_panel.toggle() end,                            desc = "Toggle Output Panel" },
-            { "<leader>tS", function() require("neotest").run.stop() end,                                       desc = "Stop" },
-            -- stylua: ignore end
+            {
+                '<leader>tt',
+                function()
+                    require('neotest').run.run(vim.fn.expand('%'))
+                end,
+                desc = 'Run File',
+            },
+            {
+                '<leader>tT',
+                function()
+                    require('neotest').run.run(vim.uv.cwd())
+                end,
+                desc = 'Run All Test Files',
+            },
+            {
+                '<leader>tr',
+                function()
+                    require('neotest').run.run()
+                end,
+                desc = 'Run Nearest',
+            },
+            {
+                '<leader>tl',
+                function()
+                    require('neotest').run.run_last()
+                end,
+                desc = 'Run Last',
+            },
+            {
+                '<leader>ts',
+                function()
+                    require('neotest').summary.toggle()
+                end,
+                desc = 'Toggle Summary',
+            },
+            {
+                '<leader>to',
+                function()
+                    require('neotest').output.open({ enter = true, auto_close = true })
+                end,
+                desc = 'Show Output',
+            },
+            {
+                '<leader>tO',
+                function()
+                    require('neotest').output_panel.toggle()
+                end,
+                desc = 'Toggle Output Panel',
+            },
+            {
+                '<leader>tS',
+                function()
+                    require('neotest').run.stop()
+                end,
+                desc = 'Stop',
+            },
         },
         dependencies = {
             -- Plugin requirements
