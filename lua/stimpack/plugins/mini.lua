@@ -195,6 +195,11 @@ return {
         -- Use sr, sa, sd, to replace, add, and delete surrounds
         require('mini.surround').setup()
 
+        -- TODO: get a function or mini surround to do this wrap for sql queries instead
+        -- This just sets the register s with a mapping that will wrap like this
+        -- '%s',
+        vim.fn.setreg('s', [[I'A',^]])
+
         require('mini.trailspace').setup()
         vim.keymap.set('n', '<leader>mt', MiniTrailspace.trim, { silent = true, desc = 'MiniTrailspace.trim' })
         vim.keymap.set(
