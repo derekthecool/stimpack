@@ -3,6 +3,18 @@
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'lines', snippetType = 'snippet', condition = nil },
+            { trig = 'lines lines', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        List.generate(int.parse(stdin.readLineSync()!), (_)  => stdin.readLineSync())
+        ]],
+            {}
+        )
+    ),
     -- http package functions
     ms(
         {
