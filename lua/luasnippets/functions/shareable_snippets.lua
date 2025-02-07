@@ -138,19 +138,43 @@ shareable.else_statement_c_style = ms(
 shareable.while_loop_c_style = ms(
     {
         { trig = 'WHILE', snippetType = 'autosnippet' },
+        { trig = 'while', snippetType = 'snippet' },
     },
-    fmt(
-        [[
-        while({})
-        {{
-            {}
-        }}
-        ]],
-        {
-            i(1, 'true'),
-            i(2),
-        }
-    )
+    fmt([[{WhileLoop}]], {
+        WhileLoop = c(1, {
+            sn(
+                nil,
+                fmt(
+                    [[
+                while ({Condition})
+                {{
+                    {Code}
+                }}
+                ]],
+                    {
+                        Condition = r(1, 'condition'),
+                        Code = r(2, 'code'),
+                    }
+                )
+            ),
+
+            sn(
+                nil,
+                fmt(
+                    [[
+                do
+                {{
+                    {Code}
+                }} while ({Condition});
+                ]],
+                    {
+                        Condition = r(1, 'condition'),
+                        Code = r(2, 'code'),
+                    }
+                )
+            ),
+        }),
+    })
 )
 
 shareable.ternary = ms(
