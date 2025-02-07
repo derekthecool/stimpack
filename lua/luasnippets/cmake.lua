@@ -755,6 +755,7 @@ local autosnippets = {
                 trig = 'IF',
                 snippetType = 'autosnippet',
             },
+            { trig = 'if', snippetType = 'snippet', condition = nil,},
         },
         fmt(
             [[
