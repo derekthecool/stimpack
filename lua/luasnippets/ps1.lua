@@ -2,6 +2,47 @@
 
 local shareable = require('luasnippets.functions.shareable_snippets')
 
+local function true_or_false_choice_node(index)
+    return c(index, {
+        t('$false'),
+        t('$true'),
+    })
+end
+
+local function param(index)
+    return sn(
+        index,
+        fmt(
+            [[
+     [Parameter(Mandatory = {Required}, ValueFromPipeline = {FromPipeline})]
+         [{Type}]${ParamName}
+     ]],
+            {
+                Required = true_or_false_choice_node(1),
+                FromPipeline = true_or_false_choice_node(2),
+                Type = i(3, 'string'),
+                ParamName = i(4, 'ParamName'),
+            }
+        )
+    )
+end
+
+local function param_block(index)
+    return sn(
+        index,
+        fmt(
+            [[
+            param (
+                {FirstParam}
+            )
+            ]],
+            {
+                FirstParam = param(1),
+            }
+        )
+    )
+end
+
 local powershell_foreground_highlights = {
     t('Gray'),
     t('Green'),
@@ -842,8 +883,8 @@ class {ClassName} {{
     --         {
     --             snippet node
     --         }),
-    --         
-    --         
+    --
+    --
     --     }
     --   )
     -- ),
@@ -1028,23 +1069,15 @@ class {ClassName} {{
         )
     ),
 
-    ms(
-        {
-            { trig = 'param', snippetType = 'snippet', condition = conds.line_begin },
-        },
-        fmt(
-            [[
-        param (
-            [Parameter()]
-            [{Type}]${Name}
-        )
-        ]],
-            {
-                Type = i(1, 'string'),
-                Name = i(2, 'MyParam'),
-            }
-        )
-    ),
+    ms({
+        { trig = 'param_block', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'param block', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, param_block(1)),
+
+    ms({
+        { trig = 'param', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'param param', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, param(1)),
 
     -- s(
     --     'param',
@@ -1298,18 +1331,21 @@ local autosnippets = {
 
     ms(
         {
+            { trig = 'function', snippetType = 'snippet', condition = nil },
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
             [[
         function {Verb}-{Noun} {{
-            {}
+            {ParamBlock}
+            {Code}
         }}
         ]],
             {
                 Verb = ApprovedVerb(1),
                 Noun = i(2, 'Noun'),
-                i(3),
+                ParamBlock = param_block(3),
+                Code = i(4),
             }
         )
     ),

@@ -186,7 +186,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Fixed',            snippetType = 'snippet' },
+            { trig = 'Fixed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md fix', snippetType = 'autosnippet' },
         },
         fmt(
@@ -203,7 +203,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Changed',             snippetType = 'snippet' },
+            { trig = 'Changed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md change', snippetType = 'autosnippet' },
         },
         fmt(
@@ -220,7 +220,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Added',            snippetType = 'snippet' },
+            { trig = 'Added', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md add', snippetType = 'autosnippet' },
         },
         fmt(
@@ -237,7 +237,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Removed',             snippetType = 'snippet' },
+            { trig = 'Removed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
         },
         fmt(
@@ -289,7 +289,7 @@ local snippets = {
     ms(
         {
             { trig = 'front_matter', snippetType = 'snippet' },
-            { trig = '---',          snippetType = 'autosnippet' },
+            { trig = '---', snippetType = 'autosnippet' },
         },
         fmt(
             [[
