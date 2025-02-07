@@ -808,6 +808,48 @@ class {ClassName} {{
 
     ms(
         {
+            { trig = 'ProgramExists', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    if(-not $(Get-Command {Program} -ErrorAction SilentlyContinue))
+    {{
+        Write-Error "The command [{RepProgram}] {Message}"
+    }}
+        ]],
+            {
+                Program = i(1, 'podman'),
+                RepProgram = rep(1),
+                Message = i(2, 'not found cannot continue program'),
+            }
+        )
+    ),
+
+    -- ms(
+    --     {
+    --         { trig = '$? Aning', snippetType = 'snippet', condition = nil},
+    --     },
+    --   fmt(
+    --     [[
+    -- if(-not $?)
+    -- {
+    --      Write-Error "{Message}"
+    --      {HandleOption}
+    -- }
+    --     ]],
+    --     {
+    --         HandleOption = c( 1,
+    --         {
+    --             snippet node
+    --         }),
+    --         
+    --         
+    --     }
+    --   )
+    -- ),
+
+    ms(
+        {
             { trig = '###', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt([[{}]], {

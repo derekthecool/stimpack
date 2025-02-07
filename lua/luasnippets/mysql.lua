@@ -5,6 +5,43 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
+            { trig = 'left', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+         LEFT({String}, {Length})
+         ]],
+            {
+                String = i(1, 'string'),
+                Length = i(2, '50'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'round', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        ROUND({Number}, {Places})
+        ]],
+            {
+                Number = i(1, 'number'),
+                Places = i(2, '3'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'time', snippetType = 'snippet', condition = nil },
+            { trig = 'now', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[NOW() - INTERVAL {Days} DAY]], {
+            Days = i(1, '5'),
+        })
+    ),
+    ms(
+        {
             { trig = 'find_in_set', snippetType = 'snippet', condition = nil },
         },
         fmt(

@@ -140,12 +140,28 @@ local snippets = {
         },
         fmt(
             [[
-        {}.replaceAll(RegExp(r'{}'),'{}');
+            {Choice}
         ]],
             {
-                i(1, 'source'),
-                i(2, '.*'),
-                i(3),
+                Choice = c(1, {
+                    sn(
+                        nil,
+                        fmt([[{Source}.replaceAllMapped(RegExp(r'{Pattern}'),'{Lam}')]], {
+                            Source = i(1, 'source'),
+                            Pattern = i(2, '.*'),
+                            Lam = shareable.lambda(3),
+                        })
+                    ),
+
+                    sn(
+                        nil,
+                        fmt([[{Source}.replaceAll(RegExp(r'{Pattern}'),'{Replacement}')]], {
+                            Source = i(1, 'source'),
+                            Pattern = i(2, '.*'),
+                            Replacement = i(3, 'replacement text'),
+                        })
+                    ),
+                }),
             }
         )
     ),
