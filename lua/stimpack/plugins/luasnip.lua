@@ -1,3 +1,64 @@
+local function open_snippet_file()
+    local current_filetype = vim.bo.filetype
+    local expected_snippet_filename = string.format('%s.lua', current_filetype)
+    local luasnip_snippet_path = OS.join_path(OS.snippets, expected_snippet_filename)
+    if FileExists(luasnip_snippet_path) == false then
+        vim.notify(
+            'Snippet file does not exist for this filetype - expected name should be: ' .. expected_snippet_filename,
+            vim.log.levels.INFO,
+            { title = 'Stimpack Notification' }
+        )
+
+        vim.ui.select({ 'yes', 'no' }, {
+            prompt = string.format('Create file %s?', luasnip_snippet_path),
+        }, function(choice)
+            if choice == 'yes' then
+                vim.notify('Creating file now', vim.log.levels.INFO, { title = 'Stimpack Notification' })
+
+                local file = io.open(luasnip_snippet_path, 'w')
+                if not file then
+                    vim.notify(
+                        'Could not open file for writing',
+                        vim.log.levels.ERROR,
+                        { title = 'Stimpack Notification' }
+                    )
+                    return
+                end
+
+                local snippet_starter_contents = {
+                    '---@diagnostic disable: undefined-global',
+                    'local snippets = {',
+                    '',
+                    '}',
+                    '',
+                    'local autosnippets = {',
+                    '',
+                    '}',
+                    '',
+                    'return snippets, autosnippets',
+                }
+                for _, value in pairs(snippet_starter_contents) do
+                    file:write(value .. '\n')
+                end
+                file:close()
+
+                vim.api.nvim_cmd({ cmd = 'tabnew', args = { luasnip_snippet_path } }, {})
+            end
+        end)
+    else
+        -- If file does exist, open it normally with luasnip opener
+
+        if FileExists(luasnip_snippet_path) then
+            require('luasnip.loaders').edit_snippet_files({
+                edit = function(file)
+                    V(string.format('Opening snippet file: %s', file))
+                    vim.api.nvim_cmd({ cmd = 'tabnew', args = { file } }, {})
+                end,
+            })
+        end
+    end
+end
+
 return {
     'L3MON4D3/LuaSnip',
     event = 'CursorMoved',
@@ -23,7 +84,7 @@ return {
             update_events = { 'TextChanged', 'TextChangedI' },
             region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
             -- delete_check_events = { 'TextChanged', 'InsertLeave' },
-            enable_autosnippets = true, -- I NEED autosnippets to live, default is false
+            enable_autosnippets = true,                                           -- I NEED autosnippets to live, default is false
             -- store_selection_keys = '<Tab>',
             store_selection_keys = '```',
             -- Add awesome highlights to help show where you are at in a snippet
@@ -166,67 +227,8 @@ return {
         -- A choice menu will popup if file has never been written
         -- A selection for which specific filetype selection
         -- STWHEUFL
-        vim.keymap.set({ 'n', 'i', 's' }, '👇', function()
-            local current_filetype = vim.bo.filetype
-            local expected_snippet_filename = string.format('%s.lua', current_filetype)
-            local luasnip_snippet_path = OS.join_path(OS.snippets, expected_snippet_filename)
-            if FileExists(luasnip_snippet_path) == false then
-                vim.notify(
-                    'Snippet file does not exist for this filetype - expected name should be: '
-                        .. expected_snippet_filename,
-                    vim.log.levels.INFO,
-                    { title = 'Stimpack Notification' }
-                )
-
-                vim.ui.select({ 'yes', 'no' }, {
-                    prompt = string.format('Create file %s?', luasnip_snippet_path),
-                }, function(choice)
-                    if choice == 'yes' then
-                        vim.notify('Creating file now', vim.log.levels.INFO, { title = 'Stimpack Notification' })
-
-                        local file = io.open(luasnip_snippet_path, 'w')
-                        if not file then
-                            vim.notify(
-                                'Could not open file for writing',
-                                vim.log.levels.ERROR,
-                                { title = 'Stimpack Notification' }
-                            )
-                            return
-                        end
-
-                        local snippet_starter_contents = {
-                            '---@diagnostic disable: undefined-global',
-                            'local snippets = {',
-                            '',
-                            '}',
-                            '',
-                            'local autosnippets = {',
-                            '',
-                            '}',
-                            '',
-                            'return snippets, autosnippets',
-                        }
-                        for _, value in pairs(snippet_starter_contents) do
-                            file:write(value .. '\n')
-                        end
-                        file:close()
-
-                        vim.api.nvim_cmd({ cmd = 'tabnew', args = { luasnip_snippet_path } }, {})
-                    end
-                end)
-            else
-                -- If file does exist, open it normally with luasnip opener
-
-                if FileExists(luasnip_snippet_path) then
-                    require('luasnip.loaders').edit_snippet_files({
-                        edit = function(file)
-                            V(string.format('Opening snippet file: %s', file))
-                            vim.api.nvim_cmd({ cmd = 'tabnew', args = { file } }, {})
-                        end,
-                    })
-                end
-            end
-        end, { desc = 'Open snippets' })
+        vim.keymap.set({ 'n', 'i', 's' }, '👇', open_snippet_file, { desc = 'Open snippets' })
+        vim.keymap.set({ 'n' }, '<leader>lz', open_snippet_file, { desc = 'Open snippets' })
 
         -- Snippet extensions, AKA get snippets of one filetype to use another as well
         -- This enables the new filetypes to appear in the snippet edit menu
