@@ -392,7 +392,6 @@ return {
                 ),
                 sources = {
                     null_ls.builtins.formatting.csharpier,
-                    null_ls.builtins.formatting.csharpier,
                     null_ls.builtins.formatting.prettier.with({
                         extra_args = { '--no-semi', '--single-quote', '--jsx-single-quote' },
                     }),
