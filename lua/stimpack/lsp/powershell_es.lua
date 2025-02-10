@@ -6,7 +6,9 @@ return {
     settings = {
         powershell = {
             scriptAnalysis = {
-                settingsPath = string.format('%s/lua/stimpack/lsp/PowershellOptions.psd1', OS.nvim),
+                -- settingsPath = string.format('%s/lua/stimpack/lsp/PowershellOptions.psd1', OS.nvim),
+                settingsPath = string.format('%s/PSScriptAnalyzerSettings.psd1', OS.home),
+                -- Feb 2025 update: moved this psd1 file from stimpack repository to MyCrossPlatformDotfiles
             },
             codeFormatting = {
                 autoCorrectAliases = true,
