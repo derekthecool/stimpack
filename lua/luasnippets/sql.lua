@@ -2,49 +2,36 @@
 local snippets = {
     ms(
         {
-            { trig = 'case_mysql', snippetType = 'snippet', condition = nil },
+            { trig = 'like like', snippetType = 'autosnippet', condition = nil },
+            { trig = 'like', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
-        CASE
-            WHEN {Condition}
-            THEN {Value}
-            ELSE {OtherValue}
-        END
+        LIKE '{Match}'
         ]],
             {
-                Condition = i(1, 'l.Value REGEXP "[0-9]{5,10}"'),
-                Value = i(2, 'true'),
-                OtherValue = i(3, 'false'),
+                Match = i(1, '%text%'),
             }
         )
     ),
 
     ms(
         {
-            { trig = 'regex_replace_mysql', snippetType = 'snippet', condition = nil },
-            { trig = 'regexp_replace_mysql', snippetType = 'snippet', condition = nil },
-        },
-        fmt([[REGEXP_REPLACE({Source}, '{Pattern}', '{Replacement}')]], {
-            Source = i(1, 'Source'),
-            Pattern = i(2, '[0-9]+_([abc]+)'),
-            Replacement = i(3, '\\\\1'),
-        })
-    ),
-
-    ms(
-        {
-            { trig = 'regex_mysql', snippetType = 'snippet', condition = nil },
+            { trig = 'insert', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
-        REGEXP '{Pattern}'
+        INSERT INTO {Table} ({Columns})
+        VALUES ({Values})
         ]],
             {
-                Pattern = i(1, '[0-9]{1,3},2025'),
+                Table = i(1, 'TableName'),
+                Columns = i(2, 'Column1,Column2,Column3'),
+                Values = i(3, 'Value1,Value2,Value3'),
             }
         )
     ),
+
     ms(
         {
             { trig = 'select', snippetType = 'snippet', condition = nil },

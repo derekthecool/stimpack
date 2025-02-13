@@ -32,12 +32,28 @@ local function param_block(index)
         index,
         fmt(
             [[
+            {CmdletBinding}
             param (
                 {FirstParam}
             )
             ]],
             {
-                FirstParam = param(1),
+                CmdletBinding = c(1, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt(
+                            [=[
+                  [CmdletBinding(
+                      SupportsShouldProcess
+                  )]
+                  ]=],
+                            {}
+                        )
+                    ),
+                }),
+
+                FirstParam = param(2),
             }
         )
     )
@@ -332,6 +348,7 @@ Write-FormatView `
     ms(
         {
             { trig = 'ShouldProcess', snippetType = 'snippet', condition = nil },
+            { trig = 'WhatIf', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[

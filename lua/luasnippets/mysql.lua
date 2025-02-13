@@ -5,6 +5,55 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
+            { trig = 'case_mysql', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        CASE
+            WHEN {Condition}
+            THEN {Value}
+            ELSE {OtherValue}
+        END
+        ]],
+            {
+                Condition = i(1, 'l.Value REGEXP "[0-9]{5,10}"'),
+                Value = i(2, 'true'),
+                OtherValue = i(3, 'false'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'REGREPLACE', snippetType = 'autosnippet', condition = nil },
+            { trig = 'regex_replace_mysql', snippetType = 'snippet', condition = nil },
+            { trig = 'regexp_replace_mysql', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[REGEXP_REPLACE({Source}, '{Pattern}', '{Replacement}')]], {
+            Source = i(1, 'Source'),
+            Pattern = i(2, '[0-9]+_([abc]+)'),
+            Replacement = i(3, '\\\\1'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'REGMATCH', snippetType = 'autosnippet', condition = nil },
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = nil },
+            { trig = 'regex_mysql', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        REGEXP '{Pattern}'
+        ]],
+            {
+                Pattern = i(1, '[0-9]{1,3},2025'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'left', snippetType = 'snippet', condition = nil },
         },
         fmt(
