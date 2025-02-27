@@ -227,6 +227,18 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'New-Alias', snippetType = 'snippet', condition = nil },
+            { trig = 'alias', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
+            Name = i(1, 'Name'),
+            Value = i(2, 'Value'),
+        })
+    ),
+
     ms(
         {
             { trig = 'format string', snippetType = 'autosnippet', condition = nil },
