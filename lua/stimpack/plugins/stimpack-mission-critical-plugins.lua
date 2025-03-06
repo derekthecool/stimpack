@@ -32,5 +32,12 @@ return {
         'derekthecool/luafun_neovim',
         lazy = true,
         pin = true,
+        config = function()
+            fun = require('luafun.fun')
+            -- set all luafun functions globally
+            for luafun_key, luafun_value in pairs(fun) do
+                _G[luafun_key] = luafun_value
+            end
+        end,
     },
 }
