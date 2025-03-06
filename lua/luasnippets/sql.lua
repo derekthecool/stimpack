@@ -1,8 +1,67 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    ms({
+        { trig = 'and and', snippetType = 'autosnippet', condition = nil },
+    }, fmt([[AND]], {})),
     ms(
         {
-            { trig = 'row_number', snippetType = 'snippet', condition = nil },
+            { trig = 'substring', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        substring({Column}, {Start}, {End}) as {SubstringName}
+        ]],
+            {
+                Column = i(1, 'ColumnName'),
+                Start = i(2, 'StartIndex'),
+                End = i(3, 'EndIndex'),
+                SubstringName = i(4, 'SubstringName'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'with', snippetType = 'snippet', condition = nil },
+            { trig = 'cte',  snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        with {CTEName} as (
+            select
+                {Select},
+                ROW_NUMBER() OVER (PARTITION BY firmwareVersion ORDER BY IMEI) AS rn
+            from {Table}
+        )
+        ]],
+            {
+                CTEName = i(1, 'CTEName'),
+                Select = i(2, 'Column1'),
+                Table = i(3, 'Table'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'update', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        update {Table}
+        set {Column}
+        where {Where}
+        ]],
+            {
+                Table = i(1, 'Table'),
+                Column = i(2, 'Column1 = 5'),
+                Where = i(3, 'Id = 1'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'row_number', snippetType = 'snippet',     condition = nil },
             { trig = 'row number', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -19,7 +78,7 @@ local snippets = {
     ms(
         {
             { trig = 'like like', snippetType = 'autosnippet', condition = nil },
-            { trig = 'like', snippetType = 'snippet', condition = nil },
+            { trig = 'like',      snippetType = 'snippet',     condition = nil },
         },
         fmt(
             [[
@@ -50,7 +109,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'select', snippetType = 'snippet', condition = nil },
+            { trig = 'select',        snippetType = 'snippet',     condition = nil },
             { trig = 'select select', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -111,7 +170,7 @@ WHERE
 
     ms(
         {
-            { trig = 'property', snippetType = 'snippet' },
+            { trig = 'property',          snippetType = 'snippet' },
             { trig = 'property property', snippetType = 'autosnippet' },
         },
         fmt([[{ColumnName} {Type} not null {DefaultValue}]], {

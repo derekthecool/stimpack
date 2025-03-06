@@ -13,13 +13,37 @@ end, {})
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'FILE_TEST', snippetType = 'snippet', condition = nil },
+            { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+using Xunit;
+
+public class {ClassNameFromFilename}
+{{
+    {Code}
+}}
+        ]],
+            {
+                ClassNameFromFilename = f(function(args, snip)
+                    -- return the first chunk of the filename
+                    -- for example: QueryFormatting.Test.cs, I just want QueryFormatting
+                    return (vim.split(vim.fn.expand('%:t'), '%.')[1])
+                end, {}),
+                Code = i(1),
+            }
+        )
+    ),
     ms({
         { trig = 'from body', snippetType = 'autosnippet', condition = nil },
-        { trig = 'FromBody', snippetType = 'snippet', condition = nil },
+        { trig = 'FromBody',  snippetType = 'snippet',     condition = nil },
     }, fmt('[FromBody]', {})),
     ms({
         { trig = 'from uri', snippetType = 'autosnippet', condition = nil },
-        { trig = 'FromUri', snippetType = 'snippet', condition = nil },
+        { trig = 'FromUri',  snippetType = 'snippet',     condition = nil },
     }, fmt('[FromUri]', {})),
 
     ms(
@@ -115,7 +139,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex match', snippetType = 'snippet' },
-            { trig = 'REGMATCH', snippetType = 'autosnippet' },
+            { trig = 'REGMATCH',    snippetType = 'autosnippet' },
         },
         fmt([[Regex.Match({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -137,7 +161,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex matches', snippetType = 'snippet' },
-            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
+            { trig = 'ALLREGMATCH',   snippetType = 'autosnippet' },
         },
         fmt([[Regex.Matches({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -159,7 +183,7 @@ local snippets = {
     ms(
         {
             { trig = 'regex replace', snippetType = 'snippet' },
-            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
+            { trig = 'REGREPLACE',    snippetType = 'autosnippet' },
         },
         fmt([[Regex.Replace({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),

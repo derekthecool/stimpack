@@ -254,6 +254,29 @@ local snippets = {
             Value = i(2, 'Value'),
         })
     ),
+
+    ms(
+        {
+            { trig = 'Test-Path', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        if({Option}(Test-Path {Path}))
+        {{
+            {Code}
+        }}
+        ]],
+            {
+                Option = c(1, {
+                    t('-not'),
+                    t(''),
+                }),
+                Path = i(2, 'Path'),
+                Code = i(3),
+            }
+        )
+    ),
+
     -- https://stackoverflow.com/a/49096299
     ms(
         {

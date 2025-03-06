@@ -56,6 +56,32 @@ end
 local snippets = {
     ms(
         {
+            { trig = [[\\]], snippetType = 'snippet', condition = nil },
+            { trig = 'regex_pattern', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{Pattern}]], {
+            Pattern = c(1, {
+                -- all letters
+                t('%a'),
+                -- control
+                t('%c'),
+                -- numbers
+                t('%d'),
+                -- all printable except space
+                t('%g'),
+                -- lowercase
+                t('%l'),
+                -- uppercase
+                t('%u'),
+                -- alphanumeric
+                t('%w'),
+                -- hexadecimal digits
+                t('%x'),
+            }),
+        })
+    ),
+    ms(
+        {
             { trig = 'table.concat', snippetType = 'autosnippet', condition = nil },
             { trig = 'table concat', snippetType = 'autosnippet', condition = nil },
             { trig = 'table.concat', snippetType = 'snippet', condition = nil },

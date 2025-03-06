@@ -1,8 +1,23 @@
 ---@diagnostic disable: undefined-global
 
 local auxiliary = require('luasnippets.functions.auxiliary')
+local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'link_local_file', snippetType = 'snippet', condition = nil },
+        },
+        fmt('[{Reference}]({Path})', {
+            Path = shareable.file_list(1),
+            -- Reference = i(2, 'Awesome file ....'),
+            Reference = d(2, function(args, snip)
+                local nodes = {}
+                table.insert(nodes, i(1, args[1]))
+                return sn(nil, nodes)
+            end, { 1 }),
+        })
+    ),
 
     ms(
         {
@@ -186,7 +201,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Fixed', snippetType = 'snippet' },
+            { trig = 'Fixed',            snippetType = 'snippet' },
             { trig = 'CHANGELOG.md fix', snippetType = 'autosnippet' },
         },
         fmt(
@@ -203,7 +218,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Changed', snippetType = 'snippet' },
+            { trig = 'Changed',             snippetType = 'snippet' },
             { trig = 'CHANGELOG.md change', snippetType = 'autosnippet' },
         },
         fmt(
@@ -220,7 +235,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Added', snippetType = 'snippet' },
+            { trig = 'Added',            snippetType = 'snippet' },
             { trig = 'CHANGELOG.md add', snippetType = 'autosnippet' },
         },
         fmt(
@@ -237,7 +252,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Removed', snippetType = 'snippet' },
+            { trig = 'Removed',             snippetType = 'snippet' },
             { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
         },
         fmt(
@@ -289,7 +304,7 @@ local snippets = {
     ms(
         {
             { trig = 'front_matter', snippetType = 'snippet' },
-            { trig = '---', snippetType = 'autosnippet' },
+            { trig = '---',          snippetType = 'autosnippet' },
         },
         fmt(
             [[

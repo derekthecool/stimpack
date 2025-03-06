@@ -4,6 +4,17 @@ local fun = require('luafun.fun')
 local scan = require('plenary.scandir')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'filename', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        vim.split(vim.fn.expand('%:t'), '.')[1]
+        ]],
+            {}
+        )
+    ),
 
     -- which-key snippet
     ms(
@@ -79,7 +90,7 @@ end
 
     ms(
         {
-            { trig = 'setreg', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'setreg',          snippetType = 'snippet', condition = conds.line_begin },
             { trig = 'vim%.fn%.setreg', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
@@ -95,7 +106,7 @@ end
 
     ms(
         {
-            { trig = 'feedkeys', snippetType = 'snippet', condition = nil },
+            { trig = 'feedkeys',      snippetType = 'snippet', condition = nil },
             { trig = 'nvim_feedkeys', snippetType = 'snippet', condition = nil },
         },
         fmt([[vim.api.nvim_feedkeys('{}', "n", nil)]], {

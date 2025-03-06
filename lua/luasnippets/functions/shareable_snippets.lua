@@ -36,6 +36,40 @@ local k = require('luasnip.nodes.key_indexer').new_key
 local ls = require('luasnip')
 local util = require('luasnip.util.util')
 local node_util = require('luasnip.nodes.util')
+require('luafun.fun')
+local scan = require('plenary.scandir')
+
+-- For any snippet file to easily reference other files
+shareable.file_list = function(index, starting_directory, respect_gitignore)
+    if not starting_directory then
+        starting_directory = MiniMisc.find_root()
+    end
+    if not respect_gitignore then
+        respect_gitignore = true
+    end
+
+    return d(index, function(args, snip)
+        local nodes = {}
+
+        -- local current_file_directory = vim.fn.expand('%:h')
+        -- local local_header_files = require('plenary.scandir').scan_dir(
+        --     current_file_directory,
+        --     { respect_gitignore = true, search_pattern = '.*%.h$' }
+        -- )
+
+        -- TODO: (Derek Lomax) 3/6/2025 10:58:19 AM, Implement search pattern
+
+        directory = '.'
+        local files = scan.scan_dir(directory, { hidden = true, respect_gitignore = true })
+        local choices = {}
+        for _, file in pairs(files) do
+            table.insert(choices, t(vim.fs.normalize(file)))
+        end
+        local choice_node = c(1, choices)
+        table.insert(nodes, choice_node)
+        return sn(nil, nodes)
+    end, {})
+end
 
 -- For dart
 shareable.lambda = function(index)
@@ -96,7 +130,7 @@ shareable.for_loop_c_style = ms(
 
 shareable.if_statement_c_style = ms(
     {
-        { trig = 'IF', snippetType = 'autosnippet' },
+        { trig = 'IF',       snippetType = 'autosnippet' },
         { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
     },
     fmt(
@@ -180,7 +214,7 @@ shareable.while_loop_c_style = ms(
 shareable.ternary = ms(
     {
         { trig = 'TERNARY', snippetType = 'autosnippet', condition = nil },
-        { trig = 'ternary', snippetType = 'snippet', condition = nil },
+        { trig = 'ternary', snippetType = 'snippet',     condition = nil },
     },
     fmt([[{Condition} ? {IfTrue} : {IfFalse}]], {
         Condition = i(1, 'variable == 1'),
