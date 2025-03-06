@@ -2,9 +2,9 @@ return {
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            'hrsh7th/cmp-buffer', -- buffer completions
-            'hrsh7th/cmp-path', -- path completions
-            'hrsh7th/cmp-cmdline', -- cmdline completions
+            'hrsh7th/cmp-buffer',                  -- buffer completions
+            'hrsh7th/cmp-path',                    -- path completions
+            'hrsh7th/cmp-cmdline',                 -- cmdline completions
             'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
@@ -96,7 +96,7 @@ return {
                     { name = 'nvim_lua' },
                     { name = 'path' },
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'buffer', keyword_length = 3 },
+                    { name = 'buffer',                 keyword_length = 3 },
                 },
                 confirm_opts = {
                     behavior = cmp.ConfirmBehavior.Replace,
@@ -126,8 +126,10 @@ return {
             })
 
             -- Vim dad bod autocompletion setup
-            cmp.setup.filetype({ 'sql' }, {
+            local sql_types_wanted = { 'sql', 'mysql', 'sqlserver', 'postgresql', 'sqlite' }
+            cmp.setup.filetype(sql_types_wanted, {
                 sources = {
+                    { name = 'luasnip' },
                     { name = 'vim-dadbod-completion' },
                     { name = 'buffer' },
                 },
@@ -173,9 +175,9 @@ return {
             -- mappings and settings
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
@@ -227,7 +229,19 @@ return {
             vim.api.nvim_set_keymap('n', '<leader>ld', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
             vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
             vim.api.nvim_set_keymap('n', 'gp', '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-            vim.api.nvim_set_keymap('n', '<leader>lf', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts)
+            vim.keymap.set('n', '<leader>lf', function()
+                vim.lsp.buf.format({ async = true })
+            end, { silent = true, desc = 'Format code' })
+
+            vim.keymap.set('x', '<leader>lf', function()
+                vim.lsp.buf.format({
+                    async = true,
+                    range = {
+                        ['start'] = vim.api.nvim_buf_get_mark(0, '<'),
+                        ['end'] = vim.api.nvim_buf_get_mark(0, '>'),
+                    },
+                })
+            end, { silent = true, desc = 'Format selected section' })
             vim.api.nvim_set_keymap('n', 'gl', '<cmd>lua vim.lsp.diagnostic.open_float()<CR>', opts)
             vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
             vim.api.nvim_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
@@ -352,9 +366,9 @@ return {
             require('lspconfig')
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
