@@ -392,7 +392,9 @@ tags: ["daily_work_notes"]
                 f(function(args, snip)
                     return (vim.fn.expand('%:t') or '')
                         :gsub('_(%w)', function(a)
-                            return a:toupper()
+                            if type(a) == 'string' then
+                                return a:toupper()
+                            end
                         end)
                         :gsub('%.md', '')
                 end, {}),

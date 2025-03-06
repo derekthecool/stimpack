@@ -247,12 +247,72 @@ local snippets = {
     ms(
         {
             { trig = 'New-Alias', snippetType = 'snippet', condition = nil },
-            { trig = 'alias', snippetType = 'snippet', condition = nil },
+            { trig = 'alias',     snippetType = 'snippet', condition = nil },
         },
         fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
             Name = i(1, 'Name'),
             Value = i(2, 'Value'),
         })
+    ),
+    -- https://stackoverflow.com/a/49096299
+    ms(
+        {
+            { trig = 'is_verbose', snippetType = 'snippet', condition = nil },
+            { trig = 'verbose',    snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+                if($PSBoundParameters.ContainsKey('Verbose'))
+                {{
+                    {Code}
+                }}
+        ]],
+            {
+                Code = i(1, 'Extra debugging stuff here if verbose enabled'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'empty',                   snippetType = 'snippet', condition = nil },
+            { trig = '[string]::IsNullOrEmpty', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    if([string]::IsNullOrEmpty(${String}))
+    {{
+        {Code}
+    }}
+        ]],
+            {
+                String = i(1, 'StringName'),
+                Code = i(2, 'return'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'serial_port', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        $port = New-Object System.IO.Ports.SerialPort
+
+        # Set the serial port parameters
+        $port.PortName = "COM1"
+        $port.BaudRate = 9600
+        $port.Parity = [System.IO.Ports.Parity]::None
+        $port.DataBits = 8
+        $port.StopBits = [System.IO.Ports.StopBits]::One
+        $port.Handshake = [System.IO.Ports.Handshake]::None
+
+        # Open the port
+        $port.Open()
+        ]],
+            {}
+        )
     ),
 
     ms(
@@ -348,7 +408,7 @@ Write-FormatView `
     ms(
         {
             { trig = 'ShouldProcess', snippetType = 'snippet', condition = nil },
-            { trig = 'WhatIf', snippetType = 'snippet', condition = nil },
+            { trig = 'WhatIf',        snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -373,7 +433,7 @@ Write-FormatView `
     ),
     ms(
         {
-            { trig = 'readonly', snippetType = 'snippet', condition = nil },
+            { trig = 'readonly',     snippetType = 'snippet', condition = nil },
             { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -578,7 +638,7 @@ Write-Output $filelist
 
     ms(
         {
-            { trig = 'error', snippetType = 'snippet', condition = nil },
+            { trig = 'error',        snippetType = 'snippet',     condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -878,7 +938,26 @@ class {ClassName} {{
 
     ms(
         {
+            { trig = 'ValidateScript', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [=[
+        [ValidateScript(
+        {{{ValidationLogic}}},
+        ErrorMessage = "{ErrorMessage}"
+        )]
+        ]=],
+            {
+                ValidationLogic = i(1, '$_ -ge (Get-Date).Date'),
+                ErrorMessage = i(2, [[{0:d} isn't a future date. Specify a later date.]]),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'ProgramExists', snippetType = 'snippet', condition = nil },
+            { trig = 'which',         snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -895,28 +974,29 @@ class {ClassName} {{
         )
     ),
 
-    -- ms(
-    --     {
-    --         { trig = '$? Aning', snippetType = 'snippet', condition = nil},
-    --     },
-    --   fmt(
-    --     [[
-    -- if(-not $?)
-    -- {
-    --      Write-Error "{Message}"
-    --      {HandleOption}
-    -- }
-    --     ]],
-    --     {
-    --         HandleOption = c( 1,
-    --         {
-    --             snippet node
-    --         }),
-    --
-    --
-    --     }
-    --   )
-    -- ),
+    ms(
+        {
+            { trig = '$?',      snippetType = 'snippet', condition = nil },
+            { trig = 'last',    snippetType = 'snippet', condition = nil },
+            { trig = 'success', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    if(-not $?)
+    {{
+         Write-Error "{Message}"
+         {HandleOption}
+    }}
+        ]],
+            {
+                Message = i(1, 'Error, the last command did not work'),
+                HandleOption = c(2, {
+                    i(1, 'exit'),
+                    t('return'),
+                }),
+            }
+        )
+    ),
 
     ms(
         {
@@ -1099,12 +1179,12 @@ class {ClassName} {{
     ),
 
     ms({
-        { trig = 'param_block', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'param_block', snippetType = 'snippet',     condition = conds.line_begin },
         { trig = 'param block', snippetType = 'autosnippet', condition = conds.line_begin },
     }, param_block(1)),
 
     ms({
-        { trig = 'param', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'param',       snippetType = 'snippet',     condition = conds.line_begin },
         { trig = 'param param', snippetType = 'autosnippet', condition = conds.line_begin },
     }, param(1)),
 
@@ -1178,9 +1258,9 @@ class {ClassName} {{
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-            -- Old method
-            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-            -- New method uses PSScriptTools function ConvertFrom-Text
+        -- Old method
+        -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+        -- New method uses PSScriptTools function ConvertFrom-Text
             [[ConvertFrom-Text '{Pattern}']],
             {
                 Pattern = i(1, '.*'),
@@ -1360,7 +1440,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'function', snippetType = 'snippet', condition = nil },
+            { trig = 'function', snippetType = 'snippet',     condition = nil },
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
@@ -1381,9 +1461,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host', snippetType = 'snippet' },
-            { trig = 'PRINT', snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
+            { trig = 'Write-Host',   snippetType = 'snippet' },
+            { trig = 'PRINT',        snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1501,8 +1581,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH', snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object', snippetType = 'snippet' },
+            { trig = 'FREACH',              snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object',      snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {

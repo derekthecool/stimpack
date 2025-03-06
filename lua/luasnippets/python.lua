@@ -3,6 +3,28 @@
 local auxiliary = require('luasnippets.functions.auxiliary')
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'SHA256', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+import hashlib
+
+
+def calculate_sha256(data):
+    # Convert data to bytes if it’s not already
+    if isinstance(data, str):
+        data = data.encode()
+    # Calculate SHA-256 hash
+    sha256_hash = hashlib.sha256(data).hexdigest()
+    return sha256_hash
+        ]],
+            {}
+        )
+    ),
+
     ms(
         {
             { trig = 'LAMBDA', snippetType = 'autosnippet', condition = nil },
@@ -141,6 +163,7 @@ client.disconnect()
     ms(
         {
             { trig = 'string format', snippetType = 'autosnippet', condition = nil },
+            { trig = 'format string', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[f'{}']], {
             i(1),

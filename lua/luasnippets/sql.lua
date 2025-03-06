@@ -2,6 +2,22 @@
 local snippets = {
     ms(
         {
+            { trig = 'row_number', snippetType = 'snippet', condition = nil },
+            { trig = 'row number', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+    ROW_NUMBER() OVER(PARTITION BY {Column} ORDER BY {OrderByColumn}) AS row_num
+    ]],
+            {
+                Column = i(1, 'PartitionByColumn'),
+                OrderByColumn = i(2, 'OrderByColumn'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'like like', snippetType = 'autosnippet', condition = nil },
             { trig = 'like', snippetType = 'snippet', condition = nil },
         },
