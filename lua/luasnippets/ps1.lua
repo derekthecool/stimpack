@@ -801,6 +801,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'test', snippetType = 'snippet',     condition = nil },
         },
         fmt(
             [[It '<TestDescription>'
@@ -842,6 +843,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'assert', snippetType = 'snippet',     condition = nil },
         },
         fmt(
             [[
@@ -865,6 +867,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+            { trig = 'test_file', snippetType = 'snippet',     condition = nil },
         },
         fmt(
             [[

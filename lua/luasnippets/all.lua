@@ -2,6 +2,15 @@
 local snippets = {
     ms(
         {
+            { trig = 'psmd', snippetType = 'snippet', condition = nil },
+            { trig = 'PSMDTemplateItem', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[þ{Stuff}þ]], {
+            Stuff = i(1, 'stuff_for_PSMDTemplate'),
+        })
+    ),
+    ms(
+        {
             { trig = 'version', snippetType = 'snippet', condition = nil },
         },
         fmt(
