@@ -15,7 +15,7 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local snippets = {
     ms(
         {
-            { trig = 'FILE_TEST', snippetType = 'snippet', condition = nil },
+            { trig = 'FILE_TEST', snippetType = 'snippet',     condition = nil },
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -31,7 +31,7 @@ public class {ClassNameFromFilename}
                 ClassNameFromFilename = f(function(args, snip)
                     -- return the first chunk of the filename
                     -- for example: QueryFormatting.Test.cs, I just want QueryFormatting
-                    return (vim.split(vim.fn.expand('%:t'), '%.')[1])
+                    return vim.split(vim.fn.expand('%:t'), '%.')[1]
                 end, {}),
                 Code = i(1),
             }
@@ -59,8 +59,8 @@ public class {ClassNameFromFilename}
         {
             { trig = 'asp log', snippetType = 'autosnippet', condition = conds.line_begin },
         },
-        fmt([[app.Logger.{LogLevel}($"{LogText}");]], {
-            LogLevel = c(1, {
+        fmt([[{LoggerName}.{LogLevel}($"{LogText}");]], {
+            LogLevel = c(2, {
                 t('LogInformation'),
                 t('LogError'),
                 t('LogCritical'),
@@ -68,7 +68,11 @@ public class {ClassNameFromFilename}
                 t('LogWarning'),
                 t('LogDebug'),
             }),
-            LogText = i(2),
+            LogText = i(3),
+            LoggerName = c(1, {
+                t('_logger'),
+                t('app.Logger'),
+            }),
         })
     ),
 
