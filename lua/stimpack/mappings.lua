@@ -32,10 +32,10 @@ vim.keymap.set('', '⊃', ':bnext<cr>') -- Use right mod
 vim.keymap.set('', '⊂', ':bprevious<cr>') -- Use left mod
 vim.keymap.set('', 'π', ':bdelete<cr>') -- Use down mod
 
--- Ｉｎｓｅｒｔ ｍａｐｓ
--- Control + j/k to select from popup menu
-vim.keymap.set('i', '<c-j>', '<C-n>')
-vim.keymap.set('i', '<c-k>', '<C-p>')
+-- -- Ｉｎｓｅｒｔ ｍａｐｓ
+-- -- Control + j/k to select from popup menu
+-- vim.keymap.set('i', '<c-j>', '<C-n>')
+-- vim.keymap.set('i', '<c-k>', '<C-p>')
 
 -- Ｖｉｓｕａｌ ｍｏｄｅ
 -- Better command to shift text in visual mode, text it reselected
@@ -80,10 +80,10 @@ vim.keymap.set('n', '<F11>', function()
     end
 end)
 
-vim.keymap.set({ 'n', 'i' }, '<C-h>', '<C-w>h', { noremap = true, silent = true })
-vim.keymap.set({ 'n', 'i' }, '<C-j>', '<C-w>j', { noremap = true, silent = true })
-vim.keymap.set({ 'n', 'i' }, '<C-k>', '<C-w>k', { noremap = true, silent = true })
-vim.keymap.set({ 'n', 'i' }, '<C-l>', '<C-w>l', { noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<C-h>', '<C-w>h', { noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<C-j>', '<C-w>j', { noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<C-k>', '<C-w>k', { noremap = true, silent = true })
+vim.keymap.set({ 'n' }, '<C-l>', '<C-w>l', { noremap = true, silent = true })
 
 -- TODO: make this work in LUA. As of 2021-07-21 it starts the folds then exits
 -- Awesome search filtering "https://vim.fandom.com/wiki/Folding_with_Regular_Expression
