@@ -4,6 +4,37 @@ local my_treesitter_functions = require('stimpack.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
 local shareable = require('luasnippets.functions.shareable_snippets')
 
+function Lambda(index)
+    return sn(
+        index,
+        fmt([[{L}]], {
+            L = c(1, {
+                sn(
+                    nil,
+                    fmt([[{var} => {logic}]], {
+                        var = i(1, 'x'),
+                        logic = i(2),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                {var} =>  {{
+                    {logic}
+                }}
+                ]],
+                        {
+                            var = i(1, 'x'),
+                            logic = i(2),
+                        }
+                    )
+                ),
+            }),
+        })
+    )
+end
+
 function ImmutableRecordProperty(index)
     return sn(
         index,
@@ -38,6 +69,27 @@ function Namespace(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'range',       snippetType = 'snippet',     condition = nil },
+            { trig = 'range range', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[Enumerable.Range({Start}, {Stop})]], {
+            Start = i(1, '0'),
+            Stop = i(2, '100'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'TASK',      snippetType = 'autosnippet', condition = nil },
+            { trig = 'task task', snippetType = 'autosnippet', condition = nil },
+            { trig = 'task',      snippetType = 'snippet',     condition = nil },
+        },
+        fmt([[Task<{T}>]], {
+            T = i(1, 'String'),
+        })
+    ),
     ms(
         {
             { trig = 'string format', snippetType = 'autosnippet', condition = nil },
@@ -158,10 +210,55 @@ app.Use(
         {
             { trig = 'LAMBDA', snippetType = 'autosnippet', condition = nil },
         },
-        fmt([[{variable}  => {repVariable}]], {
-            variable = i(1, 'x'),
-            repVariable = rep(1),
+        fmt([[{L}]], {
+            L = Lambda(1),
         })
+    ),
+
+    ms(
+        {
+            {
+                trig = '%.?[Ww]here',
+                regTrig = true,
+                trigEngine = 'pattern',
+                snippetType = 'autosnippet',
+                condition = nil,
+            },
+        },
+        fmt([[.Where({L})]], {
+            L = Lambda(1),
+        })
+    ),
+
+    ms(
+        {
+            {
+                trig = '%.?[Ss]elect',
+                regTrig = true,
+                trigEngine = 'pattern',
+                snippetType = 'autosnippet',
+                condition = nil,
+            },
+        },
+        fmt([[.Select({L})]], {
+            L = Lambda(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'dictionary', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        var {Name} = new Dictionary<{Type1},{Type2}>()
+        ]],
+            {
+                Name = i(1, 'dictionary'),
+                Type1 = i(2, 'string'),
+                Type2 = i(3, 'string'),
+            }
+        )
     ),
 
     ms(

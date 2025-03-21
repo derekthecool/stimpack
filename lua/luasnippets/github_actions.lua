@@ -16,6 +16,23 @@ local snippets = {
             {}
         )
     ),
+
+    ms(
+        {
+            { trig = 'shell', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        - script: |
+            Write-Host "Powershell version: $($PSVersionTable.PSVersion)"
+          displayName: '{Name}'
+          shell: pwsh
+        ]],
+            {
+                Name = i(1, 'Name'),
+            }
+        )
+    ),
 }
 
 local autosnippets = {}

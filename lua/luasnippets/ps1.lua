@@ -243,11 +243,41 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'hash hash', snippetType = 'autosnippet', condition = nil },
+            { trig = '@{', snippetType = 'autosnippet', condition = nil },
+            { trig = 'hash', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[{}]], {
+            c(1, {
+                sn(
+                    nil,
+                    fmt([[@{{{Items}}}]], {
+                        Items = r(1, 'Items'),
+                    })
+                ),
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                        @{{
+                            {Items}
+                        }}
+                        ]],
+                        {
+                            Items = r(1, 'Items'),
+                        }
+                    )
+                ),
+            }),
+        })
+    ),
 
     ms(
         {
             { trig = 'New-Alias', snippetType = 'snippet', condition = nil },
-            { trig = 'alias',     snippetType = 'snippet', condition = nil },
+            { trig = 'alias', snippetType = 'snippet', condition = nil },
         },
         fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
             Name = i(1, 'Name'),
@@ -281,7 +311,7 @@ local snippets = {
     ms(
         {
             { trig = 'is_verbose', snippetType = 'snippet', condition = nil },
-            { trig = 'verbose',    snippetType = 'snippet', condition = nil },
+            { trig = 'verbose', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -298,7 +328,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'empty',                   snippetType = 'snippet', condition = nil },
+            { trig = 'empty', snippetType = 'snippet', condition = nil },
             { trig = '[string]::IsNullOrEmpty', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -431,7 +461,7 @@ Write-FormatView `
     ms(
         {
             { trig = 'ShouldProcess', snippetType = 'snippet', condition = nil },
-            { trig = 'WhatIf',        snippetType = 'snippet', condition = nil },
+            { trig = 'WhatIf', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -456,7 +486,7 @@ Write-FormatView `
     ),
     ms(
         {
-            { trig = 'readonly',     snippetType = 'snippet', condition = nil },
+            { trig = 'readonly', snippetType = 'snippet', condition = nil },
             { trig = 'Set-Variable', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -661,7 +691,7 @@ Write-Output $filelist
 
     ms(
         {
-            { trig = 'error',        snippetType = 'snippet',     condition = nil },
+            { trig = 'error', snippetType = 'snippet', condition = nil },
             { trig = 'error action', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[-ErrorAction {Options}]], {
@@ -801,7 +831,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'test', snippetType = 'snippet',     condition = nil },
+            { trig = 'test', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[It '<TestDescription>'
@@ -843,7 +873,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'assert', snippetType = 'snippet',     condition = nil },
+            { trig = 'assert', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -867,7 +897,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'test_file', snippetType = 'snippet',     condition = nil },
+            { trig = 'test_file', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -983,7 +1013,7 @@ class {ClassName} {{
     ms(
         {
             { trig = 'ProgramExists', snippetType = 'snippet', condition = nil },
-            { trig = 'which',         snippetType = 'snippet', condition = nil },
+            { trig = 'which', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -1002,8 +1032,8 @@ class {ClassName} {{
 
     ms(
         {
-            { trig = '$?',      snippetType = 'snippet', condition = nil },
-            { trig = 'last',    snippetType = 'snippet', condition = nil },
+            { trig = '$?', snippetType = 'snippet', condition = nil },
+            { trig = 'last', snippetType = 'snippet', condition = nil },
             { trig = 'success', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -1205,12 +1235,12 @@ class {ClassName} {{
     ),
 
     ms({
-        { trig = 'param_block', snippetType = 'snippet',     condition = conds.line_begin },
+        { trig = 'param_block', snippetType = 'snippet', condition = conds.line_begin },
         { trig = 'param block', snippetType = 'autosnippet', condition = conds.line_begin },
     }, param_block(1)),
 
     ms({
-        { trig = 'param',       snippetType = 'snippet',     condition = conds.line_begin },
+        { trig = 'param', snippetType = 'snippet', condition = conds.line_begin },
         { trig = 'param param', snippetType = 'autosnippet', condition = conds.line_begin },
     }, param(1)),
 
@@ -1284,9 +1314,9 @@ class {ClassName} {{
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt(
-        -- Old method
-        -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-        -- New method uses PSScriptTools function ConvertFrom-Text
+            -- Old method
+            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
+            -- New method uses PSScriptTools function ConvertFrom-Text
             [[ConvertFrom-Text '{Pattern}']],
             {
                 Pattern = i(1, '.*'),
@@ -1466,7 +1496,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'function', snippetType = 'snippet',     condition = nil },
+            { trig = 'function', snippetType = 'snippet', condition = nil },
             { trig = 'FUNCTION', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt(
@@ -1487,9 +1517,9 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'Write-Host',   snippetType = 'snippet' },
-            { trig = 'PRINT',        snippetType = 'autosnippet' },
-            { trig = 'ERRORPRINT',   snippetType = 'autosnippet' },
+            { trig = 'Write-Host', snippetType = 'snippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
             { trig = 'Write-Output', snippetType = 'snippet' },
         },
         fmt([[{}]], {
@@ -1607,8 +1637,8 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH',              snippetType = 'autosnippet' },
-            { trig = 'ForEach-Object',      snippetType = 'snippet' },
+            { trig = 'FREACH', snippetType = 'autosnippet' },
+            { trig = 'ForEach-Object', snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
         fmt([[{}]], {

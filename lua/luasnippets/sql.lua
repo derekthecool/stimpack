@@ -1,5 +1,21 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    ms(
+        {
+            { trig = 'alter', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        ALTER TABLE {Table}
+        ADD CONSTRAINT {NameForRule} UNIQUE ({UniqueColumns});
+        ]],
+            {
+                Table = i(1, 'Table'),
+                NameForRule = i(2, 'name_for_rule'),
+                UniqueColumns = i(3, 'UniqueByColumn1,AlsoByColumn3'),
+            }
+        )
+    ),
     ms({
         { trig = 'and and', snippetType = 'autosnippet', condition = nil },
     }, fmt([[AND]], {})),

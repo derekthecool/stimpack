@@ -3,6 +3,102 @@
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    ms(
+        {
+            { trig = 'mermaid_rounded_box', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}([{Text}])', {
+            Name = i(1, 'RoundedBox'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_edged_box', snippetType = 'snippet', condition = nil },
+            { trig = 'mermaid_node_in_subroutine', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}[[{Text}]]', {
+            Name = i(1, 'NodeInSubRoutine'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_cylinder', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}[({Text})]', {
+            Name = i(1, 'Cylinder'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_circle', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}(({Text}))', {
+            Name = i(1, 'Circle'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_asymmetric', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}>{Text}]', {
+            Name = i(1, 'Asymmetric'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_rhombus', snippetType = 'snippet', condition = nil },
+        },
+        fmt('{Name}{{{Text}}}', {
+            Name = i(1, 'Asymmetric'),
+            Text = i(2, 'This is the text'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_if', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [=[
+        {Name}{{{Condition}}}
+        {NameRep} -->|{LeftText}| {Left}
+        {NameRep} -->|{RightText}| {Right}
+        ]=],
+            {
+                Name = i(1, 'IfConditionDescription'),
+                Condition = i(2, 'Meets these conditions?'),
+                NameRep = rep(1),
+                LeftText = i(3, 'Yes'),
+                Left = i(4, 'YesCode'),
+                RightText = i(5, 'No'),
+                Right = i(6, 'NoCode'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'mermaid_markdown', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [=[
+        MarkdownText["`* Line one
+        * Line two
+        * Line three`"]
+        ]=],
+            {}
+        )
+    ),
 
     s(
         'mermaid flowchart',
