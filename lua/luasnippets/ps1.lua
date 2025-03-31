@@ -101,16 +101,43 @@ local function PesterTest(index)
         index,
         fmt(
             [[
-    Describe '{TestGroupName}' {{
-        It '{TestDescription}' {{
+    Describe '{TestGroupName}' {Skip} {{
+        It '{TestDescription}'
+        {Multiple}
+        {{
             {Assertion}
         }}
     }}
     ]],
             {
                 TestGroupName = i(1, 'Test group'),
-                TestDescription = i(2, 'This test does ....'),
-                Assertion = i(3, '$(Get-ChildItem).Count | Should -Be 42'),
+                Skip = c(2, {
+                    t(''),
+                    t('-Skip:(-not(Test-Path Env:CI))'),
+                    t('-Skip:$true'),
+                    t('-Skip:$false'),
+                }),
+                TestDescription = i(3, 'This test does ....'),
+                Multiple = c(4, {
+                    t(''),
+                    sn(
+                        nil,
+                        fmt(
+                            [[-TestCases @(
+                                @{ <Variable> = <Value> }
+                            )
+                            ]],
+                            {
+                                Variable = i(1, 'Variable'),
+                                Value = i(2, 'Value'),
+                            },
+                            {
+                                delimiters = '<>',
+                            }
+                        )
+                    ),
+                }),
+                Assertion = i(5, '$(Get-ChildItem).Count | Should -Be 42'),
             }
         )
     )
@@ -243,6 +270,69 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'environment_exists', snippetType = 'snippet', condition = nil },
+            { trig = 'env_exists', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        if({Not}$env:{Variable})
+        {{
+            {Code}
+        }}
+        ]],
+            {
+                Not = c(1, {
+                    t(''),
+                    t('-not'),
+                }),
+                Variable = i(2, 'EnvironmentVariableName'),
+                Code = i(3, 'default'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'platform', snippetType = 'snippet', condition = nil },
+            { trig = 'Linux', snippetType = 'snippet', condition = nil },
+            { trig = 'Windows', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        switch ($null)
+        {
+            {$IsWindows}
+            {
+                <Windows>
+            }
+            {$IsLinux}
+            {
+                <Linux>
+            }
+            {$IsMacOS}
+            {
+                <Mac>
+            }
+            default
+            {
+                <Other>
+            }
+        }
+        ]],
+            {
+                Windows = i(1, 'WindowsAction'),
+                Linux = i(2, 'LinuxAction'),
+                Mac = i(3, 'MacAction'),
+                Other = i(4, 'OtherAction'),
+            },
+            {
+                delimiters = '<>',
+            }
+        )
+    ),
     ms(
         {
             { trig = 'hash hash', snippetType = 'autosnippet', condition = nil },
@@ -833,41 +923,9 @@ class {ClassName} {{
             { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
             { trig = 'test', snippetType = 'snippet', condition = nil },
         },
-        fmt(
-            [[It '<TestDescription>'
-            <Multiple>
-            {
-                <Code>
-            }
-        ]],
-            {
-                TestDescription = i(1, 'This test should do ....'),
-                Multiple = c(2, {
-                    t(''),
-                    sn(
-                        nil,
-                        fmt(
-                            [[-TestCases @(
-                                @{ <Variable> = <Value> }
-                            )
-                            ]],
-                            {
-                                Variable = i(1, 'Variable'),
-                                Value = i(2, 'Value'),
-                            },
-                            {
-                                delimiters = '<>',
-                            }
-                        )
-                    ),
-                }),
-
-                Code = i(3),
-            },
-            {
-                delimiters = '<>',
-            }
-        )
+        fmt([[{Test}]], {
+            Test = PesterTest(1),
+        })
     ),
 
     ms(
