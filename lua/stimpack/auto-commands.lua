@@ -5,7 +5,7 @@ local generalSettingsGroup = vim.api.nvim_create_augroup('General settings', { c
 vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*',
     callback = function()
-        require('vim.highlight').on_yank({ higroup = 'Visual', timeout = 500 })
+        vim.hl.on_yank({ higroup = 'Visual', timeout = 500 })
     end,
     group = generalSettingsGroup,
 })
