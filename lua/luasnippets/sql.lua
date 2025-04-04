@@ -2,6 +2,24 @@
 local snippets = {
     ms(
         {
+            { trig = 'subquery', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        select * from {OuterTable}
+        where {OuterTableProperty} in(
+            {InnerTableQuery}
+        )
+        ]],
+            {
+                OuterTable = i(1, 'OuterTable'),
+                OuterTableProperty = i(2, 'OuterTableProperty'),
+                InnerTableQuery = i(3, 'select * from InnerTable'),
+            }
+        )
+    ),
+    ms(
+        {
             { trig = 'alter', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -38,7 +56,7 @@ local snippets = {
     ms(
         {
             { trig = 'with', snippetType = 'snippet', condition = nil },
-            { trig = 'cte',  snippetType = 'snippet', condition = nil },
+            { trig = 'cte', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -77,7 +95,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'row_number', snippetType = 'snippet',     condition = nil },
+            { trig = 'row_number', snippetType = 'snippet', condition = nil },
             { trig = 'row number', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -94,7 +112,7 @@ local snippets = {
     ms(
         {
             { trig = 'like like', snippetType = 'autosnippet', condition = nil },
-            { trig = 'like',      snippetType = 'snippet',     condition = nil },
+            { trig = 'like', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -125,7 +143,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'select',        snippetType = 'snippet',     condition = nil },
+            { trig = 'select', snippetType = 'snippet', condition = nil },
             { trig = 'select select', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -186,7 +204,7 @@ WHERE
 
     ms(
         {
-            { trig = 'property',          snippetType = 'snippet' },
+            { trig = 'property', snippetType = 'snippet' },
             { trig = 'property property', snippetType = 'autosnippet' },
         },
         fmt([[{ColumnName} {Type} not null {DefaultValue}]], {

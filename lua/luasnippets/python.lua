@@ -79,7 +79,9 @@ client.disconnect()
     ),
     ms({
         { trig = 'read_all_stdin', snippetType = 'snippet' },
+        { trig = 'read line',      snippetType = 'autosnippet', condition = nil },
     }, fmt([[sys.stdin.read().splitlines()]], {})),
+
     s(
         'Plover dictionary',
         fmt(
@@ -156,6 +158,15 @@ client.disconnect()
             { trig = 'PRINT', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt([[print({})]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'ERRORPRINT', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[print({}, file=sys.stderr, flush=True)]], {
             i(1),
         })
     ),
