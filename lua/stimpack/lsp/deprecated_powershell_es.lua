@@ -4,10 +4,12 @@
 -- https://github.com/SergeCaron/Create_USB_Drive_for_Windows_Installation/blob/961678c1b819590952634626320e58c7d5b730fb/FormattingRules.psd1#L4
 return {
     settings = {
+        -- bundle_path = OS.
         powershell = {
+            -- powerShellExePath = [[C:\Users\DerekLomax\scoop\apps\pwsh\current\pwsh.exe]],
             scriptAnalysis = {
-                -- settingsPath = string.format('%s/lua/stimpack/lsp/PowershellOptions.psd1', OS.nvim),
-                settingsPath = string.format('%s/PSScriptAnalyzerSettings.psd1', OS.home),
+                enable = true,
+                settingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
                 -- Feb 2025 update: moved this psd1 file from stimpack repository to MyCrossPlatformDotfiles
             },
             codeFormatting = {

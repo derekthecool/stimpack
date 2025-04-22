@@ -2,9 +2,9 @@ return {
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            'hrsh7th/cmp-buffer',                  -- buffer completions
-            'hrsh7th/cmp-path',                    -- path completions
-            'hrsh7th/cmp-cmdline',                 -- cmdline completions
+            'hrsh7th/cmp-buffer', -- buffer completions
+            'hrsh7th/cmp-path', -- path completions
+            'hrsh7th/cmp-cmdline', -- cmdline completions
             'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
@@ -96,7 +96,7 @@ return {
                     { name = 'nvim_lua' },
                     { name = 'path' },
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'buffer',                 keyword_length = 3 },
+                    { name = 'buffer', keyword_length = 3 },
                 },
                 confirm_opts = {
                     behavior = cmp.ConfirmBehavior.Replace,
@@ -175,9 +175,9 @@ return {
             -- mappings and settings
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
@@ -357,7 +357,9 @@ return {
                     if localConfigurationFound then
                         require('lspconfig')[server_name].setup(localConfiguration)
                     else
-                        require('lspconfig')[server_name].setup({})
+                        if server_name ~= 'powershell_es' then
+                            require('lspconfig')[server_name].setup({})
+                        end
                     end
                 end,
             })
@@ -366,15 +368,66 @@ return {
             require('lspconfig')
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
                 vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
             end
         end,
+    },
+
+    {
+        'TheLeoP/powershell.nvim',
+        opts = {
+            bundle_path = OS.join_path(vim.fn.stdpath('data'), 'mason', 'packages', 'powershell-editor-services'),
+            settings = {
+                powershell = {
+                    ScriptAnalysis = {
+                        enable = true,
+                        settingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
+                    },
+                    CodeFormatting = {
+                        autoCorrectAliases = true,
+                    },
+                },
+            },
+        },
+        -- config = function()
+        --     require('powershell').setup(
+        --         ---@type powershell.user_config
+        --         {
+        --             capabilities = vim.lsp.protocol.make_client_capabilities(),
+        --             bundle_path = OS.join_path(
+        --                 vim.fn.stdpath('data'),
+        --                 'mason',
+        --                 'packages',
+        --                 'powershell-editor-services'
+        --             ),
+        --             init_options = vim.empty_dict(),
+        --             -- settings = {
+        --             --     powershell = {
+        --             --         ScriptAnalysis = {
+        --             --             enable = true,
+        --             --             settingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
+        --             --         },
+        --             --         CodeFormatting = {
+        --             --             autoCorrectAliases = true,
+        --             --         },
+        --             --     },
+        --             -- },
+        --             shell = 'pwsh',
+        --             -- handlers = base_handlers, -- see lua/powershell/handlers.lua
+        --             root_dir = function(buf)
+        --                 return fs.dirname(
+        --                     fs.find({ '.git' }, { upward = true, path = fs.dirname(api.nvim_buf_get_name(buf)) })[1]
+        --                 )
+        --             end,
+        --         }
+        --     )
+        -- end,
     },
 
     {
