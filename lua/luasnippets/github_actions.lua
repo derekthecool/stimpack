@@ -5,6 +5,43 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
+            { trig = 'on', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        on:
+          # On every push
+          push:
+            # Only on these branches
+            branches:
+              - 'releases/**'
+            # Only on these paths or specific files
+            paths:
+              - '**.ps1'
+            # Only on these tags
+            tags:
+              - 'v1.**'
+
+          # Enable manual triggered runs
+          workflow_dispatch:
+
+          # Run workflow on UTC schedule: https://crontab.guru/
+          schedule:
+            - cron: '30 5 * * 1,3'
+
+          # Run after another workflow
+          # To check if the workflow was successful use this block above the steps command
+          # if: ${{{{ github.event.workflow_run.conclusion == 'success' }}}}
+          workflow_run:
+            workflows: ['Name of workflow']
+            types:
+              - completed
+        ]],
+            {}
+        )
+    ),
+    ms(
+        {
             { trig = 'GitHub_action_steps', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(

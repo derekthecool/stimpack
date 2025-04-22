@@ -159,9 +159,18 @@ local autosnippets = {
         },
         fmt([[FROM {}]], {
             c(1, {
-                t('mcr.microsoft.com/dotnet/aspnet:8.0'),
-                t('mcr.microsoft.com/dotnet/sdk:8.0'),
-                t('mcr.microsoft.com/dotnet/runtime:8.0'),
+                t('mcr.microsoft.com/dotnet/sdk:latest'),
+                t('mcr.microsoft.com/dotnet/runtime:latest'),
+                t('mcr.microsoft.com/dotnet/aspnet:latest'),
+                t('mcr.microsoft.com/dotnet/sdk:9.0-alpine'),
+                t('mcr.microsoft.com/dotnet/runtime:9.0-alpine'),
+                t('mcr.microsoft.com/dotnet/aspnet:9.0-alpine'),
+                t('mcr.microsoft.com/dotnet/sdk:latest'),
+                t('mcr.microsoft.com/dotnet/runtime:latest'),
+                t('mcr.microsoft.com/dotnet/aspnet:latest'),
+                t('mcr.microsoft.com/dotnet/sdk:9.0'),
+                t('mcr.microsoft.com/dotnet/aspnet:9.0'),
+                t('mcr.microsoft.com/dotnet/runtime:9.0'),
                 i(1, 'ubuntu:latest'),
             }),
         })

@@ -2,6 +2,26 @@
 local snippets = {
     ms(
         {
+            { trig = 'sleep', snippetType = 'snippet', condition = nil },
+            { trig = 'delay', snippetType = 'snippet', condition = nil },
+            { trig = 'wait', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[Sleep({Milliseconds})]], {
+            Milliseconds = i(1, '60 * 1000'),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'run', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[Run "{Program}"]], {
+            Program = i(1, [[C:\Program Files (x86)\Cisco\Cisco Secure Client\UI\csc_ui.exe]]),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'FIRST', snippetType = 'autosnippet', condition = conds.line_begin },
             { trig = 'starter', snippetType = 'snippet', condition = conds.line_begin },
         },
