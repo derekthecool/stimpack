@@ -12,7 +12,65 @@ end, {})
 
 local auxiliary = require('luasnippets.functions.auxiliary')
 
+local if_statement = function(index, condition_snippet_node)
+    return d(index, function(args, snip)
+        local ft = vim.bo.filetype
+        if ft == 'cs' or ft == 'ps1' then
+            return sn(
+                nil,
+                fmt(
+                    [[
+              if({Condition})
+              {{
+                  {Code}
+              }}
+             ]],
+                    {
+                        Condition = condition_snippet_node,
+                        Code = i(2),
+                    }
+                )
+            )
+        else
+            return sn(
+                nil,
+                fmt(
+                    [[
+     if {Condition} then
+         {Code}
+     ]],
+                    {
+                        Condition = condition_snippet_node,
+                        Code = i(2),
+                    }
+                )
+            )
+        end
+    end, {})
+end
+
 local snippets = {
+    ms(
+        {
+            { trig = 'file exists', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+            {if_block}
+        ]],
+            {
+                if_block = if_statement(
+                    1,
+                    sn(
+                        1,
+                        fmt([[File.Exists({File})]], {
+                            File = i(1, 'File.txt'),
+                        })
+                    )
+                ),
+            }
+        )
+    ),
     ms(
         {
             { trig = 'FILE_TEST', snippetType = 'snippet',     condition = nil },
