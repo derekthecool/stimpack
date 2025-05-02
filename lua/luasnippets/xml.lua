@@ -1,5 +1,12 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    ms({
+        { trig = 'PublishSingleFile', snippetType = 'snippet', condition = nil },
+    }, fmt([[<PublishSingleFile>true</PublishSingleFile>]], {})),
+
+    ms({
+        { trig = 'SelfContained', snippetType = 'snippet', condition = nil },
+    }, fmt([[<SelfContained>true</SelfContained>]], {})),
 
     s(
         'combo box',
@@ -285,7 +292,7 @@ local autosnippets = {
 
         {
             { trig = 'package reference', snippetType = 'snippet' },
-            { trig = 'INCLUDE', snippetType = 'autosnippet' },
+            { trig = 'INCLUDE',           snippetType = 'autosnippet' },
         },
         fmt(
             [[

@@ -2,6 +2,20 @@
 local snippets = {
     ms(
         {
+            { trig = 'FIRST', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[{HotKey}::{Command}]], {
+            HotKey = c(1, {
+                t('^+c'),
+                t('#!x'),
+                i(1, '^+c'),
+            }),
+            Command = i(2, 'ahk command'),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'sleep', snippetType = 'snippet', condition = nil },
             { trig = 'delay', snippetType = 'snippet', condition = nil },
             { trig = 'wait', snippetType = 'snippet', condition = nil },
