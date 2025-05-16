@@ -334,35 +334,41 @@ return {
                     -- Json
                     'jsonls',
 
-                    -- Powershell
-                    'powershell_es',
-
                     -- Python
                     'pylsp',
+
+                    -- Powershell
+                    'powershell_es',
                 },
-                -- automatic_installation = true, -- This one sounds good but it really means it will auto install any lsp for a file with variable lsp.
+                automatic_enable = {
+                    exclude = {
+                        -- setup of powershell LSP is handled by plugin powershell.nvim so do not auto setup this one
+                        'powershell_es',
+                    },
+                },
             })
 
             -- Help with neovim development
             require('neodev').setup()
 
-            -- Auto setup all LSPs
-            require('mason-lspconfig').setup_handlers({
-                function(server_name) -- default handler (optional)
-                    local localConfigurationFound, localConfiguration =
-                        pcall(require, string.format('stimpack.lsp.%s', server_name))
-
-                    -- Start LSP with my local configuration settings from lua/stimpack/lsp/*
-                    -- Else start LSP with default settings if not found
-                    if localConfigurationFound then
-                        require('lspconfig')[server_name].setup(localConfiguration)
-                    else
-                        if server_name ~= 'powershell_es' then
-                            require('lspconfig')[server_name].setup({})
-                        end
-                    end
-                end,
-            })
+            -- -- Auto setup all LSPs
+            -- TODO: (Derek Lomax) 5/16/2025 9:52:51 AM, Possible to do item is to make sure every LSP is using option I want
+            -- require('mason-lspconfig').setup_handlers({
+            --     function(server_name) -- default handler (optional)
+            --         local localConfigurationFound, localConfiguration =
+            --             pcall(require, string.format('stimpack.lsp.%s', server_name))
+            --
+            --         -- Start LSP with my local configuration settings from lua/stimpack/lsp/*
+            --         -- Else start LSP with default settings if not found
+            --         if localConfigurationFound then
+            --             require('lspconfig')[server_name].setup(localConfiguration)
+            --         else
+            --             if server_name ~= 'powershell_es' then
+            --                 require('lspconfig')[server_name].setup({})
+            --             end
+            --         end
+            --     end,
+            -- })
 
             -- Third load lspconfig
             require('lspconfig')
