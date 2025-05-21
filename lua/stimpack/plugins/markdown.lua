@@ -5,8 +5,15 @@ return {
         -- 2024-03-26, trying to make this plugin lazy does not always work. I've had success using the keys and cmd to load this plugin.
         -- It says "not an editor command". So, just load on filetype instead.
         ft = { 'markdown', 'vimwiki' },
-        build = function()
-            vim.fn['mkdp#util#install']()
+        -- Build option without yarn available : note this failed for me 2025-05-16
+        -- build = function()
+        --     vim.fn['mkdp#util#install']()
+        -- end,
+
+        -- Build option with yarn or npm available
+        build = 'cd app && yarn install',
+        init = function()
+            vim.g.mkdp_filetypes = { 'markdown' }
         end,
         keys = {
             { '<leader>fM', desc = 'MarkdownPreview' },
