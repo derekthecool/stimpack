@@ -236,6 +236,7 @@ return {
         luasnip.filetype_extend('fsharp', { 'dotnet' })
         luasnip.filetype_extend('csharp', { 'dotnet' })
         luasnip.filetype_extend('cs', { 'dotnet' })
+        luasnip.filetype_extend('ps1', { 'dotnet' })
         luasnip.filetype_extend('toggleterm', { 'ps1' })
 
         -- Lua
