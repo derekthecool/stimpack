@@ -10,6 +10,21 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+    ms(
+        {
+            { trig = 'array_length', snippetType = 'snippet', condition = nil},
+            { trig = 'array length', snippetType = 'autosnippet', condition = nil,},
+        },
+      fmt(
+        [[
+        size_t {ArrayRep}_length = sizeof({Array})/sizeof({ArrayRep}[0]);
+        ]],
+        {
+            Array = i( 1, 'input_array'),
+            ArrayRep = rep(1),
+        }
+      )
+    ),
 
     ms(
         {
