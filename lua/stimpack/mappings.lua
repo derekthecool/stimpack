@@ -129,3 +129,11 @@ vim.keymap.set('n', '<leader>ac', ReloadConfig)
 -- https://unix.stackexchange.com/questions/585019/horizontal-equivalent-of-zz-in-vim
 -- vim.keymap.set('n', 'z.', '<C-u>normal! zszH<CR>', { silent = true, desc = 'Center cursor horizontally' })
 vim.cmd([[nnoremap <silent> z. :<C-u>normal! zszH<CR>]])
+
+vim.keymap.set('n', '<leader>nn', function()
+    local date = os.date('%Y-%m-%d')
+    local daily_note = string.format("%s/.mywiki/work/Freeus/diary/%s.md", OS.home, date)
+    -- if FileExists(daily_note) then
+    vim.cmd(string.format("e %s", daily_note))
+    -- end
+end, { silent = true, desc = 'Open daily note' })
