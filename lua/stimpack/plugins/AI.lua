@@ -6,7 +6,8 @@ return {
             local host = 'localhost'
             local port = 11434
             -- local model = 'llama2'
-            local model = 'moondream'
+            -- local model = 'moondream'
+            local model = 'llama3.2'
             require('gen').setup({
                 model = model, -- The default model to use.
                 host = host, -- The host running the Ollama service.
