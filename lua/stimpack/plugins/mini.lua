@@ -78,7 +78,7 @@ return {
         --     directory_root ~= nil
         --     and (directory_root:match('Exercism') == nil or directory_root:match('FreeusAdapter') == nil)
         -- then
-        -- MiniMisc.setup_auto_root()
+        MiniMisc.setup_auto_root()
         -- end
 
         -- MiniMisc.setup_auto_root({ '.exercism', 'Makefile', '.git', '.nvim.lua', '.gitignore', 'projector.json' })

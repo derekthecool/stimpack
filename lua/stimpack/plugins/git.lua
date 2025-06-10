@@ -71,7 +71,7 @@ return {
         keys = { '<leader>gj', '<leader>gk' },
         config = function()
             require('which-key').add({
-                { '<leader>g', group = 'git' },
+                { '<leader>g',  group = 'git' },
                 {
                     '<leader>gG',
                     '<cmd>Gitsigns toggle_current_line_blame<cr>',
@@ -182,8 +182,8 @@ return {
                 },
                 signs_staged_enable = true,
                 signcolumn = true, -- Toggle with `:Gitsigns toggle_signs`
-                numhl = false, -- Toggle with `:Gitsigns toggle_numhl`
-                linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
+                numhl = false,     -- Toggle with `:Gitsigns toggle_numhl`
+                linehl = false,    -- Toggle with `:Gitsigns toggle_linehl`
                 word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
                 watch_gitdir = {
                     follow_files = true,
@@ -201,7 +201,7 @@ return {
                 current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
                 sign_priority = 6,
                 update_debounce = 100,
-                status_formatter = nil, -- Use default
+                status_formatter = nil,  -- Use default
                 max_file_length = 40000, -- Disable if file is longer than this (in lines)
                 preview_config = {
                     -- Options passed to nvim_open_win
@@ -328,5 +328,57 @@ return {
                 },
             },
         },
+    },
+
+    {
+        'ThePrimeagen/git-worktree.nvim',
+        keys = {
+            { '<leader>ge', mode = 'n', desc = 'git worktree switcher' },
+            { '<leader>gf', mode = 'n', desc = 'git worktree create' },
+            { '<leader>gm', mode = 'n', desc = 'git worktree main' },
+            { '<leader>gM', mode = 'n', desc = 'git worktree master' },
+        },
+        config = function()
+            local worktree = require('git-worktree')
+            worktree.setup()
+
+            -- setup custom callback for events Create, Delete, Switch
+            worktree.on_tree_change(function(op, metadata)
+                -- op = Operations.Switch, Operations.Create, Operations.Delete
+                -- metadata = table of useful values (structure dependent on op)
+                --      Switch
+                --          path = path you switched to
+                --          prev_path = previous worktree path
+                --      Create
+                --          path = path where worktree created
+                --          branch = branch name
+                --          upstream = upstream remote name
+                --      Delete
+                --          path = path where worktree deleted
+                if op == worktree.Operations.Switch then
+                    V('Switched from ' .. metadata.prev_path .. ' to ' .. metadata.path)
+                    require('nvim-tree.api').tree.change_root(metadata.path)
+                end
+            end)
+
+            -- Load telescope exextension
+            require('telescope').load_extension('git_worktree')
+
+            vim.keymap.set('n', '<leader>ge', function()
+                require('telescope').extensions.git_worktree.git_worktrees()
+            end, { silent = true, desc = 'git worktree switcher' })
+
+            vim.keymap.set('n', '<leader>gf', function()
+                require('telescope').extensions.git_worktree.create_git_worktree()
+            end, { silent = true, desc = 'git worktree create' })
+
+            vim.keymap.set('n', '<leader>gm', function()
+                worktree.switch_worktree('main')
+            end, { silent = true, desc = 'git worktree main' })
+
+            vim.keymap.set('n', '<leader>gM', function()
+                worktree.switch_worktree('master')
+            end, { silent = true, desc = 'git worktree master' })
+        end,
     },
 }
