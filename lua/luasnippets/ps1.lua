@@ -727,7 +727,7 @@ if(-not $?)
     ),
     ms(
         {
-            { trig = 'Write-FormatView', snippetType = 'snippet', condition = nil },
+            { trig = 'WriteFormatView', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[

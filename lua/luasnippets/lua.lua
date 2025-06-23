@@ -56,7 +56,29 @@ end
 local snippets = {
     ms(
         {
-            { trig = [[\\]], snippetType = 'snippet', condition = nil },
+            { trig = 'to_binary_string', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+function to_binary(n)
+    if n == 0 then
+        return '0'
+    end
+    local t = {{}}
+    while n > 0 do
+        table.insert(t, 1, n % 2)
+        n = math.floor(n / 2)
+    end
+    return table.concat(t)
+end
+        ]],
+            {}
+        )
+    ),
+
+    ms(
+        {
+            { trig = [[\\]],          snippetType = 'snippet', condition = nil },
             { trig = 'regex_pattern', snippetType = 'snippet', condition = nil },
         },
         fmt([[{Pattern}]], {
@@ -84,7 +106,7 @@ local snippets = {
         {
             { trig = 'table.concat', snippetType = 'autosnippet', condition = nil },
             { trig = 'table concat', snippetType = 'autosnippet', condition = nil },
-            { trig = 'table.concat', snippetType = 'snippet', condition = nil },
+            { trig = 'table.concat', snippetType = 'snippet',     condition = nil },
         },
         fmt([[table.concat({Table}, {Separator}]], {
             Table = i(1, 'table'),
@@ -95,7 +117,7 @@ local snippets = {
         {
             { trig = 'table.insert', snippetType = 'autosnippet', condition = nil },
             { trig = 'table insert', snippetType = 'autosnippet', condition = nil },
-            { trig = 'table insert', snippetType = 'snippet', condition = nil },
+            { trig = 'table insert', snippetType = 'snippet',     condition = nil },
         },
         fmt([[{Choice}]], {
             Choice = c(1, {
@@ -155,7 +177,7 @@ local snippets = {
     ms(
         {
             { trig = 'require require', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'require', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'require',         snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt([[require('{Module}')]], {
             Module = i(1),
@@ -465,7 +487,7 @@ end
     ms(
         {
             { trig = 'ALLREGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'gmatch', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'gmatch',      snippetType = 'snippet',     condition = conds.line_begin },
         },
         fmt(
             [[
@@ -671,7 +693,7 @@ end
     ms(
         {
             { trig = 'module function', snippetType = 'autosnippet', condition = nil },
-            { trig = 'module function', snippetType = 'snippet', condition = nil },
+            { trig = 'module function', snippetType = 'snippet',     condition = nil },
         },
         fmt(
             [[
@@ -868,7 +890,7 @@ end
 
     ms(
         {
-            { trig = 'DESCRIBE', descr = 'Plenary test group', snippetType = 'autosnippet' },
+            { trig = 'DESCRIBE',   descr = 'Plenary test group', snippetType = 'autosnippet' },
             { trig = 'test group', descr = 'Plenary test group', snippetType = 'snippet' },
         },
         fmt(
@@ -918,7 +940,7 @@ end
                             }),
                         }
 
-                        -- test_snippet
+                    -- test_snippet
                     )
                 end, { 1 }),
 
