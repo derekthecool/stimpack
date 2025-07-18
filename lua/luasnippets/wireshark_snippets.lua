@@ -193,6 +193,23 @@ register_postdissector({RepeatedProtocolName7})
         )
     ),
 
+    ms(
+        {
+            { trig = 'wireshark register protocols on non-standard ports', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+local tcp_port_table = DissectorTable.get("tcp.port")
+local {desired_protocol} = tcp_port_table:get_dissector(1883)
+tcp_port_table:add("1886-1887", {rep_desired_protocol})
+        ]],
+            {
+                desired_protocol = i(1, 'mqtt_dissector'),
+                rep_desired_protocol = rep(1),
+            }
+        )
+    ),
+
     -- s(
     --     'wireshark register additional protocols on other ports',
     --     fmt(
