@@ -2,7 +2,9 @@ local function open_snippet_file()
     local current_filetype = vim.bo.filetype
     local expected_snippet_filename = string.format('%s.lua', current_filetype)
     local luasnip_snippet_path = OS.join_path(OS.snippets, expected_snippet_filename)
-    if FileExists(luasnip_snippet_path) == false then
+    local exists = FileExists(luasnip_snippet_path)
+    V(string.format('Attempting to open snippet file: %s, exists: %s', luasnip_snippet_path, tostring(exists)))
+    if exists == false then
         vim.notify(
             'Snippet file does not exist for this filetype - expected name should be: ' .. expected_snippet_filename,
             vim.log.levels.INFO,
@@ -55,6 +57,8 @@ local function open_snippet_file()
                     vim.api.nvim_cmd({ cmd = 'tabnew', args = { file } }, {})
                 end,
             })
+        else
+            V(string.format('Snippet file seems to still not exist'))
         end
     end
 end
