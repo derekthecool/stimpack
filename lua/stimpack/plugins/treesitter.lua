@@ -7,6 +7,10 @@ return {
         build = ':TSUpdate',
         event = 'VeryLazy',
         config = function()
+            vim.keymap.set('n', '<leader>ab', function()
+                vim.api.nvim_cmd({ cmd = 'InspectTree' }, {})
+            end, { silent = true, desc = 'Treesitter InspectTree' })
+
             require('nvim-treesitter.configs').setup({
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
@@ -43,7 +47,7 @@ return {
                 playground = {
                     enable = true,
                     disable = {},
-                    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+                    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
                     persist_queries = false, -- Whether the query persists across vim sessions
                     keybindings = {
                         toggle_query_editor = 'o',
