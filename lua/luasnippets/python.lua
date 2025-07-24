@@ -1,8 +1,193 @@
----@diagnostic disable: undefined-global
-
 local auxiliary = require('luasnippets.functions.auxiliary')
+local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
+local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
+
+local function lambda(index)
+    return sn(
+        index,
+        fmt([[lambda {variables} : {mapping}]], {
+            variables = i(1, 'x'),
+            mapping = i(2, 'x * x'),
+        })
+    )
+end
 
 local snippets = {
+    postfix('.br', {
+        l('[' .. l.POSTFIX_MATCH .. ']'),
+    }),
+
+    -- (assignment left: (identifier) @variable)
+
+    -- treesitter_postfix({
+    --     trig = 'var var',
+    --     snippetType = 'autosnippet',
+    --     name = 'log',
+    --     dscr = 'Wrap a function call like map, filter, etc.',
+    --     reparseBuffer = 'live',
+    --     matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+    --         '(assignment left: (identifier) @variable)',
+    --     }),
+    -- }, fmt('console.log({})', { l(l.LS_TSMATCH) })),
+
+    treesitter_postfix(
+        {
+            matchTSNode = {
+                query = [[(assignment left: (identifier) @variable)]],
+                query_lang = 'python',
+            },
+            trig = '.var',
+            -- snippetType = 'autosnippet',
+        },
+
+        fmt([[{}]], {
+            -- l(l.LS_TSMATCH),
+            l('test' .. (l.LS_TSCAPTURE_VARIABLE or 'empty')),
+        })
+    ),
+
+    treesitter_postfix(
+        {
+            trig = '.map',
+            snippetType = 'autosnippet',
+            name = 'log',
+            dscr = 'Wrap a function call like map, filter, etc.',
+            reparseBuffer = 'live',
+            matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+                'call',
+            }),
+        },
+        fmt('map({lambda_function}, {collection})', {
+            lambda_function = lambda(1),
+            collection = l(l.LS_TSMATCH),
+        })
+    ),
+
+    treesitter_postfix(
+        {
+            trig = '.filter',
+            snippetType = 'autosnippet',
+            name = 'fast filter',
+            dscr = 'Wrap a function call like map, filter, etc.',
+            reparseBuffer = 'live',
+            matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+                'call',
+            }),
+        },
+        fmt('filter({lambda_function}, {collection})', {
+            lambda_function = lambda(1),
+            collection = l(l.LS_TSMATCH),
+        })
+    ),
+
+    treesitter_postfix(
+        {
+            trig = 'lambda wrap',
+            snippetType = 'autosnippet',
+            name = 'fast lambda wrap',
+            dscr = 'Wrap a function call like map, filter, etc.',
+            reparseBuffer = 'live',
+            matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+                'call',
+            }),
+        },
+        fmt('{FunctionName}({lambda_function}, {collection})', {
+            FunctionName = c(1, {
+                t('map'),
+                t('filter'),
+                i(1, 'custom'),
+            }),
+
+            lambda_function = lambda(1),
+            collection = l(l.LS_TSMATCH),
+        })
+    ),
+
+    treesitter_postfix(
+        {
+            trig = 'wrap wrap',
+            snippetType = 'autosnippet',
+            name = 'super wrapper',
+            dscr = 'Wrap any function call',
+            reparseBuffer = 'live',
+            matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+                'call',
+            }),
+        },
+        fmt('{NewFunction}({collection})', {
+            NewFunction = i(1, 'list'),
+            collection = l(l.LS_TSMATCH),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'map', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[map({})]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'filter', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[filter({})]], {
+            i(1),
+        })
+    ),
+
+    ms(
+        {
+            { trig = 'range',       snippetType = 'snippet',     condition = nil },
+            { trig = 'range range', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[range({})]], {
+            i(1, '100'),
+        })
+    ),
+
+    treesitter_postfix(
+        {
+            matchTSNode = {
+                query = [[
+            (integer) @number
+        ]],
+                query_lang = 'python',
+            },
+            trig = '.pp',
+        },
+        fmt([[NumberThing = {NumberThing}]], {
+            NumberThing = l(l.LS_TSCAPTURE_NUMBER),
+        })
+    ),
+
+    treesitter_postfix({
+        trig = '.mv',
+        matchTSNode = {
+            query = [[((call) @function_call)]],
+            query_lang = 'python',
+        },
+    }, {
+        f(function(taco, parent)
+            -- vim.print(taco)
+            vim.print(parent.snippet.env)
+            vim.print(parent.snippet.env.LS_TSMATCH)
+            if taco.env then
+                vim.print('Taco has env')
+            end
+            if parent.env then
+                vim.print('parent.env has env')
+                vim.print(type(parent.env.LS_TSDATA))
+                V('function_call', parent.env.LS_TSCAPTURE_FUNCTION_CALL)
+            end
+
+            -- local node_content = table.concat(parent.snippet.env.LS_TSMATCH, '\n')
+            -- local replaced_content = ('std::move(%s)'):format(node_content)
+            -- return vim.split(ret_str, '\n', { trimempty = false })
+        end),
+    }),
 
     ms(
         {
@@ -29,9 +214,8 @@ def calculate_sha256(data):
         {
             { trig = 'LAMBDA', snippetType = 'autosnippet', condition = nil },
         },
-        fmt([[lambda {variables} : {mapping}]], {
-            variables = i(1, 'x'),
-            mapping = i(2, 'x * x'),
+        fmt([[{lambda_function}]], {
+            lambda_function = lambda(1),
         })
     ),
 

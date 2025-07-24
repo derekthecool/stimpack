@@ -7,6 +7,7 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local scan = require('plenary.scandir')
 local fun = require('luafun.fun')
 local conds_expand = require('luasnip.extras.conditions.expand')
+local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
 
 local function column_count_from_string(descr)
     -- this won't work for all cases, but it's simple to improve
@@ -54,6 +55,34 @@ local rec_ls = function()
 end
 
 local snippets = {
+    treesitter_postfix(
+        {
+            matchTSNode = {
+                query = [[
+            (function_declaration
+              name: (identifier) @fname
+              parameters: (parameters) @params
+              body: (block) @body
+            ) @prefix
+        ]],
+                query_lang = 'lua',
+            },
+            trig = '.fn',
+        },
+        fmt(
+            [[
+    local {} = function{}
+        {}
+    end
+]],
+            {
+                l(l.LS_TSCAPTURE_FNAME),
+                l(l.LS_TSCAPTURE_PARAMS),
+                l(l.LS_TSCAPTURE_BODY),
+            }
+        )
+    ),
+
     ms(
         {
             { trig = 'trigger', snippetType = 'snippet', condition = nil },
