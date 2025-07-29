@@ -82,7 +82,21 @@ function Execute(command)
         table.insert(formatted_command, match)
     end
 
-    output.stdout, output.ret, output.stderr = require('telescope.utils').get_os_command_output(formatted_command)
+    -- output.stdout, output.ret, output.stderr = require('telescope.utils').get_os_command_output(formatted_command)
+    local ok, output_or_err = pcall(function()
+        local utils = require('telescope.utils')
+        local stdout, ret, stderr = utils.get_os_command_output(formatted_command)
+        return { stdout = stdout, ret = ret, stderr = stderr }
+    end)
+
+    if ok then
+        output.stdout = output_or_err.stdout
+        output.ret = output_or_err.ret
+        output.stderr = output_or_err.stderr
+    else
+        print('Error executing command:', output_or_err)
+    end
+
     return output
 end
 
