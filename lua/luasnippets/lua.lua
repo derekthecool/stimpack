@@ -8,6 +8,7 @@ local scan = require('plenary.scandir')
 local fun = require('luafun.fun')
 local conds_expand = require('luasnip.extras.conditions.expand')
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
+local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
 
 local function column_count_from_string(descr)
     -- this won't work for all cases, but it's simple to improve
@@ -57,6 +58,24 @@ end
 local snippets = {
     treesitter_postfix(
         {
+            trig = '::',
+            snippetType = 'autosnippet',
+            name = 'function_wrap',
+            dscr = 'Call a metatable function easily',
+            reparseBuffer = 'live',
+            matchTSNode = postfix_builtin.tsnode_matcher.find_topmost_types({
+                'function_call',
+            }),
+        },
+        fmt('{function_call_data}:{new_call}({inside})', {
+            function_call_data = l(l.LS_TSMATCH),
+            new_call = i(1, 'match'),
+            inside = i(2),
+        })
+    ),
+
+    treesitter_postfix(
+        {
             matchTSNode = {
                 query = [[
             (function_declaration
@@ -79,6 +98,32 @@ local snippets = {
                 l(l.LS_TSCAPTURE_FNAME),
                 l(l.LS_TSCAPTURE_PARAMS),
                 l(l.LS_TSCAPTURE_BODY),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'TRY', snippetType = 'autosnippet', condition = nil },
+            { trig = 'try', snippetType = 'snippet',     condition = nil },
+        },
+        fmt(
+            [[
+    local {ok}, {result} = pcall(function()
+        {code}
+    end)
+
+    if {ok_rep} then
+    else
+        print('Error executing command: ', {result_rep})
+    end
+        ]],
+            {
+                ok = i(1, 'ok'),
+                result = i(2, 'result'),
+                code = i(3, 'return 5'),
+                ok_rep = rep(1),
+                result_rep = rep(2),
             }
         )
     ),

@@ -170,12 +170,13 @@ local snippets = {
         fmt(
             [[
         for (const auto &{item} : {source}) {{
-            cout << command << endl;
+            cout << {item_rep} << endl;
         }}
         ]],
             {
                 item = i(1, 'item'),
                 source = i(2, 'source_vector'),
+                item_rep = rep(1),
             }
         )
     ),

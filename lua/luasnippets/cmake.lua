@@ -280,12 +280,11 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
     -- ESP32 stuff end
 
     -- {{{ Cmake C library and test app for test driven development (tdd) setup
-    s(
+    ms(
         {
-            trig = '_Ctdd',
-            descr = 'Easy cmake tdd setup for a C project',
+            { trig = '_Ctdd',   snippetType = 'snippet', condition = nil },
+            { trig = 'c_setup', snippetType = 'snippet', condition = nil },
         },
-
         fmt(
             [[
     cmake_minimum_required(VERSION {})
@@ -382,12 +381,10 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
     -- }}}
 
     -- {{{ Cmake C executable
-    s(
+    ms(
         {
-            trig = 'Capp',
-            descr = 'Easy C cmake app setup',
+            { trig = 'Capp', descr = 'Easy C cmake app setup' },
         },
-
         fmt(
             [[
     cmake_minimum_required(VERSION {})
@@ -418,6 +415,38 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
         )
     ),
     -- }}}
+
+    ms(
+        {
+            { trig = 'cpp_app', descr = 'Easy C++ cmake app setup' },
+        },
+        fmt(
+            [[
+    cmake_minimum_required(VERSION {cmake_version})
+
+    #Set debug mode
+    set(CMAKE_BUILD_TYPE Debug)
+
+    #Export compile commands json file, this is needed for project autocomplete
+    set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+    #Set variable to use for project name and main file
+    set(ProjectBasename "{project_name}")
+    set(MainSource "{project_name_rep}.cpp")
+
+    #Set project name and specify C compiler
+    project(${{ProjectBasename}} CXX)
+
+    #Set executable
+    add_executable(${{ProjectBasename}} ${{MainSource}})
+    ]],
+            {
+                cmake_version = i(1, ' 3.10.2'),
+                project_name = i(2, 'ProjectName'),
+                project_name_rep = rep(2),
+            }
+        )
+    ),
 
     ms(
         {
@@ -755,7 +784,7 @@ local autosnippets = {
                 trig = 'IF',
                 snippetType = 'autosnippet',
             },
-            { trig = 'if', snippetType = 'snippet', condition = nil,},
+            { trig = 'if', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
