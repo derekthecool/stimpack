@@ -2,9 +2,9 @@ return {
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
-            'hrsh7th/cmp-buffer', -- buffer completions
-            'hrsh7th/cmp-path', -- path completions
-            'hrsh7th/cmp-cmdline', -- cmdline completions
+            'hrsh7th/cmp-buffer',                  -- buffer completions
+            'hrsh7th/cmp-path',                    -- path completions
+            'hrsh7th/cmp-cmdline',                 -- cmdline completions
             'hrsh7th/cmp-nvim-lsp-signature-help', -- Show function help while typing
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
@@ -96,7 +96,7 @@ return {
                     { name = 'nvim_lua' },
                     { name = 'path' },
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'buffer', keyword_length = 3 },
+                    { name = 'buffer',                 keyword_length = 3 },
                 },
                 confirm_opts = {
                     behavior = cmp.ConfirmBehavior.Replace,
@@ -175,9 +175,9 @@ return {
             -- mappings and settings
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
@@ -319,7 +319,9 @@ return {
             require('mason-lspconfig').setup({
                 ensure_installed = {
                     -- C programming
+                    -- configuration website https://clangd.llvm.org/config
                     'clangd',
+
                     -- 'cmake',
 
                     -- Lua programming
@@ -374,9 +376,9 @@ return {
             require('lspconfig')
             local signs = {
                 { name = 'DiagnosticSignError', text = Icons.diagnostics.error1 },
-                { name = 'DiagnosticSignWarn', text = Icons.diagnostics.warning },
-                { name = 'DiagnosticSignHint', text = Icons.diagnostics.information },
-                { name = 'DiagnosticSignInfo', text = Icons.diagnostics.question },
+                { name = 'DiagnosticSignWarn',  text = Icons.diagnostics.warning },
+                { name = 'DiagnosticSignHint',  text = Icons.diagnostics.information },
+                { name = 'DiagnosticSignInfo',  text = Icons.diagnostics.question },
             }
 
             for _, sign in ipairs(signs) do
@@ -471,8 +473,7 @@ return {
                     null_ls.builtins.formatting.black.with({ extra_args = { '--fast' } }),
                     null_ls.builtins.formatting.stylua,
 
-                    -- Requires pip install gersemi
-                    null_ls.builtins.formatting.gersemi,
+                    -- cmake formatter: Requires pip install gersemi
                     null_ls.builtins.formatting.prettier.with({
                         filetypes = { 'markdown', 'vimwiki' },
                         extra_args = { '--embedded-language-formatting=off' },
