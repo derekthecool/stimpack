@@ -71,7 +71,7 @@ return {
         local luasnip = require('luasnip')
 
         -- Load my treesitter helper functions now
-        require('stimpack.my-treesitter-functions')
+        require('config.my-treesitter-functions')
 
         local types = require('luasnip.util.types')
 

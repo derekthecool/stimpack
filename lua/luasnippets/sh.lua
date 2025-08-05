@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
-local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local my_treesitter_functions = require('config.my-treesitter-functions')
 
 local snippets = {
     -- Help with the PS4 function here: https://stackoverflow.com/a/17805088/9842112
@@ -133,7 +133,7 @@ local autosnippets = {
                     local snippet_table = {}
 
                     -- Load table with nodes here
-                    local variables = require('stimpack.my-treesitter-functions').bash.get_all_variables_in_file()
+                    local variables = require('config.my-treesitter-functions').bash.get_all_variables_in_file()
                     if variables ~= nil then
                         for _, value in pairs(variables) do
                             local text_node = t(value)

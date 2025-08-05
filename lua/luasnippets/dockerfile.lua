@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
-local fun = require('luafun.fun')
+-- local fun = require('luafun.fun')
 local scan = require('plenary.scandir')
 
 local snippets = {

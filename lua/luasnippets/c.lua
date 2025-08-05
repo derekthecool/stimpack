@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global
 
-local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local my_treesitter_functions = require('config.my-treesitter-functions')
 local auxiliary = require('luasnippets.functions.auxiliary')
 local string_processor = require('luasnippets.functions.string_processor')
 

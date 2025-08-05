@@ -96,7 +96,7 @@ M.neovim_test = function()
             StimpackTestSummary = summary
         end,
         on_exit = function()
-            local test_names = require('stimpack.my-treesitter-functions').lua.get_test_function_names()
+            local test_names = require('config.my-treesitter-functions').lua.get_test_function_names()
 
             -- -- Uncomment for easy debugging
             -- M.log(test_names)

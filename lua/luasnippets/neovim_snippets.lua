@@ -1,6 +1,6 @@
 ---@diagnostic disable: undefined-global, missing-parameter
 
-local fun = require('luafun.fun')
+-- local fun = require('luafun.fun')
 local scan = require('plenary.scandir')
 
 local snippets = {
@@ -340,7 +340,8 @@ end, delay_ms)
                     local nodes = {}
 
                     -- Add nodes for snippet
-                    local dirs = fun.map(function(a)
+                    -- TODO: (Derek Lomax) 8/4/2025 3:41:28 PM, fix this with luafun
+                    -- local dirs = fun.map(function(a)
                         return t(vim.fs.normalize(a))
                     end, scan.scan_dir(
                         '.',

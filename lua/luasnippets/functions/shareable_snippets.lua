@@ -36,12 +36,12 @@ local k = require('luasnip.nodes.key_indexer').new_key
 local ls = require('luasnip')
 local util = require('luasnip.util.util')
 local node_util = require('luasnip.nodes.util')
-require('luafun.fun')
+-- require('luafun.fun')
 local scan = require('plenary.scandir')
 
 -- For any snippet file to easily reference other files
 shareable.file_list = function(index, starting_directory, respect_gitignore)
-    if not starting_directory then
+    if not starting_directory and MiniMisc then
         starting_directory = MiniMisc.find_root()
     end
     if not respect_gitignore then

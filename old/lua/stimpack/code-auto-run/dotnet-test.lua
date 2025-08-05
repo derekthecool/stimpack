@@ -16,7 +16,7 @@ M.dotnet_test = function()
     local output_log_filename = nil
     local namespace_id = vim.api.nvim_create_namespace('dotnet_test_runner')
 
-    local buffer_list = require('stimpack/my-treesitter-functions').all.get_all_buffers('.*Tests.cs', true)
+    local buffer_list = require('config.my-treesitter-functions').all.get_all_buffers('.*Tests.cs', true)
     if #buffer_list == 0 then
         -- vim.notify('No open test files')
         return
@@ -76,7 +76,7 @@ M.dotnet_test = function()
                 output_log_filename = 'nil'
             else
                 local pass_fail_results = {}
-                local test_name_locations = require('stimpack.my-treesitter-functions').cs.get_test_function_names()
+                local test_name_locations = require('config.my-treesitter-functions').cs.get_test_function_names()
 
                 -- Example log line: <UnitTestResult executionId="e1462b02-1118-4df7-9b9d-685e5f0abb7a" testId="7d2eee53-b992-539e-fa8b-ec839a51b1f9" testName="TestXUnit.UnitTest1.Test2" computerName="DerekLomax" duration="00:00:00.0057145" startTime="2022-09-07T11:32:32.2976422-06:00" endTime="2022-09-07T11:32:32.2976727-06:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="e1462b02-1118-4df7-9b9d-685e5f0abb7a" />
                 -- TODO: use lua rock package for xml reading for better results

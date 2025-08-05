@@ -1,11 +1,11 @@
 ---@diagnostic disable: undefined-global, missing-parameter
 
-local my_treesitter_functions = require('stimpack.my-treesitter-functions')
+local my_treesitter_functions = require('config.my-treesitter-functions')
 local shiftwidth = vim.bo.shiftwidth
 local shiftwidth_match_string = string.rep(' ', shiftwidth)
 local auxiliary = require('luasnippets.functions.auxiliary')
 local scan = require('plenary.scandir')
-local fun = require('luafun.fun')
+-- local fun = require('luafun.fun')
 local conds_expand = require('luasnip.extras.conditions.expand')
 local treesitter_postfix = require('luasnip.extras.treesitter_postfix').treesitter_postfix
 local postfix_builtin = require('luasnip.extras.treesitter_postfix').builtin
@@ -674,7 +674,7 @@ end
             f(function(args, snip)
                 local returnString = ''
 
-                if require('stimpack.my-treesitter-functions').lua.current_location_is_in_lua_table() == true then
+                if require('config.my-treesitter-functions').lua.current_location_is_in_lua_table() == true then
                     returnString = ','
                 end
                 return returnString
