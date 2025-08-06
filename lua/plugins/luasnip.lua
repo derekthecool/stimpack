@@ -71,18 +71,51 @@ return {
             snippets = {
                 preset = 'luasnip',
             },
+            keymap = {
+                -- select the preset none because I really want all them
+                preset = 'none',
+                ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-e>'] = { 'hide', 'fallback' },
+
+                ['×'] = { 'select_and_accept' },
+                ['<C-y>'] = { 'select_and_accept' },
+                ['<CR>'] = { 'accept', 'fallback' },
+
+                -- Select between completion items in many ways
+                ['<Tab>'] = { 'select_next', 'fallback' },
+                ['<S-Tab>'] = { 'select_prev', 'fallback' },
+                ['<Down>'] = { 'select_next', 'fallback' },
+                ['<Up>'] = { 'select_prev', 'fallback' },
+                ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+                ['<C-d>'] = { 'select_next', 'fallback_to_mappings' },
+                ['<C-u>'] = { 'select_prev', 'fallback_to_mappings' },
+
+                ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+            },
+            sources = {
+                -- adding any nvim-cmp sources here will enable them with blink.compat
+                compat = {},
+                default = { 'lsp', 'path', 'snippets', 'buffer', 'cmdline' },
+            },
+            cmdline = {
+                enabled = true,
+                keymap = { preset = 'inherit' },
+                completion = { menu = { auto_show = true } },
+            },
         },
     },
+
     {
         'L3MON4D3/LuaSnip',
-        event = 'CursorMoved',
+        lazy = true,
         config = function()
             local luasnip = require('luasnip')
 
             -- Load my treesitter helper functions now
             -- require('config.my-treesitter-functions')
-
-            local types = require('luasnip.util.types')
 
             -- Setup location to load my custom lua snippets - NOTE: the value OS.snippets
             -- is a global table from my config which helps me have cross platform setup
@@ -92,7 +125,7 @@ return {
             -- require('luasnip.loaders.from_vscode').lazy_load()
 
             -- Set my config options
-            luasnip.config.set_config({
+            luasnip.setup({
                 history = true,
                 update_events = { 'TextChanged', 'TextChangedI' },
                 region_check_events = { 'CursorMoved', 'CursorHold', 'InsertEnter' }, -- update text as you type
@@ -128,24 +161,26 @@ return {
                 --         passive = { virt_text = { { Icons.nvim_dev_icon_filetype('c'), 'DevIconIni' } } },
                 --     },
                 -- },
+
+                -- -- TODO: (Derek Lomax) 8/6/2025 11:28:45 AM, Update snip_env with all the requires I would possibly want for all my snippets
+                -- snip_env = {
+                -- 		s = function(...)
+                -- 			local snip = ls.s(...)
+                -- 			-- we can't just access the global `ls_file_snippets`, since it will be
+                -- 			-- resolved in the environment of the scope in which it was defined.
+                -- 			table.insert(getfenv(2).ls_file_snippets, snip)
+                -- 		end,
+                -- 		parse = function(...)
+                -- 			local snip = ls.parser.parse_snippet(...)
+                -- 			table.insert(getfenv(2).ls_file_snippets, snip)
+                -- 		end,
+                -- 		-- remaining definitions.
+                -- 		...
+                -- 	},
+                -- 	...
             })
 
             local luasnip_autocommands = vim.api.nvim_create_augroup('luasnip_autocommands_stimpack', { clear = true })
-
-            vim.api.nvim_create_autocmd('User', {
-                pattern = 'LuasnipInsertNodeEnter',
-                callback = function()
-                    -- Disable mini.nvim animate right away
-                    vim.b.minianimate_disable = true
-
-                    -- Set timer to reenable mini.nvim animate after the delay period
-                    local delay_ms = 100
-                    vim.defer_fn(function()
-                        vim.b.minianimate_disable = false
-                    end, delay_ms)
-                end,
-                group = luasnip_autocommands,
-            })
 
             -- Clear all scratch pad files when they are opened
             vim.api.nvim_create_autocmd('BufNew', {
@@ -187,9 +222,11 @@ return {
             vim.keymap.set({ 'i', 's' }, '<c-k>', function()
                 luasnip.jump(-1)
             end, { silent = true, desc = 'Snippet previous' })
-            vim.keymap.set({ 'i', 's' }, '<c-u>', function()
-                require('luasnip.extras.select_choice')()
-            end, { silent = true, desc = 'Open snippet choice' })
+
+            -- TODO: (Derek Lomax) 8/6/2025 10:56:28 AM, find alternatative key map here
+            -- vim.keymap.set({ 'i', 's' }, '<c-u>', function()
+            --     require('luasnip.extras.select_choice')()
+            -- end, { silent = true, desc = 'Open snippet choice' })
             vim.keymap.set({ 'i', 's' }, '<c-h>', '<Plug>luasnip-next-choice', {})
             vim.keymap.set({ 'i', 's' }, '<c-l>', '<Plug>luasnip-prev-choice', {})
 
@@ -283,6 +320,15 @@ return {
                 luasnip.filetype_set(sql, sql_types_wanted)
                 luasnip.filetype_extend(sql, sql_types_wanted)
             end
+        end,
+    },
+    {
+        -- disable friendly snippets. Maybe someday I could use the snippet loader mechanism.
+        'rafamadriz/friendly-snippets',
+        enabled = false,
+        config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+            require('luasnip.loaders.from_vscode').lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
         end,
     },
 }
