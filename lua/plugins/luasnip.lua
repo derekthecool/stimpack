@@ -79,7 +79,7 @@ return {
 
                 ['×'] = { 'select_and_accept' },
                 ['<C-y>'] = { 'select_and_accept' },
-                ['<CR>'] = { 'accept', 'fallback' },
+                -- ['<CR>'] = { 'accept', 'fallback' },
 
                 -- Select between completion items in many ways
                 ['<Tab>'] = { 'select_next', 'fallback' },
