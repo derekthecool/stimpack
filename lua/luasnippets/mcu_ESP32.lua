@@ -6,6 +6,44 @@ local auxiliary = require('luasnippets.functions.auxiliary')
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+
+    ms(
+        {
+            { trig = 'ESP32_cpp_thread', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    #include "esp_pthread.h"
+
+    esp_pthread_cfg_t cfg = esp_pthread_get_default_config();
+    cfg.stack_size = (9 * 1024); // 5K default
+    cfg.thread_name = "OTASimSwapThread";
+    esp_pthread_set_cfg(&cfg);
+
+    try
+    {
+        thread t([this]() {
+            <Code>
+        });
+        t.detach();
+    }
+    catch (const std::system_error &e)
+    {
+        ESP_LOGE(TAG, "[%s] Failed to start thread: %s", __FUNCTION__, e.what());
+        abort();
+    }
+    catch (...)
+    {
+        ESP_LOGE(TAG, "[%s] Unknown exception starting thread", __FUNCTION__);
+    }
+        ]],
+            {
+                Code = i(1),
+            },
+            { delimiters = '<>' }
+        )
+    ),
+
     ms(
         {
             { trig = 'esp_err_t', snippetType = 'snippet',     condition = nil },
