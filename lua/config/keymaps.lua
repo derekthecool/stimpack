@@ -39,7 +39,9 @@ vim.keymap.set('n', 'π', function() -- Use down Emily's symbols mod
     vim.api.nvim_cmd({ cmd = 'bdelete', mods = { silent = true } }, {})
 end, { desc = 'Next buffer' })
 
--- Ｖｉｓｕａｌ ｍｏｄｅ
--- Better command to shift text in visual mode, text it reselected
-vim.keymap.set('v', '<', '<gv')
-vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('n', '<c-b>', function()
+    Snacks.picker.buffers()
+end, { desc = 'Buffers' })
+vim.keymap.set('n', '<c-f>', function()
+    Snacks.picker.git_files()
+end, { desc = 'Files' })
