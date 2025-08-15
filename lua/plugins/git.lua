@@ -23,9 +23,24 @@ return {
                         return item
                     end,
                 }, function(choice)
-                    require('git-worktree').switch_worktree(choice)
+                    if choice then
+                        require('git-worktree').switch_worktree(choice)
+                    end
                 end)
             end, { desc = 'Select git worktree' })
+
+            local function get_new_worktree_name()
+                return vim.fn.input('Enter new git worktree name')
+            end
+
+            vim.keymap.set('n', '<leader>gm', function()
+                local new_worktree = get_new_worktree_name()
+                if not new_worktree then
+                    return
+                end
+
+                require('git-worktree').create_worktree(new_worktree, new_worktree, 'origin')
+            end, { silent = true, desc = 'Create new git worktree' })
         end,
     },
 }
