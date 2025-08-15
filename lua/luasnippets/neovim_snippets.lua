@@ -90,7 +90,7 @@ end
 
     ms(
         {
-            { trig = 'setreg',          snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'setreg', snippetType = 'snippet', condition = conds.line_begin },
             { trig = 'vim%.fn%.setreg', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
@@ -106,7 +106,7 @@ end
 
     ms(
         {
-            { trig = 'feedkeys',      snippetType = 'snippet', condition = nil },
+            { trig = 'feedkeys', snippetType = 'snippet', condition = nil },
             { trig = 'nvim_feedkeys', snippetType = 'snippet', condition = nil },
         },
         fmt([[vim.api.nvim_feedkeys('{}', "n", nil)]], {
@@ -277,93 +277,94 @@ end
         )
     ),
 
-    ms(
-        {
-            '.nvim.lua',
-            'nvim.lua',
-        },
-        fmt(
-            [[
--- Simple .nvim.lua
-local delay_ms = 3000
-
-vim.defer_fn(function()
-	local toggleterm = require("toggleterm")
-
-    -- Using leader key here causes delays in insert mode
-    local keymap_starter_key = '`'
-
-    local mapping_options = { 't', 'n', 'i', }
-
-    local build = '<>'
-	vim.keymap.set(mapping_options, keymap_starter_key .. "u;", function()
-		toggleterm.exec(build)
-	end, { silent = true, desc = build })
-
-    local test = '<>'
-	vim.keymap.set(mapping_options, keymap_starter_key .. "ui", function()
-		toggleterm.exec(test)
-	end, { silent = true, desc = test })
-
-    local run = '<>'
-	vim.keymap.set(mapping_options, keymap_starter_key .. "uu", function()
-		toggleterm.exec(run)
-	end, { silent = true, desc = run })
-
-    -- Set current working directory
-    vim.cmd('cd <>')
-
-    -- Run initial start up commands in the terminal
-    vim.cmd('ToggleTerm direction=<>')
-    toggleterm.exec('<>')
-
-    vim.notify('Ready to run', vim.log.levels.INFO, { title = '.nvim.lua commands' })
-end, delay_ms)
-        ]],
-            {
-                c(1, {
-                    t('dotnet build'),
-                    t('idf.py build'),
-                    i(1, 'custom command'),
-                }),
-                c(2, {
-                    t('dotnet test'),
-                    t('ctest'),
-                    i(1, 'custom command'),
-                }),
-                c(3, {
-                    t('dotnet run'),
-                    t('idf.py build flash monitor'),
-                    i(1, 'custom command'),
-                }),
-                d(4, function(args, snip)
-                    local nodes = {}
-
-                    -- Add nodes for snippet
-                    -- TODO: (Derek Lomax) 8/4/2025 3:41:28 PM, fix this with luafun
-                    -- local dirs = fun.map(function(a)
-                        return t(vim.fs.normalize(a))
-                    end, scan.scan_dir(
-                        '.',
-                        { respect_gitignore = true, only_dirs = true, depth = 2 }
-                    )):totable()
-
-                    return sn(nil, c(1, dirs))
-                end, {}),
-                c(5, {
-                    t('tab'),
-                    t('vertical'),
-                    t('horizontal'),
-                    t('float'),
-                }),
-
-                i(6, 'ls -la'),
-            },
-            {
-                delimiters = '<>',
-            }
-        )
-    ),
+    -- TODO: (Derek Lomax) 8/15/2025 9:51:45 AM, requires luafun
+    -- ms(
+    --     {
+    --         '.nvim.lua',
+    --         'nvim.lua',
+    --     },
+    --     fmt(
+    --         [[
+    --  -- Simple .nvim.lua
+    --  local delay_ms = 3000
+    --
+    --  vim.defer_fn(function()
+    --  	local toggleterm = require("toggleterm")
+    --
+    -- -- Using leader key here causes delays in insert mode
+    -- local keymap_starter_key = '`'
+    --
+    -- local mapping_options = { 't', 'n', 'i', }
+    --
+    -- local build = '<>'
+    --  	vim.keymap.set(mapping_options, keymap_starter_key .. "u;", function()
+    --  		toggleterm.exec(build)
+    --  	end, { silent = true, desc = build })
+    --
+    -- local test = '<>'
+    --  	vim.keymap.set(mapping_options, keymap_starter_key .. "ui", function()
+    --  		toggleterm.exec(test)
+    --  	end, { silent = true, desc = test })
+    --
+    -- local run = '<>'
+    --  	vim.keymap.set(mapping_options, keymap_starter_key .. "uu", function()
+    --  		toggleterm.exec(run)
+    --  	end, { silent = true, desc = run })
+    --
+    -- -- Set current working directory
+    -- vim.cmd('cd <>')
+    --
+    -- -- Run initial start up commands in the terminal
+    -- vim.cmd('ToggleTerm direction=<>')
+    -- toggleterm.exec('<>')
+    --
+    -- vim.notify('Ready to run', vim.log.levels.INFO, { title = '.nvim.lua commands' })
+    --  end, delay_ms)
+    --     ]],
+    --         {
+    --             c(1, {
+    --                 t('dotnet build'),
+    --                 t('idf.py build'),
+    --                 i(1, 'custom command'),
+    --             }),
+    --             c(2, {
+    --                 t('dotnet test'),
+    --                 t('ctest'),
+    --                 i(1, 'custom command'),
+    --             }),
+    --             c(3, {
+    --                 t('dotnet run'),
+    --                 t('idf.py build flash monitor'),
+    --                 i(1, 'custom command'),
+    --             }),
+    --             d(4, function(args, snip)
+    --                 local nodes = {}
+    --
+    --                 -- Add nodes for snippet
+    --                 -- TODO: (Derek Lomax) 8/4/2025 3:41:28 PM, fix this with luafun
+    --                 -- local dirs = fun.map(function(a)
+    --                     return t(vim.fs.normalize(a))
+    --                 end, scan.scan_dir(
+    --                     '.',
+    --                     { respect_gitignore = true, only_dirs = true, depth = 2 }
+    --                 )):totable()
+    --
+    --                 return sn(nil, c(1, dirs))
+    --             end, {}),
+    --             c(5, {
+    --                 t('tab'),
+    --                 t('vertical'),
+    --                 t('horizontal'),
+    --                 t('float'),
+    --             }),
+    --
+    --             i(6, 'ls -la'),
+    --         },
+    --         {
+    --             delimiters = '<>',
+    --         }
+    --     )
+    -- ),
 
     ms(
         {
