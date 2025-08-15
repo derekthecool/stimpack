@@ -260,8 +260,10 @@ end
         )
     ),
 
-    s(
-        'map',
+    ms(
+        {
+            { trig = 'keymap', snippetType = 'snippet', condition = nil },
+        },
         fmt(
             [[
         vim.keymap.set('{}', '{}', function()
