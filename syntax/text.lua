@@ -13,5 +13,6 @@ set_match_and_color('LogType_ERR', '\\[ERR]', { fg = '#ff8888', bg = '#333333' }
 set_match_and_color('LogType_FTL', '\\[FTL]', { fg = '#ff0000', bg = '#333333' })
 
 vim.wo.conceallevel = 2
-
 vim.opt.commentstring = '# %s'
+vim.wo.spell = false
+vim.opt.wrap = false

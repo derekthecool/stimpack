@@ -5,6 +5,7 @@ vim.g.mapleader = ','
 
 vim.o.scrolloff = 999 -- Keep cursor vertically centered
 vim.opt.mouse = ''
+vim.opt.wrap = false
 
 -- Set pwsh as default terminal
-LazyVim.terminal.setup("pwsh")
+LazyVim.terminal.setup('pwsh')
