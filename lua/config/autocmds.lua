@@ -19,3 +19,11 @@ vim.api.nvim_create_autocmd('SearchWrapped', {
     end,
     group = generalSettingsGroup,
 })
+
+-- Disable autoformat for some filetypes
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+    pattern = { 'c', 'cpp' },
+    callback = function()
+        vim.b.autoformat = false
+    end,
+})
