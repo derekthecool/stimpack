@@ -1,16 +1,12 @@
-# 💤 LazyVim
+# Stimpack
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+This neovim configuration uses [lazyvim](https://www.lazyvim.org/)!
+Before using lazyvim I had a great time with my neovim configuration. However, I
+could never get my startup time below several seconds and my LSP integration
+was not great.
 
-## Migration to do list
+Lazyvim handles both of those so much better with amazing LSP setup and
+startup time values of:
 
-- [x] Get luasnip working perfectly like previous setup with steno and autosnippets
-- [ ] Learning new mappings or remapping basic things
-- [ ] LSP:
-  - [ ] C and C++ programming with clangd get a working windows compiler source
-        GCC through scoop does not work even with a custom .clangd or user config
-        file
-  - [ ] powershell
-  - [x] csharp
-  - [ ] fsharp
+- Windows -> 200ms
+- Linux -> 20ms
