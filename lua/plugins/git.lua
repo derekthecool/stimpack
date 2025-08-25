@@ -1,5 +1,33 @@
 return {
     {
+        'sindrets/diffview.nvim',
+        keys = {
+            {
+                '<leader>gD',
+                function()
+                    -- Set the initial value for the global or keep the existing state
+                    if DiffViewToggleState == nil then
+                        DiffViewToggleState = true
+                    end
+
+                    if DiffViewToggleState then
+                        require('diffview').open()
+                    else
+                        require('diffview').close()
+                    end
+
+                    -- Toggle the state
+                    DiffViewToggleState = not DiffViewToggleState
+                end,
+                'DiffViewToggle',
+            },
+        },
+        cmd = {
+            'DiffviewOpen',
+            'DiffviewFileHistory',
+        },
+    },
+    {
         -- TODO: (Derek Lomax) Fri Aug 15 11:01:58 2025, This plugin seems to be not Windows friendly
         -- Works in WSL though. Consider contributing to project.
         'ThePrimeagen/git-worktree.nvim',
