@@ -6,6 +6,79 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 local snippets = {
     ms(
         {
+            { trig = 'device_log', snippetType = 'snippet', condition = nil },
+            { trig = 'device log', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+      # Device Log Analysis
+      
+      - Filename: `{Filename}
+      - Date of analysis: {Date}
+      - Analyzed by: Derek Lomax
+      - DeviceId: `{DeviceId}`
+      
+      ## Synopsis
+      
+      {Synopsis}
+      
+      ## Full Description
+
+      {Description}
+      
+      ## How To Test
+      
+      ### Configuration
+      
+      {Configuration}
+      
+      ### Test Procedure
+      
+      {TestProcedure}
+      
+      ## Full Log
+      
+      > [!NOTE]
+      > NOTE this log was captured by placing the device on the cradle and running `register spiffs` then `cat errlogb.txt`
+      > Lines that have the visible ANSI chars for color should be ignored and only the clean looking lines should be read!
+
+      ```
+      {LogBlock}
+      ```
+      ]],
+            {
+                Filename = f(function(args, snip)
+                    return vim.fn.expand('%:f:t')
+                end, {}),
+
+                -- this function  node depends on the node 5 from the auxiliary.wrap_selected_text return
+                -- without this reading the buffer only shows the text from the snippet so far
+                DeviceId = f(function(args, snip)
+                    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                    for _, line in ipairs(lines) do
+                        local id = line:match('Device ID: (%w+)')
+                        if id then
+                            return id
+                        end
+                    end
+                    return 'not found after checking ' .. #lines .. ' number of lines'
+                end, { 5 }),
+                Date = f(function(args, snip)
+                    return os.date('%Y-%m-%d')
+                end, {}),
+                Synopsis = i(1, 'Brief synopsis of issue ....'),
+                Description = i(2, 'Full description of problem'),
+                Configuration = i(3, '- PowerMode: FS04'),
+                TestProcedure = i(4, '1. First ....'),
+
+                -- Function  nodes do not take any index
+                LogBlock = auxiliary.wrap_selected_text(5),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'link_local_file', snippetType = 'snippet', condition = nil },
         },
         fmt('[{Reference}]({Path})', {
@@ -201,7 +274,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Fixed',            snippetType = 'snippet' },
+            { trig = 'Fixed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md fix', snippetType = 'autosnippet' },
         },
         fmt(
@@ -218,7 +291,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Changed',             snippetType = 'snippet' },
+            { trig = 'Changed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md change', snippetType = 'autosnippet' },
         },
         fmt(
@@ -235,7 +308,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Added',            snippetType = 'snippet' },
+            { trig = 'Added', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md add', snippetType = 'autosnippet' },
         },
         fmt(
@@ -252,7 +325,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'Removed',             snippetType = 'snippet' },
+            { trig = 'Removed', snippetType = 'snippet' },
             { trig = 'CHANGELOG.md remove', snippetType = 'autosnippet' },
         },
         fmt(
@@ -304,7 +377,7 @@ local snippets = {
     ms(
         {
             { trig = 'front_matter', snippetType = 'snippet' },
-            { trig = '---',          snippetType = 'autosnippet' },
+            { trig = '---', snippetType = 'autosnippet' },
         },
         fmt(
             [[

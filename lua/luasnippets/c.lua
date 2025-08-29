@@ -10,25 +10,38 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
+    ms({
+        { trig = 'enum_switch', snippetType = 'snippet', condition = nil },
+    }, {
+        d(1, function(args, snip)
+            local nodes = {}
+
+            -- Add nodes for snippet
+            table.insert(nodes, t('Add this node'))
+
+            return sn(nil, nodes)
+        end, {}),
+    }),
+
     ms(
         {
-            { trig = 'array_length', snippetType = 'snippet', condition = nil},
-            { trig = 'array length', snippetType = 'autosnippet', condition = nil,},
+            { trig = 'array_length', snippetType = 'snippet', condition = nil },
+            { trig = 'array length', snippetType = 'autosnippet', condition = nil },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         size_t {ArrayRep}_length = sizeof({Array})/sizeof({ArrayRep}[0]);
         ]],
-        {
-            Array = i( 1, 'input_array'),
-            ArrayRep = rep(1),
-        }
-      )
+            {
+                Array = i(1, 'input_array'),
+                ArrayRep = rep(1),
+            }
+        )
     ),
 
     ms(
         {
-            { trig = 'hex_string',          snippetType = 'snippet', condition = nil },
+            { trig = 'hex_string', snippetType = 'snippet', condition = nil },
             { trig = 'bytes_to_hex_string', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -59,8 +72,8 @@ local snippets = {
 
     ms(
         {
-            { trig = 'vars',            snippetType = 'autosnippet', condition = nil },
-            { trig = 'format_variable', snippetType = 'snippet',     condition = nil },
+            { trig = 'vars', snippetType = 'autosnippet', condition = nil },
+            { trig = 'format_variable', snippetType = 'snippet', condition = nil },
         },
         fmt([[{Variable}: {Type}, ]], {
             Variable = i(1, 'VariableName'),
@@ -70,7 +83,7 @@ local snippets = {
     ms(
         {
             { trig = 'STDINT', snippetType = 'autosnippet', condition = nil },
-            { trig = 'stdint', snippetType = 'snippet',     condition = nil },
+            { trig = 'stdint', snippetType = 'snippet', condition = nil },
         },
         fmt([[{Types}]], {
             Types = c(1, {
@@ -106,13 +119,13 @@ local snippets = {
     ),
     ms({
         { trig = 'void void', snippetType = 'autosnippet', condition = nil },
-        { trig = 'noop',      snippetType = 'autosnippet', condition = nil },
-        { trig = 'no op',     snippetType = 'autosnippet', condition = nil },
+        { trig = 'noop', snippetType = 'autosnippet', condition = nil },
+        { trig = 'no op', snippetType = 'autosnippet', condition = nil },
     }, fmt([[(void)0)]], {})),
     ms(
         {
             { trig = 'readline', snippetType = 'snippet', condition = nil },
-            { trig = 'getline',  snippetType = 'snippet', condition = nil },
+            { trig = 'getline', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -126,7 +139,7 @@ local snippets = {
     ms(
         {
             { trig = 'readline_delimited', snippetType = 'snippet', condition = nil },
-            { trig = 'getdelim',           snippetType = 'snippet', condition = nil },
+            { trig = 'getdelim', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[
@@ -164,7 +177,7 @@ local snippets = {
     ms(
         {
             { trig = '#IF', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = '#if', snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = '#if', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -182,7 +195,7 @@ local snippets = {
     ms(
         {
             { trig = '#ELSE', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = '#else', snippetType = 'snippet',     condition = conds.line_begin },
+            { trig = '#else', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -196,9 +209,9 @@ local snippets = {
     ),
 
     ms({
-        { trig = 'brief',       snippetType = 'snippet',     condition = conds.line_begin },
+        { trig = 'brief', snippetType = 'snippet', condition = conds.line_begin },
         { trig = 'brief brief', snippetType = 'autosnippet', condition = conds.line_begin },
-        { trig = '///',         snippetType = 'autosnippet', condition = conds.line_begin },
+        { trig = '///', snippetType = 'autosnippet', condition = conds.line_begin },
     }, shareable.clang_brief_function_documentation(1)),
 
     ms({
@@ -225,10 +238,10 @@ local snippets = {
     ms(
         {
             { trig = 'string compare', snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp',         snippetType = 'autosnippet', condition = nil },
-            { trig = 'strncmp',        snippetType = 'autosnippet', condition = nil },
-            { trig = 'strcmp',         snippetType = 'snippet',     condition = nil },
-            { trig = 'strncmp',        snippetType = 'snippet',     condition = nil },
+            { trig = 'strcmp', snippetType = 'autosnippet', condition = nil },
+            { trig = 'strncmp', snippetType = 'autosnippet', condition = nil },
+            { trig = 'strcmp', snippetType = 'snippet', condition = nil },
+            { trig = 'strncmp', snippetType = 'snippet', condition = nil },
         },
         fmt([[{Choices}]], {
             Choices = c(1, {
@@ -342,7 +355,7 @@ local snippets = {
         {
             -- Normal printf
             'printf',
-            { trig = 'PRINT',      snippetType = 'autosnippet' },
+            { trig = 'PRINT', snippetType = 'autosnippet' },
 
             -- fprintf
             'fprintf',
@@ -351,7 +364,7 @@ local snippets = {
             -- String format either sprintf or snprintf
             'snprintf',
             'sprintf',
-            { trig = 'FRMAT',         snippetType = 'autosnippet' },
+            { trig = 'FRMAT', snippetType = 'autosnippet' },
             { trig = 'string format', snippetType = 'autosnippet' },
         },
         fmt(
@@ -492,7 +505,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'malloc',        snippetType = 'snippet',     condition = nil },
+            { trig = 'malloc', snippetType = 'snippet', condition = nil },
             { trig = 'malloc malloc', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -565,7 +578,7 @@ local snippets = {
     -- {{{ easy strtok
     ms(
         {
-            { trig = 'strtok_ez',    snippetType = 'snippet',     condition = nil },
+            { trig = 'strtok_ez', snippetType = 'snippet', condition = nil },
             { trig = 'string split', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -808,7 +821,7 @@ local snippets = {
     ms(
         {
             { trig = 'network_udp', snippetType = 'snippet', condition = conds.line_begin },
-            { trig = 'udp',         snippetType = 'snippet', condition = conds.line_begin },
+            { trig = 'udp', snippetType = 'snippet', condition = conds.line_begin },
         },
         fmt(
             [[
@@ -1184,7 +1197,7 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'case',      snippetType = 'snippet' },
+            { trig = 'case', snippetType = 'snippet' },
             { trig = 'case case', snippetType = 'autosnippet' },
         },
         fmt(

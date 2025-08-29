@@ -87,3 +87,44 @@ end
 local output, cancelFunction = get_references(opts)
 print(output)
 print(cancelFunction)
+
+-- Fat one liner to list references to symbol I specify
+vim.lsp.buf_request_all(0, 'textDocument/references', {
+    textDocument = vim.lsp.util.make_text_document_params(0),
+    position = { line = 10, character = 5 },
+    context = { includeDeclaration = true },
+}, function(r)
+    print(vim.inspect(r))
+end)
+
+-- Get all C programming enum definitions
+vim.lsp.buf_request_all(
+    0,
+    'textDocument/definition',
+    { textDocument = vim.lsp.util.make_text_document_params(0), position = { line = 3775, character = 15 } },
+    function(r)
+        local defs = {}
+        for _, res in pairs(r) do
+            if res.result then
+                for _, loc in ipairs(res.result) do
+                    local uri = loc.uri or loc.targetUri
+                    local range = loc.range or loc.targetSelectionRange
+                    local f = vim.uri_to_fname(uri)
+                    local b = vim.fn.bufnr(f, true)
+                    vim.fn.bufload(b)
+                    local lines = vim.api.nvim_buf_get_lines(b, range.start.line, range.start.line + 30, false)
+                    for _, l in ipairs(lines) do
+                        local name = l:match('^%s*(%w+)')
+                        if name then
+                            table.insert(defs, name)
+                        end
+                        if l:match('};') then
+                            break
+                        end
+                    end
+                end
+            end
+        end
+        print(vim.inspect(defs))
+    end
+)

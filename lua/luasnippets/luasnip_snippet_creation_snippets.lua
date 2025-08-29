@@ -26,6 +26,25 @@ local function ConditionsHelper(index)
     })
 end
 
+local function SnippetTriggerHelper(index)
+    return sn(
+        index,
+        fmt(
+            [[
+        {{ trig = '{Trigger}', snippetType = '{Type}', condition = {Condition},}},
+        ]],
+            {
+                Trigger = i(1, 'trigger'),
+                Type = c(2, {
+                    t('snippet'),
+                    t('autosnippet'),
+                }),
+                Condition = ConditionsHelper(3),
+            }
+        )
+    )
+end
+
 local snippets = {
 
     ms(
@@ -391,6 +410,34 @@ local autosnippets = {
                 ['snippet_nodes'] = i(4),
             },
         }
+    ),
+
+    -- Helper function to start right from a dynamic node instead of a normal snippet and created a single node just for the dynamic node
+    ms(
+        {
+            { trig = 'snip dynamic', snippetType = 'snippet', condition = nil },
+            { trig = 'snip dynamic', snippetType = 'autosnippet', condition = nil },
+            { trig = 'dynamic snip', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+    ms({{
+        {SnippetTrigger}
+    }}, {{
+        d(1, function(args, snip)
+            local nodes = {{}}
+
+            -- Add nodes for snippet
+            table.insert(nodes, t('Add this node'))
+
+            return sn(nil, nodes)
+        end, {{}}),
+    }}),
+      ]],
+            {
+                SnippetTrigger = SnippetTriggerHelper(1),
+            }
+        )
     ),
 
     ms(
