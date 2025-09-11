@@ -24,20 +24,28 @@ return {
             },
         },
     },
-    -- TODO: (Derek Lomax) 8/20/2025 9:51:06 AM, get formatting working
-    -- {
-    --     'stevearc/conform.nvim',
-    --     optional = true,
-    --     opts = {
-    --         formatters_by_ft = {
-    --             ps1 = { 'csharpier' },
-    --         },
-    --         formatters = {
-    --             csharpier = {
-    --                 command = 'dotnet-csharpier',
-    --                 args = { '--write-stdout' },
-    --             },
-    --         },
-    --     },
-    -- },
+    {
+        'stevearc/conform.nvim',
+        optional = true,
+        opts = {
+            formatters_by_ft = {
+                ps1 = { 'PSScriptAnalyzer' },
+            },
+            formatters = {
+                PSScriptAnalyzer = {
+                    command = 'pwsh',
+                    args = {
+                        '-NoProfile',
+                        '-Command',
+                        'Invoke-Formatter',
+                        '-ScriptDefinition',
+                        string.format('(Get-Content %s -Raw)', vim.fn.expand('%:p')),
+                        -- TODO: (Derek Lomax) 9/11/2025 9:46:36 AM, my settings are not working well, the formatting is gross! It works better without this for now.
+                        -- '-Settings',
+                        -- string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
+                    },
+                },
+            },
+        },
+    },
 }
