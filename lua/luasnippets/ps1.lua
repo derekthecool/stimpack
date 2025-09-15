@@ -1629,15 +1629,41 @@ class {ClassName} {{
             { trig = 'WHILE', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
-            [[
-        while ({Condition})
-        {{
-            {Code}
-        }}
+            [[{Choices}
         ]],
             {
-                Condition = i(1, '$true'),
-                Code = i(2),
+                Choices = c(1, {
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                            while ({Condition})
+                            {{
+                                {Code}
+                            }}
+                            ]],
+                            {
+                                Condition = i(1, '$true'),
+                                Code = i(2),
+                            }
+                        )
+                    ),
+
+                    sn(
+                        nil,
+                        fmt(
+                            [[
+                            do {{
+                                {Code}
+                            }} while ({Condition})
+                            ]],
+                            {
+                                Condition = i(1, '$true'),
+                                Code = i(2),
+                            }
+                        )
+                    ),
+                }),
             }
         )
     ),
