@@ -1319,7 +1319,7 @@ class {ClassName} {{
             [[
     if(-not $(Get-Command {Program} -ErrorAction SilentlyContinue))
     {{
-        Write-Error "The command [{RepProgram}] {Message}"
+        throw "The command [{RepProgram}] {Message}"
     }}
         ]],
             {
@@ -1338,17 +1338,34 @@ class {ClassName} {{
         },
         fmt(
             [[
-    if(-not $?)
+    if(-not $? -or $LASTEXITCODE -ne 0)
     {{
-         Write-Error "{Message}"
          {HandleOption}
     }}
         ]],
             {
-                Message = i(1, 'Error, the last command did not work'),
-                HandleOption = c(2, {
-                    i(1, 'exit'),
-                    t('return'),
+                HandleOption = c(1, {
+          sn(nil,
+              fmt(
+          [[
+          throw "{Message}"
+          ]],
+          {
+              Message = r(1, 'Error the last command did not work'),
+              
+          }
+          )
+          ),
+          sn(nil,
+              fmt(
+          [[
+          Write-Error "{Message}"
+          ]],
+          {
+              Message = r(1, 'Error the last command did not work'),
+          }
+          )
+          )
                 }),
             }
         )
