@@ -4,6 +4,20 @@
 local scan = require('plenary.scandir')
 
 local snippets = {
+  ms(
+      {
+          { trig = 'healthcheck', snippetType = 'snippet', condition = nil},
+      },
+    fmt(
+      [[
+      # See https://github.com/willfarrell/docker-autoheal for help with autorestarting unhealthy containers
+      HEALTHCHECK --interval=30s --timeout=30s --retries=2 CMD pwsh -File FotaHealthManager.ps1
+      ]],
+      {
+        
+      }
+    )
+  ),
     ms(
         {
             { trig = 'user', snippetType = 'snippet', condition = conds.line_begin },
