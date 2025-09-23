@@ -11,10 +11,14 @@ with pkgs;
   # .NET 9 SDK
   dotnetCorePackages.sdk_9_0
 
+  # Flutter and Android development
+  flutter
+  android-tools
+  androidsdk
+
   # Other needed tools
   rustup
   python3
-  flutter
   neovim
   git
   nodejs
