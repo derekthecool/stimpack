@@ -4,20 +4,18 @@
 local scan = require('plenary.scandir')
 
 local snippets = {
-  ms(
-      {
-          { trig = 'healthcheck', snippetType = 'snippet', condition = nil},
-      },
-    fmt(
-      [[
+    ms(
+        {
+            { trig = 'healthcheck', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
       # See https://github.com/willfarrell/docker-autoheal for help with autorestarting unhealthy containers
       HEALTHCHECK --interval=30s --timeout=30s --retries=2 CMD pwsh -File FotaHealthManager.ps1
       ]],
-      {
-        
-      }
-    )
-  ),
+            {}
+        )
+    ),
     ms(
         {
             { trig = 'user', snippetType = 'snippet', condition = conds.line_begin },
@@ -162,14 +160,11 @@ ENTRYPOINT ["dotnet", "BelleLTE_DeviceId_Provisioner.dll"]
             }
         )
     ),
-}
 
-local autosnippets = {
-    -- Simple set of snippets to get uppercase
-    -- s('from', t('FROM ')),
     ms(
         {
-            { trig = 'from', snippetType = 'autosnippet' },
+            { trig = 'from', snippetType = 'snippet' },
+            { trig = 'from from', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt([[FROM {}]], {
             c(1, {
@@ -179,9 +174,6 @@ local autosnippets = {
                 t('mcr.microsoft.com/dotnet/sdk:9.0-alpine'),
                 t('mcr.microsoft.com/dotnet/runtime:9.0-alpine'),
                 t('mcr.microsoft.com/dotnet/aspnet:9.0-alpine'),
-                t('mcr.microsoft.com/dotnet/sdk:latest'),
-                t('mcr.microsoft.com/dotnet/runtime:latest'),
-                t('mcr.microsoft.com/dotnet/aspnet:latest'),
                 t('mcr.microsoft.com/dotnet/sdk:9.0'),
                 t('mcr.microsoft.com/dotnet/aspnet:9.0'),
                 t('mcr.microsoft.com/dotnet/runtime:9.0'),
@@ -189,7 +181,11 @@ local autosnippets = {
             }),
         })
     ),
-    s('work dir', t('WORKDIR ')),
+    ms({
+        { trig = 'work_dir', snippetType = 'snippet', condition = conds.line_begin },
+        { trig = 'work dir', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, fmt([[WORKDIR]], {})),
+
     s('copy', t('COPY ')),
     s('run', t('RUN ')),
     s('expose', t('EXPOSE ')),
@@ -219,5 +215,7 @@ local autosnippets = {
         )
     ),
 }
+
+local autosnippets = {}
 
 return snippets, autosnippets

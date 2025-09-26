@@ -2,6 +2,21 @@
 local snippets = {
     ms(
         {
+            { trig = 'GitHub_release', snippetType = 'snippet', condition = nil },
+            {
+                trig = 'https://github.com/USER/PROJECT/releases/latest/download/FILENAME',
+                snippetType = 'autosnippet',
+                condition = nil,
+            },
+        },
+        fmt([[https://github.com/{USER}/{PROJECT}/releases/latest/download/{FILENAME}]], {
+            USER = i(1, 'neovim'),
+            PROJECT = i(2, 'neovim'),
+            FILENAME = i(3, 'nvim-linux-x86_64.tar.gz'),
+        })
+    ),
+    ms(
+        {
             { trig = 'psmd', snippetType = 'snippet', condition = nil },
             { trig = 'PSMDTemplateItem', snippetType = 'snippet', condition = nil },
         },
