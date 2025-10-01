@@ -1,9 +1,10 @@
-FROM ubuntu:22.04
+# Ubuntu based image which includes powershell (pwsh)
+FROM mcr.microsoft.com/dotnet/sdk
 
 # Install dependencies
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && apt-get install -y \
+RUN apt update && apt install -y \
     curl \
     wget \
     unzip \
@@ -15,12 +16,21 @@ RUN apt-get update && apt-get install -y \
     libglu1-mesa \
     ca-certificates \
     lsb-release \
-    neovim \
     nodejs \
     npm \
     python3 \
     python3-pip \
+    python3-venv \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
+
+# Install neovim
+RUN wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz | tar xzv
+ENV PATH="$PATH:/nvim-linux-x86_64/bin"
+
+# Install starship prompt and setup powershell prompt
+RUN curl -sS https://starship.rs/install.sh | sh -s -- --yes
+RUN mkdir -p ~/.config/powershell && echo 'Invoke-Expression (&starship init powershell)' > ~/.config/powershell/profile.ps1
 
 # Install Android SDK Command Line Tools
 ENV ANDROID_SDK_ROOT=/opt/android-sdk
@@ -44,19 +54,12 @@ RUN yes | sdkmanager --licenses || true && \
 ENV FLUTTER_HOME=/opt/flutter
 ENV PATH="$FLUTTER_HOME/bin:$PATH"
 
+
 RUN git clone https://github.com/flutter/flutter.git -b stable $FLUTTER_HOME \
     && flutter doctor
 
 # Accept Flutter licenses
 RUN yes | flutter doctor --android-licenses || true
 
-# Optional: Install .NET SDK 9
-RUN wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb && \
-    rm packages-microsoft-prod.deb && \
-    apt-get update && \
-    apt-get install -y dotnet-sdk-9.0 && \
-    rm -rf /var/lib/apt/lists/*
-
 # Default shell
-CMD [ "bash" ]
+CMD pwsh
