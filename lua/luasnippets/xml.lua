@@ -1,5 +1,13 @@
 ---@diagnostic disable: undefined-global
 local snippets = {
+    ms(
+        {
+            { trig = 'version', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[<Version>{Version}</Version>]], {
+            Version = i(1, '1.2.3'),
+        })
+    ),
     ms({
         { trig = 'PublishSingleFile', snippetType = 'snippet', condition = nil },
     }, fmt([[<PublishSingleFile>true</PublishSingleFile>]], {})),
@@ -292,7 +300,7 @@ local autosnippets = {
 
         {
             { trig = 'package reference', snippetType = 'snippet' },
-            { trig = 'INCLUDE',           snippetType = 'autosnippet' },
+            { trig = 'INCLUDE', snippetType = 'autosnippet' },
         },
         fmt(
             [[

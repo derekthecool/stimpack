@@ -55,6 +55,25 @@ local rec_ls = function()
     )
 end
 
+local function string_format(index)
+    return sn(
+        index,
+        fmt([[string.format({FormatChoice})]], {
+            FormatChoice = c(1, {
+
+                sn(
+                    index,
+                    fmt([['{String}'{Variables}]], {
+                        String = i(1),
+                        Variables = auxiliary.printf_style_dynamic_formatter(2, 1),
+                    })
+                ),
+                i(1),
+            }),
+        })
+    )
+end
+
 local snippets = {
     treesitter_postfix(
         {
@@ -328,15 +347,9 @@ end
                 end,
             },
         },
-        fmt(
-            [[
-        string.format("{}"{})
-        ]],
-            {
-                i(1),
-                auxiliary.printf_style_dynamic_formatter(2, 1),
-            }
-        )
+        fmt([[{Formatter}]], {
+            Formatter = string_format(1),
+        })
     ),
 
     s(
@@ -1008,7 +1021,10 @@ end
             { trig = 'ERRORPRINT', snippetType = 'autosnippet' },
         },
         fmt([[io.stderr:write({})]], {
-            i(1),
+            c(1, {
+                string_format(1),
+                i(1),
+            }),
         })
     ),
 

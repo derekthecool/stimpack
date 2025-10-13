@@ -26,7 +26,7 @@ local snippets = {
     ),
     ms(
         {
-            { trig = 'version', snippetType = 'snippet', condition = nil },
+            { trig = 'version_print_version', snippetType = 'snippet', condition = nil },
         },
         fmt(
             [[

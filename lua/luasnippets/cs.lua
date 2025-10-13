@@ -238,6 +238,7 @@ app.Use(
             {
                 trig = '%.?[Ww]here',
                 regTrig = true,
+                wordTrig = false,
                 trigEngine = 'pattern',
                 snippetType = 'autosnippet',
                 condition = nil,
