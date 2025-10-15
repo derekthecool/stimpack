@@ -1,3 +1,5 @@
+local PSScriptAnalyzerSettingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home)
+
 return {
     {
         'nvim-treesitter/nvim-treesitter',
@@ -15,7 +17,7 @@ return {
                 powershell = {
                     ScriptAnalysis = {
                         enable = true,
-                        settingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
+                        settingsPath = PSScriptAnalyzerSettingsPath,
                     },
                     CodeFormatting = {
                         autoCorrectAliases = true,
@@ -37,13 +39,12 @@ return {
                     args = {
                         '-NoProfile',
                         '-Command',
-                        'Invoke-Formatter',
-                        '-ScriptDefinition',
-                        string.format('(Get-Content %s -Raw)', vim.fn.expand('%:p')),
-                        -- TODO: (Derek Lomax) 9/11/2025 9:46:36 AM, my settings are not working well, the formatting is gross! It works better without this for now.
-                        -- '-Settings',
-                        -- string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home),
+                        [[(Invoke-Formatter -ScriptDefinition ([Console]::In.ReadToEnd()) -Settings ]]
+                            .. PSScriptAnalyzerSettingsPath
+                            .. [[).TrimEnd()]],
                     },
+                    stdin = true,
+                    timeout_ms = 12000,
                 },
             },
         },
