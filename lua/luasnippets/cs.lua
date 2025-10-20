@@ -71,6 +71,18 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'prime', snippetType = 'snippet', condition = nil },
+            { trig = 'prime prime', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[Enumerable.Range(2, (int)Math.Sqrt({Range}) - 1).All(divisor => {RangeRep} % divisor != 0)]], {
+            Range = i(1, '100'),
+            RangeRep = rep(1),
+        }),
+        SnippetInclude('System.Linq')
+    ),
+
+    ms(
+        {
             { trig = 'xml_parse', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -204,16 +216,11 @@ app.Use(
         )
     ),
 
-    ms({ { trig = 'read line', snippetType = 'autosnippet' } }, fmt([[Console.ReadLine()]], {}), {
-        callbacks = {
-            [-1] = {
-                -- Write needed using directives before expanding snippet so positions are not messed up
-                [events.pre_expand] = function()
-                    auxiliary.insert_include_if_needed('System')
-                end,
-            },
-        },
-    }),
+    ms({
+        { trig = 'Console.ReadLine', snippetType = 'snippet' },
+        { trig = 'read line', snippetType = 'autosnippet', condition = nil },
+    }, fmt([[Console.ReadLine()]], {}), SnippetInclude('System')),
+
     ms(
         {
             { trig = 'new record', snippetType = 'autosnippet' },
