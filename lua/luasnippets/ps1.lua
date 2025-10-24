@@ -242,6 +242,12 @@ local function PesterTest(index)
                 Skip = c(2, {
                     t(''),
                     t('-Skip:(-not(Test-Path Env:CI))'),
+                    sn(
+                        nil,
+                        fmt([[-Skip:([bool](!(Get-Command {Program} -ErrorAction SilentlyContinue)))]], {
+                            Program = i(1, 'tshark'),
+                        })
+                    ),
                     t('-Skip:$true'),
                     t('-Skip:$false'),
                 }),
@@ -1175,23 +1181,42 @@ class {ClassName} {{
             { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
             { trig = 'assert', snippetType = 'snippet', condition = nil },
         },
-        fmt(
-            [[
-        {Input} | Should -{Option}
-        ]],
-            {
-                Input = i(1, 'VariableOrCommand'),
-                Option = c(2, {
-                    t('Be'),
-                    t('Throw'),
-                    t('BeOfType'),
-                    t('BeTrue'),
-                    t('BeFalse'),
-                    t('HaveCount'),
-                    i(1),
-                }),
-            }
-        )
+        fmt([[ Should -{Option}]], {
+            Option = c(1, {
+                t('Be'),
+                t('BeExactly'),
+                t('BeGreaterThan'),
+                t('BeGreaterOrEqual'),
+                t('BeLessThan'),
+                t('BeLessOrEqual'),
+                t('BeIn'),
+                t('BeLike'),
+                t('BeLikeExactly'),
+                t('BeNullOrEmpty'),
+                t('BeOfType'),
+                t('BeTrue'),
+                t('BeFalse'),
+                t('Contain'),
+                t('ContainExactly'),
+                t('Exist'),
+                t('FileContentMatch'),
+                t('FileContentMatchMultiline'),
+                t('FileContentMatchExactly'),
+                t('HaveCount'),
+                t('HaveLength'),
+                t('HaveType'),
+                t('Match'),
+                t('MatchExactly'),
+                t('MatchMultiline'),
+                t('Not'),
+                t('Throw'),
+                t('ThrowExactly'),
+                t('ThrowContaining'),
+                t('Invoke'),
+                t('InvokeExactly'),
+                i(1),
+            }),
+        })
     ),
 
     ms(
@@ -1202,33 +1227,13 @@ class {ClassName} {{
         fmt(
             [[
         BeforeAll {{
-            . {Filename}
+            Import-Module $PSScriptRoot/../*.psd1
         }}
 
         {Test}
         ]],
             {
-                Filename = d(1, function(args, snip)
-                    local nodes = {}
-
-                    -- Add nodes for snippet
-                    local scandir = require('plenary.scandir')
-                    local files = scandir.scan_dir(
-                        string.format('%s/..', vim.fn.expand('%:h')),
-                        { respect_gitignore = true, search_pattern = '%.ps1' }
-                    )
-
-                    for _, value in ipairs(files) do
-                        table.insert(nodes, t(value))
-                    end
-
-                    -- local choices = c(1, nodes)
-
-                    return sn(nil, {
-                        c(1, nodes),
-                    })
-                end, {}),
-                Test = PesterTest(2),
+                Test = PesterTest(1),
             }
         )
     ),
@@ -1345,27 +1350,28 @@ class {ClassName} {{
         ]],
             {
                 HandleOption = c(1, {
-          sn(nil,
-              fmt(
-          [[
+                    sn(
+                        nil,
+                        fmt(
+                            [[
           throw "{Message}"
           ]],
-          {
-              Message = r(1, 'Error the last command did not work'),
-              
-          }
-          )
-          ),
-          sn(nil,
-              fmt(
-          [[
+                            {
+                                Message = r(1, 'Error the last command did not work'),
+                            }
+                        )
+                    ),
+                    sn(
+                        nil,
+                        fmt(
+                            [[
           Write-Error "{Message}"
           ]],
-          {
-              Message = r(1, 'Error the last command did not work'),
-          }
-          )
-          )
+                            {
+                                Message = r(1, 'Error the last command did not work'),
+                            }
+                        )
+                    ),
                 }),
             }
         )
