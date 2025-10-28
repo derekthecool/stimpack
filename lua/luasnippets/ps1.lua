@@ -404,6 +404,29 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'timer_run_in_same_scope', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+# Create a PowerShell oneshot powershell timer
+$timer = New-Object Timers.Timer
+$timer.Interval = {Interval}
+$timer.AutoReset = $false
+
+# Register event to trigger our deferred load on the main thread
+Register-ObjectEvent -InputObject $timer -EventName Elapsed -Action {{
+    {Code}
+}} | Out-Null
+$timer.Start()
+      ]],
+            {
+                Interval = i(1, '5000'),
+                Code = i(2),
+            }
+        )
+    ),
     ms({
         { trig = 'PSReadLine_AddToHistory', snippetType = 'snippet', condition = nil },
     }, fmt('[Microsoft.PowerShell.PSConsoleReadLine]::AddToHistory({Command})', { Command = i(1, 'ls') })),
