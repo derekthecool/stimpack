@@ -35,7 +35,7 @@ local snippets = {
         ]],
             {
                 CommentString = f(function(args, snip)
-                    return ((require('Comment.ft').get(vim.bo.filetype)[1]):gsub('%%s', ''))
+                    return ((vim.bo.commentstring):gsub('%%s', ''))
                 end, {}),
                 PrintCommand = f(function(args, snip)
                     local file_type = vim.bo.filetype
@@ -44,10 +44,7 @@ local snippets = {
                     elseif file_type == 'cpp' then
                         return [[printf("CPP language version: %lu\n", __cplusplus );]]
                     else
-                        return string.format(
-                            require('Comment.ft').get(vim.bo.filetype)[1],
-                            'Language ' .. file_type .. ' not found'
-                        )
+                        return string.format(vim.bo.commentstring, 'Language ' .. file_type .. ' not found')
                     end
                 end),
             }
