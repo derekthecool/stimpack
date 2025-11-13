@@ -41,7 +41,7 @@ local function param_block(index)
                 CmdletBinding = c(1, {
                     t(''),
                     sn(
-                        nil,
+                        1,
                         fmt(
                             [=[
                   [CmdletBinding(
@@ -404,6 +404,101 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'psake_task', snippetType = 'snippet', condition = nil },
+            { trig = 'psake task', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+      Task {Name} {{
+          {Code}
+      }}
+      ]],
+            {
+                Name = i(1, 'TaskName'),
+                Code = i(2),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'ModuleName', snippetType = 'snippet', condition = nil },
+            { trig = 'module name', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+      @{{ ModuleName = '{Name}'; ModuleVersion = '{Version}' }}
+      ]],
+            {
+                Name = i(1, 'SimplySql'),
+                Version = i(2, '2.1.0.96'),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'FunctionsToExportCollector', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+Task FunctionsToExport {
+    # RegEx matches files like Verb-Noun.ps1 only, not psakefile.ps1 or *-*.Tests.ps1
+    $functionNames = Get-ChildItem -Recurse | Where-Object { $_.Name -match "^[^\.]+-[^\.]+\.ps1$" } -PipelineVariable file | ForEach-Object {
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($file.FullName, [ref] $null, [ref] $null)
+        if ($ast.EndBlock.Statements.Name)
+        {
+            $ast.EndBlock.Statements.Name
+        }
+    }
+    Write-Verbose "Using functions $functionNames"
+    $moduleManifest = "${PSScriptRoot}/*.psd1"
+    Update-ModuleManifest -Path $moduleManifest -FunctionsToExport $functionNames
+}
+      ]],
+            {},
+            { delimiters = '<>' }
+        )
+    ),
+    ms(
+        {
+            { trig = 'paramset', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    param (
+        [Parameter(ParameterSetName = '__AllParameterSets')]
+        [string]$Param1,
+
+        [Parameter(ParameterSetName = 'Debug')]
+        [switch]$Param2
+    )
+      ]],
+            {}
+        )
+    ),
+    ms(
+        {
+            { trig = 'paramset_switch', snippetType = 'snippet', condition = nil },
+            { trig = 'param switch', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+      switch ($PSCmdlet.ParameterSetName)
+      {
+          'Default' { <DefaultSet> }
+          '<NextSetName>' { <NextSetBlock> }
+      }
+      ]],
+            {
+                DefaultSet = i(1, 'echo "Default code block here"'),
+                NextSetName = i(2, 'CustomSwitchTriggerName'),
+                NextSetBlock = i(3, 'echo "CustomSwitch code block"'),
+            },
+            { delimiters = '<>' }
+        )
+    ),
     ms(
         {
             { trig = 'timer_run_in_same_scope', snippetType = 'snippet', condition = nil },
@@ -1402,7 +1497,7 @@ class {ClassName} {{
 
     ms(
         {
-            { trig = '###', snippetType = 'snippet', condition = conds.line_begin },
+            { trig = '###', snippetType = 'autosnippet', condition = conds.line_begin },
         },
         fmt([[{}]], {
             c(1, {
@@ -1488,6 +1583,22 @@ class {ClassName} {{
                 ),
             }),
         })
+    ),
+
+    ms(
+        {
+            { trig = '.example', snippetType = 'snippet', condition = nil },
+            { trig = '.example', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+      .EXAMPLE
+      {Text}
+      ]],
+            {
+                Text = i(1, 'Show the example code'),
+            }
+        )
     ),
 
     s(
