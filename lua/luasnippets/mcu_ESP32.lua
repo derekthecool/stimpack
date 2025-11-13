@@ -215,6 +215,7 @@ void button_task(void *arg) {{
         {
             { trig = 'ESP32log', snippetType = 'snippet', condition = nil },
             { trig = 'ESP32 ESP32', snippetType = 'autosnippet', condition = nil },
+            { trig = 'ESP32 log', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[ESP_LOG{}({}, "[%s] {}", __FUNCTION__{});]], {
             c(1, {
@@ -238,6 +239,35 @@ void button_task(void *arg) {{
             },
         }
     ),
+
+    ms(
+        {
+            { trig = 'ESP32_detailed_log', snippetType = 'snippet', condition = nil },
+            { trig = 'ESP32 verbose', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt([[ESP_LOG{}({}, "[%s@%s line: %d] {}", __FUNCTION__, __FILENAME__, __LINE__{});]], {
+            c(1, {
+                t('I'),
+                t('D'),
+                t('W'),
+                t('E'),
+                t('V'),
+            }),
+            i(2, 'TAG'),
+            i(3),
+            auxiliary.printf_style_dynamic_formatter(4, 3),
+        }),
+        {
+            callbacks = {
+                [-1] = {
+                    [events.pre_expand] = function()
+                        auxiliary.insert_include_if_needed('"esp_log.h"')
+                    end,
+                },
+            },
+        }
+    ),
+
     ms(
         {
             {
