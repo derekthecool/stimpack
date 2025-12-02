@@ -224,42 +224,90 @@ local powershell_standard_parameter_names = {
     t('Wrap'),
 }
 
+local function PesterAssert(index)
+    return sn(
+        index,
+        fmt([[Should -{Option}]], {
+            Option = c(1, {
+                t('Be'),
+                t('BeExactly'),
+                t('BeGreaterThan'),
+                t('BeGreaterOrEqual'),
+                t('BeLessThan'),
+                t('BeLessOrEqual'),
+                t('BeIn'),
+                t('BeLike'),
+                t('BeLikeExactly'),
+                t('BeNullOrEmpty'),
+                t('BeOfType'),
+                t('BeTrue'),
+                t('BeFalse'),
+                t('Contain'),
+                t('ContainExactly'),
+                t('Exist'),
+                t('FileContentMatch'),
+                t('FileContentMatchMultiline'),
+                t('FileContentMatchExactly'),
+                t('HaveCount'),
+                t('HaveLength'),
+                t('HaveType'),
+                t('Match'),
+                t('MatchExactly'),
+                t('MatchMultiline'),
+                t('Not'),
+                t('Throw'),
+                t('ThrowExactly'),
+                t('ThrowContaining'),
+                t('Invoke'),
+                t('InvokeExactly'),
+                i(1),
+            }),
+        })
+    )
+end
+
+local function PesterTestSkip(index)
+    return sn(
+        index,
+        fmt([[{Choices}]], {
+            Choices = c(1, {
+                t(''),
+                t('-Skip:(-not(Test-Path Env:CI))'),
+                sn(
+                    nil,
+                    fmt([[-Skip:([bool](!(Get-Command {Program} -ErrorAction SilentlyContinue)))]], {
+                        Program = i(1, 'tshark'),
+                    })
+                ),
+                t('-Skip:$true'),
+                t('-Skip:$false'),
+            }),
+        })
+    )
+end
+
 local function PesterTest(index)
     return sn(
         index,
         fmt(
             [[
-    Describe '{TestGroupName}' {Skip} {{
-        It '{TestDescription}'
-        {Multiple}
-        {{
-            {Assertion}
+        It '{TestDescription}' {Multiple} 
+            {Command} | {Assertion}
         }}
-    }}
     ]],
             {
-                TestGroupName = i(1, 'Test group'),
-                Skip = c(2, {
-                    t(''),
-                    t('-Skip:(-not(Test-Path Env:CI))'),
-                    sn(
-                        nil,
-                        fmt([[-Skip:([bool](!(Get-Command {Program} -ErrorAction SilentlyContinue)))]], {
-                            Program = i(1, 'tshark'),
-                        })
-                    ),
-                    t('-Skip:$true'),
-                    t('-Skip:$false'),
-                }),
-                TestDescription = i(3, 'This test does ....'),
-                Multiple = c(4, {
-                    t(''),
+                TestDescription = i(1, 'This test does ....'),
+                Multiple = c(2, {
+                    -- If multiple test case data style is not wanted then use this curly bracket
+                    t('{'),
+
+                    -- Otherwise format like this multi test case style
                     sn(
                         nil,
                         fmt(
                             [[-TestCases @(
                                 @{ <Variable> = <Value> }
-                            )
+                            ) {
                             ]],
                             {
                                 Variable = i(1, 'Variable'),
@@ -271,7 +319,26 @@ local function PesterTest(index)
                         )
                     ),
                 }),
-                Assertion = i(5, '$(Get-ChildItem).Count | Should -Be 42'),
+                Command = i(3, 'command'),
+                Assertion = PesterAssert(4),
+            }
+        )
+    )
+end
+
+local function PesterTestGroup(index)
+    return sn(
+        index,
+        fmt(
+            [[
+    Describe '{TestGroupName}' {Skip} {{
+        {TestBody}
+    }}
+    ]],
+            {
+                TestGroupName = i(1, 'Test group'),
+                Skip = PesterTestSkip(2),
+                TestBody = PesterTest(3),
             }
         )
     )
@@ -787,18 +854,37 @@ if(-not $?)
             { trig = 'empty', snippetType = 'snippet', condition = nil },
             { trig = '[string]::IsNullOrEmpty', snippetType = 'snippet', condition = nil },
         },
-        fmt(
-            [[
-    if([string]::IsNullOrEmpty(${String}))
-    {{
-        {Code}
-    }}
-        ]],
-            {
-                String = i(1, 'StringName'),
-                Code = i(2, 'return'),
-            }
-        )
+        fmt([[{Choices}]], {
+            Choices = c(1, {
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                        if([string]::IsNullOrEmpty(${String}))
+                        {{
+                            {Code}
+                        }}
+                        ]],
+                        {
+                            String = i(1, 'StringName'),
+                            Code = i(2, 'return'),
+                        }
+                    )
+                ),
+
+                sn(
+                    nil,
+                    fmt(
+                        [[
+                        [string]::IsNullOrEmpty(${String})
+                        ]],
+                        {
+                            String = i(1, 'StringName'),
+                        }
+                    )
+                ),
+            }),
+        })
     ),
 
     ms(
@@ -1284,58 +1370,27 @@ class {ClassName} {{
         )
     ),
 
-    ms(
-        {
-            { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'test', snippetType = 'snippet', condition = nil },
-        },
-        fmt([[{Test}]], {
-            Test = PesterTest(1),
-        })
-    ),
+    ms({
+        { trig = 'test', snippetType = 'snippet', condition = nil },
+        { trig = 'TEST', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, { PesterTest(1) }),
 
-    ms(
-        {
-            { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
-            { trig = 'assert', snippetType = 'snippet', condition = nil },
-        },
-        fmt([[ Should -{Option}]], {
-            Option = c(1, {
-                t('Be'),
-                t('BeExactly'),
-                t('BeGreaterThan'),
-                t('BeGreaterOrEqual'),
-                t('BeLessThan'),
-                t('BeLessOrEqual'),
-                t('BeIn'),
-                t('BeLike'),
-                t('BeLikeExactly'),
-                t('BeNullOrEmpty'),
-                t('BeOfType'),
-                t('BeTrue'),
-                t('BeFalse'),
-                t('Contain'),
-                t('ContainExactly'),
-                t('Exist'),
-                t('FileContentMatch'),
-                t('FileContentMatchMultiline'),
-                t('FileContentMatchExactly'),
-                t('HaveCount'),
-                t('HaveLength'),
-                t('HaveType'),
-                t('Match'),
-                t('MatchExactly'),
-                t('MatchMultiline'),
-                t('Not'),
-                t('Throw'),
-                t('ThrowExactly'),
-                t('ThrowContaining'),
-                t('Invoke'),
-                t('InvokeExactly'),
-                i(1),
-            }),
-        })
-    ),
+    ms({
+        { trig = 'describe describe', snippetType = 'snippet', condition = nil },
+        { trig = 'DESCRIBE', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, { PesterTestGroup(1) }),
+
+    ms({
+        { trig = 'skip', snippetType = 'snippet', condition = nil },
+        { trig = 'skip skip', snippetType = 'autosnippet', condition = nil },
+    }, {
+        PesterTestSkip(1),
+    }),
+
+    ms({
+        { trig = 'ASSERT', snippetType = 'autosnippet', condition = conds.line_begin },
+        { trig = 'assert', snippetType = 'snippet', condition = nil },
+    }, { PesterAssert(1) }),
 
     ms(
         {
@@ -1351,7 +1406,7 @@ class {ClassName} {{
         {Test}
         ]],
             {
-                Test = PesterTest(1),
+                Test = PesterTestGroup(1),
             }
         )
     ),
