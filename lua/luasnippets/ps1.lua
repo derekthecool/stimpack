@@ -799,6 +799,25 @@ if(-not $?)
 
     ms(
         {
+            { trig = 'hashtable_iterate', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        foreach ({Item} in {Hashtable})
+        {{
+            {Code}
+        }}
+        ]],
+            {
+                Item = i(1, 'item'),
+                Hashtable = i(2, 'Hashtable'),
+                Code = i(3, '$item.Name - $item.Value'),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'New-Alias', snippetType = 'snippet', condition = nil },
             { trig = 'alias', snippetType = 'snippet', condition = nil },
         },
@@ -1205,21 +1224,6 @@ Write-Output $filelist
         ]],
             {},
             { delimiters = '<>' }
-        )
-    ),
-    ms(
-        {
-            { trig = 'hash table', snippetType = 'autosnippet', condition = nil },
-        },
-        fmt(
-            [[
-        @{{
-            {Items}
-        }}
-        ]],
-            {
-                Items = i(1),
-            }
         )
     ),
     ms(
@@ -2193,7 +2197,26 @@ local autosnippets = {
 
     ms(
         {
-            { trig = 'FREACH', snippetType = 'autosnippet' },
+            { trig = 'foreach', snippetType = 'snippet', condition = nil },
+            { trig = 'FREACH', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+        foreach ({Item} in {Collection})
+        {{
+            {Code}
+        }}
+        ]],
+            {
+                Item = i(1, 'item'),
+                Collection = i(2, 'collection'),
+                Code = i(3),
+            }
+        )
+    ),
+
+    ms(
+        {
             { trig = 'ForEach-Object', snippetType = 'snippet' },
             { trig = 'ForEach-Object { $_', snippetType = 'autosnippet', wordTrig = false },
         },
