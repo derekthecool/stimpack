@@ -22,6 +22,16 @@ return {
 
             -- Disabled by default, but I love running the query on save
             vim.g.db_ui_execute_on_save = true
+
+            -- New query file name generator
+            local function buffer_name_generator(opts)
+                if not opts.table or opts.table == '' then
+                    return 'myquery-' .. vim.fn.localtime() .. '.sql'
+                end
+
+                return 'myquery-fortable-' .. opts.table .. '-' .. vim.fn.localtime() .. '.sql'
+            end
+            vim.g.Db_ui_buffer_name_generator = buffer_name_generator
         end,
     },
 }

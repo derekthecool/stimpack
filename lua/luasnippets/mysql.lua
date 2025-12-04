@@ -3,6 +3,17 @@
 local shareable = require('luasnippets.functions.shareable_snippets')
 
 local snippets = {
+    ms({
+        { trig = 'date_difference_mysql', snippetType = 'snippet', condition = nil },
+    }, {
+        sn(
+            nil,
+            fmt('DATEDIFF(CURRENT_DATE, {DateColumn}) AS DaysInHopper', {
+                DateColumn = i(1, 'DateColumn'),
+            })
+        ),
+    }),
+
     ms(
         {
             { trig = 'case_mysql', snippetType = 'snippet', condition = nil },
