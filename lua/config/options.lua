@@ -8,6 +8,7 @@ vim.o.scrolloff = 999 -- Keep cursor vertically centered
 vim.opt.mouse = ''
 vim.opt.wrap = false
 vim.opt.shiftwidth = 4
+vim.opt.swapfile = false
 
 -- Set pwsh as default terminal
 LazyVim.terminal.setup('pwsh')
