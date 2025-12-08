@@ -51,3 +51,13 @@ vim.keymap.set('n', '_', require('dap').continue, { silent = true, desc = 'Run/C
 vim.keymap.set('n', '≥', require('dap').step_into, { silent = true, desc = 'Step Into' })
 vim.keymap.set('n', '≤', require('dap').step_out, { silent = true, desc = 'Step Out' })
 vim.keymap.set('n', 'µ', require('dap').toggle_breakpoint, { silent = true, desc = 'Toggles Breakpoint' })
+
+vim.keymap.set('n', '<leader>Nw', function()
+    local daily_note = string.format('%s/.mywiki/work/Freeus/diary/%s.md', OS.home, os.date('%Y-%m-%d'))
+    vim.cmd(string.format('e %s', daily_note))
+end, { silent = true, desc = 'Open daily work note' })
+
+vim.keymap.set('n', '<leader>Np', function()
+    local daily_note = string.format('%s/.mywiki/personal/diary/%s.md', OS.home, os.date('%Y-%m-%d'))
+    vim.cmd(string.format('e %s', daily_note))
+end, { silent = true, desc = 'Open daily note' })
