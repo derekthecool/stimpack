@@ -2,6 +2,23 @@
 
 local shareable = require('luasnippets.functions.shareable_snippets')
 
+local function step(index)
+    return sn(
+        index,
+        fmt(
+            [[
+        - pwsh: |
+            {Code}
+            displayName: '{Name}'
+        ]],
+            {
+                Code = i(1),
+                Name = i(2, 'StepName'),
+            }
+        )
+    )
+end
+
 local snippets = {
     ms(
         {
@@ -21,14 +38,15 @@ steps:
   - task: UseDotNet@2
     displayName: 'Install .NET Core SDK'
 
-  - pwsh: |
-      cd ./WebApi/
-      dotnet test
-    displayName: 'dotnet test'
+  {Step}
     ]],
-            {}
+            { Step = step(1) }
         )
     ),
+
+    ms({
+        { trig = 'Azurestep', snippetType = 'snippet', condition = nil },
+    }, step(1)),
 }
 
 local autosnippets = {}
