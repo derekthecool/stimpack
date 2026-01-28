@@ -68,7 +68,89 @@ function Namespace(index)
     )
 end
 
+local function PowershellCmdletParameter(index)
+    return sn(
+        index,
+        fmt(
+            [[
+    [Parameter(
+        Mandatory = {Mandatory},
+        Position = {Position},
+        ValueFromPipeline = {ValueFromPipeline},
+        ValueFromPipelineByPropertyName = {ValueFromPipelineByPropertyName}
+    )]
+    public required {PropertyType} {PropertyName} {{ get; set; }}
+    ]],
+            {
+                Mandatory = c(1, {
+                    t('true'),
+                    t('false'),
+                }),
+                Position = i(2, '0'),
+                ValueFromPipeline = c(3, {
+                    t('true'),
+                    t('false'),
+                }),
+                ValueFromPipelineByPropertyName = c(4, {
+                    t('true'),
+                    t('false'),
+                }),
+                PropertyType = i(5, 'string'),
+                PropertyName = i(6, 'PropertyName'),
+            }
+        )
+    )
+end
+
 local snippets = {
+
+    ms({
+        { trig = 'powershell_cmdlet_param', snippetType = 'snippet', condition = nil },
+    }, PowershellCmdletParameter(1)),
+
+    ms(
+        {
+            { trig = 'powershell_cmdlet', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+[Cmdlet("<Verb>", "<Noun>")]
+[OutputType(typeof(<OutputType>))]
+public class <VerbRep><NounRep> : PSCmdlet
+{
+    <PowershellParam>
+
+    // This method gets called once for each cmdlet in the pipeline when the pipeline starts executing
+    protected override void BeginProcessing()
+    {
+        WriteVerbose("Begin!");
+    }
+
+    // This method will be called for each input received from the pipeline to this cmdlet; if no input is received, this method is not called
+    protected override void ProcessRecord()
+    {
+        WriteVerbose("Processing record");
+    }
+
+    // This method will be called once at the end of pipeline execution; if no input is received, this method is not called
+    protected override void EndProcessing()
+    {
+        WriteVerbose("End!");
+    }
+}
+        ]],
+            {
+                Verb = i(1, 'Get'),
+                Noun = i(2, 'Item'),
+                VerbRep = rep(1),
+                NounRep = rep(2),
+                OutputType = i(3, 'OutputType'),
+                PowershellParam = PowershellCmdletParameter(4),
+            },
+            { delimiters = '<>' }
+        )
+    ),
+
     ms(
         {
             { trig = 'prime', snippetType = 'snippet', condition = nil },

@@ -249,7 +249,6 @@ local function PesterAssert(index)
                 t('FileContentMatchMultiline'),
                 t('FileContentMatchExactly'),
                 t('HaveCount'),
-                t('HaveLength'),
                 t('HaveType'),
                 t('Match'),
                 t('MatchExactly'),
@@ -471,6 +470,31 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'Write-ProgressEx', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        ${ProgressArgsName} = @{{
+            Id = {Id}
+            ShowProgressBar = 'Force'
+            Activity = "{Action}"
+            Status = "{StatusMessage}"
+            Total = {TotalCalculation}
+            Increment = $true
+        }}
+        Write-ProgressEx @args
+        ]],
+            {
+                ProgressArgsName = i(1, 'args'),
+                Id = i(2, '0'),
+                Action = i(3, 'MainAction'),
+                StatusMessage = i(4, 'Processing: $_'),
+                TotalCalculation = i(5, '$Files.Length'),
+            }
+        )
+    ),
     ms(
         {
             { trig = 'psake_task', snippetType = 'snippet', condition = nil },
@@ -820,10 +844,17 @@ if(-not $?)
         {
             { trig = 'New-Alias', snippetType = 'snippet', condition = nil },
             { trig = 'alias', snippetType = 'snippet', condition = nil },
+            { trig = 'alias alias', snippetType = 'autosnippet', condition = nil },
         },
-        fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
-            Name = i(1, 'Name'),
-            Value = i(2, 'Value'),
+        c(1, {
+            -- Proof that a snippet  node can be made with just a format  node
+            fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
+                Name = i(1, 'Name'),
+                Value = i(2, 'Value'),
+            }),
+            fmt('[Alias(\'{Name}\')]', {
+                Name = i(1, 'Name'),
+            }),
         })
     ),
 
@@ -1562,11 +1593,8 @@ class {ClassName} {{
             c(1, {
 
                 -- Short version
-
-                sn(
-                    nil,
-                    fmt(
-                        [[
+                fmt(
+                    [[
     <#
         .SYNOPSIS
         {Synopsis}
@@ -1581,23 +1609,20 @@ class {ClassName} {{
         {Example}
     #>
                   ]],
-                        {
-                            Synopsis = i(1, 'Adds a file name extension to a supplied name.'),
-                            Description = i(
-                                2,
-                                'Adds a file name extension to a supplied name. Takes any strings for the file name or extension.'
-                            ),
-                            Parameter = i(3, 'Specifies the file name.'),
-                            Example = i(4, 'PS> Add-Extension -name "File"'),
-                        }
-                    )
+                    {
+                        Synopsis = i(1, 'Adds a file name extension to a supplied name.'),
+                        Description = i(
+                            2,
+                            'Adds a file name extension to a supplied name. Takes any strings for the file name or extension.'
+                        ),
+                        Parameter = i(3, 'Specifies the file name.'),
+                        Example = i(4, 'Add-Extension -name "File"'),
+                    }
                 ),
 
                 -- Full version
-                sn(
-                    nil,
-                    fmt(
-                        [[
+                fmt(
+                    [[
     <#
         .SYNOPSIS
         Adds a file name extension to a supplied name.
@@ -1637,8 +1662,7 @@ class {ClassName} {{
         Set-Item
     #>
                   ]],
-                        {}
-                    )
+                    {}
                 ),
             }),
         })
@@ -1806,24 +1830,41 @@ class {ClassName} {{
         )
     ),
 
-    ms(
-        {
-            { trig = 'REGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
-        },
-        fmt(
-            [[
-    if({String} -cmatch '{Pattern}')
-    {{
-        {Code}
-    }}
-        ]],
-            {
-                String = i(1, 'string to match'),
-                Pattern = i(2, '.*'),
-                Code = i(3),
-            }
-        )
-    ),
+    ms({
+        { trig = 'REGMATCH', snippetType = 'autosnippet', condition = conds.line_begin },
+    }, {
+        c(1, {
+            sn(
+                nil,
+                fmt(
+                    [[
+                [regex]::Match({String}, {Pattern})
+                ]],
+                    {
+
+                        String = i(1, 'input'),
+                        Pattern = i(2, '.*'),
+                    }
+                )
+            ),
+            sn(
+                nil,
+                fmt(
+                    [[
+                if({String} -cmatch '{Pattern}')
+                {{
+                    {Code}
+                }}
+                ]],
+                    {
+                        String = i(1, 'input'),
+                        Pattern = i(2, '.*'),
+                        Code = i(3),
+                    }
+                )
+            ),
+        }),
+    }),
 
     ms(
         {
@@ -1831,11 +1872,60 @@ class {ClassName} {{
         },
         fmt(
             -- Old method
-            -- [regex]::Matches({Source}, '{Pattern}', 'IgnorePatternWhitespace') | ForEach-Object {{ $_.{DoSomething} }}
-            -- New method uses PSScriptTools function ConvertFrom-Text
-            [[ConvertFrom-Text '{Pattern}']],
+            [[[regex]::Matches({String}, '{Pattern}']],
             {
-                Pattern = i(1, '.*'),
+                String = i(1, 'input'),
+                Pattern = i(2, '.*'),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'process', snippetType = 'snippet', condition = nil },
+            { trig = 'process process', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+            process {{
+                {Code}
+            }}
+            ]],
+            {
+                Code = i(1),
+            }
+        )
+    ),
+    ms(
+        {
+            { trig = 'begin', snippetType = 'snippet', condition = nil },
+            { trig = 'begin begin', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+            begin {{
+                {Code}
+            }}
+            ]],
+            {
+                Code = i(1),
+            }
+        )
+    ),
+
+    ms(
+        {
+            { trig = 'end', snippetType = 'snippet', condition = nil },
+            { trig = 'end end', snippetType = 'autosnippet', condition = nil },
+        },
+        fmt(
+            [[
+            end {{
+                {Code}
+            }}
+            ]],
+            {
+                Code = i(1),
             }
         )
     ),

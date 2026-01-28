@@ -98,7 +98,7 @@ return {
             sources = {
                 -- adding any nvim-cmp sources here will enable them with blink.compat
                 compat = {},
-                default = { 'lsp', 'path', 'snippets', 'buffer', 'cmdline' },
+                default = { 'lsp', 'path', 'snippets', 'buffer' },
             },
             cmdline = {
                 enabled = true,
@@ -278,7 +278,7 @@ return {
             -- A selection for which specific filetype selection
             -- STWHEUFL
             vim.keymap.set({ 'n', 'i', 's' }, '👇', open_snippet_file, { desc = 'Open snippets' })
-            vim.keymap.set({ 'n' }, '<leader>lz', open_snippet_file, { desc = 'Open snippets' })
+            vim.keymap.set({ 'n' }, '<leader>cz', open_snippet_file, { desc = 'Open snippets' })
 
             -- Snippet extensions, AKA get snippets of one filetype to use another as well
             -- This enables the new filetypes to appear in the snippet edit menu

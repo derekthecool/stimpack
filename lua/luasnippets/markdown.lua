@@ -390,20 +390,19 @@ local snippets = {
             }
         )
     ),
-}
 
-local autosnippets = {
-
-    s(
-        '```',
+    ms(
+        {
+            { trig = '```', snippetType = 'autosnippet', condition = nil },
+        },
         fmt(
             [[
-            ```{}
-            {}
+            ```{Language}
+            {Content}
             ```
             ]],
             {
-                c(1, {
+                Language = c(1, {
                     t('yaml'),
                     t('sh'),
                     t('powershell'),
@@ -412,10 +411,18 @@ local autosnippets = {
                     t('c'),
                     i(1),
                 }),
-                auxiliary.wrap_selected_text(2),
+                Content = c(2, {
+                    f(function(args, snip)
+                        return vim.fn.getreg('+', 1, true)
+                    end, {}),
+                    auxiliary.wrap_selected_text(2),
+                }),
             }
         )
     ),
+}
+
+local autosnippets = {
 
     s(
         'dick',
