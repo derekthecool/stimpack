@@ -348,24 +348,18 @@ local autosnippets = {
       ]=],
             {
                 c(1, {
-                    sn(
-                        1,
-                        fmt([[{{ trig = '{}', snippetType = '{}', condition = {Conditions}}},]], {
-                            r(1, 'snippet_trigger'),
-                            c(2, {
-                                t('snippet'),
-                                t('autosnippet'),
-                            }),
-                            Conditions = ConditionsHelper(3),
-                        })
-                    ),
+                    fmt([[{{ trig = '{}', snippetType = '{}', condition = {Conditions}}},]], {
+                        r(1, 'snippet_trigger'),
+                        c(2, {
+                            t('snippet'),
+                            t('autosnippet'),
+                        }),
+                        Conditions = ConditionsHelper(3),
+                    }),
 
-                    sn(
-                        1,
-                        fmt([['{}']], {
-                            r(1, 'snippet_trigger'),
-                        })
-                    ),
+                    fmt([['{}']], {
+                        r(1, 'snippet_trigger'),
+                    }),
                 }),
                 i(2),
                 r(3, 'snippet_format'),

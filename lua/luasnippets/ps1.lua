@@ -472,6 +472,49 @@ end
 local snippets = {
     ms(
         {
+            { trig = 'RootModule', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[RootModule = '{}']], {
+            i(1, './Root.psm1'),
+        })
+    ),
+    ms(
+        {
+            { trig = 'ModuleVersion', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[ModuleVersion = '{Version}']], {
+            Version = i(1, '0.1.0'),
+        })
+    ),
+    ms(
+        {
+            { trig = 'RequiredModules', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[RequiredModules = @('{RequiredModules}')]], {
+            RequiredModules = i(1, 'SharpCompress.dll'),
+        })
+    ),
+
+    ms({
+        { trig = 'TempDirectory', snippetType = 'snippet', condition = nil },
+    }, { t([[[IO.Path]::GetTempPath()]]) }),
+    ms({
+        { trig = 'TempPath', snippetType = 'snippet', condition = nil },
+    }, { t([[[IO.Path]::GetTempFileName()]]) }),
+    ms({
+        { trig = 'ToBase64String', snippetType = 'snippet', condition = nil },
+    }, fmt([[[Convert]::ToBase64String([IO.File]::ReadAllBytes($($PWD.Path) + '/file.txt'))]], {})),
+    ms(
+        {
+            { trig = 'FromBase64String', snippetType = 'snippet', condition = nil },
+        },
+        fmt([[[convert]::FromBase64String('{String}')]], {
+            String = i(1, 'SGVsbG8gd29ybGQ='),
+        })
+    ),
+
+    ms(
+        {
             { trig = 'Write-ProgressEx', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -848,12 +891,12 @@ if(-not $?)
         },
         c(1, {
             -- Proof that a snippet  node can be made with just a format  node
+            fmt('[Alias(\'{Name}\')]', {
+                Name = i(1, 'Name'),
+            }),
             fmt([[New-Alias -Name '{Name}' -Value {Value}]], {
                 Name = i(1, 'Name'),
                 Value = i(2, 'Value'),
-            }),
-            fmt('[Alias(\'{Name}\')]', {
-                Name = i(1, 'Name'),
             }),
         })
     ),
