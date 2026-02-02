@@ -65,6 +65,19 @@ end
 
 return {
     {
+        -- I use luafun functions in luasnip snippets so this is required!
+        'derekthecool/luafun_neovim',
+        pin = true,
+        config = function()
+            -- Load all luafun functions into the global scope
+            -- This allows for fluent method chaining e.g. map(....):reduce(....):totable()
+            -- Without this this same function chain looks like fun.totable(fun.reduce(fun.map(....)))
+            for luafun_key, luafun_value in pairs(require('luafun.fun')) do
+                _G[luafun_key] = luafun_value
+            end
+        end,
+    },
+    {
         'saghen/blink.cmp',
         optional = true,
         opts = {
