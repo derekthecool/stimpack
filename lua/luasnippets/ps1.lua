@@ -1,6 +1,11 @@
 ---@diagnostic disable: undefined-global
-
 local shareable = require('luasnippets.functions.shareable_snippets')
+
+-- stylua: ignore start
+local powershell_foreground_highlights = { t('Gray'), t('Green'), t('Yellow'), t('Red'), t('Blue'), t('Cyan'), t('Magenta'), t('White'), t('Black'), t('DarkBlue'), t('DarkGreen'), t('DarkCyan'), t('DarkRed'), t('DarkMagenta'), t('DarkYellow'), t('DarkGray'), }
+local powershell_background_highlights = { t('Black'), t('DarkGreen'), t('DarkYellow'), t('DarkRed'), t('DarkBlue'), t('DarkCyan'), t('DarkMagenta'), t('Gray'), t('DarkGray'), t('Blue'), t('Green'), t('Cyan'), t('Red'), t('Magenta'), t('Yellow'), t('White'), }
+local powershell_standard_parameter_names = { t('Accessed'), t('ACL'), t('After'), t('All'), t('Allocation'), t('Append'), t('Application'), t('As'), t('Assembly'), t('Attribute'), t('Before'), t('Binary'), t('BlockCount'), t('CaseSensitive'), t('CertFile'), t('CertIssuerName'), t('CertRequestFile'), t('CertSerialNumber'), t('CertStoreLocation'), t('CertSubjectName'), t('CertUsage'), t('Class'), t('Cluster'), t('Command'), t('CompatibleVersion'), t('Compress'), t('CompressionLevel'), t('Continuous'), t('Count'), t('Create'), t('Created'), t('Credential'), t('CSPName'), t('CSPType'), t('Culture'), t('Delete'), t('Description'), t('Domain'), t('Drain'), t('Drive'), t('Encoding'), t('Erase'), t('ErrorLevel'), t('Event'), t('Exact'), t('Exclude'), t('Filter'), t('Follow'), t('Force'), t('From'), t('Group'), t('Id'), t('Include'), t('Incremental'), t('Input'), t('InputObject'), t('Insert'), t('Interactive'), t('Interface'), t('Interval'), t('IpAddress'), t('Job'), t('KeyAlgorithm'), t('KeyContainerName'), t('KeyLength'), t('LiteralPath'), t('Location'), t('Log'), t('LogName'), t('Mac'), t('Modified'), t('Name'), t('NewLine'), t('NoClobber'), t('Notify'), t('NotifyAddress'), t('Operation'), t('Output'), t('Overwrite'), t('Owner'), t('Parameter'), t('ParentId'), t('Path'), t('Port'), t('Principal'), t('Printer'), t('Privilege'), t('Prompt'), t('Property'), t('Quiet'), t('Reason'), t('Recurse'), t('Regex'), t('Repair'), t('RepairString'), t('Retry'), t('Role'), t('SaveCred'), t('Scope'), t('Select'), t('ShortName'), t('SID'), t('Size'), t('Speed'), t('State'), t('Stream'), t('Strict'), t('TempLocation'), t('TID'), t('Timeout'), t('true'), t('Truncate'), t('Trusted'), t('TrustLevel'), t('Type'), t('URL'), t('User'), t('Value'), t('ValueFromPipeline'), t('Verify'), t('Version'), t('Wait'), t('WaitTime'), t('Width'), t('Wrap'), }
+-- stylua: ignore end
 
 local function true_or_false_choice_node(index)
     return c(index, {
@@ -9,19 +14,34 @@ local function true_or_false_choice_node(index)
     })
 end
 
+---easily create a choice node from a table of options
+---@param index number
+---@param options table
+---@return c
+local function option_choice_node(index, options)
+    return t('text')
+
+    -- return c(
+    --     index,
+    --     map(function(i)
+    --         return t(i)
+    --     end, options):totable()
+    -- )
+end
+
 local function param(index)
     return sn(
         index,
         fmt(
             [[
-     [Parameter(Mandatory = {Required}, ValueFromPipeline = {FromPipeline})]
+     [Parameter({Mandatory}{FromPipeline})]
          [{Type}]${ParamName}
      ]],
             {
-                Required = true_or_false_choice_node(1),
-                FromPipeline = true_or_false_choice_node(2),
+                Mandatory = option_choice_node(1, { '', 'Mandatory,' }),
+                FromPipeline = option_choice_node(2, { '', 'ValueFromPipeline,' }),
                 Type = i(3, 'string'),
-                ParamName = i(4, 'ParamName'),
+                ParamName = c(4, powershell_standard_parameter_names),
             }
         )
     )
@@ -58,171 +78,6 @@ local function param_block(index)
         )
     )
 end
-
-local powershell_foreground_highlights = {
-    t('Gray'),
-    t('Green'),
-    t('Yellow'),
-    t('Red'),
-    t('Blue'),
-    t('Cyan'),
-    t('Magenta'),
-    t('White'),
-    t('Black'),
-    t('DarkBlue'),
-    t('DarkGreen'),
-    t('DarkCyan'),
-    t('DarkRed'),
-    t('DarkMagenta'),
-    t('DarkYellow'),
-    t('DarkGray'),
-}
-local powershell_background_highlights = {
-    t('Black'),
-    t('DarkGreen'),
-    t('DarkYellow'),
-    t('DarkRed'),
-    t('DarkBlue'),
-    t('DarkCyan'),
-    t('DarkMagenta'),
-    t('Gray'),
-    t('DarkGray'),
-    t('Blue'),
-    t('Green'),
-    t('Cyan'),
-    t('Red'),
-    t('Magenta'),
-    t('Yellow'),
-    t('White'),
-}
-
-local powershell_standard_parameter_names = {
-    t('Accessed'),
-    t('ACL'),
-    t('After'),
-    t('All'),
-    t('Allocation'),
-    t('Append'),
-    t('Application'),
-    t('As'),
-    t('Assembly'),
-    t('Attribute'),
-    t('Before'),
-    t('Binary'),
-    t('BlockCount'),
-    t('CaseSensitive'),
-    t('CertFile'),
-    t('CertIssuerName'),
-    t('CertRequestFile'),
-    t('CertSerialNumber'),
-    t('CertStoreLocation'),
-    t('CertSubjectName'),
-    t('CertUsage'),
-    t('Class'),
-    t('Cluster'),
-    t('Command'),
-    t('CompatibleVersion'),
-    t('Compress'),
-    t('CompressionLevel'),
-    t('Continuous'),
-    t('Count'),
-    t('Create'),
-    t('Created'),
-    t('Credential'),
-    t('CSPName'),
-    t('CSPType'),
-    t('Culture'),
-    t('Delete'),
-    t('Description'),
-    t('Domain'),
-    t('Drain'),
-    t('Drive'),
-    t('Encoding'),
-    t('Erase'),
-    t('ErrorLevel'),
-    t('Event'),
-    t('Exact'),
-    t('Exclude'),
-    t('Filter'),
-    t('Follow'),
-    t('Force'),
-    t('From'),
-    t('Group'),
-    t('Id'),
-    t('Include'),
-    t('Incremental'),
-    t('Input'),
-    t('InputObject'),
-    t('Insert'),
-    t('Interactive'),
-    t('Interface'),
-    t('Interval'),
-    t('IpAddress'),
-    t('Job'),
-    t('KeyAlgorithm'),
-    t('KeyContainerName'),
-    t('KeyLength'),
-    t('LiteralPath'),
-    t('Location'),
-    t('Log'),
-    t('LogName'),
-    t('Mac'),
-    t('Modified'),
-    t('Name'),
-    t('NewLine'),
-    t('NoClobber'),
-    t('Notify'),
-    t('NotifyAddress'),
-    t('Operation'),
-    t('Output'),
-    t('Overwrite'),
-    t('Owner'),
-    t('Parameter'),
-    t('ParentId'),
-    t('Path'),
-    t('Port'),
-    t('Principal'),
-    t('Printer'),
-    t('Privilege'),
-    t('Prompt'),
-    t('Property'),
-    t('Quiet'),
-    t('Reason'),
-    t('Recurse'),
-    t('Regex'),
-    t('Repair'),
-    t('RepairString'),
-    t('Retry'),
-    t('Role'),
-    t('SaveCred'),
-    t('Scope'),
-    t('Select'),
-    t('ShortName'),
-    t('SID'),
-    t('Size'),
-    t('Speed'),
-    t('State'),
-    t('Stream'),
-    t('Strict'),
-    t('TempLocation'),
-    t('TID'),
-    t('Timeout'),
-    t('true'),
-    t('Truncate'),
-    t('Trusted'),
-    t('TrustLevel'),
-    t('Type'),
-    t('URL'),
-    t('User'),
-    t('Value'),
-    t('ValueFromPipeline'),
-    t('Verify'),
-    t('Version'),
-    t('Wait'),
-    t('WaitTime'),
-    t('Width'),
-    t('Wrap'),
-}
 
 local function PesterAssert(index)
     return sn(
