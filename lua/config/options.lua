@@ -9,6 +9,9 @@ vim.opt.mouse = ''
 vim.opt.wrap = false
 vim.opt.shiftwidth = 4
 vim.opt.swapfile = false
+-- Remove o and O from indentkeys list
+vim.opt.indentkeys:remove('o')
+vim.opt.indentkeys:remove('O')
 
 -- Set pwsh as default terminal
 LazyVim.terminal.setup('pwsh')

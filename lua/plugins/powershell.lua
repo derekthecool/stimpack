@@ -3,7 +3,12 @@ local PSScriptAnalyzerSettingsPath = string.format('%s/Atelier/pwsh/PSScriptAnal
 return {
     {
         'nvim-treesitter/nvim-treesitter',
-        opts = { ensure_installed = { 'powershell' } },
+        opts = {
+            indent = { enable = true }, ---@type lazyvim.TSFeat
+            highlight = { enable = true }, ---@type lazyvim.TSFeat
+            folds = { enable = true }, ---@type lazyvim.TSFeat
+            ensure_installed = { 'powershell' },
+        },
     },
     {
         'mason-org/mason.nvim',
@@ -19,9 +24,9 @@ return {
                         enable = true,
                         settingsPath = PSScriptAnalyzerSettingsPath,
                     },
-                    CodeFormatting = {
-                        autoCorrectAliases = true,
-                    },
+                    -- CodeFormatting = {
+                    --     autoCorrectAliases = true,
+                    -- },
                 },
             },
         },
@@ -44,7 +49,7 @@ return {
                             .. [[).TrimEnd()]],
                     },
                     stdin = true,
-                    timeout_ms = 12000,
+                    timeout_ms = 20000,
                 },
             },
         },

@@ -19,14 +19,12 @@ end
 ---@param options table
 ---@return c
 local function option_choice_node(index, options)
-    return t('text')
-
-    -- return c(
-    --     index,
-    --     map(function(i)
-    --         return t(i)
-    --     end, options):totable()
-    -- )
+    return c(
+        index,
+        map(function(i)
+            return t(i)
+        end, options):totable()
+    )
 end
 
 local function param(index)
@@ -34,14 +32,15 @@ local function param(index)
         index,
         fmt(
             [[
-     [Parameter({Mandatory}{FromPipeline})]
-         [{Type}]${ParamName}
-     ]],
+            [Parameter({ParamOptions})]
+            [{Type}]${ParamName}
+            ]],
             {
-                Mandatory = option_choice_node(1, { '', 'Mandatory,' }),
-                FromPipeline = option_choice_node(2, { '', 'ValueFromPipeline,' }),
-                Type = i(3, 'string'),
-                ParamName = c(4, powershell_standard_parameter_names),
+                -- https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/parameter-attribute-declaration?view=powershell-7.5
+                ParamOptions = i(1, 'test'),
+                Type = i(2, 'string'),
+                -- 'Mandatory|ParameterSetName=""|Position=0|ValueFromPipeline|ValueFromRemainingArguments|HelpMessage=""|DontShow'
+                ParamName = c(3, powershell_standard_parameter_names),
             }
         )
     )
@@ -325,6 +324,21 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
+    ms(
+        {
+            { trig = 'script', snippetType = 'snippet', condition = nil },
+            { trig = 'single_file', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        [CmdletBinding()]
+        {params}
+        ]],
+            {
+                params = param_block(1),
+            }
+        )
+    ),
     ms(
         {
             { trig = 'RootModule', snippetType = 'snippet', condition = nil },
@@ -1333,7 +1347,7 @@ class {ClassName} {{
         fmt(
             [[
         BeforeAll {{
-            Import-Module $PSScriptRoot/../*.psd1
+            Import-Module $PSScriptRoot/../*.psd1 -Force
         }}
 
         {Test}
@@ -1587,89 +1601,6 @@ class {ClassName} {{
         fmt('${} = New-Object System.Collections.Generic.List[string]', {
             i(1),
         })
-    ),
-
-    s(
-        'script',
-        fmt(
-            [[
-        <#
-        .Name
-           {}
-        .Synopsis
-           {}
-        .DESCRIPTION
-           {}
-        .EXAMPLE
-           Example of how to use this cmdlet
-        .EXAMPLE
-           Another example of how to use this cmdlet
-        .INPUTS
-           Inputs to this cmdlet (if any)
-        .OUTPUTS
-           Output from this cmdlet (if any)
-        .NOTES
-           General notes
-        .COMPONENT
-           The component this cmdlet belongs to
-        .ROLE
-           The role this cmdlet belongs to
-        .FUNCTIONALITY
-           The functionality that best describes this cmdlet
-        #>
-        [CmdletBinding(DefaultParameterSetName='Parameter Set 1',
-            SupportsShouldProcess=$true,
-            PositionalBinding=$false,
-            HelpUri = 'http://www.microsoft.com/',
-            ConfirmImpact='Medium')]
-        [Alias()]
-        [OutputType([String])]
-        Param
-        (
-            [Parameter(Mandatory=$true,
-                ValueFromPipeline=$true,
-                ValueFromPipelineByPropertyName=$true,
-                ValueFromRemainingArguments=$false)]
-            [ValidateNotNull()]
-            [ValidateNotNullOrEmpty()]
-            # Checks to make sure path is valid first
-            # [ValidateScript({{Test-Path $_}})]
-            # [ValidateLength(1,5)]
-            # [ValidatePattern('match this regex .*')]
-            # [ValidateCount(0,5)]
-            # [ValidateSet('sun', 'moon', 'earth')]
-            # [Alias('p1','test','anothername')]
-            ${}
-        )
-
-        Begin
-        {{
-            {}
-        }}
-        Process
-        {{
-            if ($pscmdlet.ShouldProcess("Target", "Operation"))
-            {{
-                {}
-            }}
-        }}
-        End
-        {{
-            {}
-        }}
-        ]],
-            {
-                f(function(args, snip)
-                    return vim.fn.expand('%:t')
-                end, {}),
-                i(1, 'Short script description'),
-                i(2, 'Long script description'),
-                i(3, 'param1'),
-                i(4, 'echo "start code"'),
-                i(5, 'echo "perform code"'),
-                i(6, 'echo "end code"'),
-            }
-        )
     ),
 
     ms({
