@@ -324,22 +324,28 @@ local function ApprovedVerb(index)
 end
 
 local snippets = {
-ms(
-    {
-        { trig = 'PSNativeCommandUseErrorActionPreference', snippetType = 'snippet', condition = nil},
-        { trig = 'LASTEXITCODE_external_program_force_exit', snippetType = 'snippet', condition = nil},
-    },
-  fmt(
-    [[
-    # Force external programs to force powershell to stop
-    $PSNativeCommandUseErrorActionPreference = $true
-    $ErrorActionPreference = 'stop'
+    ms(
+        {
+            { trig = 'PSNativeCommandUseErrorActionPreference', snippetType = 'snippet', condition = nil },
+            { trig = 'LASTEXITCODE_external_program_force_exit', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+# Force external programs to force powershell to stop
+$SavedErrorActionPreference = $ErrorActionPreference
+$SavedPSNativeCommandUseErrorActionPreference = $PSNativeCommandUseErrorActionPreference
+$PSNativeCommandUseErrorActionPreference = $true
+$ErrorActionPreference = 'stop'
+
+trap {{
+    $PSNativeCommandUseErrorActionPreference = $SavedPSNativeCommandUseErrorActionPreference
+    $ErrorActionPreference = $SavedErrorActionPreference
+    exit $LASTEXITCODE
+}}
     ]],
-    {
-      
-    }
-  )
-),
+            {}
+        )
+    ),
     ms(
         {
             { trig = 'script', snippetType = 'snippet', condition = nil },

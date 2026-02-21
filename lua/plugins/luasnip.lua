@@ -310,10 +310,11 @@ return {
 
             -- C
             luasnip.filetype_set('h', { 'c' })
-            -- Add microcontroller specific code snippets (all in C of course)
-            luasnip.filetype_extend('c', { 'mcu_ESP32', 'inline_assembly' })
 
-            luasnip.filetype_extend('cpp', { 'c', 'mcu_ESP32' })
+            -- Add microcontroller specific code snippets (all in C of course)
+            luasnip.filetype_extend('c', { 'mcu_ESP32', 'inline_assembly', 'cpp' })
+
+            luasnip.filetype_extend('cpp', { 'c', 'mcu_ESP32', 'h' })
 
             -- Create group for flutter
             luasnip.filetype_extend('dart', { 'flutter' })

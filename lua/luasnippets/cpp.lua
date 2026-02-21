@@ -39,6 +39,23 @@ end
 
 local snippets = {
 
+    ms(
+        {
+            { trig = 'tostring_custom', snippetType = 'snippet', condition = nil },
+        },
+        fmt(
+            [[
+        std::string toString() const {{
+            oss << {Format};
+            return oss.str();
+        }}
+        ]],
+            {
+                Format = i(1, [["Name: " << name << "\nAge: " << age << "\nFinal Grade: " << finalGrade]]),
+            }
+        )
+    ),
+
     ms({
         { trig = 'map', snippetType = 'snippet', condition = nil },
         { trig = 'map map', snippetType = 'autosnippet', condition = nil },
