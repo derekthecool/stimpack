@@ -671,15 +671,26 @@ end
         },
         fmt(
             [[
-            it('{}', function()
-                {}
-            end)
-            ]],
+            T['{TestName}'] = function()
+                {TestCode}
+            end
+          ]],
             {
-                i(1),
-                i(2),
+                TestName = i(1, 'test_name'),
+                TestCode = i(2, 'eq("table", type(plugin))'),
             }
         )
+        -- fmt(
+        --     [[
+        --     it('{}', function()
+        --         {}
+        --     end)
+        --     ]],
+        --     {
+        --         i(1),
+        --         i(2),
+        --     }
+        -- )
     ),
 
     ms(
