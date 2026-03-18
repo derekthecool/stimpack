@@ -11,15 +11,15 @@ return {
                     end
 
                     if DiffViewToggleState then
-                        require('diffview').open()
+                        vim.cmd('DiffviewOpen')
                     else
-                        require('diffview').close()
+                        vim.cmd('DiffviewClose')
                     end
 
                     -- Toggle the state
                     DiffViewToggleState = not DiffViewToggleState
                 end,
-                'DiffViewToggle',
+                desc = 'DiffViewToggle',
             },
         },
         cmd = {
