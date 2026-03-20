@@ -16,6 +16,26 @@ return {
     },
     {
         'TheLeoP/powershell.nvim',
+        init = function()
+            vim.api.nvim_create_autocmd('LspAttach', {
+                callback = function(args)
+                    local client = vim.lsp.get_client_by_id(args.data.client_id)
+                    if client and client.name == 'powershell_es' then
+                        vim.api.nvim_create_autocmd('BufWritePre', {
+                            buffer = args.buf,
+                            callback = function()
+                                vim.lsp.buf.format({
+                                    async = false,
+                                    timeout_ms = 10000,
+                                    bufnr = args.buf,
+                                    filter = function(c) return c.name == 'powershell_es' end,
+                                })
+                            end,
+                        })
+                    end
+                end,
+            })
+        end,
         opts = {
             bundle_path = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'powershell-editor-services'),
             settings = {
@@ -27,29 +47,6 @@ return {
                     -- CodeFormatting = {
                     --     autoCorrectAliases = true,
                     -- },
-                },
-            },
-        },
-    },
-    {
-        'stevearc/conform.nvim',
-        optional = true,
-        opts = {
-            formatters_by_ft = {
-                ps1 = { 'PSScriptAnalyzer' },
-            },
-            formatters = {
-                PSScriptAnalyzer = {
-                    command = 'pwsh',
-                    args = {
-                        '-NoProfile',
-                        '-Command',
-                        [[(Invoke-Formatter -ScriptDefinition ([Console]::In.ReadToEnd()) -Settings ]]
-                            .. PSScriptAnalyzerSettingsPath
-                            .. [[).TrimEnd()]],
-                    },
-                    stdin = true,
-                    timeout_ms = 20000,
                 },
             },
         },
