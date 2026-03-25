@@ -1,6 +1,5 @@
 ---@diagnostic disable: undefined-global
 
--- TODO: create function to check file extension for cs and add semicolon to end of lines
 local add_optional_semicolon = f(function(args, snip)
     local file_extension = vim.fn.expand('%:e')
     local return_string
@@ -11,6 +10,32 @@ local add_optional_semicolon = f(function(args, snip)
 end, {})
 
 local auxiliary = require('luasnippets.functions.auxiliary')
+
+-- Formats a static dotnet class method call per filetype:
+--   cs/fs : ClassName.MethodName(args)
+--   ps1   : [ClassName]::MethodName(args)
+--
+-- Usage: dotnet_static_call(1, 'Console', 'WriteLine')
+--   The inner insert node for args is always index 1 inside the dynamic node.
+--   Pass a snippet_node as `args_node` for custom arg structure, or nil for a plain insert.
+local dotnet_static_call = function(index, class_name, method_name, args_node)
+    return d(index, function()
+        local args = args_node or i(1)
+        if vim.bo.filetype == 'ps1' then
+            return sn(nil, fmt('[{Class}]::{Method}({Args})', {
+                Class = t(class_name),
+                Method = t(method_name),
+                Args = args,
+            }))
+        else
+            return sn(nil, fmt('{Class}.{Method}({Args})', {
+                Class = t(class_name),
+                Method = t(method_name),
+                Args = args,
+            }))
+        end
+    end, {})
+end
 
 local if_statement = function(index, condition_snippet_node)
     return d(index, function(args, snip)
@@ -73,7 +98,7 @@ local snippets = {
     ),
     ms(
         {
-            { trig = 'FILE_TEST', snippetType = 'snippet',     condition = nil },
+            { trig = 'FILE_TEST', snippetType = 'snippet', condition = nil },
             { trig = 'FILE_TEST', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -97,11 +122,11 @@ public class {ClassNameFromFilename}
     ),
     ms({
         { trig = 'from body', snippetType = 'autosnippet', condition = nil },
-        { trig = 'FromBody',  snippetType = 'snippet',     condition = nil },
+        { trig = 'FromBody', snippetType = 'snippet', condition = nil },
     }, fmt('[FromBody]', {})),
     ms({
         { trig = 'from uri', snippetType = 'autosnippet', condition = nil },
-        { trig = 'FromUri',  snippetType = 'snippet',     condition = nil },
+        { trig = 'FromUri', snippetType = 'snippet', condition = nil },
     }, fmt('[FromUri]', {})),
 
     ms(
@@ -201,7 +226,7 @@ public class {ClassNameFromFilename}
     ms(
         {
             { trig = 'regex match', snippetType = 'snippet' },
-            { trig = 'REGMATCH',    snippetType = 'autosnippet' },
+            { trig = 'REGMATCH', snippetType = 'autosnippet' },
         },
         fmt([[Regex.Match({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -223,7 +248,7 @@ public class {ClassNameFromFilename}
     ms(
         {
             { trig = 'regex matches', snippetType = 'snippet' },
-            { trig = 'ALLREGMATCH',   snippetType = 'autosnippet' },
+            { trig = 'ALLREGMATCH', snippetType = 'autosnippet' },
         },
         fmt([[Regex.Matches({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -245,7 +270,7 @@ public class {ClassNameFromFilename}
     ms(
         {
             { trig = 'regex replace', snippetType = 'snippet' },
-            { trig = 'REGREPLACE',    snippetType = 'autosnippet' },
+            { trig = 'REGREPLACE', snippetType = 'autosnippet' },
         },
         fmt([[Regex.Replace({}, @"{}", RegexOptions.IgnorePatternWhitespace)]], {
             i(1, '"source"'),
@@ -278,18 +303,16 @@ public class {ClassNameFromFilename}
             }
         )
     ),
+    ms(
+        {
+            { trig = 'ReadLine',  snippetType = 'autosnippet' },
+            { trig = 'read line', snippetType = 'snippet' },
+        },
+        fmt('{Call}', { Call = dotnet_static_call(1, 'Console', 'ReadLine') })
+    ),
 }
 
 local autosnippets = {
-    s(
-        'ReadLine',
-        fmt(
-            [[
-        Console.ReadLine()
-        ]],
-            {}
-        )
-    ),
 
     -- {{{ XML autosnippet starter
     s(
@@ -576,8 +599,6 @@ Documenting code is recommended for many reasons. What follows are some best pra
             }),
         })
     ),
-
-    --
 }
 
 return snippets, autosnippets
