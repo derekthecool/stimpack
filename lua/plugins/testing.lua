@@ -1,9 +1,4 @@
 return {
-    -- 'nvim-neotest/neotest-plenary',
-    -- 'nvim-neotest/neotest-python',
-    -- 'vim-test/vim-test',
-    -- 'nsidorenco/neotest-vstest', -- part of LazyExtra: dotnet
-    -- 'sidlatau/neotest-dart', -- part of LazyExtra: dart
     {
         'nvim-neotest/neotest',
         dependencies = {
@@ -12,15 +7,36 @@ return {
                 -- Development location ~/neovim/neotest-pester/
                 dev = true,
             },
+            'nvim-neotest/nvim-nio',
+            'nvim-lua/plenary.nvim',
+            'antoinemadec/FixCursorHold.nvim',
+            'nvim-treesitter/nvim-treesitter',
+
+            'nvim-neotest/neotest-plenary',
+            'nvim-neotest/neotest-python',
+            'vim-test/vim-test',
+            'nsidorenco/neotest-vstest',
+            'sidlatau/neotest-dart',
         },
         opts = {
             adapters = {
-                -- 'nvim-neotest/neotest-plenary',
-                -- 'nvim-neotest/neotest-python',
-                -- 'vim-test/vim-test',
-                -- 'nsidorenco/neotest-vstest', -- part of LazyExtra: dotnet
-                -- 'sidlatau/neotest-dart', -- part of LazyExtra: dart
-                'neotest-pester',
+                ['neotest-plenary'] = {},
+                ['neotest-python'] = {},
+                ['neotest-vstest'] = {},
+                ['neotest-dart'] = {},
+                ['neotest-pester'] =
+                    ---@type neotest-pester.Config
+                    {
+                        pwsh_path = 'pwsh',
+                        ---@type PesterConfiguration
+                        pester_configuration = {
+                            Output = { Verbosity = 'Detailed' },
+                            ---@type PesterConfiguration.Filter
+                            Filter = {
+                                FullName = { '.*þ.*' },
+                            },
+                        },
+                    },
             },
             log_level = vim.log.levels.TRACE,
         },
