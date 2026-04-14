@@ -1,6 +1,7 @@
 return {
     {
         'derekthecool/plover-tapey-tape.nvim',
+        event = 'VeryLazy',
         keys = {
 
             {
