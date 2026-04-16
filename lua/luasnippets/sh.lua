@@ -3,6 +3,10 @@
 local my_treesitter_functions = require('config.my-treesitter-functions')
 
 local snippets = {
+    ms({
+        { trig = 'scriptroot', snippetType = 'snippet', condition = nil },
+        { trig = 'cd_root', snippetType = 'snippet', condition = nil },
+    }, fmt([[cd "$(dirname "$(readlink -f "$0")")"]], {})),
     -- Help with the PS4 function here: https://stackoverflow.com/a/17805088/9842112
     ms(
         {

@@ -26,6 +26,8 @@ local snippets = {
         },
         fmt(
             [[
+name: {PipelineName}
+
 trigger:
   branches:
     include:
@@ -40,7 +42,10 @@ steps:
 
   {Step}
     ]],
-            { Step = step(1) }
+            {
+                PipelineName = i(1, 'New pipeline'),
+                Step = step(2),
+            }
         )
     ),
 
