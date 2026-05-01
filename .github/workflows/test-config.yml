@@ -202,3 +202,4 @@ jobs:
             tail -20 load_test.log >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
           fi
+
