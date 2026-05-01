@@ -56,3 +56,4 @@ jobs:
       - name: Test LuaSnip loads
         run: |
           nvim --headless +"lua require('luasnip')" +q
+# CI/CD Testing
