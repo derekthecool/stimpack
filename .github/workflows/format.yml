@@ -7,13 +7,10 @@ on:
     branches: [master, main]
 
 jobs:
-  format-check:
-    name: Check Lua Formatting
+  format:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install stylua
         run: |
@@ -22,29 +19,4 @@ jobs:
           echo "/tmp" >> $GITHUB_PATH
 
       - name: Check formatting
-        id: format-check
-        run: |
-          if stylua --check lua/ 2>&1; then
-            echo "format_needed=false" >> $GITHUB_OUTPUT
-          else
-            echo "format_needed=true" >> $GITHUB_OUTPUT
-            exit 1
-          fi
-
-      - name: Show formatting diff
-        if: steps.format-check.outputs.format_needed == 'true'
-        run: |
-          echo "Lua files need formatting!"
-          echo "Run 'stylua lua/' to fix"
-          echo ""
-          stylua lua/ --diff
-
-      - name: Create summary
-        if: always()
-        run: |
-          echo "## Formatting Check" >> $GITHUB_STEP_SUMMARY
-          if [ "${{ steps.format-check.outputs.format_needed }}" = "true" ]; then
-            echo "❌ Formatting issues found. Run \`stylua lua/\` to fix." >> $GITHUB_STEP_SUMMARY
-          else
-            echo "✅ All Lua files properly formatted" >> $GITHUB_STEP_SUMMARY
-          fi
+        run: stylua --check lua/

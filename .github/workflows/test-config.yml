@@ -6,200 +6,53 @@ on:
   pull_request:
     branches: [master, main]
   workflow_dispatch:
-    inputs:
-      run_full_tests:
-        description: 'Run full test suite including snippets'
-        required: false
-        type: boolean
-        default: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  test-config:
-    name: Test on ${{ matrix.os }}
+  test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-        include:
-          - os: ubuntu-latest
-            nvim_asset: nvim-linux64.tar.gz
-            nvim_dir: nvim-linux64
-          - os: windows-latest
-            nvim_asset: nvim-win64.zip
-            nvim_dir: nvim-win64
-          - os: macos-latest
-            nvim_asset: nvim-macos-x86_64.tar.gz
-            nvim_dir: nvim-macos
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Install Neovim (Linux/macOS)
-        if: runner.os != 'Windows'
+      - name: Install Neovim (Linux)
+        if: runner.os == 'Linux'
         run: |
-          wget -qO- https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }} | tar xzv -C /tmp
-          echo "/tmp/${{ matrix.nvim_dir }}/bin" >> $GITHUB_PATH
+          wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv -C /tmp
+          echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
+          nvim --version
+
+      - name: Install Neovim (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz | tar xzv -C /tmp
+          echo "/tmp/nvim-macos/bin" >> $GITHUB_PATH
+          nvim --version
 
       - name: Install Neovim (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }}" -OutFile nvim.zip
-          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP
-          echo "$env:TEMP\${{ matrix.nvim_dir }}\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          $url = "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip"
+          Invoke-WebRequest -Uri $url -OutFile nvim.zip
+          Expand-Archive nvim.zip -DestinationPath $env:TEMP
+          "$env:TEMP\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          nvim --version
 
-      - name: Install tree-sitter-cli (Linux)
-        if: runner.os == 'Linux'
+      - name: Test config loads
+        run: nvim --headless +q
+
+      - name: Test plugins install
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y tree-sitter-cli
+          nvim --headless +"Lazy! sync" +qa
 
-      - name: Install tree-sitter-cli (macOS)
-        if: runner.os == 'macOS'
+      - name: Test LuaSnip loads
         run: |
-          brew install tree-sitter
-
-      - name: Install tree-sitter-cli (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          winget install --exact tree-sitter.cli
-
-      - name: Install stylua (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          wget -qO- https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -O stylua.zip
-          unzip stylua.zip -d /tmp
-          echo "/tmp" >> $GITHUB_PATH
-
-      - name: Install stylua (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install stylua
-
-      - name: Install stylua (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          winget install --exact JohnnyMorganz.StyLua
-
-      - name: Verify Neovim installation
-        run: nvim --version
-
-      - name: Test configuration loads
-        run: |
-          nvim --headless +q 2>&1 | tee load_test.log
-          if [ ${PIPESTATUS[0]} -ne 0 ]; then
-            echo "::error::Configuration failed to load"
-            cat load_test.log
-            exit 1
-          fi
-          echo "Configuration loaded successfully"
-
-      - name: Run health checks
-        run: |
-          cat > health_check.lua << 'EOF'
-          vim.opt.loadplugins = false
-          vim.opt.shadafile = "NONE"
-          vim.schedule(function()
-            local ok, err = pcall(vim.cmd, "checkhealth lazy")
-            vim.cmd("qa!")
-          end)
-          EOF
-          nvim --headless -u health_check.lua +q 2>&1 | tee health_check.log
-          echo "Health checks completed"
-
-      - name: Test plugin installation
-        run: |
-          cat > plugin_install.lua << 'EOF'
-          vim.opt.loadplugins = false
-          vim.opt.shadafile = "NONE"
-          vim.schedule(function()
-            local ok, err = pcall(function()
-              require("lazy").sync({ wait = true })
-            end)
-            if not ok then
-              print("Plugin installation failed: " .. tostring(err))
-              vim.cmd("cq!")
-            end
-            vim.cmd("qa!")
-          end)
-          EOF
-          nvim --headless -u plugin_install.lua +q 2>&1 | tee plugin_install.log
-          if [ ${PIPESTATUS[0]} -ne 0 ]; then
-            echo "::error::Plugin installation failed"
-            cat plugin_install.log
-            exit 1
-          fi
-          echo "Plugins installed successfully"
-
-      - name: Validate Lua syntax
-        run: |
-          find lua -name "*.lua" -exec nvim --headless -c "luafile {}" -c "q" \; 2>&1 | tee lua_syntax.log
-          echo "Lua syntax validation completed"
-
-      - name: Test LuaSnip snippets
-        run: |
-          cat > snippet_test.lua << 'EOF'
-          vim.opt.loadplugins = false
-          vim.opt.shadafile = "NONE"
-          vim.schedule(function()
-            local ok, err = pcall(require, "luasnip")
-            if not ok then
-              print("Failed to load LuaSnip: " .. tostring(err))
-              vim.cmd("cq!")
-            end
-            print("LuaSnip loaded successfully")
-            vim.cmd("qa!")
-          end)
-          EOF
-          nvim --headless -u snippet_test.lua +q 2>&1 | tee snippet_test.log
-          if [ ${PIPESTATUS[0]} -ne 0 ]; then
-            echo "::error::Snippet validation failed"
-            cat snippet_test.log
-            exit 1
-          fi
-          echo "LuaSnip snippets validated successfully"
-
-      - name: Check formatting with stylua
-        run: |
-          stylua --check lua/ 2>&1 | tee format_check.log || {
-            echo "::warning::Lua files need formatting. Run 'stylua lua/' to fix."
-            stylua lua/ --diff
-            exit 1
-          }
-          echo "All Lua files properly formatted"
-
-      - name: Upload test artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-${{ matrix.os }}
-          path: |
-            load_test.log
-            health_check.log
-            plugin_install.log
-            snippet_test.log
-            lua_syntax.log
-            format_check.log
-          retention-days: 7
-
-      - name: Create summary
-        if: always()
-        run: |
-          echo "## Test Summary for ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-
-          if [ -f load_test.log ]; then
-            echo "### Config Load Test" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            tail -20 load_test.log >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-          fi
-
+          nvim --headless +"lua require('luasnip')" +q
