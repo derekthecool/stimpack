@@ -26,7 +26,8 @@ jobs:
 
       - name: Install Neovim
         run: |
-          wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv -C /tmp
+          wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+          tar xzf nvim-linux64.tar.gz -C /tmp
           echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
 
       - name: Check for updates
@@ -54,22 +55,24 @@ jobs:
       - name: Install Neovim (Linux)
         if: runner.os == 'Linux'
         run: |
-          wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv -C /tmp
+          wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+          tar xzf nvim-linux64.tar.gz -C /tmp
           echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
 
       - name: Install Neovim (macOS)
         if: runner.os == 'macOS'
         run: |
-          curl -L https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz | tar xzv -C /tmp
+          curl -sLO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz
+          tar xzf nvim-macos-x86_64.tar.gz -C /tmp
           echo "/tmp/nvim-macos/bin" >> $GITHUB_PATH
 
       - name: Install Neovim (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $url = "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip"
-          Invoke-WebRequest -Uri $url -OutFile nvim.zip
-          Expand-Archive nvim.zip -DestinationPath $env:TEMP
+          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip" -OutFile nvim.zip -UseBasicParsing
+          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP -Force
           "$env:TEMP\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Update plugins
