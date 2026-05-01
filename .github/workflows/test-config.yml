@@ -25,30 +25,21 @@ jobs:
       - name: Install Neovim (Ubuntu)
         if: runner.os == 'Linux'
         run: |
-          mkdir -p $HOME/.nvim
-          wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-          tar -xzf nvim-linux64.tar.gz -C $HOME/.nvim --strip-components=1
-          echo "$HOME/.nvim/bin" >> $GITHUB_PATH
+          sudo apt-get update
+          sudo apt-get install -y neovim
           nvim --version
 
       - name: Install Neovim (macOS)
         if: runner.os == 'macOS'
         run: |
-          mkdir -p $HOME/.nvim
-          curl -sLO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz
-          tar -xzf nvim-macos-x86_64.tar.gz -C $HOME/.nvim --strip-components=1
-          echo "$HOME/.nvim/bin" >> $GITHUB_PATH
+          brew install neovim
           nvim --version
 
       - name: Install Neovim (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.nvim"
-          $url = "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip"
-          Invoke-WebRequest -Uri $url -OutFile nvim.zip -UseBasicParsing
-          Expand-Archive -Path nvim.zip -DestinationPath "$env:USERPROFILE\.nvim" -Force
-          "$env:USERPROFILE\.nvim\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          winget install --exact Neovim.Nvim
           nvim --version
 
       - name: Test config loads
