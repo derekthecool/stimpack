@@ -27,7 +27,6 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       updates_available: ${{ steps.check.outputs.updates_available }}
-      plugin_count: ${{ steps.check.outputs.plugin_count }}
 
     steps:
       - name: Checkout
@@ -35,7 +34,7 @@ jobs:
 
       - name: Install Neovim
         run: |
-          wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv
+          wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv -C /tmp
           echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
 
       - name: Install tree-sitter-cli
@@ -46,61 +45,35 @@ jobs:
       - name: Check for plugin updates
         id: check
         run: |
-          # Create script to check plugin updates via lazy.nvim
           cat > check_updates.lua << 'EOF'
           vim.opt.loadplugins = false
           vim.opt.shadafile = "NONE"
-
           vim.schedule(function()
             local lazy = require("lazy")
-
-            -- Update all plugins
             local ok, result = pcall(function()
               return lazy.update({ wait = true })
             end)
-
             if ok then
-              -- Write success marker
               local file = io.open("updates_available.txt", "w")
               file:write("UPDATES_AVAILABLE")
               file:close()
-
-              -- Get updated plugins count
-              local updated_count = 0
-              for _, plugin in ipairs(lazy.plugins()) do
-                if plugin._.updated then
-                  updated_count = updated_count + 1
-                end
-              end
-
-              print("Updates available: " .. updated_count)
+              print("Plugin updates detected")
               vim.cmd("qa!")
             else
-              print("No updates available or update failed")
+              print("No updates available")
               vim.cmd("cq!")
             end
           end)
           EOF
 
-          # Run the check
           nvim --headless -u check_updates.lua +q 2>&1 | tee update_check.log
 
-          # Check if updates are available
           if [ -f updates_available.txt ]; then
             echo "updates_available=true" >> $GITHUB_OUTPUT
-            echo "plugin_count=detected" >> $GITHUB_OUTPUT
-            echo "Plugin updates detected"
           else
             echo "updates_available=false" >> $GITHUB_OUTPUT
-            echo "plugin_count=0" >> $GITHUB_OUTPUT
-            echo "No plugin updates available"
             exit 1
           fi
-
-      - name: Display update details
-        if: steps.check.outputs.updates_available == 'true'
-        run: |
-          cat update_check.log
 
       - name: Upload update details
         if: steps.check.outputs.updates_available == 'true'
@@ -118,87 +91,87 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            nvim_asset: nvim-linux64.tar.gz
+            nvim_dir: nvim-linux64
+          - os: windows-latest
+            nvim_asset: nvim-win64.zip
+            nvim_dir: nvim-win64
+          - os: macos-latest
+            nvim_asset: nvim-macos-x86_64.tar.gz
+            nvim_dir: nvim-macos
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Neovim
-        shell: pwsh
+      - name: Install Neovim (Linux/macOS)
+        if: runner.os != 'Windows'
         run: |
-          if ($IsLinux) {
-            wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz | tar xzv
-            echo "/tmp/nvim-linux64/bin" >> $env:GITHUB_PATH
-          } elseif ($IsMacOS) {
-            wget -qO- https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz | tar xzv
-            echo "/tmp/nvim-macos/bin" >> $env:GITHUB_PATH
-          } else {
-            Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip" -OutFile nvim.zip
-            Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP
-            echo "$env:TEMP\nvim-win64\bin" >> $env:GITHUB_PATH
-          }
+          wget -qO- https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }} | tar xzv -C /tmp
+          echo "/tmp/${{ matrix.nvim_dir }}/bin" >> $GITHUB_PATH
 
-      - name: Install dependencies
+      - name: Install Neovim (Windows)
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          if ($IsLinux) {
-            sudo apt-get update -y
-            sudo apt-get install -y tree-sitter-cli
-          } elseif ($IsMacOS) {
-            brew install tree-sitter
-          } else {
-            winget install --exact tree-sitter.cli
-          }
+          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }}" -OutFile nvim.zip
+          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP
+          echo "$env:TEMP\${{ matrix.nvim_dir }}\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y tree-sitter-cli
+
+      - name: Install dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install tree-sitter
+
+      - name: Install dependencies (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          winget install --exact tree-sitter.cli
 
       - name: Update plugins and test
-        shell: pwsh
         run: |
-          $updateScript = @'
+          cat > update_plugins.lua << 'EOF'
           vim.opt.loadplugins = false
           vim.opt.shadafile = "NONE"
-
           vim.schedule(function()
-            -- Sync all plugins (update if available)
             local ok, err = pcall(function()
               require("lazy").sync({ wait = true })
             end)
-
             if not ok then
               print("Plugin update failed: " .. tostring(err))
               vim.cmd("cq!")
             end
-
-            -- Write new lock file
             require("lazy").lock()
-
             print("Plugins updated successfully")
             vim.cmd("qa!")
           end)
-          '@
+          EOF
 
-          $updateScript | Out-File -FilePath update_plugins.lua -Encoding utf8
+          nvim --headless -u update_plugins.lua +q 2>&1 | tee update_${{ matrix.os }}.log
 
-          # Run the update
-          nvim --headless -u update_plugins.lua +q 2>&1 | Tee-Object -FilePath update_${{ matrix.os }}.log
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Plugin update failed on ${{ matrix.os }}"
-            Get-Content update_${{ matrix.os }}.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "::error::Plugin update failed on ${{ matrix.os }}"
+            cat update_${{ matrix.os }}.log
             exit 1
-          }
-
-          Write-Host "Plugin updates successful on ${{ matrix.os }}"
+          fi
 
       - name: Test config with updated plugins
-        shell: pwsh
         run: |
-          nvim --headless +q 2>&1 | Tee-Object -FilePath load_test_${{ matrix.os }}.log
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Config failed to load after plugin update on ${{ matrix.os }}"
-            Get-Content load_test_${{ matrix.os }}.log
+          nvim --headless +q 2>&1 | tee load_test_${{ matrix.os }}.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "::error::Config failed to load after plugin update on ${{ matrix.os }}"
+            cat load_test_${{ matrix.os }}.log
             exit 1
-          }
+          fi
 
       - name: Upload updated lazy-lock.json
         uses: actions/upload-artifact@v4
@@ -233,11 +206,8 @@ jobs:
 
       - name: Verify all lock files match
         run: |
-          # Compare lock files from all platforms
           diff <(jq -S . updated-lock-ubuntu-latest/lazy-lock.json) <(jq -S . updated-lock-windows-latest/lazy-lock.json)
           diff <(jq -S . updated-lock-ubuntu-latest/lazy-lock.json) <(jq -S . updated-lock-macos-latest/lazy-lock.json)
-
-          # Use ubuntu version as canonical
           cp updated-lock-ubuntu-latest/lazy-lock.json ./lazy-lock.json
 
       - name: Create update branch

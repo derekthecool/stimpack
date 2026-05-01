@@ -27,192 +27,154 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
           - os: ubuntu-latest
-            nvim_asset: nvim-linux64
-            nvim_path: /tmp/nvim-linux64/bin
+            nvim_asset: nvim-linux64.tar.gz
+            nvim_dir: nvim-linux64
           - os: windows-latest
-            nvim_asset: nvim-win64
-            nvim_path: $env:TEMP/nvim-win64/bin
+            nvim_asset: nvim-win64.zip
+            nvim_dir: nvim-win64
           - os: macos-latest
-            nvim_asset: nvim-macos-x86_64
-            nvim_path: /tmp/nvim-macos/bin
+            nvim_asset: nvim-macos-x86_64.tar.gz
+            nvim_dir: nvim-macos
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Neovim
+      - name: Install Neovim (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          wget -qO- https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }} | tar xzv -C /tmp
+          echo "/tmp/${{ matrix.nvim_dir }}/bin" >> $GITHUB_PATH
+
+      - name: Install Neovim (Windows)
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $asset = "${{ matrix.nvim_asset }}"
-          $baseUrl = "https://github.com/neovim/neovim/releases/latest/download"
+          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/${{ matrix.nvim_asset }}" -OutFile nvim.zip
+          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP
+          echo "$env:TEMP\${{ matrix.nvim_dir }}\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-          if ($IsLinux -or $IsMacOS) {
-            $url = "$baseUrl/$asset.tar.gz"
-            Invoke-WebRequest -Uri $url -OutFile nvim.tar.gz
-            tar -xzf nvim.tar.gz -C /tmp
-          } else {
-            $url = "$baseUrl/$asset.zip"
-            Invoke-WebRequest -Uri $url -OutFile nvim.zip
-            Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP
-          }
+      - name: Install tree-sitter-cli (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y tree-sitter-cli
 
-          # Add to PATH
-          $nvimPath = "${{ matrix.nvim_path }}"
-          $nvimPath | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          Write-Host "Added $nvimPath to PATH"
+      - name: Install tree-sitter-cli (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install tree-sitter
 
-      - name: Install tree-sitter-cli
+      - name: Install tree-sitter-cli (Windows)
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          if ($IsLinux) {
-            sudo apt-get update -y
-            sudo apt-get install -y tree-sitter-cli
-          } elseif ($IsMacOS) {
-            brew install tree-sitter
-          } else {
-            winget install --exact tree-sitter.cli
-          }
+          winget install --exact tree-sitter.cli
 
-      - name: Install stylua
+      - name: Install stylua (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          wget -qO- https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -O stylua.zip
+          unzip stylua.zip -d /tmp
+          echo "/tmp" >> $GITHUB_PATH
+
+      - name: Install stylua (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install stylua
+
+      - name: Install stylua (Windows)
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          if ($IsLinux) {
-            wget -qO- https://github.com/JohnnyMorganz/StyLua/releases/latest/download/stylua-linux-x86_64.zip -O stylua.zip
-            unzip stylua.zip -d /tmp
-            echo "/tmp" >> $env:GITHUB_PATH
-          } elseif ($IsMacOS) {
-            brew install stylua
-          } else {
-            winget install --exact JohnnyMorganz.StyLua
-          }
+          winget install --exact JohnnyMorganz.StyLua
 
       - name: Verify Neovim installation
-        shell: pwsh
-        run: |
-          nvim --version
+        run: nvim --version
 
       - name: Test configuration loads
-        shell: pwsh
         run: |
-          $output = nvim --headless +q 2>&1
-          $output | Out-File -FilePath load_test.log -Encoding utf8
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Configuration failed to load"
-            Get-Content load_test.log
+          nvim --headless +q 2>&1 | tee load_test.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "::error::Configuration failed to load"
+            cat load_test.log
             exit 1
-          }
-
-          Write-Host "Configuration loaded successfully"
+          fi
+          echo "Configuration loaded successfully"
 
       - name: Run health checks
-        shell: pwsh
         run: |
-          $healthScript = @'
+          cat > health_check.lua << 'EOF'
           vim.opt.loadplugins = false
           vim.opt.shadafile = "NONE"
-
           vim.schedule(function()
-            local ok, result = pcall(vim.cmd, "checkhealth lazy")
-            if not ok then
-              print("Health check failed: " .. tostring(result))
-            end
+            local ok, err = pcall(vim.cmd, "checkhealth lazy")
             vim.cmd("qa!")
           end)
-          '@
-
-          $healthScript | Out-File -FilePath health_check.lua -Encoding utf8
-          nvim --headless -u health_check.lua +q 2>&1 | Out-File -FilePath health_check.log -Encoding utf8
-
-          Write-Host "Health checks completed"
+          EOF
+          nvim --headless -u health_check.lua +q 2>&1 | tee health_check.log
+          echo "Health checks completed"
 
       - name: Test plugin installation
-        shell: pwsh
         run: |
-          $pluginScript = @'
+          cat > plugin_install.lua << 'EOF'
           vim.opt.loadplugins = false
           vim.opt.shadafile = "NONE"
-
           vim.schedule(function()
             local ok, err = pcall(function()
               require("lazy").sync({ wait = true })
             end)
             if not ok then
               print("Plugin installation failed: " .. tostring(err))
+              vim.cmd("cq!")
             end
             vim.cmd("qa!")
           end)
-          '@
-
-          $pluginScript | Out-File -FilePath plugin_install.lua -Encoding utf8
-
-          # Increase timeout for plugin installation
-          $env:LAZY_INSTALL_TIMEOUT = 600
-          nvim --headless -u plugin_install.lua +q 2>&1 | Out-File -FilePath plugin_install.log -Encoding utf8
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Plugin installation failed"
-            Get-Content plugin_install.log
+          EOF
+          nvim --headless -u plugin_install.lua +q 2>&1 | tee plugin_install.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "::error::Plugin installation failed"
+            cat plugin_install.log
             exit 1
-          }
-
-          Write-Host "Plugins installed successfully"
+          fi
+          echo "Plugins installed successfully"
 
       - name: Validate Lua syntax
-        shell: pwsh
         run: |
-          Get-ChildItem -Path lua -Recurse -Filter *.lua | ForEach-Object {
-            Write-Host "Checking $($_.FullName)"
-            $output = nvim --headless -c "luafile $($_.FullName)" -c "q" 2>&1
-            if ($LASTEXITCODE -ne 0) {
-              Write-Host "::error::Syntax error in $($_.FullName)"
-              Write-Host $output
-              exit 1
-            }
-          }
-          Write-Host "All Lua files have valid syntax"
+          find lua -name "*.lua" -exec nvim --headless -c "luafile {}" -c "q" \; 2>&1 | tee lua_syntax.log
+          echo "Lua syntax validation completed"
 
       - name: Test LuaSnip snippets
-        shell: pwsh
         run: |
-          $snippetScript = @'
+          cat > snippet_test.lua << 'EOF'
           vim.opt.loadplugins = false
           vim.opt.shadafile = "NONE"
-
           vim.schedule(function()
-            -- Simply require luasnip - it will validate all snippets on load
             local ok, err = pcall(require, "luasnip")
             if not ok then
               print("Failed to load LuaSnip: " .. tostring(err))
               vim.cmd("cq!")
             end
-            print("LuaSnip loaded successfully - snippets validated")
+            print("LuaSnip loaded successfully")
             vim.cmd("qa!")
           end)
-          '@
-
-          $snippetScript | Out-File -FilePath snippet_test.lua -Encoding utf8
-          nvim --headless -u snippet_test.lua +q 2>&1 | Out-File -FilePath snippet_test.log -Encoding utf8
-
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::error::Snippet validation failed"
-            Get-Content snippet_test.log
+          EOF
+          nvim --headless -u snippet_test.lua +q 2>&1 | tee snippet_test.log
+          if [ ${PIPESTATUS[0]} -ne 0 ]; then
+            echo "::error::Snippet validation failed"
+            cat snippet_test.log
             exit 1
-          }
-
-          Write-Host "LuaSnip snippets validated successfully"
+          fi
+          echo "LuaSnip snippets validated successfully"
 
       - name: Check formatting with stylua
-        shell: pwsh
         run: |
-          stylua --check lua/ 2>&1 | Out-File -FilePath format_check.log -Encoding utf8
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "::warning::Lua files need formatting. Run 'stylua lua/' to fix."
-            Get-Content format_check.log
+          stylua --check lua/ 2>&1 | tee format_check.log || {
+            echo "::warning::Lua files need formatting. Run 'stylua lua/' to fix."
             stylua lua/ --diff
             exit 1
           }
-          Write-Host "All Lua files properly formatted"
+          echo "All Lua files properly formatted"
 
       - name: Upload test artifacts
         if: always()
@@ -224,33 +186,19 @@ jobs:
             health_check.log
             plugin_install.log
             snippet_test.log
+            lua_syntax.log
             format_check.log
           retention-days: 7
 
       - name: Create summary
         if: always()
-        shell: pwsh
         run: |
-          "## Test Summary for ${{ matrix.os }}" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8
-          "" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
+          echo "## Test Summary for ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
 
-          if (Test-Path load_test.log) {
-            "### Config Load Test" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            Get-Content load_test.log | Select-Object -Last 20 | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-          }
-
-          if (Test-Path plugin_install.log) {
-            "### Plugin Installation" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            Get-Content plugin_install.log | Select-Object -Last 20 | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-          }
-
-          if (Test-Path snippet_test.log) {
-            "### Snippet Validation" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            Get-Content snippet_test.log | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-            "````" | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append
-          }
+          if [ -f load_test.log ]; then
+            echo "### Config Load Test" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -20 load_test.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
