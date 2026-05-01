@@ -22,30 +22,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Neovim (Linux)
+      - name: Install Neovim (Ubuntu)
         if: runner.os == 'Linux'
         run: |
+          # Download and install Neovim
           wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-          tar xzf nvim-linux64.tar.gz -C /tmp
-          echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
+          tar -xzf nvim-linux64.tar.gz
+          sudo mv nvim-linux64 /opt/nvim
+          echo "/opt/nvim/bin" >> $GITHUB_PATH
           nvim --version
 
       - name: Install Neovim (macOS)
         if: runner.os == 'macOS'
         run: |
+          # Download and install Neovim
           curl -sLO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz
-          tar xzf nvim-macos-x86_64.tar.gz -C /tmp
-          echo "/tmp/nvim-macos/bin" >> $GITHUB_PATH
+          tar -xzf nvim-macos-x86_64.tar.gz
+          sudo mv nvim-macos /opt/nvim
+          echo "/opt/nvim/bin" >> $GITHUB_PATH
           nvim --version
 
       - name: Install Neovim (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip" -OutFile nvim.zip -UseBasicParsing
-          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP -Force
-          "$env:TEMP\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          # Download and install Neovim
+          $url = "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip"
+          Invoke-WebRequest -Uri $url -OutFile nvim.zip -UseBasicParsing
+          Expand-Archive -Path nvim.zip -DestinationPath "$env:ProgramFiles" -Force
+          "$env:ProgramFiles\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           nvim --version
 
       - name: Test config loads
