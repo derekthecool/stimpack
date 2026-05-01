@@ -10,32 +10,31 @@ local shareable = require('luasnippets.functions.shareable_snippets')
 -- https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf
 
 local snippets = {
--- doxygen snippets
--- https://www.doxygen.nl/manual/commands.html#cmdparam
+    -- doxygen snippets
+    -- https://www.doxygen.nl/manual/commands.html#cmdparam
     ms(
         {
-            { trig = '@param', snippetType = 'snippet', condition = nil},
-            { trig = '@param', snippetType = 'autosnippet', condition = nil},
+            { trig = '@param', snippetType = 'snippet', condition = nil },
+            { trig = '@param', snippetType = 'autosnippet', condition = nil },
         },
-      fmt(
-        [[
+        fmt(
+            [[
         @param[{Direction}] {ParamName} {Description}
         ]],
-        {
-                Direction = c( 1,
-                {
-                  t('in'),
-                  t('out'),
-                  t('in out'),
+            {
+                Direction = c(1, {
+                    t('in'),
+                    t('out'),
+                    t('in out'),
                 }),
-                ParamName = i( 2, 'param_name'),
-                Description = i( 3, 'this param does ....'),
-        }
-      )
+                ParamName = i(2, 'param_name'),
+                Description = i(3, 'this param does ....'),
+            }
+        )
     ),
     ms(
         {
-            { trig = 'define define', snippetType = 'autosnippet', condition = nil,},
+            { trig = 'define define', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
             [[
@@ -1044,7 +1043,6 @@ local autosnippets = {
             }),
         })
     ),
-
 
     s(
         'ENUM',

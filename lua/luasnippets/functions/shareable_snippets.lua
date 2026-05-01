@@ -130,7 +130,7 @@ shareable.for_loop_c_style = ms(
 
 shareable.if_statement_c_style = ms(
     {
-        { trig = 'IF',       snippetType = 'autosnippet' },
+        { trig = 'IF', snippetType = 'autosnippet' },
         { trig = 'ELS_EI_F', snippetType = 'autosnippet' },
     },
     fmt(
@@ -214,7 +214,7 @@ shareable.while_loop_c_style = ms(
 shareable.ternary = ms(
     {
         { trig = 'TERNARY', snippetType = 'autosnippet', condition = nil },
-        { trig = 'ternary', snippetType = 'snippet',     condition = nil },
+        { trig = 'ternary', snippetType = 'snippet', condition = nil },
     },
     fmt([[{Condition} ? {IfTrue} : {IfFalse}]], {
         Condition = i(1, 'variable == 1'),

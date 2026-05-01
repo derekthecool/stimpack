@@ -74,8 +74,8 @@ endmenu
 
     ms(
         {
-            { trig = 'kconfig_menu', snippetType = 'snippet',     condition = nil },
-            { trig = 'FIRST',        snippetType = 'autosnippet', condition = nil },
+            { trig = 'kconfig_menu', snippetType = 'snippet', condition = nil },
+            { trig = 'FIRST', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
             [[
@@ -94,8 +94,8 @@ endmenu
 
     ms(
         {
-            { trig = 'kconfig_item', snippetType = 'snippet',     condition = nil },
-            { trig = 'SECOND',       snippetType = 'autosnippet', condition = nil },
+            { trig = 'kconfig_item', snippetType = 'snippet', condition = nil },
+            { trig = 'SECOND', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
             [[

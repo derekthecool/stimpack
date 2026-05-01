@@ -3,8 +3,8 @@
 local snippets = {
     ms(
         {
-            { trig = 'PRINT',           snippetType = 'autosnippet', condition = nil },
-            { trig = 'message',         snippetType = 'snippet',     condition = nil },
+            { trig = 'PRINT', snippetType = 'autosnippet', condition = nil },
+            { trig = 'message', snippetType = 'snippet', condition = nil },
             { trig = 'message message', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -19,7 +19,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'glob',      snippetType = 'snippet',     condition = nil },
+            { trig = 'glob', snippetType = 'snippet', condition = nil },
             { trig = 'glob glob', snippetType = 'autosnippet', condition = nil },
         },
         fmt(
@@ -282,7 +282,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
     -- {{{ Cmake C library and test app for test driven development (tdd) setup
     ms(
         {
-            { trig = '_Ctdd',   snippetType = 'snippet', condition = nil },
+            { trig = '_Ctdd', snippetType = 'snippet', condition = nil },
             { trig = 'c_setup', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -450,7 +450,7 @@ set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
     ms(
         {
-            { trig = 'compile_commands.json',   snippetType = 'snippet', condition = nil },
+            { trig = 'compile_commands.json', snippetType = 'snippet', condition = nil },
             { trig = 'export_compile_commands', snippetType = 'snippet', condition = nil },
         },
         fmt(
@@ -737,7 +737,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'SECOND', snippetType = 'autosnippet' },
-            { trig = 'set',    snippetType = 'snippet' },
+            { trig = 'set', snippetType = 'snippet' },
         },
         fmt(
             [[
@@ -753,7 +753,7 @@ local autosnippets = {
     ms(
         {
             { trig = 'string', snippetType = 'snippet' },
-            { trig = 'THIRD',  snippetType = 'autosnippet' },
+            { trig = 'THIRD', snippetType = 'autosnippet' },
         },
         fmt(
             [[

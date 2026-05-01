@@ -22,17 +22,23 @@ local dotnet_static_call = function(index, class_name, method_name, args_node)
     return d(index, function()
         local args = args_node or i(1)
         if vim.bo.filetype == 'ps1' then
-            return sn(nil, fmt('[{Class}]::{Method}({Args})', {
-                Class = t(class_name),
-                Method = t(method_name),
-                Args = args,
-            }))
+            return sn(
+                nil,
+                fmt('[{Class}]::{Method}({Args})', {
+                    Class = t(class_name),
+                    Method = t(method_name),
+                    Args = args,
+                })
+            )
         else
-            return sn(nil, fmt('{Class}.{Method}({Args})', {
-                Class = t(class_name),
-                Method = t(method_name),
-                Args = args,
-            }))
+            return sn(
+                nil,
+                fmt('{Class}.{Method}({Args})', {
+                    Class = t(class_name),
+                    Method = t(method_name),
+                    Args = args,
+                })
+            )
         end
     end, {})
 end
@@ -303,13 +309,10 @@ public class {ClassNameFromFilename}
             }
         )
     ),
-    ms(
-        {
-            { trig = 'ReadLine',  snippetType = 'autosnippet' },
-            { trig = 'read line', snippetType = 'snippet' },
-        },
-        fmt('{Call}', { Call = dotnet_static_call(1, 'Console', 'ReadLine') })
-    ),
+    ms({
+        { trig = 'ReadLine', snippetType = 'autosnippet' },
+        { trig = 'read line', snippetType = 'snippet' },
+    }, fmt('{Call}', { Call = dotnet_static_call(1, 'Console', 'ReadLine') })),
 }
 
 local autosnippets = {

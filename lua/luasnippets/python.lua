@@ -140,7 +140,7 @@ local snippets = {
 
     ms(
         {
-            { trig = 'range',       snippetType = 'snippet',     condition = nil },
+            { trig = 'range', snippetType = 'snippet', condition = nil },
             { trig = 'range range', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[range({})]], {
@@ -263,7 +263,7 @@ client.disconnect()
     ),
     ms({
         { trig = 'read_all_stdin', snippetType = 'snippet' },
-        { trig = 'read line',      snippetType = 'autosnippet', condition = nil },
+        { trig = 'read line', snippetType = 'autosnippet', condition = nil },
     }, fmt([[sys.stdin.read().splitlines()]], {})),
 
     s(

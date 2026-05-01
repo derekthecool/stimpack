@@ -73,8 +73,8 @@ local snippets = {
 
     ms(
         {
-            { trig = 'GitHub',         snippetType = 'snippet', condition = nil },
-            { trig = 'actions',        snippetType = 'snippet', condition = nil },
+            { trig = 'GitHub', snippetType = 'snippet', condition = nil },
+            { trig = 'actions', snippetType = 'snippet', condition = nil },
             { trig = 'GitHub_actions', snippetType = 'snippet', condition = nil },
         },
         fmt(

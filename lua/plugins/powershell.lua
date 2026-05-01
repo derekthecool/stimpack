@@ -28,7 +28,9 @@ return {
                                     async = false,
                                     timeout_ms = 10000,
                                     bufnr = args.buf,
-                                    filter = function(c) return c.name == 'powershell_es' end,
+                                    filter = function(c)
+                                        return c.name == 'powershell_es'
+                                    end,
                                 })
                             end,
                         })

@@ -15,8 +15,8 @@ local snippets = {
     ),
     ms(
         {
-            { trig = 'sqlserver_date', snippetType = 'snippet',     condition = nil },
-            { trig = 'sqlserver_time', snippetType = 'snippet',     condition = nil },
+            { trig = 'sqlserver_date', snippetType = 'snippet', condition = nil },
+            { trig = 'sqlserver_time', snippetType = 'snippet', condition = nil },
             { trig = 'sqlserver date', snippetType = 'autosnippet', condition = nil },
         },
         fmt([[DATEDIFF({Unit}, {Column}, {DateFunction}) {TimeSpan}]], {
