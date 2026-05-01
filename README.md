@@ -39,3 +39,51 @@ winget install --exact tree-sitter-cli
 
 # Possibly using Mason using MasonInstall tree-sitter-cli
 ```
+
+## CI/CD
+
+This configuration uses GitHub Actions for automated testing and maintenance:
+
+### Automated Testing
+
+- **Cross-platform testing**: Validates config works on Ubuntu, Windows, and macOS
+- **Plugin validation**: Ensures all plugins install correctly
+- **Health checks**: Runs `:checkhealth lazy` on all platforms
+- **Snippet testing**: Validates LuaSnip snippets load without errors
+- **Format checking**: Ensures Lua code is formatted with stylua
+
+Tests run automatically on every push and pull request.
+
+### Automated Plugin Updates
+
+- **Weekly checks**: Every Sunday at 9 AM UTC
+- **Cross-platform validation**: Updates tested on all platforms before creating PR
+- **Auto-merge**: PRs merge automatically when all tests pass
+- **Safety first**: Dry-run mode available for testing
+
+### Local Testing
+
+Test the config locally before pushing:
+
+```powershell
+# Run all tests
+pwsh .github/scripts/test-config.ps1
+
+# With health checks and verbose output
+pwsh .github/scripts/test-config.ps1 -HealthCheck -Verbose
+```
+
+### Monitor Workflows
+
+```bash
+# Watch workflow runs
+gh run watch
+
+# View test results
+gh run view <run-id>
+
+# Download test artifacts
+gh run download <run-id>
+```
+
+See [`.github/TESTING.md`](.github/TESTING.md) for detailed testing documentation.
