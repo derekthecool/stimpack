@@ -52,6 +52,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Neovim plugins
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/AppData/Local/nvim-data
+            ~/.cache/nvim
+          key: ${{ runner.os }}-nvim-${{ hashFiles('lazy-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nvim-
+
       - name: Install Neovim (Linux)
         if: runner.os == 'Linux'
         run: |
@@ -76,16 +87,50 @@ jobs:
           "$env:TEMP\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Update plugins
-        run: nvim --headless +"Lazy! sync" +qa
+        id: update_plugins
+        shell: bash
+        run: |
+          set -o pipefail
+          nvim --headless +"Lazy! sync" +qa 2>&1 | tee plugin_update.log
+          if [ $? -ne 0 ]; then
+            echo "Plugin update failed"
+            exit 1
+          fi
 
       - name: Test config
-        run: nvim --headless +q
+        id: test_config
+        shell: bash
+        run: |
+          set -o pipefail
+          nvim --headless +q 2>&1 | tee config_test.log
+          if [ $? -ne 0 ]; then
+            echo "Config test failed"
+            exit 1
+          fi
 
       - name: Upload lock file
         uses: actions/upload-artifact@v4
         with:
           name: lock-${{ matrix.os }}
           path: lazy-lock.json
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.os }}
+          path: |
+            plugin_update.log
+            config_test.log
+          retention-days: 7
+
+      - name: Generate test summary
+        if: always()
+        run: |
+          echo "## Plugin Update Test Results for ${{ matrix.os }} :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Plugin Update**: ${{ steps.update_plugins.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Config Test**: ${{ steps.test_config.outcome }}" >> $GITHUB_STEP_SUMMARY
 
   create-pr:
     needs: [check-updates, test-updates]
@@ -108,12 +153,20 @@ jobs:
           jq -S . lock-windows-latest/lazy-lock.json | diff - canonical.json
           cp lock-ubuntu-latest/lazy-lock.json ./lazy-lock.json
 
+      - name: Generate date for PR
+        id: date
+        run: |
+          echo "date_short=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
+          echo "date_long=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
+
       - name: Create PR
         uses: peter-evans/create-pull-request@v6
         with:
-          branch: plugin-updates-$(date +%Y%m%d)
-          title: "chore: update plugin dependencies $(date +%Y-%m-%d)"
+          branch: plugin-updates-${{ steps.date.outputs.date_short }}
+          title: "chore: update plugin dependencies ${{ steps.date.outputs.date_long }}"
           body: |
             Plugin updates tested on Ubuntu, macOS, and Windows.
             All platforms passed configuration tests.
           labels: dependencies
+          auto-merge: merge
+          delete-branch-after-merge: true

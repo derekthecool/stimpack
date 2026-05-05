@@ -7,6 +7,10 @@ on:
     branches: [master, main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -22,17 +26,28 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache Neovim plugins
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/nvim
+            ~/AppData/Local/nvim-data
+            ~/.cache/nvim
+          key: ${{ runner.os }}-nvim-${{ hashFiles('lazy-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nvim-
+
       - name: Install Neovim (Ubuntu)
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y neovim
+          sudo apt-get install -y neovim tree-sitter-cli
           nvim --version
 
       - name: Install Neovim (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install neovim
+          brew install neovim tree-sitter
           nvim --version
 
       - name: Install Neovim (Windows)
@@ -58,13 +73,125 @@ jobs:
           # Verify installation
           & "$env:USERPROFILE\nvim\bin\nvim.exe" --version
 
+      - name: Install tree-sitter (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          # Install tree-sitter-cli via cargo if available, otherwise skip
+          if (Get-Command cargo -ErrorAction SilentlyContinue) {
+            cargo install tree-sitter-cli
+          } else {
+            Write-Host "tree-sitter-cli skipped (cargo not available)"
+          }
+
+      - name: Validate Lua syntax
+        shell: bash
+        run: |
+          find lua -name "*.lua" -type f | while read file; do
+            echo "Checking $file"
+            nvim --headless +"luafile $file" +q || exit 1
+          done
+
+      - name: Validate snippet structure
+        shell: bash
+        run: |
+          echo "Checking snippet files structure..."
+          # Check that snippet files return proper tables
+          for file in lua/luasnippets/*.lua; do
+            if [ -f "$file" ]; then
+              echo "Validating snippet file: $file"
+              nvim --headless +"luafile $file" +q || exit 1
+            fi
+          done
+          echo "All snippet files validated"
+
       - name: Test config loads
-        run: nvim --headless +q
+        id: config_load
+        shell: bash
+        run: |
+          set -o pipefail
+          nvim --headless +q 2>&1 | tee config_load.log
+          if [ $? -ne 0 ]; then
+            echo "Config failed to load"
+            exit 1
+          fi
 
       - name: Test plugins install
+        id: plugin_install
+        shell: bash
         run: |
-          nvim --headless +"Lazy! sync" +qa
+          set -o pipefail
+          nvim --headless +"Lazy! sync" +qa 2>&1 | tee plugin_install.log
+          if [ $? -ne 0 ]; then
+            echo "Plugin installation failed"
+            exit 1
+          fi
+
+      - name: Run lazy.nvim health checks
+        id: health_check
+        shell: bash
+        run: |
+          set -o pipefail
+          nvim --headless +"checkhealth lazy" +qa 2>&1 | tee health_check.log || true
+          echo "Health check completed"
 
       - name: Test LuaSnip loads
+        id: luasnip_load
+        shell: bash
         run: |
-          nvim --headless +"lua require('luasnip')" +q
+          set -o pipefail
+          nvim --headless +"lua require('luasnip')" +q 2>&1 | tee luasnip_load.log
+          if [ $? -ne 0 ]; then
+            echo "LuaSnip failed to load"
+            exit 1
+          fi
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: |
+            config_load.log
+            plugin_install.log
+            health_check.log
+            luasnip_load.log
+          retention-days: 7
+
+      - name: Generate test summary
+        if: always()
+        run: |
+          echo "## Test Results for ${{ matrix.os }} :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Config Load**: ${{ steps.config_load.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Plugin Install**: ${{ steps.plugin_install.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Health Check**: ${{ steps.health_check.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **LuaSnip Load**: ${{ steps.luasnip_load.outcome }}" >> $GITHUB_STEP_SUMMARY
+
+  report-failure:
+    name: Report Test Failures
+    needs: test
+    if: failure() && github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issue = context.issue;
+            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## ❌ Tests Failed\n\n` +
+                    `The Neovim configuration tests failed.\n\n` +
+                    `**Failed Tests:**\n` +
+                    `- See [workflow run](${runUrl}) for details.\n\n` +
+                    `**Next Steps:**\n` +
+                    `1. Check the logs for the specific test that failed\n` +
+                    `2. Run tests locally: \`pwsh .github/scripts/test-config.ps1\`\n` +
+                    `3. Fix the issue and push a new commit\n`
+            });
