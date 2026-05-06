@@ -32,7 +32,22 @@ jobs:
       - name: Check for updates
         id: check
         run: |
-          nvim --headless +"Lazy! sync" +qa
+          cat <<'EOF' > check_updates.lua
+          vim.opt.loadplugins = false
+          vim.opt.shadafile = "NONE"
+
+          vim.schedule(function()
+            local ok, err = pcall(function()
+              require("lazy").sync({ wait = true, show = false })
+            end)
+            if not ok then
+              print("ERROR: " .. tostring(err))
+              vim.cmd("cq!")
+            end
+            vim.cmd("qa!")
+          end)
+          EOF
+          nvim --headless -u check_updates.lua +q
           if git diff --quiet lazy-lock.json; then
             echo "updates_available=false" >> $GITHUB_OUTPUT
           else
@@ -72,7 +87,22 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          nvim --headless +"Lazy! sync" +qa 2>&1 | tee plugin_update.log
+          cat <<'EOF' > plugin_update.lua
+          vim.opt.loadplugins = false
+          vim.opt.shadafile = "NONE"
+
+          vim.schedule(function()
+            local ok, err = pcall(function()
+              require("lazy").sync({ wait = true, show = false })
+            end)
+            if not ok then
+              print("ERROR: " .. tostring(err))
+              vim.cmd("cq!")
+            end
+            vim.cmd("qa!")
+          end)
+          EOF
+          nvim --headless -u plugin_update.lua +q 2>&1 | tee plugin_update.log
           if [ $? -ne 0 ]; then
             echo "Plugin update failed"
             exit 1

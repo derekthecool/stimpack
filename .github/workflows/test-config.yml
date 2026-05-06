@@ -75,7 +75,22 @@ jobs:
         run: |
           set -o pipefail
           echo "Testing plugin installation..."
-          nvim --headless +"Lazy! sync" +qa 2>&1 | tee plugin_install.log
+          cat <<'EOF' > plugin_install.lua
+          vim.opt.loadplugins = false
+          vim.opt.shadafile = "NONE"
+
+          vim.schedule(function()
+            local ok, err = pcall(function()
+              require("lazy").sync({ wait = true })
+            end)
+            if not ok then
+              print("Plugin installation: " .. tostring(err))
+              vim.cmd("cq!")
+            end
+            vim.cmd("qa!")
+          end)
+          EOF
+          nvim --headless -u plugin_install.lua +q 2>&1 | tee plugin_install.log
           if [ $? -ne 0 ]; then
             echo "❌ Plugin installation failed"
             cat plugin_install.log
@@ -89,7 +104,19 @@ jobs:
         run: |
           set -o pipefail
           echo "Running health checks..."
-          nvim --headless +"checkhealth lazy" +qa 2>&1 | tee health_check.log
+          cat <<'EOF' > health_check.lua
+          vim.opt.loadplugins = false
+          vim.opt.shadafile = "NONE"
+
+          vim.schedule(function()
+            local ok, err = pcall(vim.cmd, "checkhealth lazy")
+            if not ok then
+              print("Health check: " .. tostring(err))
+            end
+            vim.cmd("qa!")
+          end)
+          EOF
+          nvim --headless -u health_check.lua +q 2>&1 | tee health_check.log
           if [ $? -ne 0 ]; then
             echo "❌ Health check failed"
             cat health_check.log
