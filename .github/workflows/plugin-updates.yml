@@ -141,7 +141,7 @@ jobs:
           echo "date_long=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
 
       - name: Create PR
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           branch: plugin-updates-${{ steps.date.outputs.date_short }}
           title: "chore: update plugin dependencies ${{ steps.date.outputs.date_long }}"
