@@ -1,32 +1,47 @@
 # CI/CD Deployment Summary
 
-**Date**: 2026-05-05
-**Version**: 1.0
-**Status**: ✅ Ready for Production
+**Date**: 2026-05-06
+**Version**: 1.1
+**Status**: ✅ Production Ready - All Platforms Passing
 
 ## Implementation Overview
 
 This CI/CD implementation for the Neovim configuration ("Stimpack") provides comprehensive automated testing, plugin updates, and format checking across Ubuntu, macOS, and Windows platforms.
+
+**Latest Update**: Fixed Windows installation by replacing platform-specific methods with `rhysd/action-setup-vim@v1` (commit 14ad89c)
+
+## Deployment History
+
+### Commit 1: bdc96bd (2026-05-05)
+- Initial CI/CD implementation
+- Platform-specific Neovim installations
+- **Status**: Windows installation FAILED
+
+### Commit 2: 14ad89c (2026-05-06)
+- Fixed Windows installation with `rhysd/action-setup-vim@v1`
+- Removed 73 lines of platform-specific code
+- **Status**: All platforms PASSING ✅
 
 ## Files Changed
 
 ### New Files Created
 - `.github/QUICKSTART.md` (278 lines) - Developer quick reference
 - `.github/VALIDATION.md` (428 lines) - Validation guide
+- `.github/DEPLOYMENT.md` (this file)
 
 ### Modified Files
-- `.github/workflows/test-config.yml` (+137 lines)
-- `.github/workflows/plugin-updates.yml` (+63 lines)
+- `.github/workflows/test-config.yml` (+137 lines, then -50 lines for fix)
+- `.github/workflows/plugin-updates.yml` (+63 lines, then -23 lines for fix)
 
-**Total Changes**: 896 lines added/modified across 4 files
+**Total Changes**: 896 lines added/modified, then 73 lines removed for fix
 
 ## Features Implemented
 
 ### 1. Test Workflow (`test-config.yml`)
 
 **Capabilities:**
-- Multi-platform testing (Ubuntu, macOS, Windows)
-- Neovim and dependencies installation (tree-sitter-cli)
+- Multi-platform testing (Ubuntu, macOS, Windows) ✅
+- Unified Neovim installation via `rhysd/action-setup-vim@v1`
 - Lua syntax validation (69 files)
 - Configuration load testing
 - Plugin installation verification
@@ -36,9 +51,11 @@ This CI/CD implementation for the Neovim configuration ("Stimpack") provides com
 - Job summaries in GitHub Actions UI
 - PR failure notifications
 
-**Performance:**
-- First run: 5-10 minutes
-- Cached runs: 2-4 minutes (60% faster)
+**Performance (Latest Run 25444915288):**
+- Ubuntu: 18 seconds
+- macOS: 48 seconds
+- Windows: 1 minute 7 seconds
+- **All platforms: PASSING** ✅
 
 ### 2. Plugin Update Workflow (`plugin-updates.yml`)
 
@@ -111,6 +128,44 @@ This CI/CD implementation for the Neovim configuration ("Stimpack") provides com
 - Old runs canceled on new commits
 - Fail-fast disabled to see all platform results
 - Parallel execution across platforms
+
+## Windows Installation Fix
+
+### Issue Identified
+**Run 25405828129** (2026-05-05):
+- Ubuntu: ✅ PASS
+- macOS: ✅ PASS
+- Windows: ❌ FAIL (Neovim installation error)
+
+### Root Cause
+Platform-specific installation methods were unreliable:
+- Ubuntu used `apt-get install neovim` (worked)
+- macOS used `brew install neovim` (worked)
+- Windows used manual download/extract (FAILED)
+
+### Solution Applied
+**Commit 14ad89c** (2026-05-06):
+- Replaced all platform-specific installations with `rhysd/action-setup-vim@v1`
+- Single action works consistently across all platforms
+- Automatically installs latest stable Neovim
+
+### Results
+**Run 25444915288** (2026-05-06):
+- Ubuntu: ✅ PASS (18 seconds)
+- macOS: ✅ PASS (48 seconds)
+- Windows: ✅ PASS (1 minute 7 seconds)
+
+**Code Changes:**
+- Removed: 73 lines of platform-specific installation code
+- Added: 12 lines using `rhysd/action-setup-vim@v1`
+- Net reduction: 61 lines
+
+### Benefits
+1. **Cross-platform consistency** - Same action works everywhere
+2. **Automatic updates** - Always installs latest stable Neovim
+3. **Simplified maintenance** - Single action instead of 3+ platform steps
+4. **Reliability** - Battle-tested action used by many Neovim projects
+5. **Cleaner code** - More readable and maintainable workflows
 
 ## Plan Requirements Verification
 
