@@ -24,11 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Neovim
-        run: |
-          wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-          tar xzf nvim-linux64.tar.gz -C /tmp
-          echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+            neovim: true
 
       - name: Check for updates
         id: check
@@ -63,28 +62,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nvim-
 
-      - name: Install Neovim (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          wget -q https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
-          tar xzf nvim-linux64.tar.gz -C /tmp
-          echo "/tmp/nvim-linux64/bin" >> $GITHUB_PATH
-
-      - name: Install Neovim (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          curl -sLO https://github.com/neovim/neovim/releases/latest/download/nvim-macos-x86_64.tar.gz
-          tar xzf nvim-macos-x86_64.tar.gz -C /tmp
-          echo "/tmp/nvim-macos/bin" >> $GITHUB_PATH
-
-      - name: Install Neovim (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          Invoke-WebRequest -Uri "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip" -OutFile nvim.zip -UseBasicParsing
-          Expand-Archive -Path nvim.zip -DestinationPath $env:TEMP -Force
-          "$env:TEMP\nvim-win64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+            neovim: true
 
       - name: Update plugins
         id: update_plugins

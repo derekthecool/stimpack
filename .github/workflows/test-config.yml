@@ -37,52 +37,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nvim-
 
-      - name: Install Neovim (Ubuntu)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y neovim tree-sitter-cli
-          nvim --version
-
-      - name: Install Neovim (macOS)
-        if: runner.os == 'macOS'
-        run: |
-          brew install neovim tree-sitter
-          nvim --version
-
-      - name: Install Neovim (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Create installation directory
-          New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\nvim"
-
-          # Download latest Neovim
-          $url = "https://github.com/neovim/neovim/releases/latest/download/nvim-win64.zip"
-          Write-Host "Downloading Neovim from $url"
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          Invoke-WebRequest -Uri $url -OutFile nvim.zip -UseBasicParsing
-
-          # Extract to user profile
-          Write-Host "Extracting to $env:USERPROFILE\nvim"
-          Expand-Archive -Path nvim.zip -DestinationPath "$env:USERPROFILE\nvim" -Force
-
-          # Add to PATH
-          "$env:USERPROFILE\nvim\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-          # Verify installation
-          & "$env:USERPROFILE\nvim\bin\nvim.exe" --version
-
-      - name: Install tree-sitter (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          # Install tree-sitter-cli via cargo if available, otherwise skip
-          if (Get-Command cargo -ErrorAction SilentlyContinue) {
-            cargo install tree-sitter-cli
-          } else {
-            Write-Host "tree-sitter-cli skipped (cargo not available)"
-          }
+      - name: Setup Neovim
+        uses: rhysd/action-setup-vim@v1
+        with:
+            neovim: true
 
       - name: Validate Lua syntax
         shell: bash
