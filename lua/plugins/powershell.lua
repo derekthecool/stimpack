@@ -1,4 +1,5 @@
-local PSScriptAnalyzerSettingsPath = string.format('%s/Atelier/pwsh/PSScriptAnalyzerSettings.psd1', OS.home)
+local psformat = require('config.psformat')
+psformat.setup()
 
 return {
     {
@@ -15,36 +16,44 @@ return {
         opts = { ensure_installed = { 'powershell-editor-services' } },
     },
     {
+        'neovim/nvim-lspconfig',
+        opts = {
+            -- powershell.nvim manages the powershell_es client itself (named-pipe
+            -- transport); letting mason-lspconfig's automatic_enable also start
+            -- nvim-lspconfig's built-in stdio-based powershell_es races both
+            -- processes over the same LogPath/SessionDetailsPath and one of them
+            -- dies with exit code 1.
+            servers = {
+                powershell_es = { enabled = false },
+            },
+        },
+    },
+    {
+        -- Format via PSScriptAnalyzer's Invoke-Formatter through conform.nvim.
+        -- PSES's own textDocument/formatting repeatedly fails with
+        -- ContentModified on save, so it is not used for formatting.
+        'stevearc/conform.nvim',
+        optional = true,
+        opts = {
+            formatters_by_ft = {
+                ps1 = { 'PSScriptAnalyzer' },
+            },
+            formatters = {
+                PSScriptAnalyzer = {
+                    format = psformat.conform_format,
+                },
+            },
+        },
+    },
+    {
         'TheLeoP/powershell.nvim',
-        init = function()
-            vim.api.nvim_create_autocmd('LspAttach', {
-                callback = function(args)
-                    local client = vim.lsp.get_client_by_id(args.data.client_id)
-                    if client and client.name == 'powershell_es' then
-                        vim.api.nvim_create_autocmd('BufWritePre', {
-                            buffer = args.buf,
-                            callback = function()
-                                vim.lsp.buf.format({
-                                    async = false,
-                                    timeout_ms = 10000,
-                                    bufnr = args.buf,
-                                    filter = function(c)
-                                        return c.name == 'powershell_es'
-                                    end,
-                                })
-                            end,
-                        })
-                    end
-                end,
-            })
-        end,
         opts = {
             bundle_path = vim.fs.joinpath(vim.fn.stdpath('data'), 'mason', 'packages', 'powershell-editor-services'),
             settings = {
                 powershell = {
                     ScriptAnalysis = {
                         enable = true,
-                        settingsPath = PSScriptAnalyzerSettingsPath,
+                        settingsPath = psformat.settings_path,
                     },
                     -- CodeFormatting = {
                     --     autoCorrectAliases = true,
