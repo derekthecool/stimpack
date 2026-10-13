@@ -1,153 +1,37 @@
-name: Plugin Update Automation
+name: Plugin Updates
 
 on:
   schedule:
     - cron: '0 9 * * 0'
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Dry run (do not create PR)'
-        required: false
-        type: boolean
-        default: false
 
 permissions:
   contents: write
   pull-requests: write
 
 jobs:
-  check-updates:
+  update:
     runs-on: ubuntu-latest
-    outputs:
-      updates_available: ${{ steps.check.outputs.updates_available }}
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Neovim
-        uses: rhysd/action-setup-vim@v1
+      - uses: rhysd/action-setup-vim@v1
         with:
-            neovim: true
+          neovim: true
 
-      - name: Check for updates
-        id: check
-        run: |
-          nvim --headless -c "lua require('lazy').sync({ wait = true, show = false })" -c "qa"
-          if git diff --quiet lazy-lock.json; then
-            echo "updates_available=false" >> $GITHUB_OUTPUT
-          else
-            echo "updates_available=true" >> $GITHUB_OUTPUT
-          fi
-
-  test-updates:
-    needs: check-updates
-    if: needs.check-updates.outputs.updates_available == 'true'
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Cache Neovim plugins
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.local/share/nvim
-            ~/AppData/Local/nvim-data
-            ~/.cache/nvim
-          key: ${{ runner.os }}-nvim-${{ hashFiles('lazy-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nvim-
-
-      - name: Setup Neovim
-        uses: rhysd/action-setup-vim@v1
-        with:
-            neovim: true
+      - name: Link repo as nvim config
+        run: ln -s "$PWD" ~/.config/nvim
 
       - name: Update plugins
-        id: update_plugins
-        shell: bash
-        run: |
-          set -o pipefail
-          nvim --headless -c "lua require('lazy').sync({ wait = true, show = false })" -c "qa" 2>&1 | tee plugin_update.log
-          if [ $? -ne 0 ]; then
-            echo "Plugin update failed"
-            exit 1
-          fi
+        run: nvim --headless "+Lazy! update" +qa
 
-      - name: Test config
-        id: test_config
-        shell: bash
-        run: |
-          set -o pipefail
-          nvim --headless +q 2>&1 | tee config_test.log
-          if [ $? -ne 0 ]; then
-            echo "Config test failed"
-            exit 1
-          fi
+      - name: Check config
+        run: nvim --headless '+Lazy! restore' '+luafile .github/scripts/ci-check.lua' +qa
 
-      - name: Upload lock file
-        uses: actions/upload-artifact@v4
+      - uses: peter-evans/create-pull-request@v7
         with:
-          name: lock-${{ matrix.os }}
-          path: lazy-lock.json
-
-      - name: Upload test logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-logs-${{ matrix.os }}
-          path: |
-            plugin_update.log
-            config_test.log
-          retention-days: 7
-
-      - name: Generate test summary
-        if: always()
-        run: |
-          echo "## Plugin Update Test Results for ${{ matrix.os }} :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Plugin Update**: ${{ steps.update_plugins.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Config Test**: ${{ steps.test_config.outcome }}" >> $GITHUB_STEP_SUMMARY
-
-  create-pr:
-    needs: [check-updates, test-updates]
-    if: needs.check-updates.outputs.updates_available == 'true' && github.event.inputs.dry_run != 'true'
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Download lock files
-        uses: actions/download-artifact@v4
-        with:
-          pattern: lock-*
-          merge-multiple: false
-
-      - name: Verify lock files match
-        run: |
-          jq -S . lock-ubuntu-latest/lazy-lock.json > canonical.json
-          jq -S . lock-macos-latest/lazy-lock.json | diff - canonical.json
-          jq -S . lock-windows-latest/lazy-lock.json | diff - canonical.json
-          cp lock-ubuntu-latest/lazy-lock.json ./lazy-lock.json
-
-      - name: Generate date for PR
-        id: date
-        run: |
-          echo "date_short=$(date +%Y%m%d)" >> $GITHUB_OUTPUT
-          echo "date_long=$(date +%Y-%m-%d)" >> $GITHUB_OUTPUT
-
-      - name: Create PR
-        uses: peter-evans/create-pull-request@v6
-        with:
-          branch: plugin-updates-${{ steps.date.outputs.date_short }}
-          title: "chore: update plugin dependencies ${{ steps.date.outputs.date_long }}"
-          body: |
-            Plugin updates tested on Ubuntu, macOS, and Windows.
-            All platforms passed configuration tests.
+          add-paths: lazy-lock.json
+          branch: plugin-updates
+          commit-message: 'build: update neovim plugins'
+          title: 'build: update neovim plugins'
           labels: dependencies
-          auto-merge: merge
-          delete-branch-after-merge: true

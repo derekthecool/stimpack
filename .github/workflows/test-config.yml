@@ -1,4 +1,4 @@
-name: Test Neovim Configuration
+name: Test
 
 on:
   push:
@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: read
-  pull-requests: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -21,143 +20,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
+        os: [ubuntu-latest, windows-latest]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Cache Neovim plugins
-        uses: actions/cache@v4
+      - uses: rhysd/action-setup-vim@v1
+        with:
+          neovim: true
+
+      - name: Link repo as nvim config
+        shell: pwsh
+        run: |
+          $dest = if ($IsWindows) { Join-Path $env:LOCALAPPDATA 'nvim' } else { Join-Path $HOME '.config/nvim' }
+          New-Item -ItemType Directory -Force (Split-Path $dest) | Out-Null
+          New-Item -ItemType SymbolicLink -Path $dest -Target $PWD.Path | Out-Null
+
+      - uses: actions/cache@v4
         with:
           path: |
             ~/.local/share/nvim
             ~/AppData/Local/nvim-data
-            ~/.cache/nvim
           key: ${{ runner.os }}-nvim-${{ hashFiles('lazy-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nvim-
+          restore-keys: ${{ runner.os }}-nvim-
 
-      - name: Setup Neovim
-        uses: rhysd/action-setup-vim@v1
-        with:
-            neovim: true
-
-      - name: Validate Lua syntax (non-snippet files)
-        shell: bash
-        run: |
-          echo "Checking Lua syntax for non-snippet files..."
-          find lua -name "*.lua" -type f ! -path "*/luasnippets/*" -print0 | while IFS= read -r -d '' file; do
-            echo "Checking syntax: $file"
-            nvim --headless +"luafile $file" +q 2>&1 || {
-              echo "❌ Syntax error in: $file"
-              exit 1
-            }
-          done
-          echo "✓ All non-snippet Lua files validated"
-
-      - name: Test config loads
-        id: config_load
-        shell: bash
-        run: |
-          set -o pipefail
-          echo "Testing config load..."
-          nvim --headless +q 2>&1 | tee config_load.log
-          if [ $? -ne 0 ]; then
-            echo "❌ Config failed to load"
-            cat config_load.log
-            exit 1
-          fi
-          echo "✓ Config loaded successfully"
-
-      - name: Test plugins install
-        id: plugin_install
-        shell: bash
-        run: |
-          set -o pipefail
-          echo "Testing plugin installation..."
-          nvim --headless -c "lua require('lazy').sync({ wait = true })" -c "qa" 2>&1 | tee plugin_install.log
-          if [ $? -ne 0 ]; then
-            echo "❌ Plugin installation failed"
-            cat plugin_install.log
-            exit 1
-          fi
-          echo "✓ Plugins installed successfully"
-
-      - name: Run lazy.nvim health checks
-        id: health_check
-        shell: bash
-        run: |
-          set -o pipefail
-          echo "Running health checks..."
-          nvim --headless -c "checkhealth lazy" -c "qa" 2>&1 | tee health_check.log
-          if [ $? -ne 0 ]; then
-            echo "❌ Health check failed"
-            cat health_check.log
-            exit 1
-          fi
-          echo "✓ Health checks passed"
-
-      - name: Test LuaSnip loads
-        id: luasnip_load
-        shell: bash
-        run: |
-          set -o pipefail
-          echo "Testing LuaSnip loads (validates all snippet files)..."
-          nvim --headless +"lua require('luasnip')" +q 2>&1 | tee luasnip_load.log
-          if [ $? -ne 0 ]; then
-            echo "❌ LuaSnip failed to load"
-            echo "This indicates snippet files have errors that prevent LuaSnip from loading."
-            cat luasnip_load.log
-            exit 1
-          fi
-          echo "✓ LuaSnip loaded successfully (all snippets validated)"
-
-      - name: Upload test logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results-${{ matrix.os }}
-          path: |
-            config_load.log
-            plugin_install.log
-            health_check.log
-            luasnip_load.log
-          retention-days: 7
-
-      - name: Generate test summary
-        if: always()
-        run: |
-          echo "## Test Results for ${{ matrix.os }} :rocket:" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- **Config Load**: ${{ steps.config_load.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Plugin Install**: ${{ steps.plugin_install.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Health Check**: ${{ steps.health_check.outcome }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **LuaSnip Load**: ${{ steps.luasnip_load.outcome }}" >> $GITHUB_STEP_SUMMARY
-
-  report-failure:
-    name: Report Test Failures
-    needs: test
-    if: failure() && github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Comment on PR
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const issue = context.issue;
-            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `## ❌ Tests Failed\n\n` +
-                    `The Neovim configuration tests failed.\n\n` +
-                    `**Failed Tests:**\n` +
-                    `- See [workflow run](${runUrl}) for details.\n\n` +
-                    `**Next Steps:**\n` +
-                    `1. Check the logs for the specific test that failed\n` +
-                    `2. Run tests locally: \`pwsh .github/scripts/test-config.ps1\`\n` +
-                    `3. Fix the issue and push a new commit\n`
-            });
+      - name: Check config
+        run: nvim --headless '+Lazy! restore' '+luafile .github/scripts/ci-check.lua' +qa
