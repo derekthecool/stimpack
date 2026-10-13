@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: rhysd/action-setup-vim@v1
         with:
@@ -29,7 +29,7 @@ jobs:
       - name: Check config
         run: nvim --headless '+Lazy! restore' '+luafile .github/scripts/ci-check.lua' +qa
 
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           add-paths: lazy-lock.json
           branch: plugin-updates
