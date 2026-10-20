@@ -1,14 +1,16 @@
 local tabterm = require('config.tab-terminal')
 
----Open, focus, or hide a Snacks terminal that lives in its own tab page: hiding it
----closes its only window and the tab page goes with it.
+---Open or focus a Snacks terminal that lives in a tab page of its own, and step back
+---out of that tab page when we are standing in it. Hiding would close its only window
+---and take the tab page with it, losing the scroll position and the mode along with
+---the window; the tab page is the thing you toggle now.
 ---@param opts? snacks.terminal.Opts
 local function terminal_tab(opts)
     opts = vim.tbl_deep_extend('force', opts or {}, { win = { position = 'current' } })
     local term = Snacks.terminal.get(nil, vim.tbl_extend('force', opts, { create = false }))
     if term and term:win_valid() then
         if vim.api.nvim_get_current_win() == term.win then
-            term:hide()
+            tabterm.leave()
         else
             vim.api.nvim_set_current_win(term.win)
         end
@@ -41,6 +43,11 @@ return {
     {
         'folke/snacks.nvim',
         opts = {
+            terminal = {
+                -- `config/autocmds.lua` puts the mode back the way it was left on the
+                -- way in; this would force insert at the bottom of the scrollback
+                auto_insert = false,
+            },
             picker = {
                 layout = {
                     preset = 'ivy_split',

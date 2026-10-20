@@ -32,6 +32,9 @@ return {
                 -- open_in_current_tab = true,
             },
             terminal = {
+                -- Claude would otherwise be put back in insert at the bottom every
+                -- time it is focused; `config/autocmds.lua` restores the real state
+                auto_insert = false,
                 ---@module "snacks"
                 ---@type snacks.win.Config|{}
                 snacks_win_opts = {

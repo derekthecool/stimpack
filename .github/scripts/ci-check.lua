@@ -25,6 +25,10 @@ if not ok_snip then
     fail('luasnip: ' .. tostring(snip_err))
 end
 
+-- `config/autocmds.lua` and the keymaps are loaded on VeryLazy, which never arrives
+-- without a UI, so ask for it before testing anything they set up.
+vim.api.nvim_exec_autocmds('User', { pattern = 'VeryLazy', modeline = false })
+
 -- Terminals get a tab page to themselves, and have to be opened at the size they
 -- keep: Snacks starts the job as soon as the window exists, so a window that is
 -- grown afterwards resizes the pty under a TUI that has already drawn itself.
@@ -59,6 +63,40 @@ else
     if vim.api.nvim_get_current_tabpage() ~= start_tab then
         fail('tab-terminal: leave() did not go back to the tab page the terminal was opened from')
     end
+
+    -- A terminal has to come back in the mode it was left in instead of being put
+    -- back in insert at the bottom of the scrollback (see `config/autocmds.lua`).
+    -- Real mode changes cannot be driven from inside a `:luafile`, so fire the events
+    -- they would: what the rule has to tell apart is a TermLeave that lands somewhere
+    -- else from one that leaves us standing in the terminal.
+    local term_win = wins[1]
+    local settle = function()
+        vim.wait(200, function()
+            return false
+        end)
+    end
+
+    if vim.b[term_buf].terminal_insert ~= true then
+        fail('terminal state: a terminal that was just opened is not ready to type in')
+    end
+
+    vim.api.nvim_set_current_win(term_win)
+    vim.api.nvim_exec_autocmds('TermEnter', { buffer = term_buf })
+    vim.api.nvim_exec_autocmds('TermLeave', { buffer = term_buf })
+    tabterm.leave()
+    settle()
+    if vim.b[term_buf].terminal_insert ~= true then
+        fail('terminal state: switching away from a terminal was taken for leaving terminal mode')
+    end
+
+    vim.api.nvim_set_current_win(term_win)
+    vim.api.nvim_exec_autocmds('TermEnter', { buffer = term_buf })
+    vim.api.nvim_exec_autocmds('TermLeave', { buffer = term_buf })
+    settle()
+    if vim.b[term_buf].terminal_insert ~= false then
+        fail('terminal state: stepping into normal mode on purpose was not remembered')
+    end
+    tabterm.leave()
 end
 pcall(vim.api.nvim_buf_delete, term_buf, { force = true })
 
