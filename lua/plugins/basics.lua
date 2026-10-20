@@ -1,3 +1,24 @@
+local tabterm = require('config.tab-terminal')
+
+---Open, focus, or hide a Snacks terminal that lives in its own tab page: hiding it
+---closes its only window and the tab page goes with it.
+---@param opts? snacks.terminal.Opts
+local function terminal_tab(opts)
+    opts = vim.tbl_deep_extend('force', opts or {}, { win = { position = 'current' } })
+    local term = Snacks.terminal.get(nil, vim.tbl_extend('force', opts, { create = false }))
+    if term and term:win_valid() then
+        if vim.api.nvim_get_current_win() == term.win then
+            term:hide()
+        else
+            vim.api.nvim_set_current_win(term.win)
+        end
+        return
+    end
+    tabterm.open(function()
+        Snacks.terminal.focus(nil, opts)
+    end)
+end
+
 return {
     {
         -- pounce is my favorite quick jumper since it works well with stenography
@@ -24,6 +45,38 @@ return {
                 layout = {
                     preset = 'ivy_split',
                 },
+            },
+        },
+        keys = {
+            {
+                '<leader>ft',
+                function()
+                    terminal_tab({ cwd = LazyVim.root() })
+                end,
+                desc = 'Terminal (Root Dir)',
+            },
+            {
+                '<leader>fT',
+                function()
+                    terminal_tab()
+                end,
+                desc = 'Terminal (cwd)',
+            },
+            {
+                '<c-/>',
+                mode = { 'n', 't' },
+                function()
+                    terminal_tab({ cwd = LazyVim.root() })
+                end,
+                desc = 'Terminal (Root Dir)',
+            },
+            {
+                '<c-_>',
+                mode = { 'n', 't' },
+                function()
+                    terminal_tab({ cwd = LazyVim.root() })
+                end,
+                desc = 'which_key_ignore',
             },
         },
     },

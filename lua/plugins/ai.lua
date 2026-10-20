@@ -1,4 +1,23 @@
+local tabterm = require('config.tab-terminal')
 local toggle_key = '<leader>ac'
+
+---Run a Claude Code command, giving the terminal a tab page of its own when the
+---command has to create its window. The terminal keeps its default split position
+---so claudecode re-shows it through its own drift-free path.
+---@param cmd string
+---@return fun()
+local function claude(cmd)
+    return function()
+        local ok, terminal = pcall(require, 'claudecode.terminal')
+        if ok and tabterm.find_win(terminal.get_active_terminal_bufnr()) then
+            vim.cmd(cmd)
+        else
+            tabterm.open(function()
+                vim.cmd(cmd)
+            end)
+        end
+    end
+end
 
 return {
     {
@@ -20,9 +39,6 @@ return {
                 ---@module "snacks"
                 ---@type snacks.win.Config|{}
                 snacks_win_opts = {
-                    position = 'float',
-                    width = 0.99,
-                    height = 0.99,
                     keys = {
                         claude_hide = {
                             toggle_key,
@@ -54,11 +70,11 @@ return {
         },
         keys = {
             { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
-            { toggle_key, '<cmd>ClaudeCode<cr>', desc = 'Toggle Claude' },
-            { '<leader>af', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
-            { '<leader>ar', '<cmd>ClaudeCode --resume<cr>', desc = 'Resume Claude' },
-            { '<leader>aC', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
-            { '<leader>am', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'Select Claude model' },
+            { toggle_key, claude('ClaudeCodeFocus'), desc = 'Toggle Claude' },
+            { '<leader>af', claude('ClaudeCodeFocus'), desc = 'Focus Claude' },
+            { '<leader>ar', claude('ClaudeCode --resume'), desc = 'Resume Claude' },
+            { '<leader>aC', claude('ClaudeCode --continue'), desc = 'Continue Claude' },
+            { '<leader>am', claude('ClaudeCodeSelectModel'), desc = 'Select Claude model' },
             { '<leader>ab', '<cmd>ClaudeCodeAdd %<cr>', desc = 'Add current buffer' },
             { '<leader>as', '<cmd>ClaudeCodeSend<cr>', mode = 'v', desc = 'Send to Claude' },
             {
