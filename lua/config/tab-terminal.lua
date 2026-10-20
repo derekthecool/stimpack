@@ -44,12 +44,11 @@ local function tidy(tab, scratch, buf)
     end
 end
 
----Run `open` in a new tab page so the terminal it opens has that tab to itself.
----The terminal can show up later than `open` returns (`:ClaudeCodeSelectModel`
----opens it from a picker callback) and Snacks only turns its buffer into a
----terminal after putting it in a window, hence the autocmd.
----@param open fun()
-function M.open(open)
+---Claim a new tab page for a terminal that is about to open. The terminal can show
+---up later than the call that opens it returns (`:ClaudeCodeSelectModel` opens it
+---from a picker callback) and Snacks only turns its buffer into a terminal after
+---putting it in a window, hence the autocmd.
+function M.claim()
     vim.cmd.tabnew()
     local tab = vim.api.nvim_get_current_tabpage()
     local scratch = vim.api.nvim_get_current_buf()
@@ -75,6 +74,12 @@ function M.open(open)
             return true
         end,
     })
+end
+
+---Run `open` in a tab page of its own.
+---@param open fun()
+function M.open(open)
+    M.claim()
     open()
 end
 

@@ -1,20 +1,20 @@
 local tabterm = require('config.tab-terminal')
 local toggle_key = '<leader>ac'
 
----Run a Claude Code command, giving the terminal a tab page of its own when the
----command has to create its window. The terminal keeps its default split position
----so claudecode re-shows it through its own drift-free path.
+---Run a Claude Code command. A terminal that has to be created claims its tab page
+---from `on_buf` below, so only re-showing a hidden one needs a tab opened for it.
 ---@param cmd string
 ---@return fun()
 local function claude(cmd)
     return function()
         local ok, terminal = pcall(require, 'claudecode.terminal')
-        if ok and tabterm.find_win(terminal.get_active_terminal_bufnr()) then
-            vim.cmd(cmd)
-        else
+        local buf = ok and terminal.get_active_terminal_bufnr()
+        if buf and not tabterm.find_win(buf) then
             tabterm.open(function()
                 vim.cmd(cmd)
             end)
+        else
+            vim.cmd(cmd)
         end
     end
 end
@@ -39,6 +39,11 @@ return {
                 ---@module "snacks"
                 ---@type snacks.win.Config|{}
                 snacks_win_opts = {
+                    -- Snacks opens the window right after this, so the tab claimed
+                    -- here is the one Claude lands in, however it was started
+                    on_buf = function()
+                        tabterm.claim()
+                    end,
                     keys = {
                         claude_hide = {
                             toggle_key,
