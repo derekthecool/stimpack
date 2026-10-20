@@ -1,21 +1,17 @@
 local tabterm = require('config.tab-terminal')
 local toggle_key = '<leader>ac'
 
----Run a Claude Code command. A terminal that has to be created claims its tab page
----from `on_buf` below, so only re-showing a hidden one needs a tab opened for it.
----@param cmd string
----@return fun()
-local function claude(cmd)
-    return function()
-        local ok, terminal = pcall(require, 'claudecode.terminal')
-        local buf = ok and terminal.get_active_terminal_bufnr()
-        if buf and not tabterm.find_win(buf) then
-            tabterm.open(function()
-                vim.cmd(cmd)
-            end)
-        else
-            vim.cmd(cmd)
-        end
+---Claude's own tab page makes hiding pointless: closing the window to get out of
+---the way takes the tab page with it and the terminal has to be rebuilt to come
+---back. So step out of the tab instead when we are standing in Claude, and focus it
+---(creating it if it does not exist yet) from anywhere else.
+local function focus_or_leave()
+    local ok, terminal = pcall(require, 'claudecode.terminal')
+    local buf = ok and terminal.get_active_terminal_bufnr()
+    if buf and buf == vim.api.nvim_get_current_buf() then
+        tabterm.leave()
+    else
+        vim.cmd.ClaudeCodeFocus()
     end
 end
 
@@ -39,19 +35,32 @@ return {
                 ---@module "snacks"
                 ---@type snacks.win.Config|{}
                 snacks_win_opts = {
+                    -- Take the whole tab page claimed in `on_buf`. The default split
+                    -- is a third of the screen that `tab-terminal` then widens, and
+                    -- Claude never recovers from being resized that early
+                    position = 'current',
                     -- Snacks opens the window right after this, so the tab claimed
                     -- here is the one Claude lands in, however it was started
                     on_buf = function()
                         tabterm.claim()
                     end,
                     keys = {
-                        claude_hide = {
+                        -- Snacks maps `q` to hide, which closes the window and takes
+                        -- the tab page with it; stepping out keeps both
+                        q = {
+                            'q',
+                            function()
+                                tabterm.leave()
+                            end,
+                            desc = 'Leave Claude tab',
+                        },
+                        claude_leave = {
                             toggle_key,
-                            function(self)
-                                self:hide()
+                            function()
+                                tabterm.leave()
                             end,
                             mode = 't',
-                            desc = 'Hide',
+                            desc = 'Leave Claude tab',
                         },
                     },
                 },
@@ -75,11 +84,11 @@ return {
         },
         keys = {
             { '<leader>a', '', desc = '+ai', mode = { 'n', 'v' } },
-            { toggle_key, claude('ClaudeCodeFocus'), desc = 'Toggle Claude' },
-            { '<leader>af', claude('ClaudeCodeFocus'), desc = 'Focus Claude' },
-            { '<leader>ar', claude('ClaudeCode --resume'), desc = 'Resume Claude' },
-            { '<leader>aC', claude('ClaudeCode --continue'), desc = 'Continue Claude' },
-            { '<leader>am', claude('ClaudeCodeSelectModel'), desc = 'Select Claude model' },
+            { toggle_key, focus_or_leave, desc = 'Focus or leave Claude' },
+            { '<leader>af', '<cmd>ClaudeCodeFocus<cr>', desc = 'Focus Claude' },
+            { '<leader>ar', '<cmd>ClaudeCode --resume<cr>', desc = 'Resume Claude' },
+            { '<leader>aC', '<cmd>ClaudeCode --continue<cr>', desc = 'Continue Claude' },
+            { '<leader>am', '<cmd>ClaudeCodeSelectModel<cr>', desc = 'Select Claude model' },
             { '<leader>ab', '<cmd>ClaudeCodeAdd %<cr>', desc = 'Add current buffer' },
             { '<leader>as', '<cmd>ClaudeCodeSend<cr>', mode = 'v', desc = 'Send to Claude' },
             {

@@ -1,16 +1,14 @@
 ---Terminals that live in a tab page of their own. Snacks only knows float and
 ---split positions, so the terminal is opened inside a fresh tab page instead and
----whatever `:tabnew` and the split leave behind is cleaned up once it shows up.
+---whatever `:tabnew` leaves behind is cleaned up once the terminal shows up.
+---
+---A terminal has to be opened at the size it will keep: Snacks starts the job as
+---soon as the window exists, so a window that is grown afterwards resizes the pty
+---under a TUI that has already drawn itself. Claude survives that badly -- text
+---comes back erased and the next render stays inside the old, smaller geometry.
+---Hence `position = 'current'` at every call site, and `leave()` instead of a hide
+---that would close the window and force the whole thing to be rebuilt.
 local M = {}
-
----@param buf integer?
----@return integer? win first window displaying `buf`, in any tab page
-function M.find_win(buf)
-    if not (buf and vim.api.nvim_buf_is_valid(buf)) then
-        return nil
-    end
-    return vim.fn.win_findbuf(buf)[1]
-end
 
 ---@param tab integer tab page handle
 ---@param scratch integer buffer `:tabnew` created
@@ -81,6 +79,17 @@ end
 function M.open(open)
     M.claim()
     open()
+end
+
+---Step out of a terminal's tab page back to the one it was opened from, leaving the
+---terminal window -- and so the size the running program drew itself at -- alone.
+function M.leave()
+    local previous = vim.fn.tabpagenr('#')
+    if previous > 0 and previous ~= vim.fn.tabpagenr() and previous <= vim.fn.tabpagenr('$') then
+        vim.cmd(previous .. 'tabnext')
+    elseif vim.fn.tabpagenr('$') > 1 then
+        vim.cmd.tabprevious()
+    end
 end
 
 return M
