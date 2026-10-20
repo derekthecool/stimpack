@@ -13,5 +13,12 @@ vim.opt.swapfile = false
 vim.opt.indentkeys:remove('o')
 vim.opt.indentkeys:remove('O')
 
--- Set pwsh as default terminal
+-- Set pwsh as default terminal. LazyVim only looks for pwsh on the PATH, where a
+-- Microsoft Store install is an execution alias Neovim cannot spawn, and then falls
+-- back to Windows PowerShell 5.1 without a word -- so point the shell at the pwsh
+-- `config/pwsh.lua` can find.
 LazyVim.terminal.setup('pwsh')
+local pwsh = require('config.pwsh')
+if pwsh.exe() and pwsh.exe() ~= 'pwsh' then
+    vim.o.shell = pwsh.quoted()
+end

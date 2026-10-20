@@ -73,16 +73,20 @@ function M.start()
         return
     end
     state.buf = ''
-    state.proc = vim.system(
-        { 'pwsh', '-NoLogo', '-NoProfile', '-NonInteractive', '-File', script_path(), M.settings_path },
-        { stdin = true, stdout = on_stdout },
-        function()
-            state.proc = nil
-            vim.schedule(function()
-                fail_pending('PSScriptAnalyzer format server exited')
-            end)
-        end
-    )
+    state.proc = vim.system({
+        require('config.pwsh').exe() or 'pwsh',
+        '-NoLogo',
+        '-NoProfile',
+        '-NonInteractive',
+        '-File',
+        script_path(),
+        M.settings_path,
+    }, { stdin = true, stdout = on_stdout }, function()
+        state.proc = nil
+        vim.schedule(function()
+            fail_pending('PSScriptAnalyzer format server exited')
+        end)
+    end)
 end
 
 function M.stop()

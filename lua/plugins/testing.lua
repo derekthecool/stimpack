@@ -27,7 +27,7 @@ return {
                 ['neotest-pester'] =
                     ---@type neotest-pester.Config
                     {
-                        pwsh_path = 'pwsh',
+                        pwsh_path = require('config.pwsh').exe() or 'pwsh',
                         ---@type PesterConfiguration
                         pester_configuration = {
                             Output = { Verbosity = 'Detailed' },

@@ -25,6 +25,19 @@ if not ok_snip then
     fail('luasnip: ' .. tostring(snip_err))
 end
 
+-- The shell has to be a PowerShell 7 Neovim can spawn. A Microsoft Store install
+-- hides behind an execution alias that `executable()` refuses, which LazyVim answers
+-- by falling back to Windows PowerShell 5.1 (see `config/pwsh.lua`).
+local pwsh = require('config.pwsh').exe()
+if pwsh then
+    if vim.fn.executable(pwsh) ~= 1 then
+        fail('pwsh: resolved ' .. pwsh .. ', which cannot be spawned')
+    end
+    if not vim.o.shell:lower():find('pwsh', 1, true) then
+        fail('options: the shell is ' .. vim.o.shell .. ' although pwsh was found at ' .. pwsh)
+    end
+end
+
 -- `config/autocmds.lua` and the keymaps are loaded on VeryLazy, which never arrives
 -- without a UI, so ask for it before testing anything they set up.
 vim.api.nvim_exec_autocmds('User', { pattern = 'VeryLazy', modeline = false })
