@@ -22,3 +22,6 @@ local pwsh = require('config.pwsh')
 if pwsh.exe() and pwsh.exe() ~= 'pwsh' then
     vim.o.shell = pwsh.quoted()
 end
+
+-- Let a terminal program's bells and OSC 777 notifications reach WezTerm
+require('config.terminal-notifications').setup()
